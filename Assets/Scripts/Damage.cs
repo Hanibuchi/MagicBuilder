@@ -1,16 +1,16 @@
-using UnityEngine;
-
-public class Damage : MonoBehaviour
+/// <summary>
+/// 魔法や衝突によって与えられるダメージの詳細。
+/// </summary>
+[System.Serializable]
+public struct Damage
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public float baseDamage;        // 基本ダメージ
+    public float woodDamage;        // 木ダメージ
+    public float waterDamage;       // 水ダメージ
+    public float temperatureDamage; // 温度ダメージ (正: 火、負: 氷)
+    public float knockback;         // ノックバック量
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // 便宜上のプロパティ
+    public float FireDamage => temperatureDamage > 0 ? temperatureDamage : 0f;
+    public float IceDamage => temperatureDamage < 0 ? -temperatureDamage : 0f;
 }
