@@ -14,3 +14,15 @@ public struct Damage
     public float FireDamage => temperatureDamage > 0 ? temperatureDamage : 0f;
     public float IceDamage => temperatureDamage < 0 ? -temperatureDamage : 0f;
 }
+
+/// <summary>
+/// ダメージの種類。
+/// </summary>
+public enum DamageType
+{
+    Base,   // 基本ダメージ
+    Fire,   // 火
+    Wood,   // 木
+    Water,  // 水
+    Ice     // 氷
+}
