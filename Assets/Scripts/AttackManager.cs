@@ -55,7 +55,7 @@ public class AttackManager : MonoBehaviour
         }
 
         // 選択したWandの持つ最初のSpellを参照
-        ISpell firstSpell = wandToUse.spells[0];
+        SpellBase firstSpell = wandToUse.spells[0];
         
         // **Z回転と強さから発射方向のベクトルを計算する例:**
         // float angleRad = rotationZ * Mathf.Deg2Rad;

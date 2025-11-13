@@ -15,32 +15,25 @@ public class Wand
 
     [Header("呪文スロット")]
     [Tooltip("この杖にセットされている呪文の配列。")]
-    [SerializeReference] public List<ISpell> spells = new List<ISpell>();
+    [SerializeReference] public List<SpellBase> spells = new List<SpellBase>();
 
     /// <summary>
     /// 現在の杖にセットされている呪文リストを取得します。
     /// </summary>
     /// <returns>呪文のリスト</returns>
-    public List<ISpell> GetSpells()
+    public List<SpellBase> GetSpells()
     {
         return spells;
     }
 
-    public void Add(ISpell spell)
+    public void Add(SpellBase spell)
     {
         spells.Add(spell);
     }
-    public void Remove(ISpell spell)
+    public void Remove(SpellBase spell)
     {
         spells.Remove(spell);
     }
-}
-
-
-// 呪文を表すマーカーインターフェース 
-public interface ISpell
-{
-    // ISpellを継承したクラスが呪文として扱われます。
 }
 
 /// <summary>
