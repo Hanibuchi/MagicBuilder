@@ -6,7 +6,7 @@ using System;
 /// 魔法の杖を表すクラス。
 /// 杖の種類と、セットされた呪文の配列を持ちます。
 /// </summary>
-[SerializeField]
+[Serializable]
 public class Wand
 {
     [Header("杖の特性")]
