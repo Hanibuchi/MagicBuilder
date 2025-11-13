@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-
-public class ProjectileSpell : SpellBase
+[CreateAssetMenu(fileName = "ExampleSpell", menuName = "Wand System/Example Spell")]
+public class ExampleSpell : SpellBase
 {
     public override void DisplayAimingLine(
         List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ,
