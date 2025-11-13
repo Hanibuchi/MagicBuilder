@@ -30,6 +30,7 @@ public class CharacterHealth : MonoBehaviour
 
     // ダメージ表示処理を委譲するためのインターフェース
     private IDamageNotifier damageNotifier;
+    private IDieNotifier dieNotifier;
 
     private void Awake()
     {
@@ -39,6 +40,7 @@ public class CharacterHealth : MonoBehaviour
 
         // ダメージ通知処理を担うコンポーネントを取得
         damageNotifier = GetComponent<IDamageNotifier>();
+        dieNotifier = GetComponent<IDieNotifier>();
     }
 
     /// <summary>
@@ -242,7 +244,7 @@ public class CharacterHealth : MonoBehaviour
     {
         Debug.Log($"{gameObject.name}は倒れた。");
         // 死亡時のアニメーションやゲームオーバー処理などを記述
-        Destroy(gameObject); // 例としてオブジェクトを削除
+        dieNotifier?.NotifyDie();
     }
 }
 
@@ -296,4 +298,9 @@ public interface IDamageNotifier
     /// <param name="damageValue">その属性のダメージ値</param>
     /// <param name="collisionPoint">ダメージが発生したワールド座標</param>
     void NotifyDamage(DamageType damageType, float damageValue, Vector2 collisionPoint);
+}
+
+public interface IDieNotifier
+{
+    void NotifyDie();
 }
