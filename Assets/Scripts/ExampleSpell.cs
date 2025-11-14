@@ -4,6 +4,7 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "ExampleSpell", menuName = "Wand System/Example Spell")]
 public class ExampleSpell : SpellBase
 {
+    List<GameObject> trajectoryPrefabs = new();
     public override void DisplayAimingLine(
         List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ,
         float strength, Vector2 casterPosition)
@@ -13,11 +14,19 @@ public class ExampleSpell : SpellBase
         Vector2 initialVelocity = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)) * strength;
         float gravityMagnitude = Physics2D.gravity.magnitude;
         // 2. 一定時間ごとに軌道上の点を計算し、trajectoryPrefabを生成
+        foreach (var obj in trajectoryPrefabs)
+        {
+            if (obj != null)
+                PoolManager.Instance.ReturnToPool(PoolType.Trajectory, obj);
+        }
+        trajectoryPrefabs.Clear();
         for (float t = 0; t < maxPredictionTime; t += trajectoryPrefabInterval)
         {
             Vector2 position = CalculateTrajectoryPoint(casterPosition, initialVelocity, gravityMagnitude, t);
-            // 実際にはここでプレハブをInstantiateする処理が入ります
-            Instantiate(trajectoryPrefab, position, Quaternion.identity);
+            // ここでプールから軌道表示用オブジェクトを取得
+            GameObject trajectoryObj = PoolManager.Instance.GetFromPool(PoolType.Trajectory);
+            trajectoryPrefabs.Add(trajectoryObj);
+            trajectoryObj.transform.position = position;
         }
     }
     [Header("投射物設定")]
