@@ -41,7 +41,8 @@ public abstract class SpellBase : ScriptableObject
         int currentSpellIndex,
         float rotationZ,
         float strength,
-        Vector2 casterPosition
+        Vector2 casterPosition,
+        bool clearLine = false
     );
 
     /// <summary>

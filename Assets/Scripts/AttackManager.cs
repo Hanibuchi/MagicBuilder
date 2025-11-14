@@ -40,7 +40,7 @@ public class AttackManager : MonoBehaviour
     /// <param name="wandIndex">照準情報を取得する対象の杖のインデックス（番号）</param>
     /// <param name="rotationZ">発射角度 (Z軸回転、float)。例: 0°は右、90°は上。</param>
     /// <param name="strength">発射の強さ（大きさ、float）。</param>
-    public void DisplayAimingLine(int wandIndex, float rotationZ, float strength)
+    public void DisplayAimingLine(int wandIndex, float rotationZ, float strength, bool clearLine = false)
     {
         if (wandIndex < 0 || wandIndex >= playerWands.Count)
         {
@@ -68,7 +68,8 @@ public class AttackManager : MonoBehaviour
             firstIndex,
             rotationZ,
             strength,
-            casterPosition
+            casterPosition,
+            clearLine
         );
 
         Debug.Log($"照準補助線を表示中: 杖 Index={wandIndex}, 角度={rotationZ:F2}° (Z回転), 強さ={strength:F2}");

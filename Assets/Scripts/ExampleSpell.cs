@@ -7,8 +7,18 @@ public class ExampleSpell : SpellBase
     List<GameObject> trajectoryPrefabs = new();
     public override void DisplayAimingLine(
         List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ,
-        float strength, Vector2 casterPosition)
+        float strength, Vector2 casterPosition, bool clearLine = false)
     {
+        if (clearLine)
+        {
+            foreach (var obj in trajectoryPrefabs)
+            {
+                if (obj != null)
+                    PoolManager.Instance.ReturnToPool(PoolType.Trajectory, obj);
+            }
+            trajectoryPrefabs.Clear();
+            return;
+        }
         // 1. Z回転と強さから初速ベクトルを計算
         float angleRad = rotationZ * Mathf.Deg2Rad;
         Vector2 initialVelocity = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)) * strength;
