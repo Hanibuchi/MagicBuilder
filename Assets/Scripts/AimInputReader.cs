@@ -35,6 +35,7 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     /// </summary>
     public void OnBeginDrag(PointerEventData eventData)
     {
+        Debug.Log("Drag Start");
         if (aimController == null || startPointTransform == null)
         {
             Debug.LogError("AimController または StartPointTransform が設定されていません。");
