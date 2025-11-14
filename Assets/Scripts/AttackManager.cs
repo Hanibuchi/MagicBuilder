@@ -17,7 +17,7 @@ public class AttackManager : MonoBehaviour
     [Header("杖の管理")]
     [Tooltip("プレイヤーが現在所持している杖の配列")]
     public List<Wand> playerWands = new List<Wand>();
-    public Vector2 casterPosition;
+    public Transform casterPositionTransform;
 
     private void Awake()
     {
@@ -68,7 +68,7 @@ public class AttackManager : MonoBehaviour
             firstIndex,
             rotationZ,
             strength,
-            casterPosition,
+            casterPositionTransform.position,
             clearLine
         );
 
@@ -102,7 +102,7 @@ public class AttackManager : MonoBehaviour
 
         SpellContext context = new()
         {
-            CasterPosition = casterPosition
+            CasterPosition = casterPositionTransform.position
         };
         // 選択したWandの持つ最初のSpellを参照
         SpellBase firstSpell = wandToUse.spells[firstIndex];
