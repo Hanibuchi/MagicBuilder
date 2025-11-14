@@ -33,7 +33,7 @@ public abstract class SpellBase : ScriptableObject
     /// <param name="wandSpells">杖にセットされている全呪文の配列</param>
     /// <param name="currentSpellIndex">この呪文が杖の配列の何番目にあるか</param>
     /// <param name="rotationZ">発射角度（Z軸回転）</param>
-    /// <param name="strength">発射の強さ</param>
+    /// <param name="strength">発射の強さ。0~1の範囲</param>
     /// <param name="casterPosition">発射元となる位置</param>
     /// <param name="gravityMagnitude">重力の大きさ</param>
     public abstract void DisplayAimingLine(
