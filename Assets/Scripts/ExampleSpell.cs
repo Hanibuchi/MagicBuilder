@@ -32,6 +32,8 @@ public class ExampleSpell : SpellBase
         trajectoryPrefabs.Clear();
         for (float t = 0; t < maxPredictionTime; t += trajectoryPrefabInterval)
         {
+            if (t == 0)
+                continue;
             Vector2 position = CalculateTrajectoryPoint(casterPosition, initialVelocity, gravityMagnitude, t);
             // ここでプールから軌道表示用オブジェクトを取得
             GameObject trajectoryObj = PoolManager.Instance.GetFromPool(PoolType.Trajectory);
