@@ -98,6 +98,12 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
         // 角度の計算: X軸 (右) を基準にした角度
         angle = Mathf.Atan2(launchVector.y, launchVector.x) * Mathf.Rad2Deg;
+        if (-180f <= angle && angle < -45f)
+            angle = Mathf.Clamp(angle + 180f, 0f, 90f);
+        else if (-45f <= angle && angle <= 135f)
+            angle = Mathf.Clamp(angle, 0f, 90f);
+        else
+            angle = 0f;
     }
 }
 
