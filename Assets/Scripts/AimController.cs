@@ -15,6 +15,10 @@ public class AimController : MonoBehaviour, IAimController
     [SerializeField]
     private int selectedWandIndex = 0; // どの杖で魔法を放つか
 
+    [Tooltip("キャラクターのアニメーションコントローラー")]
+    [SerializeField]
+    private CharacterAnimatorController animatorController;
+
     private void Start()
     {
         // AimInputReaderが設定されているか確認
@@ -46,6 +50,8 @@ public class AimController : MonoBehaviour, IAimController
             false
         );
         // Debug.Log($"AimController: UpdateAimLine - 角度={angle:F2}, 強さ={power:F2}");
+
+        animatorController.SetAimRotation(angle);
     }
     
     /// <summary>
@@ -61,6 +67,7 @@ public class AimController : MonoBehaviour, IAimController
             true // clearLineをtrueで呼び出し、AttackManager側で非表示ロジックを実行させる
         );
         // Debug.Log("AimController: ClearAimLine");
+        animatorController.SetAimRotation(0f, true);
     }
 
     /// <summary>
@@ -77,6 +84,11 @@ public class AimController : MonoBehaviour, IAimController
             power
         );
         Debug.Log($"AimController: ReleaseMagic - 杖({selectedWandIndex})を発射！ 角度={angle:F2}, 強さ={power:F2}");
+
+        if (animatorController != null)
+        {
+            animatorController.NotifyFire(angle);
+        }
     }
     
     // --- 外部から選択杖を変更するためのメソッド ---
