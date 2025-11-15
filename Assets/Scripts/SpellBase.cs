@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 /// <summary>
 /// 全ての具体的な呪文クラスの抽象基底クラス。
 /// ScriptableObjectを継承することで、Unity Inspectorで設定可能なデータアセットとして扱えます。
@@ -62,6 +63,19 @@ public abstract class SpellBase : ScriptableObject
         SpellContext context
     );
 
+    public void ModifyProjectile(SpellContext context, GameObject projectile)
+    {
+        context.ProjectileModifier?.Invoke(projectile);
+    }
+
+    [Tooltip("次に発動する呪文のオフセット配列")]
+    [SerializeField] int[] nextSpellOffsets;
+
+    public int[] GetNextSpellOffsets()
+    {
+        return nextSpellOffsets;
+    }
+
     // ----------------------------------------------------------------------------------
     // 軌道計算のヘルパー（具体的な実装例として）
     // ----------------------------------------------------------------------------------
@@ -95,4 +109,5 @@ public abstract class SpellBase : ScriptableObject
 public class SpellContext
 {
     public Vector2 CasterPosition;
+    public Action<GameObject> ProjectileModifier;
 }

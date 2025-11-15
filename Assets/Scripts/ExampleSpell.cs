@@ -89,6 +89,8 @@ public class ExampleSpell : SpellBase
         ProjectileController pc = projectileGO.AddComponent<ProjectileController>();
         pc.Initialize(rb); // Rigidbody2Dを渡してトラッキングを開始
 
+        ModifyProjectile(context, projectileGO);
+
         Debug.Log($"[{spellName}]を発射！角度:{rotationZ}°、強さ:{strength}");
     }
 }
