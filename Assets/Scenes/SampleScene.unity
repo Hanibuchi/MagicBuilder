@@ -242,7 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerWands: []
   casterPositionTransform: {fileID: 831038165}
-  test_spell: 2
+  test_spell: 1
   test_rotation: 45
   test_strength: 10
 --- !u!4 &393885584
