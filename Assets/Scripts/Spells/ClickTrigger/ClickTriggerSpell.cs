@@ -9,7 +9,7 @@ public class ClickTriggerSpell : MonoBehaviour
     /// </summary>
     /// <param name="wandSpells">杖にセットされている全ての呪文リスト。</param>
     /// <param name="currentSpellIndex">現在発射された呪文のインデックス。</param>
-    /// <param name="context">呪文の発射に関するコンテキスト情報。</param>
+    /// <param name="context">ClickTriggerに影響を与えるかもしれないコンテキスト情報。</param>
     /// <returns>投射物GameObjectを受け取り、次の呪文のClickTriggerProjectileModifierを追加するアクション。</returns>
     public static Action<GameObject> CreateClickTriggerAction(
         List<SpellBase> wandSpells,
@@ -45,7 +45,7 @@ public class ClickTriggerSpell : MonoBehaviour
                     nextSpell,
                     wandSpells,
                     nextSpellIndex,
-                    context
+                    new()
                 );
             }
         };

@@ -18,7 +18,7 @@ public abstract class SpellBase : ScriptableObject
     [Tooltip("軌道プレハブの生成間隔（秒）。小さいほど密になります。")]
     public float trajectoryPrefabInterval = 0.1f;
     [Tooltip("⚡ 軌道予測を行う最大の時間（秒）。この時間を超える軌道は計算しません。")]
-    public float maxPredictionTime = 5.0f;
+    public float maxPredictionTime = 2.0f;
 
     [Tooltip("軌道予測に使用するプレハブ")]
     public GameObject trajectoryPrefab;
@@ -182,6 +182,27 @@ public abstract class SpellBase : ScriptableObject
 
         return position;
     }
+
+    // Mathf.Deg2Radの代わりに標準偏差をラジアンに変換して使用する場合は、このメソッドで
+    // ラジアンの標準偏差を計算します。
+    // 例: error_degree=5 (度) の場合、standardDeviation = 5 * Mathf.Deg2Rad を使用します。
+    protected float GetGaussianRandomAngle(float standardDeviation)
+    {
+        standardDeviation = Mathf.Max(0f, standardDeviation);
+        // Box-Muller変換を使って正規分布に従う乱数（平均0、標準偏差1）を生成
+        // R.NextDouble()は [0.0, 1.0) の乱数
+        float u1 = 1f - UnityEngine.Random.value; // (0, 1]
+        float u2 = 1f - UnityEngine.Random.value; // (0, 1]
+
+        // 標準正規分布に従う乱数 (Z)
+        float randStdNormal = Mathf.Sqrt(-2.0f * Mathf.Log(u1)) * Mathf.Sin(2.0f * Mathf.PI * u2);
+
+        // 標準偏差 standardDeviation を乗算して、目的の正規分布に従う乱数 (X) を得る
+        // 平均は0
+        float randGaussian = randStdNormal * standardDeviation;
+
+        return randGaussian;
+    }
 }
 
 /// <summary>
@@ -191,6 +212,7 @@ public class SpellContext
 {
     public Vector2 CasterPosition;
     public Action<GameObject> ProjectileModifier;
+    public float errorDegree = 0;
 
     public SpellContext()
     {

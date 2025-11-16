@@ -98,8 +98,9 @@ public class BarrierSpell : SpellBase
             return;
         }
 
+        float finalRotationZ = rotationZ + GetGaussianRandomAngle(context.errorDegree);
         // **　バリアは casterPosition の方向 (rotationZ) を向く**
-        Quaternion rotation = Quaternion.Euler(0, 0, rotationZ);
+        Quaternion rotation = Quaternion.Euler(0, 0, finalRotationZ);
 
         // 3. プレハブを生成
         GameObject barrierGO = Instantiate(

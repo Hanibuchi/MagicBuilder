@@ -7,4 +7,7 @@ public enum SpellType
     ExampleSpell,
     Barrier,
     Downward,
+    Upward,
+    ErrorDegreeReduce,
+    ErrorDegreeIncrease,
 }

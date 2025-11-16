@@ -46,6 +46,10 @@ public class ExampleSpell : SpellBase
     public GameObject projectilePrefab;
     [SerializeField] float strengthMultiplier = 20f;
 
+    [Header("誤差設定")]
+    [Tooltip("発射角に追加する誤差の標準偏差（度）。平均0の正規分布に従います。")]
+    [SerializeField] float errorDegree = 1f; // 例として1度を設定
+
     public override void FireSpell(
         List<SpellBase> wandSpells, int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
@@ -72,8 +76,10 @@ public class ExampleSpell : SpellBase
             return;
         }
 
-        // 角度 (rotationZ) をラジアンに変換
-        float angleRad = rotationZ * Mathf.Deg2Rad;
+        // 誤差を元の角度に追加
+        float finalRotationZ = rotationZ + GetGaussianRandomAngle(errorDegree + context.errorDegree);
+        // 角度 (finalRotationZ) をラジアンに変換
+        float angleRad = finalRotationZ * Mathf.Deg2Rad;
 
         // Z軸回転と強さから初速ベクトルを計算 (X=Cos, Y=Sin)
         Vector2 initialVelocity = new Vector2(
@@ -91,7 +97,7 @@ public class ExampleSpell : SpellBase
 
         if (isClickTrigger)
         {
-            context.ProjectileModifier += ClickTriggerSpell.CreateClickTriggerAction(wandSpells, currentSpellIndex, new SpellContext());
+            context.ProjectileModifier += ClickTriggerSpell.CreateClickTriggerAction(wandSpells, currentSpellIndex, context);
         }
 
         ModifyProjectile(context, projectileGO);

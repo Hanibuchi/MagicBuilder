@@ -244,8 +244,8 @@ MonoBehaviour:
   - type: 0
     spells:
     - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
+    - {fileID: 11400000, guid: 6c9d9dfe2f68e9144b91bb04a7bd8513, type: 2}
     - {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
-    - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
   casterPositionTransform: {fileID: 1782557132}
 --- !u!4 &393885584
 Transform:
@@ -854,6 +854,12 @@ MonoBehaviour:
     spellAsset: {fileID: 11400000, guid: 6c9d9dfe2f68e9144b91bb04a7bd8513, type: 2}
   - type: 3
     spellAsset: {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
+  - type: 4
+    spellAsset: {fileID: 11400000, guid: a3a38a67181760f4283b87dbec380a68, type: 2}
+  - type: 5
+    spellAsset: {fileID: 11400000, guid: 7ec1dcb74d1e1f64cbc082ae8771f40d, type: 2}
+  - type: 6
+    spellAsset: {fileID: 11400000, guid: 6f106bb0c829b614dbf4d7f863cad4ef, type: 2}
 --- !u!4 &961296799
 Transform:
   m_ObjectHideFlags: 0
