@@ -278,4 +278,21 @@ public class SpellContext
     {
 
     }
+
+    /// <summary>
+    /// このコンテキストの値をコピーした新しいインスタンスを返す。
+    /// </summary>
+    /// <returns>値が同じ新しい SpellContext インスタンス。</returns>
+    public SpellContext Clone()
+    {
+        return new SpellContext
+        {
+            // 値型 (Vector2, float) は値そのものがコピーされる
+            CasterPosition = this.CasterPosition,
+            errorDegree = this.errorDegree,
+
+            // 参照型 (Action) は参照がコピーされるが、Actionは不変(イミュータブル)なので問題なし
+            ProjectileModifier = this.ProjectileModifier
+        };
+    }
 }
