@@ -18,4 +18,4 @@ MonoBehaviour:
   maxPredictionTime: 2
   trajectoryPrefab: {fileID: 0}
   relativeSpellGroupOffsets: 010000000200000003000000
-  delayMultiplier: 0.05
+  delayMultiplier: 0.01

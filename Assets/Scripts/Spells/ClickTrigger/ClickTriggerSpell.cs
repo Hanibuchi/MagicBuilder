@@ -1,9 +1,14 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.Linq; // SpellBase.GetGaussianRandom を使うために追加
 
 public class ClickTriggerSpell : MonoBehaviour
 {
+    // 標準偏差の計算に使用する定数
+    // 例として 0.05f を設定。context.errorDegree * 0.05f が標準偏差（秒）になる。
+    const float DELAY_MULTIPLIER = 0.01f;
+
     /// <summary>
     /// ClickTriggerが発動したときに実行される、次の呪文を処理するアクションを作成します。
     /// </summary>
@@ -41,11 +46,22 @@ public class ClickTriggerSpell : MonoBehaviour
             // 次の呪文が見つかった場合、その呪文を発動させるためのコンポーネントを追加
             if (nextSpell != null)
             {
+                // ----------------------------------------------------
+                // ⚡ 遅延時間の計算ロジックを追加 ⚡
+                // ----------------------------------------------------
+                float delayTime = context.errorDegree * DELAY_MULTIPLIER;
+                // SpellBase のヘルパーメソッドを利用して正規分布に従うランダムな遅延時間を生成
+
+                // 遅延時間は負にならないように0でクランプ（Clamp）する
+                delayTime = Mathf.Abs(delayTime);
+                // ----------------------------------------------------
+
                 obj.AddComponent<ClickTriggerProjectileModifier>().Init(
                     nextSpell,
                     wandSpells,
                     nextSpellIndex,
-                    new()
+                    new(),
+                    delayTime // 算出した遅延時間を渡す (Initのシグネチャ変更が必要)
                 );
             }
         };
