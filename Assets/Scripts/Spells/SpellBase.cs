@@ -263,6 +263,16 @@ public abstract class SpellBase : ScriptableObject
         }
         return targetIndices.ToArray();
     }
+
+    /// <summary>
+    /// 呪文の発射前に行う配列の前処理。
+    /// 特定の呪文（例：〇倍呪文）はここで配列を編集する。
+    /// </summary>
+    /// <param name="wandSpells">杖に格納されている呪文のオリジナルの配列。</param>
+    /// <param name="currentSpellIndex">現在処理中の呪文が杖の配列内で何番目かを示すインデックス。</param>
+    public virtual void Preprocess(List<SpellBase> wandSpells, int currentSpellIndex)
+    {
+    }
 }
 
 /// <summary>
