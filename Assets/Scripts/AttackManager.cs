@@ -116,29 +116,4 @@ public class AttackManager : MonoBehaviour
 
         Debug.Log($"杖を発射: Index={wandIndex} | 角度={rotationZ:F2}° | 強さ={strength:F2}");
     }
-
-
-    public SpellType test_spell;
-    public float test_rotation;
-    public float test_strength;
-    public void Test_init()
-    {
-        var wand = new Wand();
-        wand.spells.Add(SpellDatabase.Instance.GetSpellAsset(test_spell));
-        playerWands.Add(wand);
-    }
-    private void Start()
-    {
-        Test_init();
-    }
-
-    public void Test_aim()
-    {
-        DisplayAimingLine(0, test_rotation, test_strength);
-    }
-
-    public void Test_fire()
-    {
-        FireWand(0, test_rotation, test_strength);
-    }
 }
