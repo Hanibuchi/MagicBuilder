@@ -77,7 +77,7 @@ public class ExampleSpell : SpellBase
         }
 
         // 誤差を元の角度に追加
-        float finalRotationZ = rotationZ + GetGaussianRandomAngle(errorDegree + context.errorDegree);
+        float finalRotationZ = rotationZ + GetGaussianRandom(errorDegree + context.errorDegree);
         // 角度 (finalRotationZ) をラジアンに変換
         float angleRad = finalRotationZ * Mathf.Deg2Rad;
 

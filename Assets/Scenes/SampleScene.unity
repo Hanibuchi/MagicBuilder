@@ -221,6 +221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 393885584}
   - component: {fileID: 393885583}
+  - component: {fileID: 393885585}
   m_Layer: 0
   m_Name: AttackManager
   m_TagString: Untagged
@@ -244,8 +245,12 @@ MonoBehaviour:
   - type: 0
     spells:
     - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
-    - {fileID: 11400000, guid: 6c9d9dfe2f68e9144b91bb04a7bd8513, type: 2}
+    - {fileID: 11400000, guid: 6f106bb0c829b614dbf4d7f863cad4ef, type: 2}
     - {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
+    - {fileID: 11400000, guid: 0d95613ceee16444aa8e41b156d25c40, type: 2}
+    - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
+    - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
+    - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
   casterPositionTransform: {fileID: 1782557132}
 --- !u!4 &393885584
 Transform:
@@ -262,6 +267,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &393885585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 393885582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73c2785a693656f45846b29b042c2ca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &438136925
 GameObject:
   m_ObjectHideFlags: 0

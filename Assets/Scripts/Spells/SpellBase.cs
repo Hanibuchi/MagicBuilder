@@ -188,7 +188,7 @@ public abstract class SpellBase : ScriptableObject
     // Mathf.Deg2Radの代わりに標準偏差をラジアンに変換して使用する場合は、このメソッドで
     // ラジアンの標準偏差を計算します。
     // 例: error_degree=5 (度) の場合、standardDeviation = 5 * Mathf.Deg2Rad を使用します。
-    protected float GetGaussianRandomAngle(float standardDeviation)
+    protected float GetGaussianRandom(float standardDeviation)
     {
         standardDeviation = Mathf.Max(0f, standardDeviation);
         // Box-Muller変換を使って正規分布に従う乱数（平均0、標準偏差1）を生成
