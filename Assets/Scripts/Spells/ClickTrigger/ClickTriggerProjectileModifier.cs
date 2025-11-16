@@ -18,11 +18,13 @@ public class ClickTriggerProjectileModifier : MonoBehaviour
     private void Start()
     {
         // クリックを感知するクラスへ登録
+        ClickTriggerInputReader.Instance.RegisterCallback(Fire);
     }
 
     private void OnDestroy()
     {
         // クリックを感知するクラスの登録を解除
+        ClickTriggerInputReader.Instance.UnregisterCallback(Fire);
     }
 
     public void Fire()

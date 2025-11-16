@@ -50,6 +50,9 @@ TagManager:
   - name: Ally
     uniqueID: 3463954355
     locked: 0
+  - name: ClickInputReader
+    uniqueID: 4283646359
+    locked: 0
   - name: AImStartObject
     uniqueID: 2588249511
     locked: 0
