@@ -11,12 +11,6 @@ public class BarrierSpell : SpellBase
     [Tooltip("Strengthに応じて選択されるバリアプレハブの配列")]
     public GameObject[] barrierPrefabs;
 
-    [Tooltip("バリアが生成されるキャスターからの最小距離")]
-    [SerializeField] float minDistance = 1.0f;
-
-    [Tooltip("バリアが生成されるキャスターからの最大距離")]
-    [SerializeField] float maxDistance = 5.0f;
-
     // 軌道表示用のバッファ
     private GameObject currentBarrierInstance = null;
     private int lastPrefabIndex = -1; // 前回使用したPrefabのインデックス
@@ -79,26 +73,8 @@ public class BarrierSpell : SpellBase
             currentBarrierInstance.SetActive(true);
         }
 
-        // 4. 位置と回転の計算
-
-        // 距離の線形補間
-        // targetIndex/(Length-1) は、インデックスを 0.0〜1.0 の範囲に正規化する
-        float normalizedIndex = (float)targetIndex / (arrayLength - 1);
-        float distance = Mathf.Lerp(minDistance, maxDistance, normalizedIndex);
-
-        // 角度をラジアンに変換
-        float angleRad = rotationZ * Mathf.Deg2Rad;
-
-        // X軸の正の方向 (rotationZ=0) からのオフセット位置を計算
-        Vector2 direction = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
-        Vector2 position = casterPosition + direction * distance;
-
-        // 5. インスタンスの配置と回転設定
-
-        currentBarrierInstance.transform.position = position;
-
-        // **【修正点】Prefabは casterPosition の方向 (rotationZ) を向く**
         currentBarrierInstance.transform.rotation = Quaternion.Euler(0, 0, rotationZ); // rotationZをそのまま設定
+        currentBarrierInstance.transform.position = casterPosition;
     }
 
     /// <summary>
@@ -122,21 +98,13 @@ public class BarrierSpell : SpellBase
             return;
         }
 
-        // 2. 位置と回転の計算
-        // DisplayAimingLineと同じロジック
-        float normalizedIndex = (float)targetIndex / (arrayLength - 1);
-        float distance = Mathf.Lerp(minDistance, maxDistance, normalizedIndex);
-        float angleRad = rotationZ * Mathf.Deg2Rad;
-        Vector2 direction = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
-        Vector2 position = context.CasterPosition + direction * distance;
-
-        // **【修正点】バリアは casterPosition の方向 (rotationZ) を向く**
+        // **　バリアは casterPosition の方向 (rotationZ) を向く**
         Quaternion rotation = Quaternion.Euler(0, 0, rotationZ);
 
         // 3. プレハブを生成
         GameObject barrierGO = Instantiate(
             targetPrefab,
-            position,
+            context.CasterPosition,
             rotation
         );
 
