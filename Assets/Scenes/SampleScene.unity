@@ -877,6 +877,12 @@ MonoBehaviour:
     spellAsset: {fileID: 11400000, guid: 7ec1dcb74d1e1f64cbc082ae8771f40d, type: 2}
   - type: 6
     spellAsset: {fileID: 11400000, guid: 6f106bb0c829b614dbf4d7f863cad4ef, type: 2}
+  - type: 7
+    spellAsset: {fileID: 11400000, guid: 1ae5b79ace718244a92dfb03c51f91d4, type: 2}
+  - type: 8
+    spellAsset: {fileID: 11400000, guid: 0d95613ceee16444aa8e41b156d25c40, type: 2}
+  - type: 9
+    spellAsset: {fileID: 11400000, guid: 54fdeaf1e456d8843845f8b704afde19, type: 2}
 --- !u!4 &961296799
 Transform:
   m_ObjectHideFlags: 0

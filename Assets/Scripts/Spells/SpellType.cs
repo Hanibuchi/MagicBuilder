@@ -10,4 +10,7 @@ public enum SpellType
     Upward,
     ErrorDegreeReduce,
     ErrorDegreeIncrease,
+    TwoChainCast,
+    ThreeChainCast,
+    FiveChainCast,
 }
