@@ -240,11 +240,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6c4f1a007ac6eb428d761ab8d00133c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerWands: []
+  playerWands:
+  - type: 0
+    spells:
+    - {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
+    - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
   casterPositionTransform: {fileID: 831038165}
-  test_spell: 1
-  test_rotation: 45
-  test_strength: 10
 --- !u!4 &393885584
 Transform:
   m_ObjectHideFlags: 0
@@ -828,6 +829,8 @@ MonoBehaviour:
     spellAsset: {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
   - type: 2
     spellAsset: {fileID: 11400000, guid: 6c9d9dfe2f68e9144b91bb04a7bd8513, type: 2}
+  - type: 3
+    spellAsset: {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
 --- !u!4 &961296799
 Transform:
   m_ObjectHideFlags: 0
@@ -1872,6 +1875,8 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 393885584}
+  - {fileID: 961296799}
   - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 4114678529582383802}
@@ -1882,8 +1887,6 @@ SceneRoots:
   - {fileID: 4748276676359965938}
   - {fileID: 438136929}
   - {fileID: 1191228848}
-  - {fileID: 393885584}
-  - {fileID: 961296799}
   - {fileID: 1588416475}
   - {fileID: 831038165}
   - {fileID: 1465483441}

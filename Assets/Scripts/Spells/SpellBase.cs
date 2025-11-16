@@ -47,6 +47,49 @@ public abstract class SpellBase : ScriptableObject
     );
 
     /// <summary>
+    /// 渡された相対オフセット配列に基づいて、杖リスト内の対象の呪文のDisplayAimingLineを呼び出します。
+    /// </summary>
+    /// <param name="nextSpelloffsets">この呪文からの相対的なインデックス（オフセット）の配列</param>
+    /// <param name="wandSpells">杖にセットされている全呪文の配列</param>
+    /// <param name="currentSpellIndex">この呪文（呼び出し元）が杖の配列の何番目にあるか</param>
+    /// <param name="rotationZ">発射角度</param>
+    /// <param name="strength">発射の強さ</param>
+    /// <param name="casterPosition">発射元となる位置</param>
+    /// <param name="clearLine">ラインをクリアするかどうか</param>
+    protected void DisplayAimingLineForNextSpells(
+        int[] nextSpelloffsets,
+        List<SpellBase> wandSpells,
+        int currentSpellIndex,
+        float rotationZ,
+        float strength,
+        Vector2 casterPosition,
+        bool clearLine = false
+    )
+    {
+        foreach (int offset in nextSpelloffsets)
+        {
+            // 相対オフセットを絶対インデックスに変換
+            int targetIndex = currentSpellIndex + offset;
+
+            // インデックスが杖リストの範囲内にあるかチェック
+            if (targetIndex >= 0 && targetIndex < wandSpells.Count)
+            {
+                SpellBase spellToDisplay = wandSpells[targetIndex];
+
+                // 対象の呪文のDisplayAimingLineを呼び出し
+                spellToDisplay?.DisplayAimingLine(
+                    wandSpells,
+                    targetIndex,        // 新しい開始インデックス
+                    rotationZ,
+                    strength,
+                    casterPosition,
+                    clearLine         // 最初の呼び出しでのみクリアを実行
+                );
+            }
+        }
+    }
+
+    /// <summary>
     /// 呪文の主要な効果を発射・実行するためのロジックを定義します。
     /// 処理内容: 例として、特定のプレハブを発射します。
     /// </summary>
@@ -63,17 +106,55 @@ public abstract class SpellBase : ScriptableObject
         SpellContext context
     );
 
+
+    /// <summary>
+    /// 渡された相対オフセット配列に基づいて、杖リスト内の対象の呪文のFireSpellを呼び出します。
+    /// </summary>
+    /// <param name="nextSpelloffsets">この呪文からの相対的なインデックス（オフセット）の配列</param>
+    /// <param name="wandSpells">杖にセットされている全呪文の配列</param>
+    /// <param name="currentSpellIndex">この呪文が杖の配列の何番目にあるか</param>
+    /// <param name="rotationZ">発射角度（Z軸回転）</param>
+    /// <param name="strength">発射の強さ</param>
+    /// <param name="context">発射時の環境情報を持つインスタンス</param>
+    protected void FireSpellForNextSpells(
+        int[] nextSpelloffsets,
+        List<SpellBase> wandSpells,
+        int currentSpellIndex,
+        float rotationZ,
+        float strength,
+        SpellContext context
+    )
+    {
+        foreach (int offset in nextSpelloffsets)
+        {
+            // 相対オフセットを絶対インデックスに変換
+            int targetIndex = currentSpellIndex + offset;
+
+            // インデックスが杖リストの範囲内にあるかチェック
+            if (targetIndex >= 0 && targetIndex < wandSpells.Count)
+            {
+                SpellBase spellToDisplay = wandSpells[targetIndex];
+
+                // 対象の呪文のDisplayAimingLineを呼び出し
+                spellToDisplay?.FireSpell(
+                    wandSpells,
+                    targetIndex,        // 新しい開始インデックス
+                    rotationZ,
+                    strength,
+                    context
+                );
+            }
+        }
+    }
+
     public void ModifyProjectile(SpellContext context, GameObject projectile)
     {
         context.ProjectileModifier?.Invoke(projectile);
     }
 
-    [Tooltip("次に発動する呪文のオフセット配列")]
-    [SerializeField] int[] nextSpellOffsets;
-
-    public int[] GetNextSpellOffsets()
+    public virtual int[] GetNextSpellOffsets()
     {
-        return nextSpellOffsets;
+        return new int[0];
     }
 
     // ----------------------------------------------------------------------------------

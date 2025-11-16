@@ -6,4 +6,5 @@ public enum SpellType
     None,
     ExampleSpell,
     Barrier,
+    Downward,
 }

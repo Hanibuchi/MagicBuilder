@@ -17,7 +17,6 @@ MonoBehaviour:
   trajectoryPrefabInterval: 0.1
   maxPredictionTime: 5
   trajectoryPrefab: {fileID: 0}
-  nextSpellOffsets: 
   barrierTrajectoryPrefabs:
   - {fileID: 8075082112969415287, guid: 78522e2c7c857d146810dfef6da3168b, type: 3}
   - {fileID: 7125903335348748597, guid: 7348a572a200f47418f7a09f93b3eb57, type: 3}
@@ -39,4 +38,4 @@ MonoBehaviour:
   - {fileID: 1660344234855539301, guid: 85b274a17276cbb4ca920ca20da946b7, type: 3}
   - {fileID: 1154555468632637730, guid: f3717e44b85f01d47bab85eb64340030, type: 3}
   minDistance: 1
-  maxDistance: 5
+  maxDistance: 4
