@@ -46,15 +46,15 @@ public class CharacterHealth : MonoBehaviour
     /// <summary>
     /// 衝突時にダメージ源からダメージを受け取る。
     /// </summary>
-    /// <param name="collision">衝突情報</param>
-    private void OnCollisionEnter2D(Collision2D collision)
+    /// <param name="other">衝突情報</param>
+    private void OnTriggerEnter2D(Collider2D other)
     {
         // 衝突したオブジェクトからIDamageSourceインターフェースを持つコンポーネントを取得
-        IDamageSource damageSource = collision.gameObject.GetComponent<IDamageSource>();
+        IDamageSource damageSource = other.gameObject.GetComponent<IDamageSource>();
 
         if (damageSource != null)
         {
-            ApplyDamage(damageSource.GetDamage(), collision);
+            ApplyDamage(damageSource.GetDamage(), other.gameObject);
         }
     }
 
@@ -62,8 +62,8 @@ public class CharacterHealth : MonoBehaviour
     /// ダメージを計算し、適用するメインメソッド。
     /// </summary>
     /// <param name="damage">受けた生のダメージデータ</param>
-    /// <param name="collision">ノックバック処理に渡すための衝突情報</param>
-    public void ApplyDamage(Damage damage, Collision2D collision)
+    /// <param name="other">ぶつかってきたオブジェクト</param>
+    public void ApplyDamage(Damage damage, GameObject other)
     {
         if (currentHealth <= 0) return; // 既に死んでいる場合は処理しない
 
@@ -83,36 +83,35 @@ public class CharacterHealth : MonoBehaviour
         // 4. ダメージ表示通知 (単一メソッドで属性ごとに通知)
         if (damageNotifier != null)
         {
-            Vector2 collisionPoint = collision.GetContact(0).point;
             // 基本ダメージ
             if (modifiedDamage.baseDamage > 0)
             {
-                damageNotifier.NotifyDamage(DamageType.Base, modifiedDamage.baseDamage, collisionPoint);
+                damageNotifier.NotifyDamage(DamageType.Base, modifiedDamage.baseDamage);
             }
             // 火ダメージ
             if (modifiedDamage.FireDamage > 0)
             {
-                damageNotifier.NotifyDamage(DamageType.Fire, modifiedDamage.FireDamage, collisionPoint);
+                damageNotifier.NotifyDamage(DamageType.Fire, modifiedDamage.FireDamage);
             }
             // 氷ダメージ
             if (modifiedDamage.IceDamage > 0)
             {
-                damageNotifier.NotifyDamage(DamageType.Ice, modifiedDamage.IceDamage, collisionPoint);
+                damageNotifier.NotifyDamage(DamageType.Ice, modifiedDamage.IceDamage);
             }
             // 木ダメージ
             if (modifiedDamage.woodDamage > 0)
             {
-                damageNotifier.NotifyDamage(DamageType.Wood, modifiedDamage.woodDamage, collisionPoint);
+                damageNotifier.NotifyDamage(DamageType.Wood, modifiedDamage.woodDamage);
             }
             // 水ダメージ
             if (modifiedDamage.waterDamage > 0)
             {
-                damageNotifier.NotifyDamage(DamageType.Water, modifiedDamage.waterDamage, collisionPoint);
+                damageNotifier.NotifyDamage(DamageType.Water, modifiedDamage.waterDamage);
             }
         }
 
         // 4. ノックバック処理の委譲
-        HandleKnockback(modifiedDamage.knockback, collision);
+        HandleKnockback(modifiedDamage.knockback, other);
 
         if (currentHealth <= 0)
         {
@@ -227,13 +226,13 @@ public class CharacterHealth : MonoBehaviour
     /// ノックバック処理をIKickbackHandlerに委譲します。
     /// </summary>
     /// <param name="knockbackValue">ノックバック量</param>
-    /// <param name="collision">ノックバック方向の参考にできる情報</param>
-    private void HandleKnockback(float knockbackValue, Collision2D collision)
+    /// <param name="other">ノックバック方向の参考にできる情報</param>
+    private void HandleKnockback(float knockbackValue, GameObject other)
     {
         if (knockbackValue > 0f && knockbackHandler != null)
         {
             // ノックバック処理を実装コンポーネントに任せる
-            knockbackHandler.ApplyKickback(knockbackValue, collision);
+            knockbackHandler.ApplyKickback(knockbackValue, other);
         }
     }
 
@@ -262,8 +261,8 @@ public interface IKickbackHandler
     /// ノックバックを適用します。
     /// </summary>
     /// <param name="knockbackValue">ノックバックの強さ</param>
-    /// <param name="collision">ノックバック方向を決定するための衝突情報</param>
-    void ApplyKickback(float knockbackValue, Collision2D collision);
+    /// <param name="other">ぶつかってきた放射物</param>
+    void ApplyKickback(float knockbackValue, GameObject other);
 }
 
 /// <summary>
@@ -301,8 +300,7 @@ public interface IDamageNotifier
     /// </summary>
     /// <param name="damageType">ダメージの属性 (Base, Fire, Iceなど)</param>
     /// <param name="damageValue">その属性のダメージ値</param>
-    /// <param name="collisionPoint">ダメージが発生したワールド座標</param>
-    void NotifyDamage(DamageType damageType, float damageValue, Vector2 collisionPoint);
+    void NotifyDamage(DamageType damageType, float damageValue);
 }
 
 public interface IDieNotifier

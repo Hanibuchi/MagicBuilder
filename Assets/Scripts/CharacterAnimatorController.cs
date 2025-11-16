@@ -29,7 +29,7 @@ public class CharacterAnimatorController : MonoBehaviour, IDamageNotifier, IDieN
     /// <summary>
     /// ダメージを受け取ったことを通知し、アニメーション表示処理を委譲します。
     /// </summary>
-    public void NotifyDamage(DamageType damageType, float damageValue, Vector2 collisionPoint)
+    public void NotifyDamage(DamageType damageType, float damageValue)
     {
         if (animator == null || !animator.enabled) return;
 
@@ -42,8 +42,9 @@ public class CharacterAnimatorController : MonoBehaviour, IDamageNotifier, IDieN
     /// </summary>
     public void NotifyDie()
     {
+        if (gameObject.TryGetComponent<Collider2D>(out Collider2D collider))
+            collider.enabled = false;
         if (animator == null || !animator.enabled) return;
-
         animator.SetTrigger(DIE_TRIGGER);
     }
 

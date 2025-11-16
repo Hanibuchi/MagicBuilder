@@ -13,6 +13,7 @@ public class ProjectileDamageSource : MonoBehaviour, IDamageSource
     // publicかつ[System.Serializable]な構造体であるDamageを直接SerializeFieldとして定義することで、
     // インスペクタと外部スクリプトの両方から編集可能になります。
     public Damage damageData;
+    const string HIT_TRIGGER = "hit";
 
     // --- IDamageSourceの実装 ---
 
@@ -23,5 +24,15 @@ public class ProjectileDamageSource : MonoBehaviour, IDamageSource
     public Damage GetDamage()
     {
         return damageData;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Destroy();
+    }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
     }
 }
