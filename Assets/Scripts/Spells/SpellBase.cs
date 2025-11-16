@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 /// <summary>
 /// 全ての具体的な呪文クラスの抽象基底クラス。
 /// ScriptableObjectを継承することで、Unity Inspectorで設定可能なデータアセットとして扱えます。
@@ -203,6 +204,64 @@ public abstract class SpellBase : ScriptableObject
         float randGaussian = randStdNormal * standardDeviation;
 
         return randGaussian;
+    }
+
+
+    /// <summary>
+    /// 呪文のまとまりの相対的なオフセット配列に基づいて、実際に呼び出すべき呪文の絶対インデックス配列を計算します。
+    /// </summary>
+    /// <param name="wandSpells">杖にセットされている全呪文の配列</param>
+    /// <param name="currentSpellIndex">この呪文が杖の配列の何番目にあるか</param>
+    /// <param name="relativeGroupOffsets">この呪文からの相対的なまとまりインデックスの配列</param>
+    /// <returns>呼び出すべき呪文の絶対インデックスの配列</returns>
+    public static int[] GetAbsoluteIndicesFromSpellGroupArray(
+        List<SpellBase> wandSpells,
+        int currentSpellIndex,
+        int[] relativeGroupOffsets)
+    {
+        // オフセットを昇順にソートし、重複を排除（連鎖の計算をシンプルにするため）
+        relativeGroupOffsets = relativeGroupOffsets.Distinct().OrderBy(o => o).ToArray();
+
+        bool[] fired = new bool[wandSpells.Count];
+        for (int i = 0; i <= currentSpellIndex; i++)
+            fired[i] = true;
+        int maxOffset = relativeGroupOffsets[^1];
+        int targetOffsetIndex = 0; // 現在探してる相対オフセットのインデックス
+        var targetIndices = new List<int>();
+
+        for (int i = 1; i <= maxOffset; i++)
+        {
+            // まだ呼び出されてない最初の呪文のインデックスを求める配列に格納。
+            int start = Array.IndexOf(fired, false);
+            if (start < 0) break;
+
+            if (relativeGroupOffsets[targetOffsetIndex] == i)
+            {
+                targetIndices.Add(start);
+                targetOffsetIndex++;
+            }
+
+            // インデックスがstartのものから呼び出される呪文を深さ優先探索して記録。
+            var stack = new Stack<int>();
+            stack.Push(start);
+            while (stack.Count > 0)
+            {
+                int v = stack.Pop();
+                if (v < 0 || fired.Length <= v || fired[v]) continue;
+                fired[v] = true;
+
+                // スタックはLIFOなので、隣接リストを逆順で積むと
+                // 元の隣接リストの順序通りに巡ることができる
+                var neighborsRelative = wandSpells[v].GetNextSpellOffsets(wandSpells, v);
+
+                for (int j = neighborsRelative.Length - 1; j >= 0; j--)
+                {
+                    int to = v + neighborsRelative[j];
+                    if (!(to < 0 || fired.Length <= to || fired[to])) stack.Push(to);
+                }
+            }
+        }
+        return targetIndices.ToArray();
     }
 }
 
