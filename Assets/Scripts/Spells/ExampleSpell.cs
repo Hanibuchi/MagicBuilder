@@ -107,7 +107,8 @@ public class ExampleSpell : SpellBase
 
     [SerializeField] bool isClickTrigger = false;
 
-    public override int[] GetNextSpellOffsets()
+    public override int[] GetNextSpellOffsets(List<SpellBase> wandSpells,
+        int currentSpellIndex)
     {
         if (isClickTrigger)
             return new int[] { 1 };

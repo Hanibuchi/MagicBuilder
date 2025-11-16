@@ -8,7 +8,7 @@ public class ErrorDegreeChangeSpell : SpellBase
         List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ,
         float strength, Vector2 casterPosition, bool clearLine = false)
     {
-        DisplayAimingLineForNextSpells(GetNextSpellOffsets(), wandSpells, currentSpellIndex, rotationZ, strength, casterPosition, clearLine);
+        DisplayAimingLineForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, currentSpellIndex, rotationZ, strength, casterPosition, clearLine);
     }
 
     [SerializeField] float additionalErrorDegree = 0f;
@@ -18,11 +18,12 @@ public class ErrorDegreeChangeSpell : SpellBase
         float rotationZ, float strength, SpellContext context)
     {
         context.errorDegree += additionalErrorDegree;
-        FireSpellForNextSpells(GetNextSpellOffsets(), wandSpells, currentSpellIndex, rotationZ, strength, context);
+        FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, currentSpellIndex, rotationZ, strength, context);
     }
 
     int[] nextSpellOffsets = { 1 };
-    public override int[] GetNextSpellOffsets()
+    public override int[] GetNextSpellOffsets(List<SpellBase> wandSpells,
+        int currentSpellIndex)
     {
         return nextSpellOffsets;
     }
