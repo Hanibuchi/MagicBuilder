@@ -243,7 +243,7 @@ MonoBehaviour:
   playerWands:
   - type: 0
     spells:
-    - {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
+    - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
     - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
   casterPositionTransform: {fileID: 831038165}
 --- !u!4 &393885584
@@ -1286,9 +1286,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 393885583}
+      - m_Target: {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
         m_TargetAssemblyTypeName: AttackManager, Assembly-CSharp
-        m_MethodName: Test_aim
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

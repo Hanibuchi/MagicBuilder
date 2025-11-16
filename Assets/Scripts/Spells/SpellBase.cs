@@ -191,4 +191,9 @@ public class SpellContext
 {
     public Vector2 CasterPosition;
     public Action<GameObject> ProjectileModifier;
+
+    public SpellContext()
+    {
+
+    }
 }

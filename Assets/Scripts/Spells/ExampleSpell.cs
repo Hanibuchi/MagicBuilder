@@ -89,8 +89,23 @@ public class ExampleSpell : SpellBase
         ProjectileController pc = projectileGO.AddComponent<ProjectileController>();
         pc.Initialize(rb); // Rigidbody2Dを渡してトラッキングを開始
 
+        if (isClickTrigger)
+        {
+            context.ProjectileModifier += ClickTriggerSpell.CreateClickTriggerAction(wandSpells, currentSpellIndex, new SpellContext());
+        }
+
         ModifyProjectile(context, projectileGO);
 
         Debug.Log($"[{spellName}]を発射！角度:{rotationZ}°、強さ:{strength}");
+    }
+
+    [SerializeField] bool isClickTrigger = false;
+
+    public override int[] GetNextSpellOffsets()
+    {
+        if (isClickTrigger)
+            return new int[] { 1 };
+        else
+            return new int[0];
     }
 }
