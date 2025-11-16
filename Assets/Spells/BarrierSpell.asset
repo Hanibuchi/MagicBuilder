@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43a8d2a37957b9a45a81cecfe16eb118, type: 3}
+  m_Name: BarrierSpell
+  m_EditorClassIdentifier: 
+  cooldown: 0.5
+  spellName: "\u30D0\u30EA\u30A2"
+  trajectoryPrefabInterval: 0.1
+  maxPredictionTime: 5
+  trajectoryPrefab: {fileID: 0}
+  nextSpellOffsets: 
+  barrierTrajectoryPrefabs:
+  - {fileID: 8075082112969415287, guid: 78522e2c7c857d146810dfef6da3168b, type: 3}
+  - {fileID: 7125903335348748597, guid: 7348a572a200f47418f7a09f93b3eb57, type: 3}
+  - {fileID: 5319495327638603745, guid: 789dbd7a16320f54bbaa3133df754c72, type: 3}
+  - {fileID: 7060840147140399012, guid: cbc9151606a201b40be92c1f6e3a603f, type: 3}
+  - {fileID: 5452682799913740652, guid: 1345c06a658ea3a47a90875520f241ca, type: 3}
+  - {fileID: 6801762806076407378, guid: 89c9fbe24678ce440a76e7bfc0dbb810, type: 3}
+  - {fileID: 7983550600557110689, guid: ea8c3313a7ad6864285e41444890ce31, type: 3}
+  - {fileID: 5349183852079704145, guid: 2e28805bd38853d4d9a600e41d79e25f, type: 3}
+  - {fileID: 233966801441486607, guid: 30d12478c9118ff4aa20349152f689fe, type: 3}
+  barrierPrefabs:
+  - {fileID: 2719851900670582441, guid: ded1fd2499f01314284f1395f226162e, type: 3}
+  - {fileID: 7975075957321439129, guid: 2ffd53e049a55b74e92d637a1b335086, type: 3}
+  - {fileID: 505367751023656993, guid: b331022da810a874092ecea28232049d, type: 3}
+  - {fileID: 2711014346083308867, guid: 630e0816b868b6b4c91f91668362bea4, type: 3}
+  - {fileID: 4398434347747919880, guid: a5ddcb1718863074d9daa838295403b5, type: 3}
+  - {fileID: 2365352283750058868, guid: cba6e66034b52bc4093f49e11fd9a5cb, type: 3}
+  - {fileID: 8088399618527786917, guid: 98c2cbd2921096048b61f0344423b813, type: 3}
+  - {fileID: 1660344234855539301, guid: 85b274a17276cbb4ca920ca20da946b7, type: 3}
+  - {fileID: 1154555468632637730, guid: f3717e44b85f01d47bab85eb64340030, type: 3}
+  minDistance: 1
+  maxDistance: 5

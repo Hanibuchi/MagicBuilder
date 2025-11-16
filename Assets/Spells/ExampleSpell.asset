@@ -17,5 +17,6 @@ MonoBehaviour:
   trajectoryPrefabInterval: 0.1
   maxPredictionTime: 2
   trajectoryPrefab: {fileID: 1466714393806619573, guid: 98ca9d2a816129845b7a7ffa5ba22cb6, type: 3}
+  nextSpellOffsets: 
   projectilePrefab: {fileID: 396131387130879284, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
   strengthMultiplier: 20
