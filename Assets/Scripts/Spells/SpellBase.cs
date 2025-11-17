@@ -38,14 +38,21 @@ public abstract class SpellBase : ScriptableObject
     /// <param name="strength">発射の強さ。0~1の範囲</param>
     /// <param name="casterPosition">発射元となる位置</param>
     /// <param name="gravityMagnitude">重力の大きさ</param>
-    public abstract void DisplayAimingLine(
+    public virtual void DisplayAimingLine(
         List<SpellBase> wandSpells,
         int currentSpellIndex,
         float rotationZ,
         float strength,
         Vector2 casterPosition,
         bool clearLine = false
-    );
+    )
+    {
+        // GetNextSpellOffsetsで得られた次の呪文に対して、同じ引数でDisplayAimingLineを呼び出す
+        DisplayAimingLineForNextSpells(
+            GetNextSpellOffsets(wandSpells, currentSpellIndex),
+            wandSpells, currentSpellIndex, rotationZ, strength, casterPosition, clearLine
+        );
+    }
 
     /// <summary>
     /// 渡された相対オフセット配列に基づいて、杖リスト内の対象の呪文のDisplayAimingLineを呼び出します。
@@ -99,13 +106,20 @@ public abstract class SpellBase : ScriptableObject
     /// <param name="rotationZ">発射角度（Z軸回転）</param>
     /// <param name="strength">発射の強さ</param>
     /// <param name="context">発射時の環境情報を持つインスタンス</param>
-    public abstract void FireSpell(
+    public virtual void FireSpell(
         List<SpellBase> wandSpells,
         int currentSpellIndex,
         float rotationZ,
         float strength,
         SpellContext context
-    );
+    )
+    {
+        // GetNextSpellOffsetsで得られた次の呪文に対して、同じ引数でFireSpellを呼び出す
+        FireSpellForNextSpells(
+            GetNextSpellOffsets(wandSpells, currentSpellIndex),
+            wandSpells, currentSpellIndex, rotationZ, strength, context
+        );
+    }
 
 
     /// <summary>
@@ -270,8 +284,10 @@ public abstract class SpellBase : ScriptableObject
     /// </summary>
     /// <param name="wandSpells">杖に格納されている呪文のオリジナルの配列。</param>
     /// <param name="currentSpellIndex">現在処理中の呪文が杖の配列内で何番目かを示すインデックス。</param>
-    public virtual void Preprocess(List<SpellBase> wandSpells, int currentSpellIndex)
+    /// <returns>次の呪文のインデックス。リスト編集後インデックスが変わってる場合があるため。</returns>
+    public virtual int Preprocess(List<SpellBase> wandSpells, int currentSpellIndex)
     {
+        return currentSpellIndex + 1;
     }
 }
 

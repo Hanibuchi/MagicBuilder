@@ -13,4 +13,7 @@ public enum SpellType
     TwoChainCast,
     ThreeChainCast,
     FiveChainCast,
+    TwoMultiplier,
+    ThreeMultiplier,
+    FiveMultiplier,
 }

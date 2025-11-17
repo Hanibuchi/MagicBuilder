@@ -4,13 +4,6 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "ErrorDegreeChangeSpell", menuName = "Wand System/ErrorDegreeChangeSpell")]
 public class ErrorDegreeChangeSpell : SpellBase
 {
-    public override void DisplayAimingLine(
-        List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ,
-        float strength, Vector2 casterPosition, bool clearLine = false)
-    {
-        DisplayAimingLineForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, currentSpellIndex, rotationZ, strength, casterPosition, clearLine);
-    }
-
     [SerializeField] float additionalErrorDegree = 0f;
 
     public override void FireSpell(

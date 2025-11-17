@@ -19,7 +19,7 @@ public class Downward : SpellBase
         FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, currentSpellIndex, upward ? 90 : -90, strength, context);
     }
 
-    int[] nextSpellOffsets = { 1 };
+    readonly int[] nextSpellOffsets = { 1 };
     public override int[] GetNextSpellOffsets(List<SpellBase> wandSpells,
         int currentSpellIndex)
     {
