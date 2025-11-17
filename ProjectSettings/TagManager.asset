@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
+  serializedVersion: 3
   tags: []
   layers:
   - Default
@@ -14,11 +14,11 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ally
+  - Enemy
+  - Attack_Ally
+  - Attack_Enemy
+  - Click_Target
   - 
   - 
   - 
@@ -41,3 +41,29 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Attack
+    uniqueID: 2860272233
+    locked: 0
+  - name: Enemy
+    uniqueID: 527999779
+    locked: 0
+  - name: Ally
+    uniqueID: 3463954355
+    locked: 0
+  - name: ProjectileBack
+    uniqueID: 1165936911
+    locked: 0
+  - name: Projectile
+    uniqueID: 2182538909
+    locked: 0
+  - name: ProjectileFront
+    uniqueID: 3535399885
+    locked: 0
+  - name: ClickInputReader
+    uniqueID: 4283646359
+    locked: 0
+  - name: AImStartObject
+    uniqueID: 2588249511
+    locked: 0
+  m_RenderingLayers:
+  - Default
