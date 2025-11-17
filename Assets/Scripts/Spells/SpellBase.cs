@@ -14,7 +14,7 @@ public abstract class SpellBase : ScriptableObject
 
     [Tooltip("この呪文のゲーム内での表示名")]
     public string spellName = "未定義の呪文";
-    
+
     // ----------------------------------------------------------------------------------
     // 抽象メソッド定義
     // ----------------------------------------------------------------------------------
@@ -228,8 +228,11 @@ public abstract class SpellBase : ScriptableObject
         relativeGroupOffsets = relativeGroupOffsets.Distinct().OrderBy(o => o).ToArray();
 
         bool[] fired = new bool[wandSpells.Count];
-        for (int i = 0; i <= currentSpellIndex; i++)
-            fired[i] = true;
+        for (int i = 0; i <= fired.Length - 1; i++)
+        {
+            if (i <= currentSpellIndex || wandSpells[i] == null)
+                fired[i] = true;
+        }
         int maxOffset = relativeGroupOffsets[^1];
         int targetOffsetIndex = 0; // 現在探してる相対オフセットのインデックス
         var targetIndices = new List<int>();
