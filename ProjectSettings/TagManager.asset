@@ -50,6 +50,15 @@ TagManager:
   - name: Ally
     uniqueID: 3463954355
     locked: 0
+  - name: ProjectileBack
+    uniqueID: 1165936911
+    locked: 0
+  - name: Projectile
+    uniqueID: 2182538909
+    locked: 0
+  - name: ProjectileFront
+    uniqueID: 3535399885
+    locked: 0
   - name: ClickInputReader
     uniqueID: 4283646359
     locked: 0

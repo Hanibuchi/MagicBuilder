@@ -5,6 +5,12 @@ using System.Collections.Generic;
 public class ExampleSpell : SpellBase
 {
     List<GameObject> trajectoryPrefabs = new();
+    [Header("補助線設定")]
+    [Tooltip("軌道プレハブの生成間隔（秒）。小さいほど密になります。")]
+    public float trajectoryPrefabInterval = 0.1f;
+    [Tooltip("⚡ 軌道予測を行う最大の時間（秒）。この時間を超える軌道は計算しません。")]
+    public float maxPredictionTime = 2.0f;
+
     public override void DisplayAimingLine(
         List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ,
         float strength, Vector2 casterPosition, bool clearLine = false)
@@ -89,11 +95,6 @@ public class ExampleSpell : SpellBase
 
         // 初速を適用
         rb.linearVelocity = initialVelocity;
-
-        // 3. 進行方向を向くコンポーネントをアタッチ (ProjectileControllerを想定)
-        // 進行方向に常にオブジェクトを向けるロジックは、このコンポーネントに実装します。
-        ProjectileController pc = projectileGO.AddComponent<ProjectileController>();
-        pc.Initialize(rb); // Rigidbody2Dを渡してトラッキングを開始
 
         if (isClickTrigger)
         {

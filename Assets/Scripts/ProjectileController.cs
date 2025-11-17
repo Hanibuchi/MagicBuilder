@@ -6,6 +6,10 @@ using UnityEngine;
 public class ProjectileController : MonoBehaviour
 {
     private Rigidbody2D rb;
+    void Start()
+    {
+        Initialize(GetComponent<Rigidbody2D>());
+    }
 
     public void Initialize(Rigidbody2D body)
     {
@@ -18,7 +22,7 @@ public class ProjectileController : MonoBehaviour
         {
             // 速度ベクトルからZ軸の回転角度を計算
             float angle = Mathf.Atan2(rb.linearVelocity.y, rb.linearVelocity.x) * Mathf.Rad2Deg;
-            
+
             // 自身のTransformに回転を適用
             transform.rotation = Quaternion.Euler(0, 0, angle);
         }

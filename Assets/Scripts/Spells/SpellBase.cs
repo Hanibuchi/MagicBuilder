@@ -14,16 +14,7 @@ public abstract class SpellBase : ScriptableObject
 
     [Tooltip("この呪文のゲーム内での表示名")]
     public string spellName = "未定義の呪文";
-
-    [Header("補助線設定")]
-    [Tooltip("軌道プレハブの生成間隔（秒）。小さいほど密になります。")]
-    public float trajectoryPrefabInterval = 0.1f;
-    [Tooltip("⚡ 軌道予測を行う最大の時間（秒）。この時間を超える軌道は計算しません。")]
-    public float maxPredictionTime = 2.0f;
-
-    [Tooltip("軌道予測に使用するプレハブ")]
-    public GameObject trajectoryPrefab;
-
+    
     // ----------------------------------------------------------------------------------
     // 抽象メソッド定義
     // ----------------------------------------------------------------------------------
