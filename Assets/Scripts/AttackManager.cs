@@ -105,9 +105,16 @@ public class AttackManager : MonoBehaviour
         }
 
         Wand wandToUse = playerWands[wandIndex];
+        if (wandToUse == null || wandToUse.spells.Count == 0)
+        {
+            Debug.LogError("wandToUse is null or no spell");
+            return;
+        }
+
+        List<SpellBase> processedSpells = ProcessWandSpellsBeforeFire(wandToUse.spells);
 
         int[] targetIndices = SpellBase.GetAbsoluteIndicesFromSpellGroupArray(
-            wandToUse.spells,
+            processedSpells,
             -1,
             new int[] { }, // 最初の呪文グループ（すなわち最初の呪文）の次のインデックスを取得
             true
@@ -118,15 +125,15 @@ public class AttackManager : MonoBehaviour
         // 取得した全ての開始インデックスの呪文に対して FireSpell を呼び出す
         foreach (int targetIndex in targetIndices)
         {
-            if (targetIndex >= 0 && targetIndex < wandToUse.spells.Count)
+            if (targetIndex >= 0 && targetIndex < processedSpells.Count)
             {
                 SpellContext context = new()
                 {
                     CasterPosition = casterPositionTransform.position
                 };
-                SpellBase spell = wandToUse.spells[targetIndex];
+                SpellBase spell = processedSpells[targetIndex];
                 spell?.FireSpell(
-                    wandToUse.spells,
+                    processedSpells,
                     targetIndex,
                     rotationZ,
                     strength,
@@ -135,5 +142,38 @@ public class AttackManager : MonoBehaviour
             }
         }
         // --- 修正終了 ---
+    }
+
+    /// <summary>
+    /// 杖の発射前に、呪文リストのプリプロセス（例: Modifiersによる呪文リストの操作）を実行します。
+    /// </summary>
+    /// <param name="wandToUse">処理対象の杖</param>
+    private List<SpellBase> ProcessWandSpellsBeforeFire(List<SpellBase> spells)
+    {
+        // 杖の呪文リストをクローンし、プリプロセスで変更があっても元のリストに影響を与えないようにする
+        List<SpellBase> processedSpells = new List<SpellBase>(spells);
+
+        // 現在のインデックスを保持
+        int currentProcessedIndex = 0;
+
+        // リストの末尾まで処理を続ける
+        while (currentProcessedIndex < processedSpells.Count)
+        {
+            SpellBase currentSpell = processedSpells[currentProcessedIndex];
+
+            // 呪文が存在すればPreprocessを実行
+            if (currentSpell != null)
+            {
+                // Preprocessが新しいインデックスを返す
+                currentProcessedIndex = currentSpell.Preprocess(processedSpells, currentProcessedIndex);
+            }
+            else
+            {
+                // 呪文がnullの場合は、単純に次のインデックスへ
+                currentProcessedIndex++;
+            }
+        }
+
+        return processedSpells;
     }
 }
