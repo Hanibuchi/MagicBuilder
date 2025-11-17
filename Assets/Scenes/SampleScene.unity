@@ -157,15 +157,16 @@ MonoBehaviour:
   playerWands:
   - type: 0
     spells:
+    - {fileID: 0}
+    - {fileID: 11400000, guid: 6c9d9dfe2f68e9144b91bb04a7bd8513, type: 2}
     - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
     - {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
     - {fileID: 11400000, guid: 0d95613ceee16444aa8e41b156d25c40, type: 2}
     - {fileID: 11400000, guid: 0e90aacf1978eb94aa4bf7f8d59eff8f, type: 2}
     - {fileID: 11400000, guid: 0e90aacf1978eb94aa4bf7f8d59eff8f, type: 2}
     - {fileID: 11400000, guid: 0e90aacf1978eb94aa4bf7f8d59eff8f, type: 2}
-    - {fileID: 11400000, guid: 6c9d9dfe2f68e9144b91bb04a7bd8513, type: 2}
-    - {fileID: 11400000, guid: 645133f780521974dbe2acd65646acdb, type: 2}
   casterPositionTransform: {fileID: 1782557132}
+  displayAimingLineSpellCount: 5
 --- !u!4 &393885584
 Transform:
   m_ObjectHideFlags: 0

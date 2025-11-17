@@ -218,11 +218,12 @@ public abstract class SpellBase : ScriptableObject
     /// <param name="wandSpells">杖にセットされている全呪文の配列</param>
     /// <param name="currentSpellIndex">この呪文が杖の配列の何番目にあるか</param>
     /// <param name="relativeGroupOffsets">この呪文からの相対的なまとまりインデックスの配列</param>
+    /// <param name="allSpell">relativeGroupOffsetsを無視して、すべての呪文のまとまりの最初の要素を返すかどうか</param>
     /// <returns>呼び出すべき呪文の絶対インデックスの配列</returns>
     public static int[] GetAbsoluteIndicesFromSpellGroupArray(
         List<SpellBase> wandSpells,
         int currentSpellIndex,
-        int[] relativeGroupOffsets)
+        int[] relativeGroupOffsets, bool allSpell = false)
     {
         // オフセットを昇順にソートし、重複を排除（連鎖の計算をシンプルにするため）
         relativeGroupOffsets = relativeGroupOffsets.Distinct().OrderBy(o => o).ToArray();
@@ -233,7 +234,7 @@ public abstract class SpellBase : ScriptableObject
             if (i <= currentSpellIndex || wandSpells[i] == null)
                 fired[i] = true;
         }
-        int maxOffset = relativeGroupOffsets[^1];
+        int maxOffset = allSpell ? int.MaxValue : relativeGroupOffsets[^1];
         int targetOffsetIndex = 0; // 現在探してる相対オフセットのインデックス
         var targetIndices = new List<int>();
 
@@ -243,7 +244,12 @@ public abstract class SpellBase : ScriptableObject
             int start = Array.IndexOf(fired, false);
             if (start < 0) break;
 
-            if (relativeGroupOffsets[targetOffsetIndex] == i)
+            if (allSpell)
+            {
+                targetIndices.Add(start);
+                targetOffsetIndex++;
+            }
+            else if (relativeGroupOffsets[targetOffsetIndex] == i)
             {
                 targetIndices.Add(start);
                 targetOffsetIndex++;
