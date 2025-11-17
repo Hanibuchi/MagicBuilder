@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
+using Unity.VisualScripting;
 
 [CreateAssetMenu(fileName = "MultCastSpell", menuName = "Wand System/MultCast Spell")]
 public class MultCastSpell : SpellBase
@@ -53,6 +54,8 @@ public class MultCastSpell : SpellBase
         );
     }
 
+    [SerializeField] float additionalErrorDegree = 2;
+
     /// <summary>
     /// 呪文を発射・実行します。このメソッド自体は非同期ではありませんが、
     /// コルーチンをキックして時間差発動を行います。
@@ -77,6 +80,7 @@ public class MultCastSpell : SpellBase
             {
                 SpellBase spellToFire = wandSpells[targetIndex];
 
+                context.errorDegree += additionalErrorDegree;
                 // Contextの複製（Executorも引き継ぐ）
                 SpellContext newContext = context.Clone();
 
