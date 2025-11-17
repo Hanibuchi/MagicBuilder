@@ -16,4 +16,6 @@ public enum SpellType
     TwoMultiplier,
     ThreeMultiplier,
     FiveMultiplier,
+    Expansion,
+    Contraction,
 }
