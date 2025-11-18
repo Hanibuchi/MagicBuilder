@@ -176,4 +176,13 @@ public class AttackManager : MonoBehaviour
 
         return processedSpells;
     }
+
+    [SerializeField] private int currentWandIndex = 0;
+
+    public int GetCurrentWandIndex()
+    {
+        // 実装例: 現在選択されている杖のインデックスを返す
+        // ここでは単純に0を返すが、実際にはゲームのロジックに応じて変更する必要がある
+        return currentWandIndex;
+    }
 }

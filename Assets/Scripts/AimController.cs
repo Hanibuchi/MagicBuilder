@@ -13,7 +13,7 @@ public class AimController : MonoBehaviour, IAimController
 
     [Tooltip("現在選択されている杖のインデックス")]
     [SerializeField]
-    private int selectedWandIndex = 0; // どの杖で魔法を放つか
+    private int selectedWandIndex => AttackManager.Instance.GetCurrentWandIndex();
 
     [Tooltip("キャラクターのアニメーションコントローラー")]
     [SerializeField]
@@ -89,16 +89,5 @@ public class AimController : MonoBehaviour, IAimController
         {
             animatorController.NotifyFire(angle);
         }
-    }
-    
-    // --- 外部から選択杖を変更するためのメソッド ---
-    
-    /// <summary>
-    /// 次に発射する杖のインデックスを設定します。
-    /// </summary>
-    public void SetSelectedWandIndex(int newIndex)
-    {
-        selectedWandIndex = newIndex;
-        Debug.Log($"選択杖インデックスが {newIndex} に変更されました。");
     }
 }
