@@ -31,6 +31,8 @@ public class Wand
 
     public void Add(SpellBase spell, int index)
     {
+        // Debug.Log("index: " + index);
+        // Debug.Log("spells count: " + spells.Count);
         spells.Insert(index, spell);
         NotifyListChanged();
     }

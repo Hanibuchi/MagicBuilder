@@ -250,16 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6c4f1a007ac6eb428d761ab8d00133c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerWands:
-  - type: 0
-    spells:
-    - {fileID: 11400000, guid: 6f106bb0c829b614dbf4d7f863cad4ef, type: 2}
-    - {fileID: 11400000, guid: 645133f780521974dbe2acd65646acdb, type: 2}
-    - {fileID: 11400000, guid: 0e90aacf1978eb94aa4bf7f8d59eff8f, type: 2}
-    - {fileID: 11400000, guid: 6c9d9dfe2f68e9144b91bb04a7bd8513, type: 2}
-    - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
-    - {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
-    - {fileID: 11400000, guid: 54fdeaf1e456d8843845f8b704afde19, type: 2}
+  playerWands: []
   casterPositionTransform: {fileID: 1782557132}
   displayAimingLineSpellCount: 5
   currentWandIndex: 0
@@ -1030,9 +1021,13 @@ MonoBehaviour:
   test_wand:
     type: 0
     spells:
+    - {fileID: 11400000, guid: 6f106bb0c829b614dbf4d7f863cad4ef, type: 2}
+    - {fileID: 11400000, guid: 645133f780521974dbe2acd65646acdb, type: 2}
+    - {fileID: 11400000, guid: 0e90aacf1978eb94aa4bf7f8d59eff8f, type: 2}
     - {fileID: 11400000, guid: 6c9d9dfe2f68e9144b91bb04a7bd8513, type: 2}
-    - {fileID: 11400000, guid: 1ae5b79ace718244a92dfb03c51f91d4, type: 2}
+    - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
     - {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
+    - {fileID: 11400000, guid: 54fdeaf1e456d8843845f8b704afde19, type: 2}
 --- !u!4 &1074218395
 Transform:
   m_ObjectHideFlags: 0

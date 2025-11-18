@@ -42,6 +42,8 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
         if (droppedSpellUI != null)
         {
             SpellBase spellToAdd = droppedSpellUI.GetSpellData();
+            droppedSpellUI.NotifyDropSuccess();
+            if (droppedSpellUI.index < index) index--; // ドラッグ完了と同時に要素の削除と追加を行うとずれる。ドロップした時点でどの要素に追加するのかは決定されてしまい、その状態で要素が削除されるため、本来追加したい場所に追加されなくなる場合がある。この問題を回避するために、ここで補正をかけている。
 
             // 2. **アニメーションをリセット**
             if (animator != null)

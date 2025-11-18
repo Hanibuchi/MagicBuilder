@@ -74,15 +74,17 @@ public class WandUI : MonoBehaviour
     {
         if (wandEditor != null)
         {
-            uiElements.RemoveAt(2 * index + 1); // ドラッグ中の呪文UIを削除しないよう、リストから外す。
+            // uiElements.RemoveAt(2 * index + 1); // ドラッグ中の呪文UIを削除しないよう、リストから外す。
             // 編集ロジックに通知
             wandEditor.RemoveSpell(index);
         }
     }
 
+    SpellBase[] spellBasesCashe;
     // UI要素をクリアし、現在の呪文の並びに基づいて再生成する
     public void RebuildUI(SpellBase[] newSequence)
     {
+        spellBasesCashe = newSequence;
         // 全てのUI要素をクリア
         foreach (var element in uiElements)
         {
@@ -102,6 +104,10 @@ public class WandUI : MonoBehaviour
             CreateSpellUI(i, newSequence[i]);
         }
         CreateSpacingUI(newSequence.Length);
+    }
+    public void RebuildUI()
+    {
+        RebuildUI(spellBasesCashe);
     }
 }
 

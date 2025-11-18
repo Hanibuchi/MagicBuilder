@@ -3,13 +3,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 /// <summary>
 /// 杖に組み込まれている呪文のUI。ドラッグによる削除と並び替えの起点となる。
 /// </summary>
 public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    private int index;
+    public int index;
     private WandUI wandUI;
     private SpellBase spellData;
 
@@ -45,6 +46,7 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        dropSuccess = false;
         // 1. ドラッグ開始時に、自身をCanvasの最前面に移動
         RectTransform root = DraggingSpellRootProvider.Instance.GetRootTransform();
         if (root != null)
@@ -61,11 +63,20 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        StartCoroutine(CheckDropResultAndCleanUp());
+    }
+    private IEnumerator CheckDropResultAndCleanUp()
+    {
+        // 1フレーム待機することで、IDropHandler.OnDropの実行を保証する
+        yield return null;
+
+        if (!dropSuccess)
+            wandUI.RebuildUI();
+    }
+    private bool dropSuccess = false;    // ★ 追加: ドロップが成功したか
+    public void NotifyDropSuccess()
+    {
         wandUI.NotifySpellRemoved(index);
-        // 2. **WandUIにRebuildを促す**
-        // ドロップに成功した場合はSpacingUIがNotifySpellAddedを呼んでいるため、
-        // 失敗した場合のみRebuildを再度実行して、元の呪文を再配置する必要がある。
-        // （ここではシンプルに、ドロップ先に移動しなかった場合は元の位置に戻す処理を
-        // IWandEditor/WandUI側で実装することを想定し、一旦処理を省略）
+        dropSuccess = true;
     }
 }
