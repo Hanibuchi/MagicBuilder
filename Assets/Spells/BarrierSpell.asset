@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 0.5
   spellName: "\u30D0\u30EA\u30A2"
-  icon: {fileID: 0}
+  icon: {fileID: 8790154677910664958, guid: 45488465b9fd3cc4c80011555bbadd6f, type: 3}
   uiPrefab: {fileID: 5499559984272135055, guid: a8aa928887aa65d429d07a9b1f220163, type: 3}
   barrierTrajectoryPrefabs:
   - {fileID: 8075082112969415287, guid: 78522e2c7c857d146810dfef6da3168b, type: 3}

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 0.5
   spellName: ExampleSpell_ClickTrigger
-  icon: {fileID: 0}
+  icon: {fileID: 2880664357010954948, guid: 190bbb254493f2a49aa432e337539383, type: 3}
   uiPrefab: {fileID: 5499559984272135055, guid: a8aa928887aa65d429d07a9b1f220163, type: 3}
   trajectoryPrefabInterval: 0.1
   maxPredictionTime: 5
