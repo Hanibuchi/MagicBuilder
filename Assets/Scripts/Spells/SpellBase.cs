@@ -15,10 +15,6 @@ public abstract class SpellBase : ScriptableObject
     [Tooltip("この呪文のゲーム内での表示名")]
     public string spellName = "未定義の呪文";
 
-    // ----------------------------------------------------------------------------------
-    // 抽象メソッド定義
-    // ----------------------------------------------------------------------------------
-
     /// <summary>
     /// 補助線（軌道予測）を表示するためのロジックを定義します。
     /// 処理内容: 発射角度と強さ、重力に基づいて軌道を計算し、プレハブを生成します。
@@ -288,6 +284,24 @@ public abstract class SpellBase : ScriptableObject
     public virtual int Preprocess(List<SpellBase> wandSpells, int currentSpellIndex)
     {
         return currentSpellIndex + 1;
+    }
+
+
+    [Header("UI")]
+    public Sprite icon;
+    public GameObject uiPrefab;
+
+    /// <summary>
+    /// このSpellBaseに対応するSpellUIインスタンスを生成する。
+    /// </summary>
+    public virtual SpellUI CreateUI()
+    {
+        // プレハブから生成
+        SpellUI uiInstance = Instantiate(uiPrefab).GetComponent<SpellUI>();
+        // アイコンを設定
+        uiInstance.SetData(this);
+
+        return uiInstance;
     }
 }
 
