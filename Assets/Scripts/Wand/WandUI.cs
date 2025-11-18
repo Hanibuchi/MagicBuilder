@@ -24,12 +24,13 @@ public class WandUI : MonoBehaviour
         this.wandEditor = wandEditor;
     }
 
-
+    [SerializeField] RectTransform spellFrame;
     private void CreateSpellUI(int index, SpellBase spell)
     {
         SpellUI spellUI = spell.CreateUI();
         if (spellUI != null)
         {
+            spellUI.transform.SetParent(spellFrame);
             spellUI.SetIndex(index);
             spellUI.Initialize(this); // このWandUI自身への参照を渡す
         }
@@ -40,7 +41,7 @@ public class WandUI : MonoBehaviour
 
     private void CreateSpacingUI(int index)
     {
-        GameObject spacingObj = Instantiate(spacingUIPrefab, transform);
+        GameObject spacingObj = Instantiate(spacingUIPrefab, spellFrame);
         SpacingUI spacingUI = spacingObj.GetComponent<SpacingUI>();
         if (spacingUI != null)
         {

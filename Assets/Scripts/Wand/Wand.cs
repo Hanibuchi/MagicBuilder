@@ -18,7 +18,7 @@ public class Wand
     [SerializeReference] public List<SpellBase> spells = new List<SpellBase>();
 
     // 呪文リストの変更を監視するリスナーのリスト
-    private readonly List<ISpellListChangeListener> listeners = new List<ISpellListChangeListener>();
+    private ISpellListChangeListener listener;
 
     /// <summary>
     /// 現在の杖にセットされている呪文リストを取得します。
@@ -29,14 +29,14 @@ public class Wand
         return spells;
     }
 
-    public void Add(SpellBase spell)
+    public void Add(SpellBase spell, int index)
     {
-        spells.Add(spell);
+        spells.Insert(index, spell);
         NotifyListChanged();
     }
-    public void Remove(SpellBase spell)
+    public void Remove(int index)
     {
-        spells.Remove(spell);
+        spells.RemoveAt(index);
         NotifyListChanged();
     }
 
@@ -45,32 +45,15 @@ public class Wand
     /// </summary>
     private void NotifyListChanged()
     {
-        foreach (var listener in listeners)
-        {
-            if (listener != null)
-                listener.OnSpellListChanged(GetSpells());
-            else
-                listeners.Remove(listener);
-        }
+        listener?.OnSpellListChanged(GetSpells());
     }
 
     /// <summary>
     /// リスナーを追加します。
     /// </summary>
-    public void AddListener(ISpellListChangeListener listener)
+    public void SetListener(ISpellListChangeListener listener)
     {
-        if (!listeners.Contains(listener))
-        {
-            listeners.Add(listener);
-        }
-    }
-
-    /// <summary>
-    /// リスナーを削除します。
-    /// </summary>
-    public void RemoveListener(ISpellListChangeListener listener)
-    {
-        listeners.Remove(listener);
+        this.listener = listener;
     }
 }
 

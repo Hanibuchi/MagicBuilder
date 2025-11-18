@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 0.5
   spellName: "\u8AA4\u5DEE\u5897\u52A0"
-  trajectoryPrefabInterval: 0.1
-  maxPredictionTime: 2
-  trajectoryPrefab: {fileID: 0}
+  icon: {fileID: 0}
+  uiPrefab: {fileID: 5499559984272135055, guid: a8aa928887aa65d429d07a9b1f220163, type: 3}
   additionalErrorDegree: 30

@@ -14,9 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 0.5
   spellName: "\u30D0\u30EA\u30A2"
-  trajectoryPrefabInterval: 0.1
-  maxPredictionTime: 5
-  trajectoryPrefab: {fileID: 0}
+  icon: {fileID: 0}
+  uiPrefab: {fileID: 5499559984272135055, guid: a8aa928887aa65d429d07a9b1f220163, type: 3}
   barrierTrajectoryPrefabs:
   - {fileID: 8075082112969415287, guid: 78522e2c7c857d146810dfef6da3168b, type: 3}
   - {fileID: 7125903335348748597, guid: 7348a572a200f47418f7a09f93b3eb57, type: 3}
@@ -37,5 +36,3 @@ MonoBehaviour:
   - {fileID: 8088399618527786917, guid: 98c2cbd2921096048b61f0344423b813, type: 3}
   - {fileID: 1660344234855539301, guid: 85b274a17276cbb4ca920ca20da946b7, type: 3}
   - {fileID: 1154555468632637730, guid: f3717e44b85f01d47bab85eb64340030, type: 3}
-  minDistance: 1
-  maxDistance: 4
