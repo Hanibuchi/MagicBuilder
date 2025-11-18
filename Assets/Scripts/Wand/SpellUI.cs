@@ -11,15 +11,15 @@ using System.Collections;
 public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     public int index;
-    private WandUI wandUI;
+    private ISpellContainer spellContainerUI;
     private SpellBase spellData;
 
     // UIパーツ
     public Image iconImage;
 
-    public void Initialize(WandUI parentWandUI)
+    public void Initialize(ISpellContainer parentWandUI)
     {
-        this.wandUI = parentWandUI;
+        this.spellContainerUI = parentWandUI;
     }
 
     public void SetData(SpellBase data)
@@ -71,12 +71,32 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         yield return null;
 
         if (!dropSuccess)
-            wandUI.RebuildUI();
+            spellContainerUI.RebuildUI();
     }
     private bool dropSuccess = false;    // ★ 追加: ドロップが成功したか
     public void NotifyDropSuccess()
     {
-        wandUI.NotifySpellRemoved(index);
+        spellContainerUI.NotifySpellRemoved(index);
         dropSuccess = true;
     }
+}
+
+// ファイル名: ISpellContainer.cs
+
+/// <summary>
+/// SpellUIを格納し、その操作結果（例：削除）を受け取るためのコンテナインターフェース。
+/// WandUIやInventoryUIなどがこれを実装します。
+/// </summary>
+public interface ISpellContainer
+{
+    /// <summary>
+    /// SpellUIがドラッグ＆ドロップによってコンテナから削除されたことを通知します。
+    /// </summary>
+    /// <param name="removedIndex">削除された呪文が元々持っていたインデックス。</param>
+    void NotifySpellRemoved(int removedIndex);
+
+    /// <summary>
+    /// 呪文リストが変更された（削除・並び替え・追加など）後に、UIを再構築するよう要求します。
+    /// </summary>
+    void RebuildUI();
 }

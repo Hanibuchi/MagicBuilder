@@ -3,7 +3,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class WandUI : MonoBehaviour
+public class WandUI : MonoBehaviour, ISpellContainer
 {
     // 実装クラスのインターフェース
     private IWandEditor wandEditor;
