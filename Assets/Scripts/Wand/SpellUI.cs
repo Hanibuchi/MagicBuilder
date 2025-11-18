@@ -11,7 +11,7 @@ using System.Collections;
 public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     public int index;
-    private ISpellContainer spellContainerUI;
+    public ISpellContainer spellContainerUI;
     private SpellBase spellData;
 
     // UIパーツ
