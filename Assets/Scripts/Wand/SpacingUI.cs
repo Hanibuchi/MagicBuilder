@@ -67,6 +67,7 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
         {
             if (animator != null)
             {
+                animator.ResetTrigger(NormalTrigger);
                 animator.SetTrigger(HighlightTrigger);
             }
         }
@@ -77,6 +78,7 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
         if (animator != null)
         {
             animator.SetTrigger(NormalTrigger);
+            animator.ResetTrigger(HighlightTrigger);
         }
     }
 }
