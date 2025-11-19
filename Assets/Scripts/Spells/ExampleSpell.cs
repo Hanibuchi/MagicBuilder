@@ -55,6 +55,7 @@ public class ExampleSpell : SpellBase
     [Header("誤差設定")]
     [Tooltip("発射角に追加する誤差の標準偏差（度）。平均0の正規分布に従います。")]
     [SerializeField] float errorDegree = 1f; // 例として1度を設定
+    [SerializeField] Damage damage; // 例として1度を設定
 
     public override void FireSpell(
         List<SpellBase> wandSpells, int currentSpellIndex,
@@ -75,6 +76,9 @@ public class ExampleSpell : SpellBase
             context.CasterPosition,
             Quaternion.Euler(0, 0, finalRotationZ) // 初期のZ回転を設定
         );
+
+        context.damage += damage;
+        projectileGO.GetComponent<ProjectileDamageSource>().Initialize(strength, context);
 
         // 2. Rigidbody2Dを取得し、初速を計算して設定
         Rigidbody2D rb = projectileGO.GetComponent<Rigidbody2D>();

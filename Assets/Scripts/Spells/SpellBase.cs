@@ -313,6 +313,7 @@ public class SpellContext
     public Vector2 CasterPosition;
     public Action<GameObject> ProjectileModifier;
     public float errorDegree = 0;
+    public Damage damage;
 
     public SpellContext()
     {
@@ -332,7 +333,8 @@ public class SpellContext
             errorDegree = this.errorDegree,
 
             // 参照型 (Action) は参照がコピーされるが、Actionは不変(イミュータブル)なので問題なし
-            ProjectileModifier = this.ProjectileModifier
+            ProjectileModifier = this.ProjectileModifier,
+            damage = this.damage
         };
     }
 }

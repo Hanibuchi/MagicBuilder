@@ -13,6 +13,21 @@ public struct Damage
     // 便宜上のプロパティ
     public float FireDamage => temperatureDamage > 0 ? temperatureDamage : 0f;
     public float IceDamage => temperatureDamage < 0 ? -temperatureDamage : 0f;
+
+    // + 演算子のオーバーロード
+    public static Damage operator +(Damage a, Damage b)
+    {
+        return new Damage
+        {
+            baseDamage = a.baseDamage + b.baseDamage,
+            woodDamage = a.woodDamage + b.woodDamage,
+            waterDamage = a.waterDamage + b.waterDamage,
+            // temperatureDamageは、火（正の値）と氷（負の値）の合計を表すため、そのまま加算します。
+            temperatureDamage = a.temperatureDamage + b.temperatureDamage,
+            // ノックバックも合計します。
+            knockback = a.knockback + b.knockback
+        };
+    }
 }
 
 /// <summary>
