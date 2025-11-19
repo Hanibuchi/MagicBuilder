@@ -19,4 +19,5 @@ public enum SpellType
     Expansion,
     Contraction,
     Inferno,
+    ExampleSpellClickTrigger,
 }
