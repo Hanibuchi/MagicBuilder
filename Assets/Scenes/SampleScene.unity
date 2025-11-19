@@ -926,6 +926,8 @@ MonoBehaviour:
     spellAsset: {fileID: 11400000, guid: 6abafd8e81b8866468c46b473fdd1073, type: 2}
   - type: 14
     spellAsset: {fileID: 11400000, guid: 43bf6d9cd2bbe1345b07935ed43c6996, type: 2}
+  - type: 15
+    spellAsset: {fileID: 11400000, guid: 0e90aacf1978eb94aa4bf7f8d59eff8f, type: 2}
 --- !u!4 &961296799
 Transform:
   m_ObjectHideFlags: 0

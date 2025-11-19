@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 0.5
   spellName: "\u4E0B\u65B9\u546A\u6587"
-  icon: {fileID: -7707517247929924685, guid: 0193f9aa8bdc309408bcde2e7eecfa11, type: 3}
+  icon: {fileID: -5786198434420982544, guid: 04eafb0e59abe904581062d982c3cc1e, type: 3}
   uiPrefab: {fileID: 5499559984272135055, guid: a8aa928887aa65d429d07a9b1f220163, type: 3}
   upward: 0
