@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 // ISpellContainer を実装
 public class SpellInventory : MonoBehaviour, ISpellContainer
@@ -14,6 +15,7 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
 
     void Start()
     {
+        availableSpells = SpellDatabase.Instance.allSpells.Select(e => e.spellAsset).ToList();
         // ゲーム開始時にインベントリUIを構築する
         RebuildUI();
     }
