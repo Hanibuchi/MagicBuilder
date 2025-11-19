@@ -42,7 +42,7 @@ public class AimController : MonoBehaviour, IAimController
     /// <param name="power">発射強度 (0.0f ～ 1.0f)</param>
     public void UpdateAimLine(float angle, float power)
     {
-        if (!WizardCooldownManager.Instance.CanAttack)
+        if (!CooldownManager.Instance.CanAttack)
             return;
 
         // AttackManagerの補助線表示メソッドを呼び出す
@@ -81,12 +81,12 @@ public class AimController : MonoBehaviour, IAimController
     /// <param name="power">発射強度 (0.0f ～ 1.0f)</param>
     public void ReleaseMagic(float angle, float power)
     {
-        if (!WizardCooldownManager.Instance.CanAttack)
+        if (!CooldownManager.Instance.CanAttack)
             return;
 
         var wand = AttackManager.Instance.GetCurrentWand();
         if (wand != null)
-            WizardCooldownManager.Instance.AddCooldown(wand.GetTotalCooldown());
+            CooldownManager.Instance.AddCooldown(wand.GetTotalCooldown());
 
         // AttackManagerの発射メソッドを呼び出す
         AttackManager.Instance.FireWand(

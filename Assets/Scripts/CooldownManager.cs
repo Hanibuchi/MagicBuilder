@@ -6,11 +6,11 @@ using System.Collections.Generic;
 /// 魔術師（プレイヤー）のクールタイムを管理するシングルトンクラス。
 /// 攻撃に使用された全呪文のクールタイムの合計を計測し、攻撃可能状態を制御します。
 /// </summary>
-public class WizardCooldownManager : MonoBehaviour
+public class CooldownManager : MonoBehaviour
 {
     // --- シングルトンインスタンス ---
-    private static WizardCooldownManager instance;
-    public static WizardCooldownManager Instance => instance;
+    private static CooldownManager instance;
+    public static CooldownManager Instance => instance;
 
     // --- 状態 ---
 
@@ -47,6 +47,7 @@ public class WizardCooldownManager : MonoBehaviour
         if (!CanAttack)
         {
             currentCooldown -= Time.deltaTime;
+            NotifyCooldownChanged();
 
             // クールタイムが0以下になったら、正確に0に設定し、ターン終了の通知などを発行（オプション）
             if (currentCooldown <= 0f)
@@ -67,9 +68,10 @@ public class WizardCooldownManager : MonoBehaviour
     public void AddCooldown(float totalCooldownDuration)
     {
         if (totalCooldownDuration < 0) return;
-        
+
         currentCooldown += totalCooldownDuration;
-        
+        NotifyCooldownChanged();
+
         Debug.Log($"⏳ クールタイムを追加しました: +{totalCooldownDuration:F2}秒。合計クールタイム: {currentCooldown:F2}秒");
     }
 
@@ -81,4 +83,36 @@ public class WizardCooldownManager : MonoBehaviour
     {
         return currentCooldown;
     }
+
+    private ICooldownChangeListener listener;
+
+    /// <summary>
+    /// クールタイム変更を監視するリスナーを設定します（登録できるのは一つのみ）。
+    /// </summary>
+    public void SetListener(ICooldownChangeListener listener)
+    {
+        this.listener = listener;
+        // 初期状態を通知
+        NotifyCooldownChanged();
+    }
+
+    /// <summary>
+    /// クールタイムの変更をリスナーに通知します。
+    /// </summary>
+    private void NotifyCooldownChanged()
+    {
+        this.listener?.OnCooldownChanged(currentCooldown);
+    }
+}
+
+/// <summary>
+/// クールタイムの残り時間が変更されたときに通知を受け取るためのインターフェース。
+/// </summary>
+public interface ICooldownChangeListener
+{
+    /// <summary>
+    /// クールタイムが変更されたときに呼び出されます。
+    /// </summary>
+    /// <param name="remainingCooldown">現在のクールタイムの残り時間（秒）。</param>
+    void OnCooldownChanged(float remainingCooldown);
 }
