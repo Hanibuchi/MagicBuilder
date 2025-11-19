@@ -66,11 +66,14 @@ public class ExampleSpell : SpellBase
             return;
         }
 
+        // 誤差を元の角度に追加
+        float finalRotationZ = rotationZ + GetGaussianRandom(errorDegree + context.errorDegree);
+
         // 1. プレハブを生成
         GameObject projectileGO = Instantiate(
             projectilePrefab,
             context.CasterPosition,
-            Quaternion.Euler(0, 0, rotationZ) // 初期のZ回転を設定
+            Quaternion.Euler(0, 0, finalRotationZ) // 初期のZ回転を設定
         );
 
         // 2. Rigidbody2Dを取得し、初速を計算して設定
@@ -81,9 +84,6 @@ public class ExampleSpell : SpellBase
             Destroy(projectileGO);
             return;
         }
-
-        // 誤差を元の角度に追加
-        float finalRotationZ = rotationZ + GetGaussianRandom(errorDegree + context.errorDegree);
         // 角度 (finalRotationZ) をラジアンに変換
         float angleRad = finalRotationZ * Mathf.Deg2Rad;
 
@@ -103,7 +103,7 @@ public class ExampleSpell : SpellBase
 
         ModifyProjectile(context, projectileGO);
 
-        Debug.Log($"[{spellName}]を発射！角度:{rotationZ}°、強さ:{strength}");
+        Debug.Log($"[{spellName}]を発射！角度:{finalRotationZ}°、強さ:{strength}");
     }
 
     [SerializeField] bool isClickTrigger = false;
