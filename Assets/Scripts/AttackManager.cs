@@ -185,4 +185,14 @@ public class AttackManager : MonoBehaviour
         // ここでは単純に0を返すが、実際にはゲームのロジックに応じて変更する必要がある
         return currentWandIndex;
     }
+
+    public Wand GetCurrentWand()
+    {
+        if (currentWandIndex < 0 || currentWandIndex >= playerWands.Count)
+        {
+            Debug.LogError($"不正な杖インデックスが指定されました: {currentWandIndex}");
+            return null;
+        }
+        return playerWands[currentWandIndex];
+    }
 }

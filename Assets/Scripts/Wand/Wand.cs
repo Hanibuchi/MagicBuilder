@@ -57,6 +57,19 @@ public class Wand
     {
         this.listener = listener;
     }
+
+    public float GetTotalCooldown()
+    {
+        float totalCooldown = 0f;
+        foreach (var spell in spells)
+        {
+            if (spell != null)
+            {
+                totalCooldown += spell.cooldown;
+            }
+        }
+        return totalCooldown;
+    }
 }
 
 /// <summary>
