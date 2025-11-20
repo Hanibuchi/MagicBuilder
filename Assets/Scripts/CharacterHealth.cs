@@ -31,6 +31,7 @@ public class CharacterHealth : MonoBehaviour
     // ダメージ表示処理を委譲するためのインターフェース
     private IDamageNotifier damageNotifier;
     private IDieNotifier dieNotifier;
+    private IHealthNotifier healthNotifier;
 
     private void Awake()
     {
@@ -41,6 +42,7 @@ public class CharacterHealth : MonoBehaviour
         // ダメージ通知処理を担うコンポーネントを取得
         damageNotifier = GetComponent<IDamageNotifier>();
         dieNotifier = GetComponent<IDieNotifier>();
+        healthNotifier = GetComponent<IHealthNotifier>();
     }
 
     /// <summary>
@@ -66,7 +68,7 @@ public class CharacterHealth : MonoBehaviour
     public void ApplyDamage(Damage damage, GameObject other)
     {
         if (currentHealth <= 0) return; // 既に死んでいる場合は処理しない
-
+        float previousHealth = currentHealth;
         // 1. 属性に基づくダメージ補正
         Damage modifiedDamage = ApplyElementModifier(damage);
 
@@ -112,6 +114,8 @@ public class CharacterHealth : MonoBehaviour
 
         // 4. ノックバック処理の委譲
         HandleKnockback(modifiedDamage.knockback, other);
+
+        healthNotifier?.NotifyHealthChange(maxHealth, previousHealth, currentHealth);
 
         if (currentHealth <= 0)
         {
@@ -306,4 +310,19 @@ public interface IDamageNotifier
 public interface IDieNotifier
 {
     void NotifyDie();
+}
+
+
+/// <summary>
+/// HPの変化を通知するコンポーネントが実装すべきインターフェース。
+/// </summary>
+public interface IHealthNotifier
+{
+    /// <summary>
+    /// HPの変化を通知し、表示処理を委譲します。
+    /// </summary>
+    /// <param name="maxHP">最大HP</param>
+    /// <param name="previousHP">ダメージ/回復前のHP</param>
+    /// <param name="currentHP">ダメージ/回復後の現在のHP</param>
+    void NotifyHealthChange(float maxHP, float previousHP, float currentHP);
 }

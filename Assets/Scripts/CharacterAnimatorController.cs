@@ -4,10 +4,10 @@ using UnityEngine;
 /// 各種interfaceを実装してアニメーションを再生するためのクラス
 /// </summary>
 [RequireComponent(typeof(Animator))] // Animatorコンポーネントが必須であることを保証
-public class CharacterAnimatorController : MonoBehaviour, IDamageNotifier, IDieNotifier
+public class CharacterAnimatorController : MonoBehaviour, IDamageNotifier, IDieNotifier, IHealthNotifier
 {
     private Animator animator;
-
+    private HPBarController hpBarController;
     // --- アニメーションのトリガー名 ---
     private const string HIT_TRIGGER = "damage";          // ダメージを受けた時のアニメーション
     private const string DIE_TRIGGER = "die";          // 死亡時のアニメーション
@@ -23,7 +23,7 @@ public class CharacterAnimatorController : MonoBehaviour, IDamageNotifier, IDieN
         {
             Debug.LogError("Animator component not found on " + gameObject.name);
         }
-
+        hpBarController = GetComponent<HPBarController>();
     }
 
     /// <summary>
@@ -88,5 +88,21 @@ public class CharacterAnimatorController : MonoBehaviour, IDamageNotifier, IDieN
         // 3. Animatorのfloatパラメーターに設定
         animator.SetFloat(AIM_DEGREE_PARAM, normalizedValue);
         animator.SetTrigger(AIM_TRIGGER);
+    }
+
+
+    /// <summary>
+    /// HPの変化を通知し、表示処理を委譲します。（IHealthNotifierの実装）
+    /// </summary>
+    /// <param name="maxHP">最大HP</param>
+    /// <param name="previousHP">ダメージ/回復前のHP</param>
+    /// <param name="currentHP">ダメージ/回復後の現在のHP</param>
+    public void NotifyHealthChange(float maxHP, float previousHP, float currentHP)
+    {
+        if (hpBarController != null)
+        {
+            // HPバーの表示更新を委譲
+            hpBarController.UpdateHPBar(maxHP, previousHP, currentHP);
+        }
     }
 }

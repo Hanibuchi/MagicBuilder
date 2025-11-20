@@ -41,7 +41,7 @@ public class HPBarController : MonoBehaviour
             // アニメーションの「Show」トリガーを呼び出し、HPバーを徐々に表出させる
             hpBarAnimator.SetTrigger(SHOW_TRIGGER);
         }
-        else if (previousHP < maxHP && currentHP >= maxHP)
+        else if (currentHP == 0 || (previousHP < maxHP && currentHP >= maxHP))
         {
             // HPが最大値に回復した場合（表示状態から透明へ）
             // アニメーションの「Hide」トリガーを呼び出し、HPバーを徐々に透明にする
@@ -106,14 +106,5 @@ public class HPBarController : MonoBehaviour
 
         // Animatorが初期状態で非表示状態にあることを確認してください。
         // （例：最初は透明度が0になっているか、SetActive(false)になっているなど）
-    }
-
-    public float test_max;
-    public float test_prev;
-    public float test_current;
-
-    public void Test()
-    {
-        UpdateHPBar(test_max, test_prev, test_current);
     }
 }
