@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnOnStart: 0
-  startEffectPrefab: {fileID: 5931018633442477964, guid: fbb7d22be4a030d41bb5460c5621e43e, type: 3}
+  startEffectPrefab: {fileID: 4625990114907629602, guid: fbb7d22be4a030d41bb5460c5621e43e, type: 3}
   localSpawnOffset: {x: 1, y: 0, z: 0}
   matchRotation: 1
   matchScale: 1
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnOnDestroy: 1
-  startEffectPrefab: {fileID: 1946058102781641783, guid: 3db3f4acc26d0654099ecd96c99228db, type: 3}
+  startEffectPrefab: {fileID: 1405153890113068789, guid: 3db3f4acc26d0654099ecd96c99228db, type: 3}
   localSpawnOffset: {x: 1.2, y: 0, z: 0}
   matchRotation: 1
   matchScale: 0
