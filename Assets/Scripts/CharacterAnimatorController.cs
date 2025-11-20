@@ -3,10 +3,9 @@ using UnityEngine;
 /// <summary>
 /// 各種interfaceを実装してアニメーションを再生するためのクラス
 /// </summary>
-[RequireComponent(typeof(Animator))] // Animatorコンポーネントが必須であることを保証
 public class CharacterAnimatorController : MonoBehaviour, IDamageNotifier, IDieNotifier, IHealthNotifier
 {
-    private Animator animator;
+    [SerializeField] Animator animator;
     private HPBarController hpBarController;
     // --- アニメーションのトリガー名 ---
     private const string HIT_TRIGGER = "damage";          // ダメージを受けた時のアニメーション
@@ -18,10 +17,11 @@ public class CharacterAnimatorController : MonoBehaviour, IDamageNotifier, IDieN
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
         if (animator == null)
         {
-            Debug.LogError("Animator component not found on " + gameObject.name);
+            animator = GetComponent<Animator>();
+            if (animator == null)
+                Debug.LogError("Animator component not found on " + gameObject.name);
         }
         hpBarController = GetComponent<HPBarController>();
     }
@@ -35,6 +35,8 @@ public class CharacterAnimatorController : MonoBehaviour, IDamageNotifier, IDieN
 
         // 例: 基本/全てのダメージで共通の"Hit"アニメーションを再生
         animator.SetTrigger(HIT_TRIGGER);
+
+        DamageTextManager.Instance.ShowDamageText(damageValue, damageType, transform.position);
     }
 
     /// <summary>
