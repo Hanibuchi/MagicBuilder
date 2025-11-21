@@ -249,11 +249,6 @@ public class CharacterHealth : MonoBehaviour
         // 死亡時のアニメーションやゲームオーバー処理などを記述
         dieNotifier?.NotifyDie();
     }
-
-    public void Destroy()
-    {
-        Destroy(gameObject);
-    }
 }
 
 /// <summary>
