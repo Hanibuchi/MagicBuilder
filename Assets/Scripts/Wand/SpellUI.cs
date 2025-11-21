@@ -54,6 +54,7 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
             // 現在の親から切り離し、ルートCanvasの子にする
             transform.SetParent(root, true);
         }
+        WandUIManager.Instance?.NotifySpellDragBeganToAll();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -63,6 +64,9 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        // このメソッドはDragが成功した場合はなぜか呼ばれない。ただ、失敗した場合は呼ばれる必要がある。
+        Debug.Log("OnEndDrag called");
+        WandUIManager.Instance?.NotifySpellDragEndedToAll();
         StartCoroutine(CheckDropResultAndCleanUp());
     }
     private IEnumerator CheckDropResultAndCleanUp()
@@ -76,6 +80,7 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     private bool dropSuccess = false;    // ★ 追加: ドロップが成功したか
     public void NotifyDropSuccess()
     {
+        WandUIManager.Instance?.NotifySpellDragEndedToAll();
         spellContainerUI.NotifySpellRemoved(index);
         dropSuccess = true;
     }

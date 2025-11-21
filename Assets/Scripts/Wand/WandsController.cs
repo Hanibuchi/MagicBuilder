@@ -14,13 +14,6 @@ public class WandsController : MonoBehaviour
     // AttackManager.Instanceを使ってアクセスするため、設定は任意とします。
     AttackManager attackManager => AttackManager.Instance;
 
-    [Header("UIとコンポーネントのプレハブ")]
-    [Tooltip("WandUIとWandControllerを保持するオブジェクトのプレハブ")]
-    [SerializeField] private GameObject wandUIPrefab;
-
-    [Tooltip("WandUIを配置する親のTransform")]
-    [SerializeField] private Transform wandUIParent;
-
     // 個々のWandControllerのリスト（配列の要件を満たす）
     private List<WandController> wandControllers = new List<WandController>();
     public WandController[] WandControllers => wandControllers.ToArray();
@@ -31,16 +24,19 @@ public class WandsController : MonoBehaviour
     /// </summary>
     public void GenerateNewWand(Wand newWand)
     {
-        GameObject container = Instantiate(wandUIPrefab, wandUIParent);
+        if (newWand == null)
+        {
+            Debug.LogError("newWandが見つかりません。");
+            return;
+        }
 
-        WandUI wandUI = container.GetComponentInChildren<WandUI>();
+        WandUI wandUI = WandUIManager.Instance?.CreateWandUIInstance();
+
         WandController wandController = new();
 
-        if (newWand == null || wandController == null || wandUI == null)
+        if (wandController == null || wandUI == null)
         {
             Debug.LogError("wandContainerPrefabにWandControllerまたはWandUIコンポーネントが見つかりません。コンテナオブジェクトを破棄します。");
-            // リストからWandを削除して処理を中止
-            Destroy(container);
             return;
         }
         int newWandIndex = attackManager.playerWands.Count;

@@ -109,6 +109,49 @@ public class WandUI : MonoBehaviour, ISpellContainer
     {
         RebuildUI(spellBasesCashe);
     }
+
+    /// <summary>
+    /// SpacingUIがPointerEnterイベントを受け取ったことを通知する。
+    /// この通知を受け取ったWandUIは、他のSpacingUIのハイライトを解除する。
+    /// </summary>
+    public void NotifySpacingUIEntered(SpacingUI enteredSpacing)
+    {
+        // ハイライトの排他制御
+        foreach (var element in uiElements)
+        {
+            SpacingUI spacing = element.GetComponent<SpacingUI>();
+            if (spacing != null && spacing != enteredSpacing)
+            {
+                spacing.StopHighlight();
+            }
+        }
+    }
+
+    // --- SpellUIのドラッグ開始/終了を管理する機能の追加 ---
+
+    /// <summary>
+    /// SpellUIがドラッグを開始したことを通知する。
+    /// </summary>
+    public void NotifySpellDragBegan()
+    {
+        // 全てのSpacingUIの拡張トリガーをアクティブ化
+        foreach (var element in uiElements)
+        {
+            element.GetComponent<SpacingUI>()?.SetExtendedTriggerActive(true);
+        }
+    }
+
+    /// <summary>
+    /// SpellUIのドラッグが終了したことを通知する。
+    /// </summary>
+    public void NotifySpellDragEnded()
+    {
+        // 全てのSpacingUIの拡張トリガーを非アクティブ化
+        foreach (var element in uiElements)
+        {
+            element.GetComponent<SpacingUI>()?.SetExtendedTriggerActive(false);
+        }
+    }
 }
 
 

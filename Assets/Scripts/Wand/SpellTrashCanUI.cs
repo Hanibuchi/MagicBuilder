@@ -12,6 +12,7 @@ public class SpellTrashCanUI : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
+        Debug.Log("OnDrop called");
         // 1. ドロップされたオブジェクトが SpellUI であるかを確認します。
         SpellUI droppedSpellUI = eventData.pointerDrag.GetComponent<SpellUI>();
 

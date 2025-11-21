@@ -1,5 +1,6 @@
 // ファイル名: SpacingUI.cs
 
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -16,14 +17,19 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     private const string HighlightTrigger = "Highlight";
     private const string NormalTrigger = "Normal";
 
+    [SerializeField] ExtendedSpacingTriggerUI extendedTriggerUI;
+
     void Awake()
     {
         animator = GetComponent<Animator>();
+        extendedTriggerUI.Initialize(this);
+        SetExtendedTriggerActive(false);
     }
 
     public void Initialize(WandUI parentWandUI)
     {
         this.wandUI = parentWandUI;
+        // 初期状態では非アクティブ
     }
 
     public void SetIndex(int newIndex)
@@ -48,7 +54,7 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
             // 2. **アニメーションをリセット**
             if (animator != null)
             {
-                animator.SetTrigger(NormalTrigger);
+                StopHighlight();
             }
 
             // 1. **WandUIに呪文の追加を通知**
@@ -65,6 +71,8 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
         // ドラッグ中のオブジェクトがある場合のみアニメーション再生
         if (eventData.pointerDrag != null && eventData.pointerDrag.GetComponent<SpellUI>() != null)
         {
+            // ★ 追加: 他のSpacingUIにハイライト解除を通知
+            wandUI.NotifySpacingUIEntered(this);
             if (animator != null)
             {
                 animator.ResetTrigger(NormalTrigger);
@@ -77,8 +85,31 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     {
         if (animator != null)
         {
+            StopHighlight();
+        }
+    }
+
+    /// <summary>
+    /// 他のSpacingUIからハイライト解除要求が来た時に呼ばれる。
+    /// </summary>
+    public void StopHighlight()
+    {
+        if (animator != null)
+        {
             animator.SetTrigger(NormalTrigger);
             animator.ResetTrigger(HighlightTrigger);
+        }
+    }
+
+    /// <summary>
+    /// 拡張トリガーUIを有効/無効にする（WandUIから呼び出される）
+    /// </summary>
+    public void SetExtendedTriggerActive(bool isActive)
+    {
+        Debug.Log("isActive" + isActive);
+        if (extendedTriggerUI != null)
+        {
+            extendedTriggerUI.gameObject.SetActive(isActive);
         }
     }
 }
