@@ -8,11 +8,27 @@ using UnityEngine.UI;
 // ISpellContainer を実装
 public class SpellInventory : MonoBehaviour, ISpellContainer
 {
+
+    public static SpellInventory Instance { get; private set; }
     public List<SpellBase> availableSpells = new List<SpellBase>();
     [SerializeField] private RectTransform inventoryFrame;
 
     private List<SpellUI> spellUIs = new List<SpellUI>();
     SpellUI draggingSpellUI;
+
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            // シーンをまたいで保持する場合はDontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
 
     void Start()
@@ -49,6 +65,7 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         }
 
         UpdateScroll();
+        DeactivateSpellUIs(AttackManager.Instance.GetCurrentWand().GetSpells());
     }
 
     /// <summary>
@@ -106,6 +123,10 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         draggingSpellUI = spellUIs[index];
         spellUIs[index] = null;
         RebuildUIWithoutDragging();
+
+        var spellList = AttackManager.Instance.GetCurrentWand().GetSpells().ToList();
+        spellList.Add(draggingSpellUI.GetSpellData());
+        DeactivateSpellUIs(spellList);
     }
 
     /// <summary>
@@ -236,5 +257,57 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         }
 
         inventoryUI.anchoredPosition = new Vector2(currentPos.x, newPosY);
+    }
+
+
+    // ----------------------------------------------------------------------
+    // ★ 追加するメソッド: 呪文UIの非アクティブ化
+    // ----------------------------------------------------------------------
+
+    /// <summary>
+    /// 渡されたSpellBaseのリストに対応するSpellUIを非アクティブ化します。
+    /// 同じ呪文が複数ある場合、リストの末尾から該当するUIを非アクティブにします。
+    /// </summary>
+    /// <param name="spellsToDeactivate">非アクティブ化する対象の呪文データのリスト。</param>
+    public void DeactivateSpellUIs(List<SpellBase> spellsToDeactivate)
+    {
+        if (spellsToDeactivate == null)
+        {
+            return;
+        }
+
+        // 非アクティブ化の対象となる SpellBase と、その出現回数をカウント
+        var countsToDeactivate = spellsToDeactivate.GroupBy(s => s)
+                                                   .ToDictionary(g => g.Key, g => g.Count());
+
+        // SpellUIのリストを末尾から逆順に走査し、対応するSpellBaseとカウントが一致するものを非アクティブ化
+        // リストの後ろから非アクティブにするという要件を満たすため、逆順に処理します。
+        for (int i = spellUIs.Count - 1; i >= 0; i--)
+        {
+            SpellUI currentUI = spellUIs[i];
+            if (currentUI == null) continue;
+
+            SpellBase spellData = currentUI.GetSpellData();
+
+            // 非アクティブ化対象の SpellBase であり、かつまだ非アクティブ化すべき残数があるかチェック
+            if (spellData != null)
+                if (countsToDeactivate.TryGetValue(spellData, out int count))
+                {
+                    if (count > 0)
+                    {
+                        currentUI.SetActive(false); // SpellUI の SetActive(false) を呼び出し
+                        countsToDeactivate[spellData] = count - 1; // 残数を減らす
+                        Debug.Log($"インベントリ内の呪文 {spellData.spellName} (index: {i}) を非アクティブ化しました。");
+                    }
+                }
+                else
+                    currentUI.SetActive(true);
+        }
+
+        // 全てのカウントが0になったか確認（デバッグ用）
+        if (countsToDeactivate.Values.Any(c => c > 0))
+        {
+            Debug.LogWarning("非アクティブ化対象の SpellBase の一部に対応する SpellUI が見つかりませんでした。");
+        }
     }
 }

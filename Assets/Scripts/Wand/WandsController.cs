@@ -63,6 +63,7 @@ public class WandsController : MonoBehaviour, WandSwitchListener
     {
         AttackManager.Instance.SetCurrentWandIndex(index);
         WandUIManager.Instance.SetActiveWandUI(index);
+        SpellInventory.Instance.DeactivateSpellUIs(AttackManager.Instance.GetCurrentWand().GetSpells());
     }
 
     [SerializeField] List<Wand> test_wand;

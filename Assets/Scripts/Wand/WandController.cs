@@ -62,6 +62,9 @@ public class WandController : IWandEditor, ISpellListChangeListener
     /// </summary>
     public void OnSpellListChanged(List<SpellBase> spells)
     {
+        // Debug.Log("OnSpellListChanged called: " + spells);
+        if (AttackManager.Instance.GetCurrentWand() == managedWand)
+            SpellInventory.Instance.DeactivateSpellUIs(spells);
         // WandUIを最新の呪文リストに基づいて再構築する
         wandUI.RebuildUI(spells.ToArray());
     }
