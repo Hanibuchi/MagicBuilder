@@ -33,7 +33,7 @@ public class AttackManager : MonoBehaviour
         }
     }
 
-    // --- 攻撃準備フェーズのメソッド ---
+    [SerializeField] int displayAimingLineSpellCount = 5;
     /// <summary>
     /// 選択された杖の最初の呪文を参照し、補助線を表示するメソッドを実行します。
     /// </summary>
@@ -56,29 +56,40 @@ public class AttackManager : MonoBehaviour
             return;
         }
 
-        var firstNotNull = wandToUse.spells
-            .Select((value, index) => new { Value = value, Index = index }) // インデックス付きで選択
-            .FirstOrDefault(item => item.Value != null); // nullではない最初の要素を検索
-        int firstIndex = firstNotNull.Index;
-
-        // 選択したWandの持つ最初のSpellを参照
-        SpellBase firstSpell = wandToUse.spells[firstIndex];
-        firstSpell.DisplayAimingLine(
+        int[] arr = new int[displayAimingLineSpellCount];
+        for (int i = 0; i < displayAimingLineSpellCount; i++)
+            arr[i] = i + 1;
+        // GetAbsoluteIndicesFromSpellGroupArray を使用して、呪文の連鎖全体で次に発動すべき呪文を特定
+        // 最初の呪文は「1つ目の呪文」として処理するため、relativeGroupOffsets は [1] を渡す
+        int[] targetIndices = SpellBase.GetAbsoluteIndicesFromSpellGroupArray(
             wandToUse.spells,
-            firstIndex,
-            rotationZ,
-            strength,
-            casterPositionTransform.position,
-            clearLine
+            -1,
+            arr // 最初の呪文グループ（すなわち最初の呪文）の次のインデックスを取得
         );
 
         Debug.Log($"照準補助線を表示中: 杖 Index={wandIndex}, 角度={rotationZ:F2}° (Z回転), 強さ={strength:F2}");
 
+        // 取得した全ての開始インデックスの呪文に対して DisplayAimingLine を呼び出す
+        foreach (int targetIndex in targetIndices)
+        {
+            if (targetIndex >= 0 && targetIndex < wandToUse.spells.Count)
+            {
+                SpellBase spell = wandToUse.spells[targetIndex];
+                spell?.DisplayAimingLine(
+                    wandToUse.spells,
+                    targetIndex,
+                    rotationZ,
+                    strength,
+                    casterPositionTransform.position,
+                    clearLine // clearLineは最初の呼び出しでのみ意味を持つが、ここでは全ての開始点で実行させる
+                );
+            }
+        }
+        // --- 修正終了 ---
+
         // 補助線表示のロジックは、このrotationZとstrengthを使って軌道を予測し、UI描画を行います。
     }
-    // --- 攻撃実行フェーズのメソッド ---
 
-    // FireWandメソッドも、同様にインデックスと角度・強さを受け取るように修正しておきます。
     /// <summary>
     /// 指定された杖の発射をトリガーします。
     /// </summary>
@@ -94,26 +105,103 @@ public class AttackManager : MonoBehaviour
         }
 
         Wand wandToUse = playerWands[wandIndex];
-
-        var firstNotNull = wandToUse.spells
-            .Select((value, index) => new { Value = value, Index = index }) // インデックス付きで選択
-            .FirstOrDefault(item => item.Value != null); // nullではない最初の要素を検索
-        int firstIndex = firstNotNull.Index;
-
-        SpellContext context = new()
+        if (wandToUse == null || wandToUse.spells.Count == 0)
         {
-            CasterPosition = casterPositionTransform.position
-        };
-        // 選択したWandの持つ最初のSpellを参照
-        SpellBase firstSpell = wandToUse.spells[firstIndex];
-        firstSpell.FireSpell(
-            wandToUse.spells,
-            firstIndex,
-            rotationZ,
-            strength,
-            context
+            Debug.LogError("wandToUse is null or no spell");
+            return;
+        }
+
+        List<SpellBase> processedSpells = ProcessWandSpellsBeforeFire(wandToUse.spells);
+
+        int[] targetIndices = SpellBase.GetAbsoluteIndicesFromSpellGroupArray(
+            processedSpells,
+            -1,
+            new int[] { }, // 最初の呪文グループ（すなわち最初の呪文）の次のインデックスを取得
+            true
         );
 
         Debug.Log($"杖を発射: Index={wandIndex} | 角度={rotationZ:F2}° | 強さ={strength:F2}");
+
+        // 取得した全ての開始インデックスの呪文に対して FireSpell を呼び出す
+        foreach (int targetIndex in targetIndices)
+        {
+            if (targetIndex >= 0 && targetIndex < processedSpells.Count)
+            {
+                SpellContext context = new()
+                {
+                    CasterPosition = casterPositionTransform.position
+                };
+                SpellBase spell = processedSpells[targetIndex];
+                spell?.FireSpell(
+                    processedSpells,
+                    targetIndex,
+                    rotationZ,
+                    strength,
+                    context
+                );
+            }
+        }
+        // --- 修正終了 ---
+    }
+
+    /// <summary>
+    /// 杖の発射前に、呪文リストのプリプロセス（例: Modifiersによる呪文リストの操作）を実行します。
+    /// </summary>
+    /// <param name="wandToUse">処理対象の杖</param>
+    private List<SpellBase> ProcessWandSpellsBeforeFire(List<SpellBase> spells)
+    {
+        // 杖の呪文リストをクローンし、プリプロセスで変更があっても元のリストに影響を与えないようにする
+        List<SpellBase> processedSpells = new List<SpellBase>(spells);
+
+        // 現在のインデックスを保持
+        int currentProcessedIndex = 0;
+
+        // リストの末尾まで処理を続ける
+        while (currentProcessedIndex < processedSpells.Count)
+        {
+            SpellBase currentSpell = processedSpells[currentProcessedIndex];
+
+            // 呪文が存在すればPreprocessを実行
+            if (currentSpell != null)
+            {
+                // Preprocessが新しいインデックスを返す
+                currentProcessedIndex = currentSpell.Preprocess(processedSpells, currentProcessedIndex);
+            }
+            else
+            {
+                // 呪文がnullの場合は、単純に次のインデックスへ
+                currentProcessedIndex++;
+            }
+        }
+
+        return processedSpells;
+    }
+
+    [SerializeField] private int currentWandIndex = 0;
+    public void SetCurrentWandIndex(int index)
+    {
+        if (index < 0 || index >= playerWands.Count)
+        {
+            Debug.LogError($"不正な杖インデックスが指定されました: {index}");
+            return;
+        }
+        currentWandIndex = index;
+    }
+
+    public int GetCurrentWandIndex()
+    {
+        // 実装例: 現在選択されている杖のインデックスを返す
+        // ここでは単純に0を返すが、実際にはゲームのロジックに応じて変更する必要がある
+        return currentWandIndex;
+    }
+
+    public Wand GetCurrentWand()
+    {
+        if (currentWandIndex < 0 || currentWandIndex >= playerWands.Count)
+        {
+            Debug.LogError($"不正な杖インデックスが指定されました: {currentWandIndex}");
+            return null;
+        }
+        return playerWands[currentWandIndex];
     }
 }

@@ -18,4 +18,6 @@ public enum SpellType
     FiveMultiplier,
     Expansion,
     Contraction,
+    Inferno,
+    ExampleSpellClickTrigger,
 }

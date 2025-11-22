@@ -196,4 +196,84 @@ public class SpellGroupCalculatorTests
         Assert.That(actual, Is.EqualTo(expected), "Case 1: 直後の単発呪文");
     }
 
+    [Test]
+    public void TestCase_GroupWithNullSpell()
+    {
+        // 杖: [0: MultCast({1}), 1: SpellA({+1}), 2: (null), 3: SpellC({0}), 4: SpellD({0})]
+        // グループ1: 1 -> 2(null) -> 3 (実際には2がnullのため、1から3へは繋がらない)
+        // グループ2: 4
+
+        List<SpellBase> wand = new List<SpellBase>();
+        wand.Add(CreateWand(("MultCast", new int[] { 1 }))[0]); // 0
+        wand.Add(CreateWand(("SpellA", new int[] { 1 }))[0]);   // 1. これが2を呼び出す
+        wand.Add(null);                                         // 2. null
+        wand.Add(CreateWand(("SpellC", new int[] { 0 }))[0]);   // 3
+        wand.Add(CreateWand(("SpellD", new int[] { 0 }))[0]);   // 4
+
+        int current = 0;
+        int[] offsets = { 1, 2 }; // 1つ目と2つ目のまとまりを呼び出す
+
+        // 期待値:
+        // i=1: start=1。ターゲットに1を追加。
+        //      DFS(1):
+        //          v=1。fired[1]=T。neighbors={1}。
+        //          to=2。wandSpells[2]はnullなので、fired[2]=T（初期化で既にTになっている）。continue。
+        //      fired={T, T, T, F, F}。
+        // i=2: start=3。ターゲットに3を追加。
+        //      DFS(3):
+        //          v=3。fired[3]=T。neighbors={0}。
+        //      fired={T, T, T, T, F}。
+        // i=3: start=4。break（offsets={1, 2}までしか要求していないため、i=3の計算は行われるがターゲットには追加されない）。
+        //      - ロジック上はi=3のループは回るが、targetOffsetIndexが2で配列の長さに達しているため、targetIndices.Add(start)は実行されない
+
+        int[] expected = { 1, 3 };
+        int[] actual = CalculateIndices(wand, current, offsets);
+        Assert.That(actual, Is.EqualTo(expected), "Case 7: グループ内にnull呪文を含む場合の連鎖とスキップ");
+    }
+
+    [Test]
+    public void TestCase_StartNextGroupAfterNullSpell()
+    {
+        // 杖: [0: MultCast({1}), 1: (null), 2: SpellB({0})]
+        // グループ1: 2
+
+        List<SpellBase> wand = new List<SpellBase>();
+        wand.Add(CreateWand(("MultCast", new int[] { 1 }))[0]); // 0
+        wand.Add(null);                                         // 1. null
+        wand.Add(CreateWand(("SpellB", new int[] { 0 }))[0]);   // 2
+
+        int current = 0;
+        int[] offsets = { 1 }; // 1つ目のまとまり
+
+        // 期待値:
+        // i=1: start=2。ターゲットに2を追加。
+        //      DFS(2): v=2。fired[2]=T。
+        //      fired={T, T, T}。
+        int[] expected = { 2 };
+        int[] actual = CalculateIndices(wand, current, offsets);
+        Assert.That(actual, Is.EqualTo(expected), "Case 8: null呪文の直後の呪文がグループの先頭になる");
+    }
+
+    [Test]
+    public void TestCase_StartNextGroupAfterNullSpell_CurrentIsMinusOne()
+    {
+        // 杖: [0: MultCast({1}), 1: (null), 2: SpellB({0})]
+        // グループ1: 2
+
+        List<SpellBase> wand = new List<SpellBase>();
+        wand.Add(CreateWand(("MultCast", new int[] { 1 }))[0]); // 0
+        wand.Add(null);                                         // 1. null
+        wand.Add(CreateWand(("SpellB", new int[] { 0 }))[0]);   // 2
+
+        int current = -1;
+        int[] offsets = { 1, 2 }; // 1つ目のまとまり
+
+        // 期待値:
+        // i=1: start=2。ターゲットに2を追加。
+        //      DFS(2): v=2。fired[2]=T。
+        //      fired={T, T, T}。
+        int[] expected = { 0, 2 };
+        int[] actual = CalculateIndices(wand, current, offsets);
+        Assert.That(actual, Is.EqualTo(expected), "Case 8: null呪文の直後の呪文がグループの先頭になる");
+    }
 }

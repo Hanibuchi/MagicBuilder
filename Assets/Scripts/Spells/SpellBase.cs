@@ -14,10 +14,6 @@ public abstract class SpellBase : ScriptableObject
 
     [Tooltip("この呪文のゲーム内での表示名")]
     public string spellName = "未定義の呪文";
-    
-    // ----------------------------------------------------------------------------------
-    // 抽象メソッド定義
-    // ----------------------------------------------------------------------------------
 
     /// <summary>
     /// 補助線（軌道予測）を表示するためのロジックを定義します。
@@ -218,19 +214,23 @@ public abstract class SpellBase : ScriptableObject
     /// <param name="wandSpells">杖にセットされている全呪文の配列</param>
     /// <param name="currentSpellIndex">この呪文が杖の配列の何番目にあるか</param>
     /// <param name="relativeGroupOffsets">この呪文からの相対的なまとまりインデックスの配列</param>
+    /// <param name="allSpell">relativeGroupOffsetsを無視して、すべての呪文のまとまりの最初の要素を返すかどうか</param>
     /// <returns>呼び出すべき呪文の絶対インデックスの配列</returns>
     public static int[] GetAbsoluteIndicesFromSpellGroupArray(
         List<SpellBase> wandSpells,
         int currentSpellIndex,
-        int[] relativeGroupOffsets)
+        int[] relativeGroupOffsets, bool allSpell = false)
     {
         // オフセットを昇順にソートし、重複を排除（連鎖の計算をシンプルにするため）
         relativeGroupOffsets = relativeGroupOffsets.Distinct().OrderBy(o => o).ToArray();
 
         bool[] fired = new bool[wandSpells.Count];
-        for (int i = 0; i <= currentSpellIndex; i++)
-            fired[i] = true;
-        int maxOffset = relativeGroupOffsets[^1];
+        for (int i = 0; i <= fired.Length - 1; i++)
+        {
+            if (i <= currentSpellIndex || wandSpells[i] == null)
+                fired[i] = true;
+        }
+        int maxOffset = allSpell ? int.MaxValue : relativeGroupOffsets[^1];
         int targetOffsetIndex = 0; // 現在探してる相対オフセットのインデックス
         var targetIndices = new List<int>();
 
@@ -240,7 +240,12 @@ public abstract class SpellBase : ScriptableObject
             int start = Array.IndexOf(fired, false);
             if (start < 0) break;
 
-            if (relativeGroupOffsets[targetOffsetIndex] == i)
+            if (allSpell)
+            {
+                targetIndices.Add(start);
+                targetOffsetIndex++;
+            }
+            else if (relativeGroupOffsets[targetOffsetIndex] == i)
             {
                 targetIndices.Add(start);
                 targetOffsetIndex++;
@@ -280,6 +285,24 @@ public abstract class SpellBase : ScriptableObject
     {
         return currentSpellIndex + 1;
     }
+
+
+    [Header("UI")]
+    public Sprite icon;
+    public GameObject uiPrefab;
+
+    /// <summary>
+    /// このSpellBaseに対応するSpellUIインスタンスを生成する。
+    /// </summary>
+    public virtual SpellUI CreateUI()
+    {
+        // プレハブから生成
+        SpellUI uiInstance = Instantiate(uiPrefab).GetComponent<SpellUI>();
+        // アイコンを設定
+        uiInstance.SetData(this);
+
+        return uiInstance;
+    }
 }
 
 /// <summary>
@@ -290,6 +313,7 @@ public class SpellContext
     public Vector2 CasterPosition;
     public Action<GameObject> ProjectileModifier;
     public float errorDegree = 0;
+    public Damage damage;
 
     public SpellContext()
     {
@@ -309,7 +333,8 @@ public class SpellContext
             errorDegree = this.errorDegree,
 
             // 参照型 (Action) は参照がコピーされるが、Actionは不変(イミュータブル)なので問題なし
-            ProjectileModifier = this.ProjectileModifier
+            ProjectileModifier = this.ProjectileModifier,
+            damage = this.damage
         };
     }
 }
