@@ -31,6 +31,7 @@ public class WandsController : MonoBehaviour
         }
 
         WandUI wandUI = WandUIManager.Instance?.CreateWandUIInstance();
+        WandUIManager.Instance.SetActiveWandUI(0);
 
         WandController wandController = new();
 

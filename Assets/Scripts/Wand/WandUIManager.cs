@@ -18,6 +18,7 @@ public class WandUIManager : MonoBehaviour
     [Tooltip("WandUIを配置する親のTransform")] // ★ 追加
     [SerializeField] private Transform wandUIParent; // ★ 追加
 
+
     void Awake()
     {
         if (Instance == null)
@@ -29,6 +30,34 @@ public class WandUIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    /// <summary>
+    /// 指定されたインデックスのWandUIをアクティブにし、それ以外を非アクティブにします。
+    /// </summary>
+    /// <param name="index">アクティブにするWandUIのインデックス。</param>
+    public void SetActiveWandUI(int index) // ★ 新規追加
+    {
+        if (activeWandUIs.Count == 0)
+        {
+            Debug.LogWarning("登録されているWandUIがありません。");
+            return;
+        }
+
+        if (index < 0 || index >= activeWandUIs.Count)
+        {
+            Debug.LogError($"指定されたインデックス {index} は無効です。有効範囲: 0 から {activeWandUIs.Count - 1} まで。");
+            return;
+        }
+
+        // 全てのWandUIを走査し、アクティブ/非アクティブを設定
+        for (int i = 0; i < activeWandUIs.Count; i++)
+        {
+            bool isActive = (i == index);
+            activeWandUIs[i].gameObject.SetActive(isActive); // 親のGameObjectを制御
+        }
+
+        Debug.Log($"WandUIをインデックス {index} のものに切り替えました。");
     }
 
     /// <summary>
@@ -53,6 +82,8 @@ public class WandUIManager : MonoBehaviour
             Destroy(container);
             return null;
         }
+        // ★ 追加: 新しく生成・登録されたWandUIはデフォルトで非アクティブにする
+        wandUI.gameObject.SetActive(false);
         RegisterWandUI(wandUI);
 
         return wandUI;
@@ -61,7 +92,7 @@ public class WandUIManager : MonoBehaviour
     /// <summary>
     /// WandUIが生成されたときに自身を登録します。
     /// </summary>
-    public void RegisterWandUI(WandUI wandUI)
+    void RegisterWandUI(WandUI wandUI)
     {
         if (!activeWandUIs.Contains(wandUI))
         {
@@ -73,7 +104,7 @@ public class WandUIManager : MonoBehaviour
     /// <summary>
     /// WandUIが破棄されたときに登録を解除します。
     /// </summary>
-    public void UnregisterWandUI(WandUI wandUI)
+    void UnregisterWandUI(WandUI wandUI)
     {
         activeWandUIs.Remove(wandUI);
     }
