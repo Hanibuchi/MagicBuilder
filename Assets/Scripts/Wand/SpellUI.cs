@@ -17,6 +17,11 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     // UIパーツ
     public Image iconImage;
 
+    private void Awake()
+    {
+        activeColor = frame.color;
+    }
+
     public void Initialize(ISpellContainer parentWandUI)
     {
         this.spellContainerUI = parentWandUI;
@@ -84,6 +89,31 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         WandUIManager.Instance?.NotifySpellDragEndedToAll();
         spellContainerUI.NotifySpellRemoved(index);
         dropSuccess = true;
+    }
+
+    /// <summary>
+    /// 非アクティブのとき色を変えるFrame
+    /// </summary>
+    [SerializeField] Image frame;
+    [SerializeField] Color disableColor;
+    [SerializeField] Material disableMaterial;
+    [SerializeField] Image raycastTargetImage;
+    Color activeColor;
+    public void SetActive(bool active)
+    {
+        if (active)
+        {
+            frame.color = activeColor;
+            iconImage.material = null;
+            raycastTargetImage.raycastTarget = true;
+        }
+        else
+        {
+            activeColor = frame.color;
+            frame.color = disableColor;
+            iconImage.material = disableMaterial;
+            raycastTargetImage.raycastTarget = false;
+        }
     }
 }
 
