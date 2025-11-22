@@ -12,6 +12,7 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
     [SerializeField] private RectTransform inventoryFrame;
 
     private List<SpellUI> spellUIs = new List<SpellUI>();
+    SpellUI draggingSpellUI;
 
 
     void Start()
@@ -40,6 +41,21 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
     /// </summary>
     public void RebuildUI()
     {
+        RebuildUIWithoutDragging();
+        if (draggingSpellUI != null)
+        {
+            Destroy(draggingSpellUI.gameObject);
+            draggingSpellUI = null;
+        }
+
+        UpdateScroll();
+    }
+
+    /// <summary>
+    /// インベントリの呪文UIをドラッグ中のUIを除いて再構築します。
+    /// </summary>
+    void RebuildUIWithoutDragging()
+    {
         // 既存のUI要素を全て破棄
         foreach (var spellUI in spellUIs)
         {
@@ -55,8 +71,6 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         {
             CreateSpellUI(i, availableSpells[i]);
         }
-
-        UpdateScroll();
     }
 
     /// <summary>
@@ -87,6 +101,12 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
 
 
     // --- ISpellContainer の実装 ---
+    public void NotifyDragBegin(int index)
+    {
+        draggingSpellUI = spellUIs[index];
+        spellUIs[index] = null;
+        RebuildUIWithoutDragging();
+    }
 
     /// <summary>
     /// SpellUIがドラッグ＆ドロップによってコンテナから削除されたことを通知。

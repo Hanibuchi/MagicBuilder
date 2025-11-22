@@ -47,6 +47,7 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     public void OnBeginDrag(PointerEventData eventData)
     {
         dropSuccess = false;
+        spellContainerUI.NotifyDragBegin(index);
         // 1. ドラッグ開始時に、自身をCanvasの最前面に移動
         RectTransform root = DraggingSpellRootProvider.Instance.GetRootTransform();
         if (root != null)
@@ -94,6 +95,12 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 /// </summary>
 public interface ISpellContainer
 {
+    /// <summary>
+    /// ドラッグが開始されたことを通知。SpellIndex用。
+    /// </summary>
+    /// <param name="index"></param>
+    void NotifyDragBegin(int index) { }
+
     /// <summary>
     /// SpellUIがドラッグ＆ドロップによってコンテナから削除されたことを通知します。
     /// </summary>
