@@ -31,7 +31,7 @@ public class WandsController : MonoBehaviour, WandSwitchListener
             return;
         }
 
-        WandUI wandUI = WandUIManager.Instance?.CreateWandUIInstance();
+        WandUI wandUI = WandUIManager.Instance.CreateWandUIInstance();
 
         WandController wandController = new();
 
@@ -69,7 +69,8 @@ public class WandsController : MonoBehaviour, WandSwitchListener
     int test_nextWandIndex = 0;
     public void Test()
     {
-        GenerateNewWand(test_wand[test_nextWandIndex++]);
+        GenerateNewWand(test_wand[test_nextWandIndex]);
+        test_nextWandIndex++;
         if (test_nextWandIndex == 1)
             SwitchWand(0);
     }

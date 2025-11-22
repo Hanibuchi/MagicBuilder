@@ -83,6 +83,7 @@ public class WandUIManager : MonoBehaviour
         wandUI.gameObject.SetActive(false);
         RegisterWandUI(wandUI);
 
+        UpdateWandSwitchButtons(AttackManager.Instance.GetCurrentWandIndex());
         return wandUI;
     }
 
@@ -167,7 +168,7 @@ public class WandUIManager : MonoBehaviour
     /// <param name="newIndex">新しく選択された杖のインデックス</param>
     private void UpdateWandSwitchButtons(int newIndex) // ★ 新規追加
     {
-        int totalWands = AttackManager.Instance.playerWands.Count;
+        int totalWands = activeWandUIs.Count;
 
         // 次へボタンの表示制御
         bool canSwitchNext = newIndex < totalWands - 1;
