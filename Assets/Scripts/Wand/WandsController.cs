@@ -1,13 +1,14 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 /// <summary>
 /// プレイヤーの所持する全ての杖を管理するコントローラー。
 /// 新しい杖の生成、UIの関連付けを行います。
 /// WandControllerの配列を保持します。
 /// </summary>
-public class WandsController : MonoBehaviour
+public class WandsController : MonoBehaviour, WandSwitchListener
 {
     [Header("依存コンポーネント")]
     [Tooltip("AttackManagerインスタンスへの参照")]
@@ -31,7 +32,6 @@ public class WandsController : MonoBehaviour
         }
 
         WandUI wandUI = WandUIManager.Instance?.CreateWandUIInstance();
-        WandUIManager.Instance.SetActiveWandUI(0);
 
         WandController wandController = new();
 
@@ -50,9 +50,27 @@ public class WandsController : MonoBehaviour
         Debug.Log($"新しい杖が生成されました。インデックス: {newWandIndex} | タイプ: {newWand.type}");
     }
 
-    [SerializeField] Wand test_wand;
+    void Start()
+    {
+        WandUIManager.Instance.SetWandSwitchListener(this);
+    }
+    /// <summary>
+    /// WandSwitchListenerインターフェースの実装。
+    /// 実際の切り替え処理はAttackManagerに委譲する。
+    /// </summary>
+    /// <param name="index">次の杖のindex</param>
+    public void SwitchWand(int index)
+    {
+        AttackManager.Instance.SetCurrentWandIndex(index);
+        WandUIManager.Instance.SetActiveWandUI(index);
+    }
+
+    [SerializeField] List<Wand> test_wand;
+    int test_nextWandIndex = 0;
     public void Test()
     {
-        GenerateNewWand(test_wand);
+        GenerateNewWand(test_wand[test_nextWandIndex++]);
+        if (test_nextWandIndex == 1)
+            SwitchWand(0);
     }
 }

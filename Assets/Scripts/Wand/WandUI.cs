@@ -62,9 +62,12 @@ public class WandUI : MonoBehaviour, ISpellContainer
     {
         if (wandEditor != null)
         {
+            Debug.Log($"呪文が追加されました。インデックス: {index} | 呪文タイプ: {spell.spellName}");
             // 編集ロジックに通知
             wandEditor.AddSpell(index, spell);
         }
+        else
+            Debug.LogError("WandEditorが設定されていません。呪文の追加ができません。");
     }
 
     /// <summary>

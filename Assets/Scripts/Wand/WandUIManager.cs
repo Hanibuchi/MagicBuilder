@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 /// <summary>
 /// 画面上の全てのWandUIインスタンスを管理し、グローバルなUIイベントをブロードキャストします。
@@ -38,12 +39,6 @@ public class WandUIManager : MonoBehaviour
     /// <param name="index">アクティブにするWandUIのインデックス。</param>
     public void SetActiveWandUI(int index) // ★ 新規追加
     {
-        if (activeWandUIs.Count == 0)
-        {
-            Debug.LogWarning("登録されているWandUIがありません。");
-            return;
-        }
-
         if (index < 0 || index >= activeWandUIs.Count)
         {
             Debug.LogError($"指定されたインデックス {index} は無効です。有効範囲: 0 から {activeWandUIs.Count - 1} まで。");
@@ -57,6 +52,7 @@ public class WandUIManager : MonoBehaviour
             activeWandUIs[i].gameObject.SetActive(isActive); // 親のGameObjectを制御
         }
 
+        UpdateWandSwitchButtons(index);
         Debug.Log($"WandUIをインデックス {index} のものに切り替えました。");
     }
 
@@ -74,7 +70,8 @@ public class WandUIManager : MonoBehaviour
 
         // 1. インスタンスの生成（WandsControllerから移動）
         GameObject container = Instantiate(wandUIPrefab, wandUIParent);
-        WandUI wandUI = container.GetComponentInChildren<WandUI>();
+        WandUI wandUI = container.GetComponent<WandUI>();
+        wandUI.transform.SetAsFirstSibling();
 
         if (wandUI == null)
         {
@@ -130,4 +127,68 @@ public class WandUIManager : MonoBehaviour
             wandUI.NotifySpellDragEnded();
         }
     }
+
+
+
+    [Header("杖切り替えUI")] // ★ 追加
+    [SerializeField] private Button switchNextButton; // ★ 追加: 次の杖へ
+    [SerializeField] private Button switchPrevButton; // ★ 追加: 前の杖へ
+    // ★ 杖切り替えリスナー
+    private WandSwitchListener wandSwitchListener; // ★ 追加: WandsControllerが実装
+    void Start() // ★ 追加: ボタンリスナーの設定とAttackManagerのイベント登録
+    {
+        // ボタンにクリックリスナーを登録
+        switchNextButton?.onClick.AddListener(() => OnSwitchWandClicked(1));
+        switchPrevButton?.onClick.AddListener(() => OnSwitchWandClicked(-1));
+    }
+    public void SetWandSwitchListener(WandSwitchListener listener)
+    {
+        wandSwitchListener = listener;
+    }
+    /// <summary>
+    /// ボタンがクリックされたときにWandsControllerに切り替えを指示します。
+    /// </summary>
+    /// <param name="direction">切り替え方向 (1: 次, -1: 前)</param>
+    private void OnSwitchWandClicked(int direction) // ★ 新規追加
+    {
+        var index = AttackManager.Instance.GetCurrentWandIndex() + direction;
+        if (wandSwitchListener != null)
+        {
+            wandSwitchListener.SwitchWand(index);
+        }
+        else
+        {
+            Debug.LogWarning("WandSwitchListenerが設定されていません。杖切り替えが実行できません。");
+        }
+    }
+    /// <summary>
+    /// AttackManagerからの通知を受けて、杖切り替えボタンの表示を更新します。
+    /// </summary>
+    /// <param name="newIndex">新しく選択された杖のインデックス</param>
+    private void UpdateWandSwitchButtons(int newIndex) // ★ 新規追加
+    {
+        int totalWands = AttackManager.Instance.playerWands.Count;
+
+        // 次へボタンの表示制御
+        bool canSwitchNext = newIndex < totalWands - 1;
+        switchNextButton?.gameObject.SetActive(canSwitchNext);
+
+        // 前へボタンの表示制御
+        bool canSwitchPrev = newIndex > 0;
+        switchPrevButton?.gameObject.SetActive(canSwitchPrev);
+
+        Debug.Log($"杖切り替えUIを更新: 現在のIndex={newIndex}, Next={canSwitchNext}, Prev={canSwitchPrev}");
+    }
+}
+
+/// <summary>
+/// 杖切り替えイベントを受け取るためのインターフェース
+/// </summary>
+public interface WandSwitchListener
+{
+    /// <summary>
+    /// 杖を一つ切り替えます（インデックスの更新）
+    /// </summary>
+    /// <param name="index">次の杖のindex</param>
+    void SwitchWand(int index);
 }

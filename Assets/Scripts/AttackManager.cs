@@ -178,6 +178,15 @@ public class AttackManager : MonoBehaviour
     }
 
     [SerializeField] private int currentWandIndex = 0;
+    public void SetCurrentWandIndex(int index)
+    {
+        if (index < 0 || index >= playerWands.Count)
+        {
+            Debug.LogError($"不正な杖インデックスが指定されました: {index}");
+            return;
+        }
+        currentWandIndex = index;
+    }
 
     public int GetCurrentWandIndex()
     {
