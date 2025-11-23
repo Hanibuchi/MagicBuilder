@@ -2101,12 +2101,15 @@ MonoBehaviour:
   - type: 0
     spells:
     - {fileID: 11400000, guid: 6c9d9dfe2f68e9144b91bb04a7bd8513, type: 2}
-  - type: 0
+    sprite: {fileID: -115740529236340053, guid: 2e69467cfff73bc4cb18f1a109d26ca0, type: 3}
+  - type: 1
     spells:
     - {fileID: 11400000, guid: 1ae5b79ace718244a92dfb03c51f91d4, type: 2}
-  - type: 0
+    sprite: {fileID: 1012713627532921925, guid: 2e69467cfff73bc4cb18f1a109d26ca0, type: 3}
+  - type: 2
     spells:
     - {fileID: 11400000, guid: 54fdeaf1e456d8843845f8b704afde19, type: 2}
+    sprite: {fileID: -8090468150265851040, guid: 2e69467cfff73bc4cb18f1a109d26ca0, type: 3}
 --- !u!4 &1074218395
 Transform:
   m_ObjectHideFlags: 0

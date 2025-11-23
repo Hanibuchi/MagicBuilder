@@ -28,6 +28,7 @@ public class WandController : IWandEditor, ISpellListChangeListener
 
         // 2. WandUIに自身をエディターとして登録する (IWandEditor)
         wandUI.SetWandEditor(this);
+        wandUI.ChangeAppearance(wand.Sprite);
 
         // 初期状態でUIを構築
         OnSpellListChanged(managedWand.GetSpells());
