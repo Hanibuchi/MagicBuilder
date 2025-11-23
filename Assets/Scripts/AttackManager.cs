@@ -199,7 +199,7 @@ public class AttackManager : MonoBehaviour
     {
         if (currentWandIndex < 0 || currentWandIndex >= playerWands.Count)
         {
-            Debug.LogError($"不正な杖インデックスが指定されました: {currentWandIndex}");
+            Debug.LogWarning($"不正な杖インデックスが指定されました: {currentWandIndex}");
             return null;
         }
         return playerWands[currentWandIndex];

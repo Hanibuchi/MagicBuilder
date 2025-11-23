@@ -65,7 +65,9 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         }
 
         UpdateScroll();
-        DeactivateSpellUIs(AttackManager.Instance.GetCurrentWand().GetSpells());
+        var wand = AttackManager.Instance.GetCurrentWand();
+        if (wand != null)
+            DeactivateSpellUIs(wand.GetSpells());
     }
 
     /// <summary>
