@@ -90,7 +90,7 @@ public enum WandType
 {
     Default,
     Crystal,
-    Wood,
     Steam,
+    Wood,
     Dark,
 }
