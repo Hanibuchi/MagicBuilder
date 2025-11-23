@@ -18,7 +18,9 @@ public class DamageTextManager : MonoBehaviour
     [Tooltip("ダメージ表記の表示時間")]
     [SerializeField] private float displayDuration = 1.0f;
     [Tooltip("Y軸方向の初期ランダムオフセット範囲")]
-    [SerializeField] private float initialRandomYOffset = 0.5f;
+    [SerializeField] private float initialRandomYOffset = 5f;
+    [Tooltip("X軸方向の初期ランダムオフセット範囲")]
+    [SerializeField] private float initialRandomXOffset = 5f; // 例としてY軸と同じ値を初期値に設定
 
     // --- 内部状態 ---
     private Camera mainCamera;
@@ -93,8 +95,17 @@ public class DamageTextManager : MonoBehaviour
         }
 
         // オフセットを加えて初期位置を設定
+        // X方向のランダムオフセットを生成
+        float randomOffsetX = Random.Range(-initialRandomXOffset, initialRandomXOffset); // 👈 Xオフセットを追加
+
+        // Y方向のランダムオフセットを生成
         float randomOffsetY = Random.Range(-initialRandomYOffset, initialRandomYOffset);
-        rectTransform.position = screenPos + Vector3.up * randomOffsetY * rectTransform.lossyScale.y; // スケールを考慮してオフセット適用
+
+        // オフセットベクトルを構築 (X, Y)
+        Vector3 offsetVector = new Vector3(randomOffsetX, randomOffsetY, 0f); // Zは0
+
+        // 最終的な位置を設定
+        rectTransform.position = screenPos + offsetVector; // 👈 変更: 新しいオフセットベクトルを適用v
 
         var animator = textObj.GetComponent<DamageText>();
         animator.Initialize(damageValue, displayDuration);
