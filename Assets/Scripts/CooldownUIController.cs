@@ -127,6 +127,8 @@ public class CooldownUIController : MonoBehaviour, ICooldownChangeListener
                 }
             }
         }
+
+        ControlUIAnimator(totalCooldownValue);
     }
 
     /// <summary>
@@ -172,6 +174,58 @@ public class CooldownUIController : MonoBehaviour, ICooldownChangeListener
             handleTransform.gameObject.SetActive(isActive);
         }
     }
+
+
+
+    // クールタイム表示に使用するAnimator
+    [Tooltip("UIの表示/非表示に使用するAnimator。")]
+    public Animator uiAnimator;
+
+    // Animatorの表示トリガー名
+    [Tooltip("AnimatorでUIを表示する際に使用するTrigger名。")]
+    public string showTriggerName = "Show";
+
+    // Animatorの非表示トリガー名
+    [Tooltip("AnimatorでUIを非表示にする際に使用するTrigger名。")]
+    public string hideTriggerName = "Hide";
+    private bool isUIShowing = false; // UIが現在表示状態にあるかを示すフラグ
+
+    /// <summary>
+    /// Animatorを使用してUIの表示/非表示を切り替える
+    /// </summary>
+    /// <param name="totalCooldownValue">現在の合計クールタイム</param>
+    private void ControlUIAnimator(float totalCooldownValue)
+    {
+        if (uiAnimator == null) return;
+
+        // クールタイムが微小な値（または0）の場合
+        if (totalCooldownValue <= 0.01f)
+        {
+            // 現在表示中の場合にのみHideを実行する
+            if (isUIShowing)
+            {
+                if (!string.IsNullOrEmpty(hideTriggerName))
+                {
+                    uiAnimator.SetTrigger(hideTriggerName);
+                }
+                isUIShowing = false; // 状態を非表示に更新
+            }
+        }
+        else
+        {
+            // 現在非表示中の場合にのみShowを実行する
+            if (!isUIShowing)
+            {
+                if (!string.IsNullOrEmpty(showTriggerName))
+                {
+                    uiAnimator.SetTrigger(showTriggerName);
+                }
+                isUIShowing = true; // 状態を表示中に更新
+            }
+        }
+    }
+
+
 
     // --- デバッグ用 ---
     [ContextMenu("Test Cooldown 50")]
