@@ -63,7 +63,14 @@ public class WandsController : MonoBehaviour, WandSwitchListener
     {
         AttackManager.Instance.SetCurrentWandIndex(index);
         WandUIManager.Instance.SetActiveWandUI(index);
-        SpellInventory.Instance.DeactivateSpellUIs(AttackManager.Instance.GetCurrentWand().GetSpells());
+        var wand = AttackManager.Instance.GetCurrentWand();
+        if (wand == null)
+        {
+            Debug.LogError("現在の杖が見つかりません。");
+            return;
+        }
+        SpellInventory.Instance.DeactivateSpellUIs(wand.GetSpells());
+        WandAppearanceManager.Instance.ChangeAppearance(wand.type);
     }
 
     [SerializeField] List<Wand> test_wand;
