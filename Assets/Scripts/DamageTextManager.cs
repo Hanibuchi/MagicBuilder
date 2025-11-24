@@ -45,6 +45,9 @@ public class DamageTextManager : MonoBehaviour
         mainCamera = Camera.main;
     }
 
+
+    [SerializeField] bool active = true;
+
     // --- 公開メソッド ---
 
     /// <summary>
@@ -55,7 +58,13 @@ public class DamageTextManager : MonoBehaviour
     /// <param name="worldPosition">ダメージを受けたエンティティのワールド座標。</param>
     public void ShowDamageText(float damageValue, DamageType damageType, Vector3 worldPosition)
     {
+        if (!active)
+        {
+            Debug.LogWarning("DamageTextManager is inactive. Damage text will not be shown.");
+            return;
+        }
         if (canvasParent == null || mainCamera == null) return;
+
         GameObject textPrefab;
         switch (damageType)
         {
