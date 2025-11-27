@@ -18,7 +18,7 @@ public class AimController : MonoBehaviour, IAimController
 
     [Tooltip("キャラクターのアニメーションコントローラー")]
     [SerializeField]
-    private CharacterAnimatorController animatorController;
+    private PlayerAnimatorController animatorController;
 
     private void Start()
     {

@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 7091445444110774504}
   - component: {fileID: 991323039495209748}
   - component: {fileID: 901289672571734739}
-  - component: {fileID: 1695195137089414777}
+  - component: {fileID: 8211045740446732899}
   - component: {fileID: 9151595110414199077}
   - component: {fileID: 3832080241137156492}
   - component: {fileID: 1480648989808443419}
@@ -218,7 +218,7 @@ MonoBehaviour:
   iceStopThreshold: 0.3
   iceStopDuration: 20
   maxSlowDurationOnIce: 10
---- !u!114 &1695195137089414777
+--- !u!114 &8211045740446732899
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -227,7 +227,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8260157914405382283}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b45617434a3ffe44a77494fcb5e9023, type: 3}
+  m_Script: {fileID: 11500000, guid: 24621f32461004849ad0501da1f9574f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 991323039495209748}

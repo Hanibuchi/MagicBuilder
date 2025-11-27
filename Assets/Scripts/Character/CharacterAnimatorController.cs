@@ -5,15 +5,12 @@ using UnityEngine;
 /// </summary>
 public class CharacterAnimatorController : MonoBehaviour, IDamageNotifier, IDieNotifier, IHealthNotifier
 {
-    [SerializeField] Animator animator;
-    private HPBarController hpBarController;
+    [SerializeField] protected Animator animator;
+    protected HPBarController hpBarController;
     // --- アニメーションのトリガー名 ---
-    private const string HIT_TRIGGER = "damage";          // ダメージを受けた時のアニメーション
-    private const string DIE_TRIGGER = "die";          // 死亡時のアニメーション
-    private const string FIRE_TRIGGER = "attack";
-    private const string FIRE_DEGREE_PARAM = "attack_degree";
-    private const string AIM_TRIGGER = "aim";
-    private const string AIM_DEGREE_PARAM = "aim_degree";
+    protected const string HIT_TRIGGER = "damage";          // ダメージを受けた時のアニメーション
+    protected const string DIE_TRIGGER = "die";          // 死亡時のアニメーション
+    protected const string FIRE_TRIGGER = "attack";
 
     private void Awake()
     {
@@ -53,43 +50,10 @@ public class CharacterAnimatorController : MonoBehaviour, IDamageNotifier, IDieN
     /// <summary>
     /// 魔法発射を通知し、攻撃アニメーションのトリガーを設定します。
     /// </summary>
-    public void NotifyFire(float angle)
+    public void NotifyFire()
     {
         if (animator == null || !animator.enabled) return;
-
-        // 1. 角度を0度から90度の範囲にクランプ（制限）
-        // 例: -45 -> 0, 125 -> 90, 45 -> 45
-        float clampedAngle = Mathf.Clamp(angle, 0f, 90f);
-
-        // 2. クランプされた角度を0.0から1.0の値に正規化
-        // Mathf.InverseLerp(最小値, 最大値, 現在の値) は、最小値〜最大値の範囲内で
-        // 現在の値がどの位置にあるかを0.0〜1.0で返します。
-        // 例: 0 -> 0.0, 90 -> 1.0, 45 -> 0.5
-        float normalizedValue = Mathf.InverseLerp(0f, 90f, clampedAngle);
-        // 3. Animatorのfloatパラメーターに設定
-        animator.SetFloat(FIRE_DEGREE_PARAM, normalizedValue);
         animator.SetTrigger(FIRE_TRIGGER);
-    }
-
-    /// <param name="angle">狙いの角度 (度)</param>
-    public void SetAimRotation(float angle, bool reset = false)
-    {
-        if (animator == null || !animator.enabled) return;
-        if (reset)
-            return;
-
-        // 1. 角度を0度から90度の範囲にクランプ（制限）
-        // 例: -45 -> 0, 125 -> 90, 45 -> 45
-        float clampedAngle = Mathf.Clamp(angle, 0f, 90f);
-
-        // 2. クランプされた角度を0.0から1.0の値に正規化
-        // Mathf.InverseLerp(最小値, 最大値, 現在の値) は、最小値〜最大値の範囲内で
-        // 現在の値がどの位置にあるかを0.0〜1.0で返します。
-        // 例: 0 -> 0.0, 90 -> 1.0, 45 -> 0.5
-        float normalizedValue = Mathf.InverseLerp(0f, 90f, clampedAngle);
-        // 3. Animatorのfloatパラメーターに設定
-        animator.SetFloat(AIM_DEGREE_PARAM, normalizedValue);
-        animator.SetTrigger(AIM_TRIGGER);
     }
 
 
