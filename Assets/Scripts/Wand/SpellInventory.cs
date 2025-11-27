@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UI;
+using System.Collections;
 
 // ISpellContainer を実装
 public class SpellInventory : MonoBehaviour, ISpellContainer
@@ -57,7 +58,7 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
     /// </summary>
     public void RebuildUI()
     {
-        RebuildUIWithoutDragging();
+        RebuildUICore();
         if (draggingSpellUI != null)
         {
             Destroy(draggingSpellUI.gameObject);
@@ -70,10 +71,20 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
             DeactivateSpellUIs(wand.GetSpells());
     }
 
+    public void RebuildUIWhileDragging()
+    {
+        RebuildUICore();
+
+        var spellList = AttackManager.Instance.GetCurrentWand().GetSpells().ToList();
+        if (draggingSpellUI != null)
+            spellList.Add(draggingSpellUI.GetSpellData());
+        DeactivateSpellUIs(spellList);
+    }
+
     /// <summary>
     /// インベントリの呪文UIをドラッグ中のUIを除いて再構築します。
     /// </summary>
-    void RebuildUIWithoutDragging()
+    void RebuildUICore()
     {
         // 既存のUI要素を全て破棄
         foreach (var spellUI in spellUIs)
@@ -124,11 +135,8 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
     {
         draggingSpellUI = spellUIs[index];
         spellUIs[index] = null;
-        RebuildUIWithoutDragging();
 
-        var spellList = AttackManager.Instance.GetCurrentWand().GetSpells().ToList();
-        spellList.Add(draggingSpellUI.GetSpellData());
-        DeactivateSpellUIs(spellList);
+        RebuildUIWhileDragging();
     }
 
     /// <summary>
@@ -311,5 +319,56 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         {
             Debug.LogWarning("非アクティブ化対象の SpellBase の一部に対応する SpellUI が見つかりませんでした。");
         }
+    }
+
+    /// <summary>
+    /// 新しい呪文をインベントリのデータリストに追加し、UIを再構築します。
+    /// このメソッドは、呪文がドロップアニメーションを完了した後、DropManagerから呼び出されます。
+    /// </summary>
+    /// <param name="spellToAdd">インベントリに追加するSpellBaseデータ。</param>
+    public void AddSpellToInventory(SpellBase spellToAdd)
+    {
+        if (spellToAdd == null)
+        {
+            Debug.LogError("追加しようとした呪文データがnullです。");
+            return;
+        }
+
+        // 1. データリストに追加
+        availableSpells.Add(spellToAdd);
+
+        // 2. UIを再構築 (新しい呪文のUIも含まれる)
+        // ※ RebuildUIが呼ばれる前に、DeactivateSpellUIsの処理で、新しく追加された
+        //    呪文UIが非アクティブ化されないように注意が必要です。（現状のコードでは大丈夫です）
+        RebuildUIWhileDragging();
+
+        Debug.Log($"呪文 '{spellToAdd.spellName}' をインベントリに追加しました。");
+        // スクロールが必要になる可能性があるので、スクロール制御も更新
+        UpdateScroll();
+    }
+
+    [SerializeField] float test_delayTime;
+    [SerializeField] SpellBase test_spell;
+    /// <summary>
+    /// 遅延処理のテストを開始するメソッド
+    /// </summary>
+    public void Test()
+    {
+        // コルーチンを開始
+        StartCoroutine(TestCoroutine());
+    }
+
+    /// <summary>
+    /// test_delayTime秒後にAddSpellToInventoryを実行するコルーチン
+    /// </summary>
+    public IEnumerator TestCoroutine()
+    {
+        // test_delayTime秒間待機
+        yield return new WaitForSeconds(test_delayTime);
+
+        // 待機後にAddSpellToInventoryを実行
+        AddSpellToInventory(test_spell);
+
+        Debug.Log($"遅延時間 {test_delayTime}秒後に呪文 '{test_spell.spellName}' をインベントリに追加しました。");
     }
 }
