@@ -20,6 +20,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: infelno Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 504650700790327757, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
+      propertyPath: m_Mass
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3252799626688289902, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.3

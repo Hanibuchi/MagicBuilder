@@ -30,7 +30,7 @@ public class ProjectileDamageSource : MonoBehaviour, IDamageSource
         return damageData;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         Destroy();
     }

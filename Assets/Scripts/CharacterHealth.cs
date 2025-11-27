@@ -48,15 +48,15 @@ public class CharacterHealth : MonoBehaviour
     /// <summary>
     /// 衝突時にダメージ源からダメージを受け取る。
     /// </summary>
-    /// <param name="other">衝突情報</param>
-    private void OnTriggerEnter2D(Collider2D other)
+    /// <param name="collision">衝突情報</param>
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         // 衝突したオブジェクトからIDamageSourceインターフェースを持つコンポーネントを取得
-        IDamageSource damageSource = other.gameObject.GetComponent<IDamageSource>();
+        IDamageSource damageSource = collision.gameObject.GetComponent<IDamageSource>();
 
         if (damageSource != null)
         {
-            ApplyDamage(damageSource.GetDamage(), other.gameObject);
+            ApplyDamage(damageSource.GetDamage(), collision.gameObject);
         }
     }
 
