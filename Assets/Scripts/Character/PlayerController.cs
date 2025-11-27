@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// 各種interfaceを実装してアニメーションを再生するためのクラス
 /// </summary>
-public class PlayerAnimatorController : CharacterAnimatorController
+public class PlayerController : CharacterController
 {
     private const string FIRE_DEGREE_PARAM = "attack_degree";
     private const string AIM_TRIGGER = "aim";

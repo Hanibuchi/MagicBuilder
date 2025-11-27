@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// 各種interfaceを実装してアニメーションを再生するためのクラス
 /// </summary>
-public class CharacterAnimatorController : MonoBehaviour, IDamageNotifier, IDieNotifier, IHealthNotifier
+public class CharacterController : MonoBehaviour, IDamageNotifier, IDieNotifier, IHealthNotifier
 {
     [SerializeField] protected Animator animator;
     protected HPBarController hpBarController;
