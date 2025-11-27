@@ -6376,10 +6376,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1967465937475426357, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
-      propertyPath: m_Name
-      value: sprite
-      objectReference: {fileID: 0}
     - target: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_Name
       value: slime

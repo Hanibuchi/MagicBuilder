@@ -41,8 +41,8 @@ public class CharacterAnimatorController : MonoBehaviour, IDamageNotifier, IDieN
     /// </summary>
     public void NotifyDie()
     {
-        if (gameObject.TryGetComponent<Collider2D>(out Collider2D collider))
-            collider.enabled = false;
+        // if (gameObject.TryGetComponent<Collider2D>(out Collider2D collider))
+            // collider.enabled = false;
         if (animator == null || !animator.enabled) return;
         animator.SetTrigger(DIE_TRIGGER);
     }
