@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// 各種interfaceを実装してアニメーションを再生するためのクラス
 /// </summary>
-public class CharacterController : MonoBehaviour, IDamageNotifier, IDieNotifier, IHealthNotifier
+public class CharacterController : MonoBehaviour, IDamageNotifier, IDieNotifier, IHealthNotifier, IStatusEffectReceiver
 {
     [SerializeField] protected Animator animator;
     protected HPBarController hpBarController;
@@ -12,6 +12,7 @@ public class CharacterController : MonoBehaviour, IDamageNotifier, IDieNotifier,
     protected const string DIE_TRIGGER = "die";          // 死亡時のアニメーション
     protected const string FIRE_TRIGGER = "attack";
 
+    private StatusEffectModel _statusModel;
     private void Awake()
     {
         if (animator == null)
@@ -21,6 +22,7 @@ public class CharacterController : MonoBehaviour, IDamageNotifier, IDieNotifier,
                 Debug.LogError("Animator component not found on " + gameObject.name);
         }
         hpBarController = GetComponent<HPBarController>();
+        _statusModel = new StatusEffectModel(this);
     }
 
     /// <summary>
@@ -38,14 +40,17 @@ public class CharacterController : MonoBehaviour, IDamageNotifier, IDieNotifier,
 
     public void NotifyFireStun(float duration)
     {
+        _statusModel.FireStun(duration);
     }
 
     public void NotifyFreezeStun(float duration)
     {
+        _statusModel.FreezeStun(duration);
     }
 
     public void NotifyIceSlow(float duration)
     {
+        _statusModel.IceSlow(duration);
     }
 
     /// <summary>
@@ -82,5 +87,36 @@ public class CharacterController : MonoBehaviour, IDamageNotifier, IDieNotifier,
             // HPバーの表示更新を委譲
             hpBarController.UpdateHPBar(maxHP, previousHP, currentHP);
         }
+    }
+
+    private void Update()
+    {
+        _statusModel.Update(Time.deltaTime);
+    }
+
+    public virtual void OnFireStunStart()
+    {
+        Debug.Log("FireStun started");
+    }
+
+    public virtual void OnFireStunEnd()
+    {
+        Debug.Log("FireStun ended");
+    }
+
+    public void OnFreezeStunStart()
+    {
+    }
+
+    public virtual void OnFreezeStunEnd()
+    {
+    }
+
+    public virtual void OnIceSlowStart()
+    {
+    }
+
+    public virtual void OnIceSlowEnd()
+    {
     }
 }
