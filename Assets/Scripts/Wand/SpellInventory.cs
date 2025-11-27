@@ -120,6 +120,15 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         if (spellUI != null)
         {
             spellUI.transform.SetParent(inventoryFrame, false); // 親を設定
+
+            /// 呪文を追加する際のアニメーションの終端位置を取得するために、常に一番最後の要素に特定のオブジェクトがある必要がある。
+            int targetIndex = inventoryFrame.childCount - 2;
+            // targetIndexが0未満にならないように、最大で0とする (つまり、要素が少ない場合は先頭に配置される)
+            if (targetIndex < 0)
+                targetIndex = 0;
+            // 順番を設定
+            spellUI.transform.SetSiblingIndex(targetIndex);
+
             spellUI.SetIndex(index);
             // SpellInventory自身をコンテナとして渡す
             spellUI.Initialize(this);
@@ -347,6 +356,37 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         UpdateScroll();
     }
 
+    [SerializeField] RectTransform dropTargetRect;
+    /// <summary>
+    /// 呪文ドロップアニメーションの終端となるRectTransformの位置（画面下のインベントリフレーム内）を取得します。
+    /// これは、DropManagerがアニメーションのターゲット位置を決定するために使用します。
+    /// </summary>
+    /// <returns>RectTransformで表されたローカル座標系の終端位置。常に画面左下（0, 0）から見た相対座標。</returns>
+    public Vector2 GetDropTargetPosition()
+    {
+        if (dropTargetRect == null)
+        {
+            Debug.LogError("dropTargetRectが設定されていません。");
+            return Vector2.zero;
+        }
+
+        Camera uiCamera = dropTargetRect.GetComponentInParent<Canvas>().renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main;
+
+        // UIの中心のワールド座標を取得（これ自体はあまり使わないが中間ステップとして）
+        Vector3 uiWorldPosition = dropTargetRect.position;
+        // ワールド座標からスクリーン座標に変換
+        // RectTransformUtility.WorldToScreenPointを使用するのが一般的ですが、
+        // 階層を無視して「スクリーン上のどこか」を取得するだけなら、
+        // 実際にはそのUI要素のピボット（position）が既にスクリーン座標に近い値を持っていることが多いです。
+        // シンプルにCanvas内のpositionを取得し、画面サイズで正規化して利用する方法もありますが、
+        // 確実に取得するなら以下の方法です。
+
+        // 確実な方法: 画面の中央からの相対位置ではなく、Rawなスクリーン座標を取得
+        Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(uiCamera, uiWorldPosition);
+
+        return screenPoint;
+    }
+
     [SerializeField] float test_delayTime;
     [SerializeField] SpellBase test_spell;
     /// <summary>
@@ -370,5 +410,25 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         AddSpellToInventory(test_spell);
 
         Debug.Log($"遅延時間 {test_delayTime}秒後に呪文 '{test_spell.spellName}' をインベントリに追加しました。");
+    }
+
+    [SerializeField] RectTransform test_rect;
+    public void Test2()
+    {
+        Camera uiCamera = test_rect.GetComponentInParent<Canvas>().renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main;
+
+        // UIの中心のワールド座標を取得（これ自体はあまり使わないが中間ステップとして）
+        Vector3 uiWorldPosition = test_rect.position;
+
+        // ワールド座標からスクリーン座標に変換
+        // RectTransformUtility.WorldToScreenPointを使用するのが一般的ですが、
+        // 階層を無視して「スクリーン上のどこか」を取得するだけなら、
+        // 実際にはそのUI要素のピボット（position）が既にスクリーン座標に近い値を持っていることが多いです。
+        // シンプルにCanvas内のpositionを取得し、画面サイズで正規化して利用する方法もありますが、
+        // 確実に取得するなら以下の方法です。
+
+        // 確実な方法: 画面の中央からの相対位置ではなく、Rawなスクリーン座標を取得
+        Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(uiCamera, uiWorldPosition);
+        Debug.Log($"Screen Point: {screenPoint}");
     }
 }

@@ -16,4 +16,5 @@ MonoBehaviour:
   spellName: "\u8AA4\u5DEE\u6E1B\u5C11"
   icon: {fileID: -867783436307240682, guid: 926b2e59fa449e74a92407a129deff1d, type: 3}
   uiPrefab: {fileID: 5499559984272135055, guid: a8aa928887aa65d429d07a9b1f220163, type: 3}
+  dropUIPrefab: {fileID: 1104287654635820185, guid: af09b9e47e48e2b4593b9a8e28d2e8f0, type: 3}
   additionalErrorDegree: -30
