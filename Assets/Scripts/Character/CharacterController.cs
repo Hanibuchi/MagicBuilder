@@ -36,13 +36,25 @@ public class CharacterController : MonoBehaviour, IDamageNotifier, IDieNotifier,
         DamageTextManager.Instance.ShowDamageText(damageValue, damageType, transform.position);
     }
 
+    public void NotifyFireStun(float duration)
+    {
+    }
+
+    public void NotifyFreezeStun(float duration)
+    {
+    }
+
+    public void NotifyIceSlow(float duration)
+    {
+    }
+
     /// <summary>
     /// 死亡を通知し、死亡アニメーションのトリガーを設定します。
     /// </summary>
     public void NotifyDie()
     {
         // if (gameObject.TryGetComponent<Collider2D>(out Collider2D collider))
-            // collider.enabled = false;
+        // collider.enabled = false;
         if (animator == null || !animator.enabled) return;
         animator.SetTrigger(DIE_TRIGGER);
     }

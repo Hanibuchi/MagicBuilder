@@ -182,7 +182,7 @@ public class CharacterHealth : MonoBehaviour
     }
 
     /// <summary>
-    /// 火・氷ダメージによる状態異常を処理し、SendMessageで通知します。
+    /// 火・氷ダメージによる状態異常を処理し、interfaceを通じて通知します。
     /// </summary>
     /// <param name="modifiedDamage">補正後のダメージデータ</param>
     private void HandleFireAndIceEffects(Damage modifiedDamage)
@@ -197,9 +197,8 @@ public class CharacterHealth : MonoBehaviour
             float stopRatio = fireDamage / maxHealth;
             float stopDuration = Mathf.Min(stopRatio * maxStopDurationOnFire, maxStopDurationOnFire);
 
-            // "StopAction"メソッドを他のコンポーネントに呼び出してもらう
             // 引数: 停止時間 (float)
-            SendMessage("FireStun", stopDuration, SendMessageOptions.DontRequireReceiver);
+            damageNotifier.NotifyFireStun(stopDuration);
             Debug.Log($"火ダメージ({fireDamage})により、{stopDuration}秒間停止します。");
         }
 
@@ -212,15 +211,14 @@ public class CharacterHealth : MonoBehaviour
             if (stopFactor >= iceStopThreshold)
             {
                 // 完全停止
-                SendMessage("FreezeStun", iceStopDuration, SendMessageOptions.DontRequireReceiver);
+                damageNotifier.NotifyFreezeStun(iceStopDuration);
                 Debug.Log($"氷ダメージ({iceDamage})が大きいため、{iceStopDuration}秒間完全に停止します。");
             }
             else
             {
                 // 減速                
-                // "SlowAction"メソッドを他のコンポーネントに呼び出してもらう
                 float slowDuration = stopFactor * maxSlowDurationOnIce;
-                SendMessage("IceSlow", slowDuration, SendMessageOptions.DontRequireReceiver);
+                damageNotifier.NotifyIceSlow(slowDuration);
                 Debug.Log($"氷ダメージ({iceDamage})により、{slowDuration}秒間減速します。");
             }
         }
@@ -300,6 +298,15 @@ public interface IDamageNotifier
     /// <param name="damageType">ダメージの属性 (Base, Fire, Iceなど)</param>
     /// <param name="damageValue">その属性のダメージ値</param>
     void NotifyDamage(DamageType damageType, float damageValue);
+
+    // 火傷によるスタン（停止）を通知するメソッド
+    void NotifyFireStun(float duration);
+
+    // 凍結による完全停止を通知するメソッド
+    void NotifyFreezeStun(float duration);
+
+    // 氷ダメージによる減速を通知するメソッド
+    void NotifyIceSlow(float duration);
 }
 
 public interface IDieNotifier
