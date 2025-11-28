@@ -13,7 +13,7 @@ public class CharacterController : MonoBehaviour, IDamageNotifier, IDieNotifier,
     protected const string FIRE_TRIGGER = "attack";
 
     private StatusEffectModel _statusModel;
-    private void Awake()
+    protected virtual void Awake()
     {
         if (animator == null)
         {
@@ -65,16 +65,6 @@ public class CharacterController : MonoBehaviour, IDamageNotifier, IDieNotifier,
     }
 
     /// <summary>
-    /// 魔法発射を通知し、攻撃アニメーションのトリガーを設定します。
-    /// </summary>
-    public void NotifyFire()
-    {
-        if (animator == null || !animator.enabled) return;
-        animator.SetTrigger(FIRE_TRIGGER);
-    }
-
-
-    /// <summary>
     /// HPの変化を通知し、表示処理を委譲します。（IHealthNotifierの実装）
     /// </summary>
     /// <param name="maxHP">最大HP</param>
@@ -89,7 +79,7 @@ public class CharacterController : MonoBehaviour, IDamageNotifier, IDieNotifier,
         }
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         _statusModel.Update(Time.deltaTime);
     }

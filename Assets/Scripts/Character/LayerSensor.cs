@@ -8,8 +8,9 @@ public class LayerSensor : MonoBehaviour
     [SerializeField]
     private LayerMask targetLayer;
 
+    public string TriggerID => triggerID;
     [Tooltip("トリガーを区別するためのID")]
-    [SerializeField] string triggerID = "Default";
+    [SerializeField] string triggerID = "attack1";
 
     // 登録されたハンドラーのインスタンス
     private ITriggerHandler handlerInstance;
@@ -30,7 +31,7 @@ public class LayerSensor : MonoBehaviour
         if ((targetLayer.value & (1 << other.gameObject.layer)) > 0)
         {
             // ハンドラーが設定されていれば通知を実行
-            handlerInstance?.OnTriggerSensed(triggerID);
+            handlerInstance?.OnTriggerSensed(triggerID, other.transform.position);
         }
     }
 
@@ -42,7 +43,18 @@ public class LayerSensor : MonoBehaviour
         if ((targetLayer.value & (1 << other.gameObject.layer)) > 0)
         {
             // ハンドラーが設定されていれば通知を実行
-            handlerInstance?.OnTriggerSensed(triggerID);
+            handlerInstance?.OnTriggerSensed(triggerID, other.transform.position);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        // 離脱したオブジェクトのLayerが指定のtargetLayerに含まれているかチェック
+        if ((targetLayer.value & (1 << other.gameObject.layer)) > 0)
+        {
+            // ハンドラーが設定されていれば、離脱通知を実行
+            // 離脱時はターゲットの位置情報 (Vector2 target) は不要なため、IDのみ渡します。
+            handlerInstance?.OnTriggerExited(triggerID);
         }
     }
 }
@@ -53,5 +65,12 @@ public interface ITriggerHandler
     /// LayerSensorによってトリガーが感知された際に呼び出されます。
     /// </summary>
     /// <param name="triggerID">トリガーを区別するためのID。</param>
-    void OnTriggerSensed(string triggerID);
+    /// <param name="target">感知された対象のワールド座標。</param>
+    void OnTriggerSensed(string triggerID, Vector2 target);
+
+    /// <summary>
+    /// LayerSensorからトリガー対象が離脱した際に呼び出されます。（離脱）
+    /// </summary>
+    /// <param name="triggerID">トリガーを区別するためのID。</param>
+    void OnTriggerExited(string triggerID); // ★ このメソッドを追加
 }

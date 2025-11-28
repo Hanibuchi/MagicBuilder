@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine; // MonoBehaviourを継承しないため不要ですが、Unityプロジェクトを想定して。
 
@@ -190,24 +191,19 @@ public interface IEnemyAttackExecutor
     void ExecuteAttack(string attackId);
 }
 
+
 /// <summary>
 /// 攻撃ごとの設定データを保持する構造体
 /// </summary>
+[Serializable]
 public struct AttackData
 {
     /// <summary>攻撃の識別子</summary>
-    public string Id { get; }
+    public string Id;
 
     /// <summary>攻撃のクールタイム（秒）</summary>
-    public float CoolDownTime { get; }
+    public float CoolDownTime;
 
     /// <summary>攻撃の実行時間（秒）</summary>
-    public float ExecutionTime { get; }
-
-    public AttackData(string id, float coolDownTime, float executionTime)
-    {
-        Id = id;
-        CoolDownTime = coolDownTime;
-        ExecutionTime = executionTime;
-    }
+    public float ExecutionTime;
 }

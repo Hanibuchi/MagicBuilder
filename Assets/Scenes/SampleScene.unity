@@ -3243,25 +3243,17 @@ MonoBehaviour:
   woodPrefab: {fileID: 7817211578556221874, guid: 20075e99690f30c44b1c6cd13a6f0117, type: 3}
   waterPrefab: {fileID: 2454662495530537007, guid: ae67901838295d24091540e5af300c10, type: 3}
   active: 0
---- !u!1 &1386169242 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+--- !u!114 &1386169249 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9138608648733254415, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
   m_PrefabInstance: {fileID: 771291240962951969}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1386169249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1386169242}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 885f7a52c9c8b034db01adc090013000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockbackDirection: {x: 1, y: 1}
-  test_strength: 10
 --- !u!1 &1403286900
 GameObject:
   m_ObjectHideFlags: 0
@@ -6402,10 +6394,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1386169249}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
 --- !u!224 &1161794359527488145
 RectTransform:
