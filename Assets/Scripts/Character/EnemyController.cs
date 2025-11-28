@@ -1,11 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 
 /// <summary>
 /// 敵の挙動を制御し、センサーからの通知を受け取り、攻撃を管理するクラス。
 /// </summary>
-public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttackExecutor
+public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttackExecutor, IKickbackHandler
 {
     // --- インスペクタ設定 ---
 
@@ -37,6 +38,13 @@ public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttac
 
     /// <summary>最後にセンサーが感知したターゲットのワールド座標</summary>
     private Vector2 _lastSensedTargetPosition = Vector2.zero;
+
+    // ★ 追加: ノックバック処理のためのEffector
+    private KnockbackEffector _knockbackEffector;
+    // ★ 追加: Rigidbody2D（ノックバック時間計算に必要）
+    private Rigidbody2D _rb2d;
+
+    private Coroutine _kickbackStunCoroutine;
 
     // --- Unity イベント関数 ---
 
@@ -76,6 +84,26 @@ public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttac
         else
         {
             Debug.LogError("EnemyMovementBase component is not attached to the GameObject.");
+        }
+
+        // ★ 追加: KnockbackEffectorの取得
+        if (TryGetComponent<KnockbackEffector>(out var effector))
+        {
+            _knockbackEffector = effector;
+        }
+        else
+        {
+            Debug.LogWarning("KnockbackEffector component is not attached to the GameObject. Knockback will not be applied.");
+        }
+
+        // ★ 追加: Rigidbody2Dの取得
+        if (TryGetComponent<Rigidbody2D>(out var rb))
+        {
+            _rb2d = rb;
+        }
+        else
+        {
+            Debug.LogError("Rigidbody2D component is required for Knockback on " + gameObject.name);
         }
     }
 
@@ -251,5 +279,47 @@ public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttac
         enemyMovement?.ResumeMovement();
         // ★ 追加: クールタイムの倍率をリセット (1.0倍)
         _attackModel.ResetCooldownMultiplier();
+    }
+
+
+    /// <summary>
+    /// ノックバックを適用します。
+    /// ぶつかってきたオブジェクトからこの敵が受けるノックバック処理をKnockbackEffectorに委譲します。
+    /// </summary>
+    /// <param name="knockbackValue">ノックバックの強さ</param>
+    /// <param name="other">ぶつかってきた放射物（ダメージ源）</param>
+    public void ApplyKickback(float knockbackValue, GameObject other)
+    {
+        if (_knockbackEffector == null || _rb2d == null || knockbackValue <= 0f || _kickbackStunCoroutine != null) return;
+        enemyMovement?.StopMovement();
+
+        _knockbackEffector.ApplyKnockback(knockbackValue);
+
+        // 2. 移動を停止し、ノックバックによるスタン処理を開始
+
+        _kickbackStunCoroutine = StartCoroutine(KickbackStunCoroutine(knockbackValue));
+    }
+
+    /// <summary>
+    /// ノックバックによるスタン時間を処理するコルーチン。
+    /// </summary>
+    /// <param name="knockbackValue">ノックバックの強さ（コルーチン内でスタン時間を計算するために使用）</param>
+    private IEnumerator KickbackStunCoroutine(float knockbackValue)
+    {
+        float stunDuration = 1.41421356237f * knockbackValue / (_rb2d.mass * Physics2D.gravity.magnitude);
+
+        // スタン時間の下限・上限を設定しても良い
+        // stunDuration = Mathf.Clamp(stunDuration, 0.1f, 2.0f); 
+
+        Debug.Log($"ノックバックによるスタン時間: {stunDuration}秒 (ノックバック値: {knockbackValue}, 質量: {_rb2d.mass})");
+
+        // スタン時間だけ待機
+        yield return new WaitForSeconds(stunDuration);
+
+        // スタン終了後、移動を再開
+        enemyMovement?.ResumeMovement();
+        _kickbackStunCoroutine = null; // コルーチンが完了したことをマーク
+
+        Debug.Log("ノックバックスタン終了。移動を再開します。");
     }
 }
