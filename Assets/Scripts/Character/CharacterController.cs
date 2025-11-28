@@ -94,7 +94,7 @@ public class CharacterController : MonoBehaviour, IDamageNotifier, IDieNotifier,
         Debug.Log("FireStun ended");
     }
 
-    public void OnFreezeStunStart()
+    public virtual void OnFreezeStunStart()
     {
     }
 

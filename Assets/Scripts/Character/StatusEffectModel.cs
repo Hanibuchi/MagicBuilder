@@ -101,6 +101,7 @@ public class StatusEffectModel
     /// </summary>
     private void ApplyEffect(StatusEffectType newType, float duration)
     {
+        Debug.Log($"Applying effect {newType} with duration {duration}");
         if (duration <= 0) return;
 
         // 1. 新しい状態の残り時間を更新（延長処理）

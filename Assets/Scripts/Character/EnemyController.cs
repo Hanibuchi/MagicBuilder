@@ -198,4 +198,54 @@ public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttac
             Debug.LogWarning("AttackLauncher3が設定されていません。");
         }
     }
+
+    public override void OnFireStunStart()
+    {
+        base.OnFireStunStart();
+        // FireStun開始時は攻撃を停止
+        _attackModel.StopAttack();
+        // 動きも停止
+        enemyMovement?.ApplyFireStun();
+    }
+
+    public override void OnFireStunEnd()
+    {
+        base.OnFireStunEnd();
+        // FireStun終了時は攻撃を再開
+        _attackModel.ResumeAttack();
+        // 動きも再開
+        enemyMovement?.ResumeMovement();
+    }
+
+    public override void OnFreezeStunStart()
+    {
+        base.OnFreezeStunStart();
+        // FreezeStun開始時は攻撃を停止
+        _attackModel.StopAttack();
+        // 動きも停止
+        enemyMovement?.ApplyFreezeStun();
+    }
+
+    public override void OnFreezeStunEnd()
+    {
+        base.OnFreezeStunEnd();
+        // FreezeStun終了時は攻撃を再開
+        _attackModel.ResumeAttack();
+        // 動きも再開。減速（Slow）状態もリセットされる。
+        enemyMovement?.ResumeMovement();
+    }
+
+    public override void OnIceSlowStart()
+    {
+        base.OnIceSlowStart();
+        // 減速状態を移動コンポーネントに適用
+        enemyMovement?.ApplyIceSlow();
+    }
+
+    public override void OnIceSlowEnd()
+    {
+        base.OnIceSlowEnd();
+        // 減速状態を解除
+        enemyMovement?.ResumeMovement(); // 減速状態の終了なので、気絶状態もリセットされてしまうResumeMovementは使用しない方が良い。
+    }
 }

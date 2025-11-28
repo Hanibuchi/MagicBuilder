@@ -8,12 +8,16 @@ public class EnemyMovementBase : MonoBehaviour
     [Header("移動設定")]
     [SerializeField]
     protected float moveSpeed = 1.0f; // 単位時間あたりの移動速度
-    
+
     // 通常の移動速度を保持するフィールドを追加
-    protected float defaultMoveSpeed; 
+    protected float defaultMoveSpeed;
 
     protected Rigidbody2D rb;
     protected bool isMoving = true; // 現在移動中かどうかのフラグ
+
+    // --- 状態異常管理用フィールド ---
+    protected bool isStunned = false; // 気絶（FireStun, FreezeStun）中かどうか
+    protected bool isSlowed = false;  // 減速（IceSlow）中かどうか
 
     // --- Unity ライフサイクルメソッド ---
 
@@ -25,7 +29,7 @@ public class EnemyMovementBase : MonoBehaviour
         {
             Debug.LogError("Rigidbody2Dが見つかりません。敵モブにはRigidbody2Dが必要です。", this);
         }
-        
+
         // 速度比率制御のために、Awake時に現在のmoveSpeedをデフォルト値として保持する
         defaultMoveSpeed = moveSpeed;
     }
@@ -33,7 +37,7 @@ public class EnemyMovementBase : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         // 物理演算はFixedUpdateで行う
-        if (isMoving)
+        if (isMoving && !isStunned)
         {
             // 毎フレーム呼ばれる動きの処理を実行
             HandleMovement();
@@ -41,7 +45,7 @@ public class EnemyMovementBase : MonoBehaviour
     }
 
     // --- 動きの制御メソッド ---
-    
+
     /// <summary>
     /// 0.0fから1.0fのfloat型を取り、1.0fを通常状態として移動速度をその比率にする。
     /// 例: ratioが0.5fなら、速度は通常の半分になる。
@@ -51,7 +55,7 @@ public class EnemyMovementBase : MonoBehaviour
     {
         // 比率を0.0fから1.0fの間にクランプ（制限）する
         float clampedRatio = Mathf.Clamp01(ratio);
-        
+
         // moveSpeedをデフォルトの速度に比率を掛けた値に設定
         moveSpeed = defaultMoveSpeed * clampedRatio;
     }
@@ -59,7 +63,7 @@ public class EnemyMovementBase : MonoBehaviour
     /// <summary>
     /// 移動速度を通常の速度に戻す (SetMovementSpeedRatio(1.0f) と同じ)。
     /// </summary>
-    public virtual void ResetMovementSpeed()
+    protected virtual void ResetMovementSpeed()
     {
         moveSpeed = defaultMoveSpeed;
     }
@@ -96,14 +100,57 @@ public class EnemyMovementBase : MonoBehaviour
     }
 
     /// <summary>
-    /// 敵の動きを再開させる。
+    /// 敵の動きを再開させる。状態異常（気絶・減速）からも復帰する。
     /// </summary>
     public virtual void ResumeMovement()
     {
+        // 状態異常フラグをリセット
+        isStunned = false;
+        isSlowed = false;
+
+        // 速度をデフォルトに戻す（減速状態からの復帰）
+        ResetMovementSpeed();
+
         if (!isMoving)
         {
             isMoving = true;
             // 再開時の速度設定はHandleMovement()に任せる（次のFixedUpdateで実行される）
         }
+    }
+
+
+    /// <summary>
+    /// 火による気絶状態を適用する。動きが完全に停止する。
+    /// </summary>
+    public virtual void ApplyFireStun()
+    {
+        // FireStunはFreezeStunと同じ効果（動きの停止）を持つ
+        ApplyFreezeStun();
+    }
+
+    /// <summary>
+    /// 氷による気絶状態を適用する。動きが完全に停止する。
+    /// </summary>
+    public virtual void ApplyFreezeStun()
+    {
+        // 既に気絶状態なら何もしない
+        if (isStunned) return;
+
+        isStunned = true;
+        // 動きを完全に停止させる
+        StopMovement();
+    }
+
+    /// <summary>
+    /// 氷による減速状態を適用する。速さが半減する。
+    /// </summary>
+    public virtual void ApplyIceSlow()
+    {
+        // 既に減速状態なら何もしない
+        if (isSlowed) return;
+
+        isSlowed = true;
+        // 速度を半減させる
+        SetMovementSpeedRatio(0.5f);
     }
 }
