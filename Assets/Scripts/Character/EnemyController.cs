@@ -243,7 +243,7 @@ public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttac
         // FireStun開始時は攻撃を停止
         _attackModel.StopAttack();
         // 動きも停止
-        enemyMovement?.ApplyFireStun();
+        enemyMovement?.ApplyStun();
     }
 
     public override void OnFireStunEnd()
@@ -252,7 +252,7 @@ public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttac
         // FireStun終了時は攻撃を再開
         _attackModel.ResumeAttack();
         // 動きも再開
-        enemyMovement?.ResumeMovement();
+        enemyMovement?.RemoveStun();
     }
 
     public override void OnFreezeStunStart()
@@ -261,7 +261,7 @@ public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttac
         // FreezeStun開始時は攻撃を停止
         _attackModel.StopAttack();
         // 動きも停止
-        enemyMovement?.ApplyFreezeStun();
+        enemyMovement?.ApplyStun();
     }
 
     public override void OnFreezeStunEnd()
@@ -270,7 +270,7 @@ public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttac
         // FreezeStun終了時は攻撃を再開
         _attackModel.ResumeAttack();
         // 動きも再開。減速（Slow）状態もリセットされる。
-        enemyMovement?.ResumeMovement();
+        enemyMovement?.RemoveStun();
     }
 
     public override void OnIceSlowStart()
@@ -286,7 +286,7 @@ public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttac
     {
         base.OnIceSlowEnd();
         // 減速状態を解除
-        enemyMovement?.ResumeMovement();
+        enemyMovement?.RemoveSlow();
         // ★ 追加: クールタイムの倍率をリセット (1.0倍)
         _attackModel.ResetCooldownMultiplier();
     }
@@ -301,7 +301,7 @@ public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttac
     public void ApplyKickback(float knockbackValue, GameObject other)
     {
         if (_knockbackEffector == null || _rb2d == null || knockbackValue <= 0f || _kickbackStunCoroutine != null) return;
-        enemyMovement?.StopMovement();
+        enemyMovement?.ApplyStun();
 
         _knockbackEffector.ApplyKnockback(knockbackValue);
 
@@ -328,7 +328,7 @@ public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttac
 
         // スタン終了後、移動を再開
         if (!characterHealth.IsDead)
-            enemyMovement?.ResumeMovement();
+            enemyMovement?.RemoveStun();
         _kickbackStunCoroutine = null; // コルーチンが完了したことをマーク
 
         Debug.Log("ノックバックスタン終了。移動を再開します。");
@@ -336,7 +336,7 @@ public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttac
 
     public override void NotifyDie()
     {
-        enemyMovement?.StopMovement();
+        enemyMovement?.ApplyStun();
         base.NotifyDie();
     }
 }

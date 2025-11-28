@@ -16,7 +16,7 @@ public class EnemyMovementBase : MonoBehaviour
     protected bool isMoving = true; // 現在移動中かどうかのフラグ
 
     // --- 状態異常管理用フィールド ---
-    protected bool isStunned = false; // 気絶（FireStun, FreezeStun）中かどうか
+    protected int isStunned = 0; // 気絶（FireStun, FreezeStun）中かどうか
     protected bool isSlowed = false;  // 減速（IceSlow）中かどうか
 
     // --- Unity ライフサイクルメソッド ---
@@ -37,7 +37,7 @@ public class EnemyMovementBase : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         // 物理演算はFixedUpdateで行う
-        if (isMoving && !isStunned)
+        if (isMoving && isStunned <= 0)
         {
             // 毎フレーム呼ばれる動きの処理を実行
             HandleMovement();
@@ -88,15 +88,7 @@ public class EnemyMovementBase : MonoBehaviour
     /// </summary>
     public virtual void StopMovement()
     {
-        if (isMoving)
-        {
-            isMoving = false;
-            if (rb != null)
-            {
-                // 停止時に現在の速度をゼロにする
-                rb.linearVelocity = Vector2.zero;
-            }
-        }
+        isMoving = false;
     }
 
     /// <summary>
@@ -104,41 +96,25 @@ public class EnemyMovementBase : MonoBehaviour
     /// </summary>
     public virtual void ResumeMovement()
     {
+        isMoving = true;
+    }
+
+    public void ApplyStun()
+    {
+        isStunned++;
+    }
+    public void RemoveStun()
+    {
+        isStunned--;
+    }
+
+    public void RemoveSlow()
+    {
         // 状態異常フラグをリセット
-        isStunned = false;
         isSlowed = false;
 
         // 速度をデフォルトに戻す（減速状態からの復帰）
         ResetMovementSpeed();
-
-        if (!isMoving)
-        {
-            isMoving = true;
-            // 再開時の速度設定はHandleMovement()に任せる（次のFixedUpdateで実行される）
-        }
-    }
-
-
-    /// <summary>
-    /// 火による気絶状態を適用する。動きが完全に停止する。
-    /// </summary>
-    public virtual void ApplyFireStun()
-    {
-        // FireStunはFreezeStunと同じ効果（動きの停止）を持つ
-        ApplyFreezeStun();
-    }
-
-    /// <summary>
-    /// 氷による気絶状態を適用する。動きが完全に停止する。
-    /// </summary>
-    public virtual void ApplyFreezeStun()
-    {
-        // 既に気絶状態なら何もしない
-        if (isStunned) return;
-
-        isStunned = true;
-        // 動きを完全に停止させる
-        StopMovement();
     }
 
     /// <summary>
