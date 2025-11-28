@@ -40,6 +40,9 @@ public class EnemyAttackModel
     /// <summary>現在攻撃の実行中か？</summary>
     public bool IsExecutingAttack => _currentExecutionTimer > 0f;
 
+    /// <summary>クールタイムにかける倍率 (1.0fが通常)</summary>
+    private float _cooldownMultiplier = 1.0f; // <--- 追加
+
     // --- コンストラクタ ---
 
     /// <summary>
@@ -114,7 +117,7 @@ public class EnemyAttackModel
         // 状態を更新
         _currentExecutingAttackId = attackId;
         _currentExecutionTimer = data.ExecutionTime;
-        _remainingCoolDowns[attackId] = data.CoolDownTime;
+        _remainingCoolDowns[attackId] = data.CoolDownTime * _cooldownMultiplier;
 
         // 外部に実行を依頼
         _executor.ExecuteAttack(attackId);
@@ -176,6 +179,22 @@ public class EnemyAttackModel
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// クールタイムの倍率を設定する（例: 2.0fでクールタイムが2倍になる）
+    /// </summary>
+    public void SetCooldownMultiplier(float multiplier) // <--- 追加
+    {
+        _cooldownMultiplier = multiplier;
+    }
+
+    /// <summary>
+    /// クールタイムの倍率をリセットする（1.0fに戻す）
+    /// </summary>
+    public void ResetCooldownMultiplier() // <--- 追加
+    {
+        _cooldownMultiplier = 1.0f;
     }
 }
 

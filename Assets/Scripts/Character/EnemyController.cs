@@ -240,12 +240,16 @@ public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttac
         base.OnIceSlowStart();
         // 減速状態を移動コンポーネントに適用
         enemyMovement?.ApplyIceSlow();
+        // ★ 追加: 攻撃頻度を半分にするため、クールタイムを2.0倍に設定
+        _attackModel.SetCooldownMultiplier(2.0f);
     }
 
     public override void OnIceSlowEnd()
     {
         base.OnIceSlowEnd();
         // 減速状態を解除
-        enemyMovement?.ResumeMovement(); // 減速状態の終了なので、気絶状態もリセットされてしまうResumeMovementは使用しない方が良い。
+        enemyMovement?.ResumeMovement();
+        // ★ 追加: クールタイムの倍率をリセット (1.0倍)
+        _attackModel.ResetCooldownMultiplier();
     }
 }
