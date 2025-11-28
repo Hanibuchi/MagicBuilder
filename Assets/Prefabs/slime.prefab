@@ -507,7 +507,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   launchPoint: {fileID: 379072239273853010}
-  attackPrefab: {fileID: 396131387130879284, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
+  attackPrefab: {fileID: 461336670524401298, guid: d08d85676f491d342afddad4897663e5, type: 3}
 --- !u!1001 &4614337404976686399
 PrefabInstance:
   m_ObjectHideFlags: 0

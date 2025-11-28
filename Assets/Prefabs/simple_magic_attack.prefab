@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4652757309359089412}
   - component: {fileID: 504650700790327757}
   - component: {fileID: 8527945778064652579}
-  - component: {fileID: -6898668614026110431}
   - component: {fileID: 414260835269359439}
+  - component: {fileID: 8600365097350075244}
   m_Layer: 11
   m_Name: simple_magic_attack
   m_TagString: Untagged
@@ -122,18 +122,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0.4550339, y: 0}
   m_Radius: 0.2910322
---- !u!114 &-6898668614026110431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 396131387130879284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68c9ebe4cd0e07345b1d3271c5747b5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &414260835269359439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,6 +132,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93a32b6351d32c04b8468e3cfc53f208, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8600365097350075244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396131387130879284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 725e96cb8d8268e48a74493b7e8c8ff7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4536938712615723385

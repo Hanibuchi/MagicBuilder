@@ -51,12 +51,21 @@ public class CharacterHealth : MonoBehaviour
     /// <param name="collision">衝突情報</param>
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        HandleCollision(collision.gameObject);
+    }
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        HandleCollision(collision.gameObject);
+    }
+
+    void HandleCollision(GameObject obj)
+    {
         // 衝突したオブジェクトからIDamageSourceインターフェースを持つコンポーネントを取得
-        IDamageSource damageSource = collision.gameObject.GetComponent<IDamageSource>();
+        IDamageSource damageSource = obj.GetComponent<IDamageSource>();
 
         if (damageSource != null)
         {
-            ApplyDamage(damageSource.GetDamage(), collision.gameObject);
+            ApplyDamage(damageSource.GetDamage(), obj);
         }
     }
 

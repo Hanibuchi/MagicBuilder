@@ -1,20 +1,25 @@
 using UnityEngine;
 
 /// <summary>
-/// 呪文以外用。衝突時にダメージ情報をCharacterHealthコンポーネントに提供するコンポーネント。
+/// 呪文用。衝突時にダメージ情報をCharacterHealthコンポーネントに提供するコンポーネント。
 /// IDamageSourceインターフェースを実装しています。
 /// </summary>
-public class ProjectileDamageSource : DamageSourceBase
+public class SpellProjectileDamageSource : DamageSourceBase
 {
     // --- 外部参照用変数 (public/SerializeField) ---
-    [Tooltip("このオブジェクトが自動で消滅するまでの時間 (秒)")]
-    [SerializeField] private float destroyTime = 0.1f;
 
     [Header("ダメージ設定")]
     [Tooltip("このダメージ源が与える詳細なダメージ情報")]
     // publicかつ[System.Serializable]な構造体であるDamageを直接SerializeFieldとして定義することで、
     // インスペクタと外部スクリプトの両方から編集可能になります。
-    [SerializeField] Damage damageData;
+    Damage damageData;
+    const string HIT_TRIGGER = "hit";
+
+    // --- IDamageSourceの実装 ---
+    public void Initialize(float strength, SpellContext spellContext)
+    {
+        damageData = spellContext.damage;
+    }
 
     /// <summary>
     /// このダメージ源が持つダメージ情報を取得します。
@@ -23,11 +28,5 @@ public class ProjectileDamageSource : DamageSourceBase
     public override Damage GetDamage()
     {
         return damageData;
-    }
-
-    private void Start()
-    {
-        // 指定した時間経過後に自身を破棄
-        Destroy(gameObject, destroyTime);
     }
 }
