@@ -47,21 +47,21 @@ public class CharacterHealth : MonoBehaviour
 
 
     // 衝突時にダメージ源からダメージを受け取る。（単発/範囲）
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void OnCollisionEnter2D(Collision2D collision)
     {
         HandleCollisionEnter(collision.gameObject);
     }
-    void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
         HandleCollisionEnter(collision.gameObject);
     }
 
     // 接触中にダメージ源からダメージを受け取る。（多段）
-    private void OnCollisionStay2D(Collision2D collision)
+    public void OnCollisionStay2D(Collision2D collision)
     {
         HandleCollisionStay(collision.gameObject);
     }
-    void OnTriggerStay2D(Collider2D collision)
+    public void OnTriggerStay2D(Collider2D collision)
     {
         HandleCollisionStay(collision.gameObject);
     }
