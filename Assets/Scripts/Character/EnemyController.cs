@@ -46,6 +46,8 @@ public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttac
 
     private Coroutine _kickbackStunCoroutine;
 
+    CharacterHealth characterHealth;
+
     // --- Unity イベント関数 ---
 
     protected override void Awake()
@@ -104,6 +106,14 @@ public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttac
         else
         {
             Debug.LogError("Rigidbody2D component is required for Knockback on " + gameObject.name);
+        }
+        if (TryGetComponent<CharacterHealth>(out var health))
+        {
+            characterHealth = health;
+        }
+        else
+        {
+            Debug.LogError("CharacterHealth component is required on " + gameObject.name);
         }
     }
 
@@ -317,9 +327,16 @@ public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttac
         yield return new WaitForSeconds(stunDuration);
 
         // スタン終了後、移動を再開
-        enemyMovement?.ResumeMovement();
+        if (!characterHealth.IsDead)
+            enemyMovement?.ResumeMovement();
         _kickbackStunCoroutine = null; // コルーチンが完了したことをマーク
 
         Debug.Log("ノックバックスタン終了。移動を再開します。");
+    }
+
+    public override void NotifyDie()
+    {
+        enemyMovement?.StopMovement();
+        base.NotifyDie();
     }
 }

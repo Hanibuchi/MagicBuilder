@@ -56,7 +56,7 @@ public class CharacterController : MonoBehaviour, IDamageNotifier, IDieNotifier,
     /// <summary>
     /// 死亡を通知し、死亡アニメーションのトリガーを設定します。
     /// </summary>
-    public void NotifyDie()
+    public virtual void NotifyDie()
     {
         // if (gameObject.TryGetComponent<Collider2D>(out Collider2D collider))
         // collider.enabled = false;

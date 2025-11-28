@@ -237,12 +237,19 @@ public class CharacterHealth : MonoBehaviour
             knockbackHandler.ApplyKickback(knockbackValue, other);
         }
     }
-
+    /// <summary>
+    /// キャラクターが死亡しているかどうかを取得します。
+    /// </summary>
+    public bool IsDead => isDead;
+    // --- 追加: 死亡状態フラグ ---
+    private bool isDead = false;
     /// <summary>
     /// キャラクターが死亡した時の処理。
     /// </summary>
     private void Die()
     {
+        if (isDead) return; // 既に死亡済みなら重複処理を避ける
+        isDead = true;
         Debug.Log($"{gameObject.name}は倒れた。");
         // 死亡時のアニメーションやゲームオーバー処理などを記述
         dieNotifier?.NotifyDie();
