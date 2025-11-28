@@ -153,7 +153,7 @@ MonoBehaviour:
   startEffectPrefab: {fileID: 1405153890113068789, guid: 3db3f4acc26d0654099ecd96c99228db, type: 3}
   localSpawnOffset: {x: 1.2, y: 0, z: 0}
   matchRotation: 1
-  matchScale: 0
+  matchScale: 1
 --- !u!114 &6385625881979512774
 MonoBehaviour:
   m_ObjectHideFlags: 0

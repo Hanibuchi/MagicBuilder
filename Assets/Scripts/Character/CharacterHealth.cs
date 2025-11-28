@@ -45,27 +45,71 @@ public class CharacterHealth : MonoBehaviour
         healthNotifier = GetComponent<IHealthNotifier>();
     }
 
-    /// <summary>
-    /// 衝突時にダメージ源からダメージを受け取る。
-    /// </summary>
-    /// <param name="collision">衝突情報</param>
+
+    // 衝突時にダメージ源からダメージを受け取る。（単発/範囲）
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        HandleCollision(collision.gameObject);
+        HandleCollisionEnter(collision.gameObject);
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
-        HandleCollision(collision.gameObject);
+        HandleCollisionEnter(collision.gameObject);
     }
 
-    void HandleCollision(GameObject obj)
+    // 接触中にダメージ源からダメージを受け取る。（多段）
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        HandleCollisionStay(collision.gameObject);
+    }
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        HandleCollisionStay(collision.gameObject);
+    }
+
+    // 衝突処理を統合する新しいメソッド
+    void HandleCollisionEnter(GameObject obj)
     {
         // 衝突したオブジェクトからIDamageSourceインターフェースを持つコンポーネントを取得
         IDamageSource damageSource = obj.GetComponent<IDamageSource>();
 
         if (damageSource != null)
         {
-            ApplyDamage(damageSource.GetDamage(), obj);
+            DamageSourceType sourceType = damageSource.GetDamageSourceType();
+
+            switch (sourceType)
+            {
+                case DamageSourceType.SingleHit:
+                    // 単発ヒット: Enter時のみ、かつ貫通回数が残っているかチェック
+                    if (damageSource.TryConsumePierceCount())
+                        ApplyDamage(damageSource.GetDamage(), obj);
+                    break;
+
+                case DamageSourceType.AreaOfEffect:
+                    // 範囲攻撃: Enter時のみダメージ適用（範囲内の敵すべてに当たる）
+                    ApplyDamage(damageSource.GetDamage(), obj);
+                    break;
+            }
+        }
+    }
+
+
+    // 衝突処理を統合する新しいメソッド
+    void HandleCollisionStay(GameObject obj)
+    {
+        // 衝突したオブジェクトからIDamageSourceインターフェースを持つコンポーネントを取得
+        IDamageSource damageSource = obj.GetComponent<IDamageSource>();
+
+        if (damageSource != null)
+        {
+            DamageSourceType sourceType = damageSource.GetDamageSourceType();
+
+            if (sourceType == DamageSourceType.MultiHit)
+            {
+                // 多段ヒット: Stay時のみダメージ適用（一定時間ごとにダメージを与える処理は、IDamageSourceの実装側で管理する必要がある）
+                // 注意: 多段ヒットのダメージ頻度（クールタイム）は、IDamageSourceを実装するコンポーネント側で制御することが一般的です。
+                // ここでは衝突が継続していることのみを判定しています。
+                ApplyDamage(damageSource.GetDamage(), obj);
+            }
         }
     }
 
@@ -291,6 +335,16 @@ public enum CharacterElement
 }
 
 /// <summary>
+/// ダメージ源の攻撃タイプ。
+/// </summary>
+public enum DamageSourceType
+{
+    SingleHit,    // 単発ヒット（貫通可能）
+    AreaOfEffect, // 範囲攻撃
+    MultiHit      // 多段ヒット
+}
+
+/// <summary>
 /// ダメージを与えるコンポーネントが実装すべきインターフェース。
 /// </summary>
 public interface IDamageSource
@@ -300,6 +354,27 @@ public interface IDamageSource
     /// </summary>
     /// <returns>Damage構造体。</returns>
     Damage GetDamage();
+
+    /// <summary>
+    /// このダメージ源の攻撃タイプを取得します。
+    /// </summary>
+    DamageSourceType GetDamageSourceType();
+
+    // --- 単発ヒット（貫通あり）専用 ---
+
+    /// <summary>
+    /// 単発ヒットのターゲットとしてヒット可能かどうかを判定します。
+    /// 呼び出すたびに内部でヒット回数/貫通回数をカウントダウンし、
+    /// 0以下になったらfalseを返します。
+    /// </summary>
+    /// <returns>ヒット可能であればtrue、そうでなければfalse。</returns>
+    bool TryConsumePierceCount();
+
+    /// <summary>
+    /// 単発ヒットの貫通回数を設定/追加します。
+    /// </summary>
+    /// <param name="count">追加する貫通回数。</param>
+    void AddPierceCount(int count);
 }
 
 
