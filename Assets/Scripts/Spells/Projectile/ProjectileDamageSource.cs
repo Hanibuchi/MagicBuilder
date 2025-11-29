@@ -6,6 +6,7 @@ using UnityEngine;
 /// </summary>
 public class ProjectileDamageSource : DamageSourceBase
 {
+    [SerializeField] bool autoDestroy = true;
     // --- 外部参照用変数 (public/SerializeField) ---
     [Tooltip("このオブジェクトが自動で消滅するまでの時間 (秒)")]
     [SerializeField] private float destroyTime = 0.1f;
@@ -28,6 +29,7 @@ public class ProjectileDamageSource : DamageSourceBase
     private void Start()
     {
         // 指定した時間経過後に自身を破棄
-        Destroy(gameObject, destroyTime);
+        if (autoDestroy)
+            Destroy(gameObject, destroyTime);
     }
 }

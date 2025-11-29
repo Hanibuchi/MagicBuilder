@@ -47,6 +47,9 @@ public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttac
     private Coroutine _kickbackStunCoroutine;
 
 
+    protected const string STOP_PARAM = "is_stop";
+
+
     // --- Unity イベント関数 ---
 
     protected override void Awake()
@@ -146,6 +149,7 @@ public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttac
         _attackModel.RequestAttack(triggerID);
 
         enemyMovement?.StopMovement();
+        animator.SetBool(STOP_PARAM, true);
     }
 
     /// <summary>
@@ -160,6 +164,8 @@ public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttac
         _isTargetSensed = false;
 
         enemyMovement?.ResumeMovement();
+
+        animator.SetBool(STOP_PARAM, false);
     }
 
     // --- IEnemyAttackExecutor の実装 ---
