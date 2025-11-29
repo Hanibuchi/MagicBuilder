@@ -29,4 +29,9 @@ public class SpellProjectileDamageSource : DamageSourceBase
     {
         return damageData;
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        Destroy();
+    }
 }

@@ -99,6 +99,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: bat_stone Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 2221629164813666676, guid: a85e5e272b9727a4db18153d0132e4f4, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: ad46bc02815b00c4b85fc09e6b8325c1, type: 2}
     - target: {fileID: 4976873380423070600, guid: a85e5e272b9727a4db18153d0132e4f4, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[0].x
       value: 0.61816126
