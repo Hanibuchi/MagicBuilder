@@ -13,6 +13,8 @@ public class CharacterController : MonoBehaviour, IDamageNotifier, IDieNotifier,
     protected const string FIRE_TRIGGER = "attack";
 
     private StatusEffectModel _statusModel;
+
+    protected CharacterHealth characterHealth;
     protected virtual void Awake()
     {
         if (animator == null)
@@ -23,6 +25,15 @@ public class CharacterController : MonoBehaviour, IDamageNotifier, IDieNotifier,
         }
         hpBarController = GetComponent<HPBarController>();
         _statusModel = new StatusEffectModel(this);
+
+        if (TryGetComponent<CharacterHealth>(out var health))
+        {
+            characterHealth = health;
+        }
+        else
+        {
+            Debug.LogError("CharacterHealth component is required on " + gameObject.name);
+        }
     }
 
     /// <summary>
@@ -30,7 +41,7 @@ public class CharacterController : MonoBehaviour, IDamageNotifier, IDieNotifier,
     /// </summary>
     public void NotifyDamage(DamageType damageType, float damageValue)
     {
-        if (animator == null || !animator.enabled) return;
+        if (animator == null || !animator.enabled || characterHealth.IsDead) return;
 
         // 例: 基本/全てのダメージで共通の"Hit"アニメーションを再生
         animator.SetTrigger(HIT_TRIGGER);

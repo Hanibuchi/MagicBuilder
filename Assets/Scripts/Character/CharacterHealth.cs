@@ -132,6 +132,17 @@ public class CharacterHealth : MonoBehaviour
         currentHealth -= finalDamage;
         Debug.Log($"{gameObject.name}は{finalDamage}のダメージを受けました。残り体力: {currentHealth}");
 
+        // 4. ノックバック処理の委譲
+        HandleKnockback(modifiedDamage.knockback, other);
+
+        healthNotifier?.NotifyHealthChange(maxHealth, previousHealth, currentHealth);
+
+        if (currentHealth <= 0)
+        {
+            Die();
+            return;
+        }
+
         // 3. 受けたダメージによる状態異常処理
         HandleFireAndIceEffects(modifiedDamage);
 
@@ -163,16 +174,6 @@ public class CharacterHealth : MonoBehaviour
             {
                 damageNotifier.NotifyDamage(DamageType.Water, modifiedDamage.waterDamage);
             }
-        }
-
-        // 4. ノックバック処理の委譲
-        HandleKnockback(modifiedDamage.knockback, other);
-
-        healthNotifier?.NotifyHealthChange(maxHealth, previousHealth, currentHealth);
-
-        if (currentHealth <= 0)
-        {
-            Die();
         }
     }
 

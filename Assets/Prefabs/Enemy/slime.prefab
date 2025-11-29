@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 9076936378721177696}
   - component: {fileID: 3054214445999646573}
   - component: {fileID: 476603648058067127}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: sensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -296,7 +296,7 @@ GameObject:
   - component: {fileID: 3976017126703981615}
   - component: {fileID: 7809496392863742821}
   m_Layer: 10
-  m_Name: slime_anim
+  m_Name: anim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

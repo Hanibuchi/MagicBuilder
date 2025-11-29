@@ -46,7 +46,6 @@ public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttac
 
     private Coroutine _kickbackStunCoroutine;
 
-    CharacterHealth characterHealth;
 
     // --- Unity イベント関数 ---
 
@@ -106,14 +105,6 @@ public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttac
         else
         {
             Debug.LogError("Rigidbody2D component is required for Knockback on " + gameObject.name);
-        }
-        if (TryGetComponent<CharacterHealth>(out var health))
-        {
-            characterHealth = health;
-        }
-        else
-        {
-            Debug.LogError("CharacterHealth component is required on " + gameObject.name);
         }
     }
 
