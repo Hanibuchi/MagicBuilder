@@ -45,6 +45,10 @@ public class CharacterHealth : MonoBehaviour
         healthNotifier = GetComponent<IHealthNotifier>();
     }
 
+    private static int ALLAY_LAYER_INDEX = 9;
+    private static int ENEMY_LAYER_INDEX = 10;
+    private static int ALLAY_ATTACK_LAYER_INDEX = 11;
+    private static int ENEMY_ATTACK_LAYER_INDEX = 12;
 
     // 衝突時にダメージ源からダメージを受け取る。（単発/範囲）
     public void OnCollisionEnter2D(Collision2D collision)
@@ -74,6 +78,16 @@ public class CharacterHealth : MonoBehaviour
 
         if (damageSource != null)
         {
+            // *** Layer Filtering: 敵味方/同陣営の弾丸を無視する処理を追加 ***
+            int selfLayer = gameObject.layer;
+            int otherLayer = obj.layer;
+
+            // 1. 自分(Allay)が味方弾(Allay_Projectile)に当たった場合
+            // 2. 自分(Enemy)が敵弾(Enemy_Projectile)に当たった場合
+            if ((selfLayer == ALLAY_LAYER_INDEX && otherLayer == ALLAY_ATTACK_LAYER_INDEX) ||
+                (selfLayer == ENEMY_LAYER_INDEX && otherLayer == ENEMY_ATTACK_LAYER_INDEX))
+                return; // 処理を無視して終了
+
             DamageSourceType sourceType = damageSource.GetDamageSourceType();
 
             switch (sourceType)
@@ -101,6 +115,15 @@ public class CharacterHealth : MonoBehaviour
 
         if (damageSource != null)
         {
+            // *** Layer Filtering: 敵味方/同陣営の弾丸を無視する処理を追加 ***
+            int selfLayer = gameObject.layer;
+            int otherLayer = obj.layer;
+
+            // 1. 自分(Allay)が味方弾(Allay_Projectile)に当たった場合
+            // 2. 自分(Enemy)が敵弾(Enemy_Projectile)に当たった場合
+            if ((selfLayer == ALLAY_LAYER_INDEX && otherLayer == ALLAY_ATTACK_LAYER_INDEX) ||
+                (selfLayer == ENEMY_LAYER_INDEX && otherLayer == ENEMY_ATTACK_LAYER_INDEX))
+                return; // 処理を無視して終了
             DamageSourceType sourceType = damageSource.GetDamageSourceType();
 
             if (sourceType == DamageSourceType.MultiHit)
