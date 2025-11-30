@@ -335,5 +335,6 @@ public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttac
     {
         enemyMovement?.ApplyStun();
         base.NotifyDie();
+        GetComponent<SpellDropper>()?.DropSpells();
     }
 }

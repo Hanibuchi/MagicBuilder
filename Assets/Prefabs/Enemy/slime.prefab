@@ -431,6 +431,7 @@ GameObject:
   - component: {fileID: 74969639956603153}
   - component: {fileID: 427356011830783050}
   - component: {fileID: 6875321328670521665}
+  - component: {fileID: 551951246347731591}
   m_Layer: 10
   m_Name: slime
   m_TagString: Untagged
@@ -581,6 +582,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &551951246347731591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8884610926546658600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba660a8d08692d545bdf153e29bbfafc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  droppableSpells: []
+  dropDelay: 0.2
 --- !u!1001 &4614337404976686399
 PrefabInstance:
   m_ObjectHideFlags: 0
