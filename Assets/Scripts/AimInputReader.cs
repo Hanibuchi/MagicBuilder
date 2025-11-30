@@ -7,9 +7,9 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
+    public static AimInputReader Instance { get; private set; }
     [Header("設定")]
     [Tooltip("発射の開始地点となるワールド座標")]
-    [SerializeField]
     private Transform startPointTransform;
 
     [Tooltip("最大のドラッグ距離に対応する発射強度 (1.0f)")]
@@ -21,6 +21,32 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     // 発射開始地点のスクリーン座標を格納するフィールド
     private Vector2 startPointScreenPosition;
     private bool isAiming = false;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        startPointTransform = PlayerController.Instance.aimStartPoint;
+        if (startPointTransform == null)
+        {
+            Debug.LogError("StartPointTransformが設定されていません。インスペクタから設定してください。");
+        }
+    }
+
+    void Update()
+    {
+        transform.position = startPointTransform.position;
+    }
 
     /// <summary>
     /// IAimControllerをセットするためのパブリックメソッド

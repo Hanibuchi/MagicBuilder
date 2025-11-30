@@ -9,7 +9,6 @@ public class AimController : MonoBehaviour, IAimController
 {
     [Header("設定")]
     [Tooltip("入力を受け取るためのAimInputReaderのインスタンス")]
-    [SerializeField]
     private AimInputReader aimInputReader;
 
     [Tooltip("現在選択されている杖のインデックス")]
@@ -17,11 +16,13 @@ public class AimController : MonoBehaviour, IAimController
     private int selectedWandIndex => AttackManager.Instance.GetCurrentWandIndex();
 
     [Tooltip("キャラクターのアニメーションコントローラー")]
-    [SerializeField]
     private PlayerController animatorController;
 
     private void Start()
     {
+        aimInputReader = AimInputReader.Instance;
+        animatorController = PlayerController.Instance;
+
         // AimInputReaderが設定されているか確認
         if (aimInputReader == null)
         {

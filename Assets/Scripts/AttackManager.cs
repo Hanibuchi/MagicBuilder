@@ -17,7 +17,7 @@ public class AttackManager : MonoBehaviour
     [Header("杖の管理")]
     [Tooltip("プレイヤーが現在所持している杖の配列")]
     public List<Wand> playerWands = new List<Wand>();
-    public Transform casterPositionTransform;
+    protected Transform casterPositionTransform;
 
     private void Awake()
     {
@@ -31,6 +31,11 @@ public class AttackManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        casterPositionTransform = PlayerController.Instance.aimStartPoint;
     }
 
     [SerializeField] int displayAimingLineSpellCount = 5;

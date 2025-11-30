@@ -1081,7 +1081,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerWands: []
-  casterPositionTransform: {fileID: 1782557132}
   displayAimingLineSpellCount: 5
   currentWandIndex: 0
 --- !u!4 &393885584
@@ -1986,7 +1985,6 @@ GameObject:
   - component: {fileID: 831038164}
   - component: {fileID: 831038163}
   - component: {fileID: 831038166}
-  - component: {fileID: 831038167}
   m_Layer: 13
   m_Name: AimStartObject
   m_TagString: Untagged
@@ -2006,7 +2004,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 076c254811e02074cbec4a3e53de55dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPointTransform: {fileID: 1782557132}
   maxDragDistance: 200
 --- !u!212 &831038164
 SpriteRenderer:
@@ -2114,26 +2111,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!1818360608 &831038167
-PositionConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 831038162}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Weight: 1
-  m_TranslationAtRest: {x: 0.86, y: 0.27, z: 0}
-  m_TranslationOffset: {x: 0, y: 0, z: 0}
-  m_AffectTranslationX: 1
-  m_AffectTranslationY: 1
-  m_AffectTranslationZ: 1
-  m_Active: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 1782557132}
-    weight: 1
 --- !u!1 &893214385
 GameObject:
   m_ObjectHideFlags: 0
@@ -3612,8 +3589,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8def98e480479354c9d1795872d755b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aimInputReader: {fileID: 831038163}
-  animatorController: {fileID: 4748276676359965939}
 --- !u!4 &1465483441
 Transform:
   m_ObjectHideFlags: 0
@@ -3726,7 +3701,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1579409899}
   m_Layer: 0
-  m_Name: BG_Forest
+  m_Name: Background_Forest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3915,11 +3890,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trashCanUI: {fileID: 203037217}
---- !u!4 &1782557132 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6375063124494403374, guid: 864d69398cbad294a89daf01f91bb0a9, type: 3}
-  m_PrefabInstance: {fileID: 4748276676359965938}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1802142826
 GameObject:
   m_ObjectHideFlags: 0
@@ -6631,17 +6601,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 864d69398cbad294a89daf01f91bb0a9, type: 3}
---- !u!114 &4748276676359965939 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8211045740446732899, guid: 864d69398cbad294a89daf01f91bb0a9, type: 3}
-  m_PrefabInstance: {fileID: 4748276676359965938}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24621f32461004849ad0501da1f9574f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4799691744398808843
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,9 +5,29 @@ using UnityEngine;
 /// </summary>
 public class PlayerController : CharacterController
 {
+    public static PlayerController Instance { get; private set; }
     private const string FIRE_DEGREE_PARAM = "attack_degree";
     private const string AIM_TRIGGER = "aim";
     private const string AIM_DEGREE_PARAM = "aim_degree";
+
+    [SerializeField] public Transform aimStartPoint;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        if (aimStartPoint == null)
+        {
+            Debug.LogError("AimStartPointが設定されていません。インスペクタから設定してください。");
+        }
+    }
 
     /// <summary>
     /// 魔法発射を通知し、攻撃アニメーションのトリガーを設定します。

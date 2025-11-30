@@ -231,6 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 991323039495209748}
+  aimStartPoint: {fileID: 6375063124494403374}
 --- !u!61 &9151595110414199077
 BoxCollider2D:
   m_ObjectHideFlags: 0

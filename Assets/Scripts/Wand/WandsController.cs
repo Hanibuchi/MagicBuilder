@@ -10,6 +10,7 @@ using System;
 /// </summary>
 public class WandsController : MonoBehaviour, WandSwitchListener
 {
+    public static WandsController Instance { get; private set; }
     [Header("依存コンポーネント")]
     [Tooltip("AttackManagerインスタンスへの参照")]
     // AttackManager.Instanceを使ってアクセスするため、設定は任意とします。
@@ -48,6 +49,18 @@ public class WandsController : MonoBehaviour, WandSwitchListener
         wandControllers.Add(wandController);
 
         Debug.Log($"新しい杖が生成されました。インデックス: {newWandIndex} | タイプ: {newWand.type}");
+    }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     void Start()
