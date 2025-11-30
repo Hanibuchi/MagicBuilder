@@ -733,6 +733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cf6534e3d23e50438ee2d96faadbb41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clearCondition: 1
   stagePrefabs:
   - {fileID: 5006268731125347042, guid: bcc1f67afad4f5346988e29a2d33ad21, type: 3}
   - {fileID: 6306026796900488691, guid: 10a201b20e740d34eb8bff9441b6a070, type: 3}
@@ -743,11 +744,13 @@ MonoBehaviour:
   - {fileID: 9015308416365106781, guid: 46570480b52627a4996a6a554e425cba, type: 3}
   - {fileID: 4004734349162004513, guid: 2c1c63c9eefd7b24a880671b7fce2f89, type: 3}
   - {fileID: 4566236321816154798, guid: 408ed9a2b6c06dd428bdd6c5c8235ad6, type: 3}
+  - {fileID: 1885488079702365206, guid: d1617606c44ac7544bae927f2b140dd4, type: 3}
   playerPrefab: {fileID: 5255534377115560913, guid: 864d69398cbad294a89daf01f91bb0a9, type: 3}
   playerSpawnPoint: {fileID: 1008364732}
   enemySpawnPoint: {fileID: 1899820376}
   test_phases:
   - {fileID: 11400000, guid: c7ccc81a04475ce4a8f84a9a24402982, type: 2}
+  clearDelaySeconds: 3
 --- !u!4 &827964235
 Transform:
   m_ObjectHideFlags: 0

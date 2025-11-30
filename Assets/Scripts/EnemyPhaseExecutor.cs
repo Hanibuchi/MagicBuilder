@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 /// <summary>
 /// EnemyPhaseConfigの木構造を読み込み、敵の出現を制御するクラス。
@@ -39,20 +40,20 @@ public class EnemyPhaseExecutor : MonoBehaviour
     // 現在実行中のフェーズと、次の処理待ちのフェーズを管理するスタック
     private Stack<EnemyPhaseConfig> phaseStack = new Stack<EnemyPhaseConfig>();
 
-    public void StartPhase(EnemyPhaseConfig[] phases)
+    public void StartPhase(EnemyPhaseConfig[] phases, Action callback = null)
     {
         // 初期フェーズをスタックに追加
         for (int i = phases.Length - 1; i >= 0; i--)
         {
             phaseStack.Push(phases[i]);
         }
-        StartCoroutine(ExecutePhases());
+        StartCoroutine(ExecutePhases(callback));
     }
 
     /// <summary>
     /// フェーズを深さ優先探索で実行するコルーチン。
     /// </summary>
-    private IEnumerator ExecutePhases()
+    private IEnumerator ExecutePhases(Action callback)
     {
         Debug.Log("EnemyPhaseExecutor: フェーズ実行開始");
 
@@ -86,6 +87,7 @@ public class EnemyPhaseExecutor : MonoBehaviour
         }
 
         Debug.Log("EnemyPhaseExecutor: すべてのフェーズの実行が完了しました。");
+        callback?.Invoke();
     }
 
     /// <summary>

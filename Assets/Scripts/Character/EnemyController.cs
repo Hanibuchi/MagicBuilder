@@ -111,6 +111,11 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         }
     }
 
+    private void Start()
+    {
+        EnemyCounter.Instance?.AddEnemy();
+    }
+
     protected override void Update()
     {
         // CharacterController.Updateを呼び出し、ステータス効果を更新
@@ -337,5 +342,6 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         base.NotifyDie();
         GetComponent<SpellDropper>()?.DropSpells();
         GetComponent<BossClearNotifier>()?.NotifyDefeated();
+        EnemyCounter.Instance?.RemoveEnemy();
     }
 }
