@@ -66,6 +66,8 @@ public class WandsController : MonoBehaviour, WandSwitchListener
     void Start()
     {
         WandUIManager.Instance.SetWandSwitchListener(this);
+
+        Test();// テスト用。本格的な処理は後々実装。
     }
     /// <summary>
     /// WandSwitchListenerインターフェースの実装。
