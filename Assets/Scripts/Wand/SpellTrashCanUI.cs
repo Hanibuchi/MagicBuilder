@@ -29,9 +29,15 @@ public class SpellTrashCanUI : MonoBehaviour, IDropHandler
             // ※ ここで RebuildUI() を呼ぶ必要はありません。
             //    NotifyDropSuccess() の内部で、元の ISpellContainer (WandUIなど) が
             //    NotifySpellRemovedを呼び出し、その後に RebuildUI が適切に処理されます。
-            
+
             // 例: ドロップ成功時の視覚的なフィードバック（任意）
             Debug.Log($"呪文 '{droppedSpellUI.GetSpellData().spellName}' がゴミ箱にドロップされ、杖から削除されました。");
         }
+    }
+
+    [SerializeField] private GameObject setActiveObject;
+    public void SetActive(bool active)
+    {
+        setActiveObject.SetActive(active);
     }
 }

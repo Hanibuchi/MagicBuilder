@@ -16,4 +16,5 @@ MonoBehaviour:
   spellName: "5\u500D\u546A\u6587"
   icon: {fileID: 21300000, guid: 48f801d513c8f8f479d9a91c176a840c, type: 3}
   uiPrefab: {fileID: 5499559984272135055, guid: a8aa928887aa65d429d07a9b1f220163, type: 3}
+  dropUIPrefab: {fileID: 1104287654635820185, guid: af09b9e47e48e2b4593b9a8e28d2e8f0, type: 3}
   multiplierCount: 5

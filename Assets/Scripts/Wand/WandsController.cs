@@ -10,6 +10,7 @@ using System;
 /// </summary>
 public class WandsController : MonoBehaviour, WandSwitchListener
 {
+    public static WandsController Instance { get; private set; }
     [Header("依存コンポーネント")]
     [Tooltip("AttackManagerインスタンスへの参照")]
     // AttackManager.Instanceを使ってアクセスするため、設定は任意とします。
@@ -50,9 +51,23 @@ public class WandsController : MonoBehaviour, WandSwitchListener
         Debug.Log($"新しい杖が生成されました。インデックス: {newWandIndex} | タイプ: {newWand.type}");
     }
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
         WandUIManager.Instance.SetWandSwitchListener(this);
+
+        Test();// テスト用。本格的な処理は後々実装。
     }
     /// <summary>
     /// WandSwitchListenerインターフェースの実装。
@@ -63,7 +78,14 @@ public class WandsController : MonoBehaviour, WandSwitchListener
     {
         AttackManager.Instance.SetCurrentWandIndex(index);
         WandUIManager.Instance.SetActiveWandUI(index);
-        SpellInventory.Instance.DeactivateSpellUIs(AttackManager.Instance.GetCurrentWand().GetSpells());
+        var wand = AttackManager.Instance.GetCurrentWand();
+        if (wand == null)
+        {
+            Debug.LogError("現在の杖が見つかりません。");
+            return;
+        }
+        SpellInventory.Instance.DeactivateSpellUIs(wand.GetSpells());
+        WandAppearanceManager.Instance.ChangeAppearance(wand.type);
     }
 
     [SerializeField] List<Wand> test_wand;

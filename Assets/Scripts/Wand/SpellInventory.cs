@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UI;
+using System.Collections;
 
 // ISpellContainer を実装
 public class SpellInventory : MonoBehaviour, ISpellContainer
@@ -57,7 +58,7 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
     /// </summary>
     public void RebuildUI()
     {
-        RebuildUIWithoutDragging();
+        RebuildUICore();
         if (draggingSpellUI != null)
         {
             Destroy(draggingSpellUI.gameObject);
@@ -65,13 +66,25 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         }
 
         UpdateScroll();
-        DeactivateSpellUIs(AttackManager.Instance.GetCurrentWand().GetSpells());
+        var wand = AttackManager.Instance.GetCurrentWand();
+        if (wand != null)
+            DeactivateSpellUIs(wand.GetSpells());
+    }
+
+    public void RebuildUIWhileDragging()
+    {
+        RebuildUICore();
+
+        var spellList = AttackManager.Instance.GetCurrentWand().GetSpells().ToList();
+        if (draggingSpellUI != null)
+            spellList.Add(draggingSpellUI.GetSpellData());
+        DeactivateSpellUIs(spellList);
     }
 
     /// <summary>
     /// インベントリの呪文UIをドラッグ中のUIを除いて再構築します。
     /// </summary>
-    void RebuildUIWithoutDragging()
+    void RebuildUICore()
     {
         // 既存のUI要素を全て破棄
         foreach (var spellUI in spellUIs)
@@ -107,6 +120,15 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         if (spellUI != null)
         {
             spellUI.transform.SetParent(inventoryFrame, false); // 親を設定
+
+            /// 呪文を追加する際のアニメーションの終端位置を取得するために、常に一番最後の要素に特定のオブジェクトがある必要がある。
+            int targetIndex = inventoryFrame.childCount - 2;
+            // targetIndexが0未満にならないように、最大で0とする (つまり、要素が少ない場合は先頭に配置される)
+            if (targetIndex < 0)
+                targetIndex = 0;
+            // 順番を設定
+            spellUI.transform.SetSiblingIndex(targetIndex);
+
             spellUI.SetIndex(index);
             // SpellInventory自身をコンテナとして渡す
             spellUI.Initialize(this);
@@ -122,11 +144,8 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
     {
         draggingSpellUI = spellUIs[index];
         spellUIs[index] = null;
-        RebuildUIWithoutDragging();
 
-        var spellList = AttackManager.Instance.GetCurrentWand().GetSpells().ToList();
-        spellList.Add(draggingSpellUI.GetSpellData());
-        DeactivateSpellUIs(spellList);
+        RebuildUIWhileDragging();
     }
 
     /// <summary>
@@ -309,5 +328,107 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         {
             Debug.LogWarning("非アクティブ化対象の SpellBase の一部に対応する SpellUI が見つかりませんでした。");
         }
+    }
+
+    /// <summary>
+    /// 新しい呪文をインベントリのデータリストに追加し、UIを再構築します。
+    /// このメソッドは、呪文がドロップアニメーションを完了した後、DropManagerから呼び出されます。
+    /// </summary>
+    /// <param name="spellToAdd">インベントリに追加するSpellBaseデータ。</param>
+    public void AddSpellToInventory(SpellBase spellToAdd)
+    {
+        if (spellToAdd == null)
+        {
+            Debug.LogError("追加しようとした呪文データがnullです。");
+            return;
+        }
+
+        // 1. データリストに追加
+        availableSpells.Add(spellToAdd);
+
+        // 2. UIを再構築 (新しい呪文のUIも含まれる)
+        // ※ RebuildUIが呼ばれる前に、DeactivateSpellUIsの処理で、新しく追加された
+        //    呪文UIが非アクティブ化されないように注意が必要です。（現状のコードでは大丈夫です）
+        RebuildUIWhileDragging();
+
+        Debug.Log($"呪文 '{spellToAdd.spellName}' をインベントリに追加しました。");
+        // スクロールが必要になる可能性があるので、スクロール制御も更新
+        UpdateScroll();
+    }
+
+    [SerializeField] RectTransform dropTargetRect;
+    /// <summary>
+    /// 呪文ドロップアニメーションの終端となるRectTransformの位置（画面下のインベントリフレーム内）を取得します。
+    /// これは、DropManagerがアニメーションのターゲット位置を決定するために使用します。
+    /// </summary>
+    /// <returns>RectTransformで表されたローカル座標系の終端位置。常に画面左下（0, 0）から見た相対座標。</returns>
+    public Vector2 GetDropTargetPosition()
+    {
+        if (dropTargetRect == null)
+        {
+            Debug.LogError("dropTargetRectが設定されていません。");
+            return Vector2.zero;
+        }
+
+        Camera uiCamera = dropTargetRect.GetComponentInParent<Canvas>().renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main;
+
+        // UIの中心のワールド座標を取得（これ自体はあまり使わないが中間ステップとして）
+        Vector3 uiWorldPosition = dropTargetRect.position;
+        // ワールド座標からスクリーン座標に変換
+        // RectTransformUtility.WorldToScreenPointを使用するのが一般的ですが、
+        // 階層を無視して「スクリーン上のどこか」を取得するだけなら、
+        // 実際にはそのUI要素のピボット（position）が既にスクリーン座標に近い値を持っていることが多いです。
+        // シンプルにCanvas内のpositionを取得し、画面サイズで正規化して利用する方法もありますが、
+        // 確実に取得するなら以下の方法です。
+
+        // 確実な方法: 画面の中央からの相対位置ではなく、Rawなスクリーン座標を取得
+        Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(uiCamera, uiWorldPosition);
+
+        return screenPoint;
+    }
+
+    [SerializeField] float test_delayTime;
+    [SerializeField] SpellBase test_spell;
+    /// <summary>
+    /// 遅延処理のテストを開始するメソッド
+    /// </summary>
+    public void Test()
+    {
+        // コルーチンを開始
+        StartCoroutine(TestCoroutine());
+    }
+
+    /// <summary>
+    /// test_delayTime秒後にAddSpellToInventoryを実行するコルーチン
+    /// </summary>
+    public IEnumerator TestCoroutine()
+    {
+        // test_delayTime秒間待機
+        yield return new WaitForSeconds(test_delayTime);
+
+        // 待機後にAddSpellToInventoryを実行
+        AddSpellToInventory(test_spell);
+
+        Debug.Log($"遅延時間 {test_delayTime}秒後に呪文 '{test_spell.spellName}' をインベントリに追加しました。");
+    }
+
+    [SerializeField] RectTransform test_rect;
+    public void Test2()
+    {
+        Camera uiCamera = test_rect.GetComponentInParent<Canvas>().renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main;
+
+        // UIの中心のワールド座標を取得（これ自体はあまり使わないが中間ステップとして）
+        Vector3 uiWorldPosition = test_rect.position;
+
+        // ワールド座標からスクリーン座標に変換
+        // RectTransformUtility.WorldToScreenPointを使用するのが一般的ですが、
+        // 階層を無視して「スクリーン上のどこか」を取得するだけなら、
+        // 実際にはそのUI要素のピボット（position）が既にスクリーン座標に近い値を持っていることが多いです。
+        // シンプルにCanvas内のpositionを取得し、画面サイズで正規化して利用する方法もありますが、
+        // 確実に取得するなら以下の方法です。
+
+        // 確実な方法: 画面の中央からの相対位置ではなく、Rawなスクリーン座標を取得
+        Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(uiCamera, uiWorldPosition);
+        Debug.Log($"Screen Point: {screenPoint}");
     }
 }

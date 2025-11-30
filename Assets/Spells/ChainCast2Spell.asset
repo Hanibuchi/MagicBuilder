@@ -16,6 +16,7 @@ MonoBehaviour:
   spellName: "2\u9023\u7D9A\u8A60\u5531"
   icon: {fileID: -4528508259275424184, guid: 47f3e55d9434f84498d6dad85330ac95, type: 3}
   uiPrefab: {fileID: 5499559984272135055, guid: a8aa928887aa65d429d07a9b1f220163, type: 3}
+  dropUIPrefab: {fileID: 1104287654635820185, guid: af09b9e47e48e2b4593b9a8e28d2e8f0, type: 3}
   relativeSpellGroupOffsets: 0100000002000000
   delayMultiplier: 0.01
   additionalErrorDegree: 2

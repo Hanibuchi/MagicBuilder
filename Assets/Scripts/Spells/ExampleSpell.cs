@@ -78,7 +78,7 @@ public class ExampleSpell : SpellBase
         );
 
         context.damage += damage;
-        projectileGO.GetComponent<ProjectileDamageSource>().Initialize(strength, context);
+        projectileGO.GetComponent<SpellProjectileDamageSource>().Initialize(strength, context);
 
         // 2. Rigidbody2Dを取得し、初速を計算して設定
         Rigidbody2D rb = projectileGO.GetComponent<Rigidbody2D>();

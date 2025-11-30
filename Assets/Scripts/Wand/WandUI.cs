@@ -2,6 +2,8 @@
 
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.U2D.Animation;
+using UnityEngine.UI;
 
 public class WandUI : MonoBehaviour, ISpellContainer
 {
@@ -154,6 +156,20 @@ public class WandUI : MonoBehaviour, ISpellContainer
         {
             element.GetComponent<SpacingUI>()?.SetExtendedTriggerActive(false);
         }
+    }
+
+
+
+
+    [SerializeField] Image wandImage;
+
+    /// <summary>
+    /// 指定されたWandTypeに基づいて杖の見た目を変更します。
+    /// </summary>
+    /// <param name="wandSprite">設定する杖のタイプ</param>
+    public void ChangeAppearance(Sprite wandSprite)
+    {
+        wandImage.sprite = wandSprite;
     }
 }
 

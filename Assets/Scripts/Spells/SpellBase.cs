@@ -303,6 +303,30 @@ public abstract class SpellBase : ScriptableObject
 
         return uiInstance;
     }
+
+
+    [Tooltip("ドロップ時のアニメーションに使用するUIプレハブ。nullの場合は uiPrefab を使用。")]
+    public GameObject dropUIPrefab;
+
+    /// <summary>
+    /// 呪文がワールドからドロップしてインベントリに回収される際のアニメーションに使用するUIオブジェクトを生成します。
+    /// </summary>
+    /// <returns>生成されたUIオブジェクトのGameObject。</returns>
+    public virtual GameObject CreateDropUI()
+    {
+        if (dropUIPrefab == null)
+        {
+            Debug.LogError($"呪文 '{spellName}' に dropUIPrefabが設定されていません。");
+            return null;
+        }
+        // UIオブジェクトを生成
+        GameObject dropUIInstance = Instantiate(dropUIPrefab);
+        if (dropUIInstance.TryGetComponent<SpellDropUI>(out var spellDropUI))
+        {
+            spellDropUI.SetData(this);
+        }
+        return dropUIInstance;
+    }
 }
 
 /// <summary>

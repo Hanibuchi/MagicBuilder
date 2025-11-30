@@ -107,6 +107,7 @@ public class WandUIManager : MonoBehaviour
         activeWandUIs.Remove(wandUI);
     }
 
+
     /// <summary>
     /// 全てのWandUIに、SpellUIのドラッグが開始されたことを通知します。
     /// </summary>
@@ -115,6 +116,11 @@ public class WandUIManager : MonoBehaviour
         foreach (var wandUI in activeWandUIs)
         {
             wandUI.NotifySpellDragBegan();
+        }
+        // ★ 追加: 登録された全てのハンドラにも通知
+        foreach (var handler in dragHandlers)
+        {
+            handler.OnSpellDragBegan();
         }
     }
 
@@ -127,6 +133,34 @@ public class WandUIManager : MonoBehaviour
         {
             wandUI.NotifySpellDragEnded();
         }
+        // ★ 追加: 登録された全てのハンドラにも通知
+        foreach (var handler in dragHandlers)
+        {
+            handler.OnSpellDragEnded();
+        }
+    }
+
+
+
+    // ★ 追加: SpellDragHandlerのリスト
+    private List<ISpellDragHandler> dragHandlers = new List<ISpellDragHandler>(); // ★ 新規追加
+    /// <summary>
+    /// SpellDragHandlerが生成されたときに自身を登録します。
+    /// </summary>
+    public void RegisterSpellDragHandler(ISpellDragHandler handler) // ★ 新規追加
+    {
+        if (!dragHandlers.Contains(handler))
+        {
+            dragHandlers.Add(handler);
+            Debug.Log($"SpellDragHandler登録完了。現在 {dragHandlers.Count} 個のハンドラが登録されています。");
+        }
+    }
+    /// <summary>
+    /// SpellDragHandlerが破棄されたときに登録を解除します。
+    /// </summary>
+    public void UnregisterSpellDragHandler(ISpellDragHandler handler) // ★ 新規追加
+    {
+        dragHandlers.Remove(handler);
     }
 
 
@@ -192,4 +226,20 @@ public interface WandSwitchListener
     /// </summary>
     /// <param name="index">次の杖のindex</param>
     void SwitchWand(int index);
+}
+
+/// <summary>
+/// SpellUIのドラッグ開始/終了イベントを受け取るためのインターフェース。
+/// </summary>
+public interface ISpellDragHandler
+{
+    /// <summary>
+    /// SpellUIのドラッグが開始されたときに呼ばれます。
+    /// </summary>
+    void OnSpellDragBegan();
+
+    /// <summary>
+    /// SpellUIのドラッグが終了したときに呼ばれます（ドロップ成功/失敗にかかわらず）。
+    /// </summary>
+    void OnSpellDragEnded();
 }
