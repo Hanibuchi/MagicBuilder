@@ -13,7 +13,7 @@ public class StageManager : MonoBehaviour
     [Header("プレイヤー設定")]
     [Tooltip("プレイヤーのPrefab")]
     [SerializeField] private GameObject playerPrefab;
-    
+
     [Tooltip("プレイヤーをInstantiateする初期位置を示すTransformマーカー")]
     [SerializeField] private Transform playerSpawnPoint;
 
@@ -21,13 +21,15 @@ public class StageManager : MonoBehaviour
 
     private const string StageCommonSceneName = "Stage_Common";
 
+    [SerializeField] Transform enemySpawnPoint;
+
     // --- Unityライフサイクルメソッド ---
 
     private void Awake()
     {
         // 1. StageCommonシーンのAdditiveロード
         LoadCommonScene();
-        
+
         // 2. ステージ固有のPrefabのInstantiate
         InstantiateStageElements();
 
@@ -105,7 +107,20 @@ public class StageManager : MonoBehaviour
 
         // プレイヤーを初期位置に、回転を維持してInstantiateする
         Instantiate(playerPrefab, playerSpawnPoint.position, playerSpawnPoint.rotation);
-        
+
         Debug.Log($"プレイヤーを位置: {playerSpawnPoint.position} にInstantiateしました。");
     }
+
+    private void Start()
+    {
+        StartPhase();
+    }
+
+    public void StartPhase()
+    {
+        EnemyPhaseExecutor.Instance.SetSpawnPoint(enemySpawnPoint.position);
+        EnemyPhaseExecutor.Instance.StartPhase(test_phases);
+    }
+
+    public EnemyPhaseConfig[] test_phases;
 }
