@@ -10,11 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5c15d6a2a4cd60418b1bdd9064a2d84, type: 3}
-  m_Name: test_EnemyPhase
+  m_Name: test_bossEnemyPhase
   m_EditorClassIdentifier: 
   conditionType: 1
   conditionValue: 1
-  spawnerConfig: {fileID: 11400000, guid: 2b64748838611104daa5cbecc282d093, type: 2}
-  nextPhases:
-  - {fileID: 11400000, guid: 6e332e42a0ee84940974d973a4c65264, type: 2}
-  - {fileID: 11400000, guid: 76aa54129f39d174c8d33a8ea85a183a, type: 2}
+  spawnerConfig: {fileID: 11400000, guid: 446566680d2ee354aaf6d8d714cfa92f, type: 2}
+  nextPhases: []

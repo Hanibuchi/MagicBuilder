@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System.Collections;
 
 public class StageManager : MonoBehaviour
 {
     // --- インスペクタから設定するフィールド ---
+
+    public static StageManager Instance { get; private set; }
 
     [Header("ステージ構成要素")]
     [Tooltip("Instantiateするステージ固有のPrefabのリスト")]
@@ -27,6 +30,8 @@ public class StageManager : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
+
         // 1. StageCommonシーンのAdditiveロード
         LoadCommonScene();
 
@@ -123,4 +128,43 @@ public class StageManager : MonoBehaviour
     }
 
     public EnemyPhaseConfig[] test_phases;
+
+
+    /// <summary>
+    /// ボスとして指定された敵が倒されたときに呼び出されます。
+    /// これにより、ステージクリアが判定されます。
+    /// </summary>
+    public void NotifyBossDefeatedForClear() // メソッド名を変更
+    {
+        Debug.Log("🛡️ ボス撃破通知を受け取りました！");
+        HandleStageClear();
+
+    }
+    [Header("ステージクリア設定")] // 追記
+    [Tooltip("クリア後の演出時間（秒）。この時間後にゲームが停止します。")]
+    [SerializeField] private float clearDelaySeconds = 3.0f; // 例として3.0秒
+
+    /// <summary>
+    /// ステージクリア時の処理を実行します。
+    /// </summary>
+    private void HandleStageClear()
+    {
+        Debug.Log("🎉 ステージクリア！");
+        StartCoroutine(DelayAndPauseGame(clearDelaySeconds));
+    }
+
+    /// <summary>
+    /// 指定された秒数だけ待機した後、ゲームを停止します。
+    /// </summary>
+    private IEnumerator DelayAndPauseGame(float delay) // 追記
+    {
+        Debug.Log($"クリア演出のため {delay} 秒間待機します...");
+
+        // 指定された秒数だけ待機
+        yield return new WaitForSeconds(delay);
+
+        // 待機後、ゲームを一時停止 (Time.timeScale = 0f)
+        Time.timeScale = 0f;
+        Debug.Log("ゲームを一時停止しました。");
+    }
 }
