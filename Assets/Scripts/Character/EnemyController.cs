@@ -6,7 +6,7 @@ using System.Collections;
 /// <summary>
 /// 敵の挙動を制御し、センサーからの通知を受け取り、攻撃を管理するクラス。
 /// </summary>
-public class EnemyController : CharacterController, ITriggerHandler, IEnemyAttackExecutor, IKickbackHandler
+public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAttackExecutor, IKickbackHandler
 {
     // --- インスペクタ設定 ---
 
