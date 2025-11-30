@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: -0.10681707
       objectReference: {fileID: 0}
+    - target: {fileID: 6643108821517507489, guid: 323fdf8714f967446bdba15d4ab2de4e, type: 3}
+      propertyPath: damageSourceType
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -173,7 +177,7 @@ PrefabInstance:
     - target: {fileID: 7224741444940645311, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 001556ddcfc1677469c54a38581a6757, type: 2}
+      objectReference: {fileID: 22100000, guid: 0a4714b5d2c3eac45b908b91b54352ad, type: 2}
     - target: {fileID: 7809496392863742821, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_Radius
       value: 0.46073294
