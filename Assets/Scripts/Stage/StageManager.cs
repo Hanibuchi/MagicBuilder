@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Collections;
+using System;
 
 public class StageManager : MonoBehaviour, IZeroEnemyNotifier
 {
@@ -166,8 +167,12 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         if (isStageClear) return; // 既にクリア済みの場合は何もしない
         isStageClear = true;
         Debug.Log("🎉 ステージクリア！");
+        // ★ 追加: 全ての敵に死亡通知を送る
+        OnStageClearForceDie?.Invoke();
+
         StartCoroutine(DelayAndPauseGame());
     }
+    public static Action OnStageClearForceDie;
 
     [Header("ステージクリア設定")] // 追記
     [Tooltip("クリア後の演出時間（秒）。この時間後にゲームが停止します。")]

@@ -114,6 +114,7 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
     private void Start()
     {
         EnemyCounter.Instance?.AddEnemy();
+        StageManager.OnStageClearForceDie += ForceDie;
     }
 
     protected override void Update()
@@ -336,6 +337,23 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         Debug.Log("ノックバックスタン終了。移動を再開します。");
     }
 
+    /// <summary>
+    /// ステージクリア時などに外部から強制的に死亡させるために呼び出されます。
+    /// </summary>
+    public void ForceDie()
+    {
+        // ノックバックスタン中のコルーチンが実行中であれば停止
+        if (_kickbackStunCoroutine != null)
+        {
+            StopCoroutine(_kickbackStunCoroutine);
+            _kickbackStunCoroutine = null;
+        }
+
+        // 死亡処理を呼び出す
+        // 既に死んでいる場合は、NotifyDie() 内で処理がスキップされることを期待します
+        NotifyDie();
+    }
+
     public override void NotifyDie()
     {
         enemyMovement?.ApplyStun();
@@ -343,5 +361,10 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         GetComponent<SpellDropper>()?.DropSpells();
         GetComponent<BossClearNotifier>()?.NotifyDefeated();
         EnemyCounter.Instance?.RemoveEnemy();
+    }
+
+    private void OnDestroy()
+    {
+        StageManager.OnStageClearForceDie -= ForceDie;
     }
 }
