@@ -9,6 +9,7 @@ public class PlayerController : MyCharacterController
     private const string FIRE_DEGREE_PARAM = "attack_degree";
     private const string AIM_TRIGGER = "aim";
     private const string AIM_DEGREE_PARAM = "aim_degree";
+    private const string VICTORY_TRIGGER = "victory";
 
     [SerializeField] public Transform aimStartPoint;
 
@@ -69,5 +70,11 @@ public class PlayerController : MyCharacterController
         // 3. Animatorのfloatパラメーターに設定
         animator.SetFloat(AIM_DEGREE_PARAM, normalizedValue);
         animator.SetTrigger(AIM_TRIGGER);
+    }
+
+    public void Victory()
+    {
+        if (animator == null || !animator.enabled) return;
+        animator.SetTrigger(VICTORY_TRIGGER);
     }
 }

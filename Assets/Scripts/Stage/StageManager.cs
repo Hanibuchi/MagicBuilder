@@ -145,9 +145,17 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         if (clearCondition == StageClearCondition.SpecificBossDefeated)
             HandleStageClear();
     }
-    [Header("ステージクリア設定")] // 追記
-    [Tooltip("クリア後の演出時間（秒）。この時間後にゲームが停止します。")]
-    [SerializeField] private float clearDelaySeconds = 3.0f; // 例として3.0秒
+
+    bool spawnComplete = false;
+    // IZeroEnemyNotifier インターフェースの実装
+    public void OnEnemyCountZero()
+    {
+        if (clearCondition == StageClearCondition.AllEnemiesDefeated && spawnComplete)
+        {
+            HandleStageClear();
+        }
+    }
+
 
     private bool isStageClear = false;
     /// <summary>
@@ -158,32 +166,30 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         if (isStageClear) return; // 既にクリア済みの場合は何もしない
         isStageClear = true;
         Debug.Log("🎉 ステージクリア！");
-        StartCoroutine(DelayAndPauseGame(clearDelaySeconds));
+        StartCoroutine(DelayAndPauseGame());
     }
+
+    [Header("ステージクリア設定")] // 追記
+    [Tooltip("クリア後の演出時間（秒）。この時間後にゲームが停止します。")]
+    [SerializeField] private float clearDelaySeconds = 1f; // 例として3.0秒
+    [SerializeField] private float clearDelaySeconds2 = 1f; // 例として3.0秒
 
     /// <summary>
     /// 指定された秒数だけ待機した後、ゲームを停止します。
     /// </summary>
-    private IEnumerator DelayAndPauseGame(float delay) // 追記
+    private IEnumerator DelayAndPauseGame() // 追記
     {
-        Debug.Log($"クリア演出のため {delay} 秒間待機します...");
+        Debug.Log($"クリア演出のため {clearDelaySeconds} 秒間待機します...");
+        Time.timeScale = 0.5f;
 
         // 指定された秒数だけ待機
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(clearDelaySeconds);
 
-        // 待機後、ゲームを一時停止 (Time.timeScale = 0f)
-        Time.timeScale = 0f;
+        Time.timeScale = 1f;
+
+        yield return new WaitForSeconds(clearDelaySeconds2);
+        PlayerController.Instance.Victory();
         Debug.Log("ゲームを一時停止しました。");
-    }
-
-    bool spawnComplete = false;
-    // IZeroEnemyNotifier インターフェースの実装
-    public void OnEnemyCountZero()
-    {
-        if (clearCondition == StageClearCondition.AllEnemiesDefeated && spawnComplete)
-        {
-            HandleStageClear();
-        }
     }
 }
 

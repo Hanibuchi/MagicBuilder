@@ -906,7 +906,8 @@ MonoBehaviour:
   enemySpawnPoint: {fileID: 1899820376}
   test_phases:
   - {fileID: 11400000, guid: c7ccc81a04475ce4a8f84a9a24402982, type: 2}
-  clearDelaySeconds: 3
+  clearDelaySeconds: 1
+  clearDelaySeconds2: 1
 --- !u!4 &827964235
 Transform:
   m_ObjectHideFlags: 0
