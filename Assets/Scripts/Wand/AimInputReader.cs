@@ -14,7 +14,7 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
     [Tooltip("最大のドラッグ距離に対応する発射強度 (1.0f)")]
     [SerializeField]
-    private float maxDragDistance = 200f;
+    private float maxDragDistance = 400f;
 
     private IAimController aimController;
 
@@ -131,12 +131,14 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
         // 角度の計算: X軸 (右) を基準にした角度
         angle = Mathf.Atan2(launchVector.y, launchVector.x) * Mathf.Rad2Deg;
-        if (-180f <= angle && angle < -45f)
-            angle = Mathf.Clamp(angle + 180f, 0f, 90f);
-        else if (-45f <= angle && angle <= 135f)
-            angle = Mathf.Clamp(angle, 0f, 90f);
-        else
-            angle = 0f;
+
+        angle = Mathf.Clamp(angle, -45f, 90f);
+        // if (-180f <= angle && angle <= -90f)
+        //     angle = Mathf.Clamp(angle + 180f, -45f, 135f);
+        // else if (-90f <= angle && angle <= 180f)
+        //     angle = Mathf.Clamp(angle, -45f, 135f);
+        // else
+        //     angle = Mathf.Clamp(angle - 180f, -45f, 135f);
     }
 }
 
