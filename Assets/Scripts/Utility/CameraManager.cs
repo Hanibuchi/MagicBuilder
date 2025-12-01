@@ -12,6 +12,7 @@ public class CameraManager : MonoBehaviour
     private Camera mainCamera; // インスペクターで設定するメインカメラ
 
     private float _defaultOrthographicSize; // 起動時のデフォルトOrthographic Size
+    public float DefaultOrthographicSize => _defaultOrthographicSize;
 
     private void Awake()
     {

@@ -8,6 +8,19 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class CameraInputHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
+    [SerializeField] private Transform limitPointA;
+    [SerializeField] private Transform limitPointB;
+
+    // ★追加: カメラが移動できる境界のワールド座標
+    private float minX;
+    private float maxX;
+    private float minY;
+    private float maxY;
+
+    // ★追加: カメラのズーム制限 (任意)
+    [SerializeField] float minRelativeSize = 1f; // 最小ズーム (最大拡大)
+    [SerializeField] float maxRelativeSize = 5.0f; // 最大ズーム (最小拡大)
+
     // カメラ移動用
     private bool isDragging = false;
     private Vector2 startScreenPosition; // ドラッグ開始時の指のスクリーン座標
@@ -26,6 +39,23 @@ public class CameraInputHandler : MonoBehaviour, IDragHandler, IBeginDragHandler
         {
             Debug.LogError("CameraInputHandler: メインカメラが見つかりません。");
         }
+
+        // ★追加: 境界のワールド座標を計算
+        if (limitPointA != null && limitPointB != null)
+        {
+            float ax = limitPointA.position.x;
+            float ay = limitPointA.position.y;
+            float bx = limitPointB.position.x;
+            float by = limitPointB.position.y;
+
+            // min/maxを計算 (AとBの座標の小さい方と大きい方をそれぞれmin/maxとする)
+            minX = Mathf.Min(ax, bx);
+            maxX = Mathf.Max(ax, bx);
+            minY = Mathf.Min(ay, by);
+            maxY = Mathf.Max(ay, by);
+        }
+        else
+            Debug.LogWarning("CameraInputHandler: limitPointAまたはlimitPointBが設定されていません。カメラの移動範囲制限は無効になります。");
     }
 
     private void Update()
@@ -84,7 +114,7 @@ public class CameraInputHandler : MonoBehaviour, IDragHandler, IBeginDragHandler
             // カメラを移動させる新しい中心ワールド座標
             Vector2 newPosition = startCameraWorldPosition - worldDelta;
 
-            CameraManager.Instance.SetCameraPosition(newPosition);
+            TrySetCameraPosition(newPosition);
         }
         else
         {
@@ -101,7 +131,7 @@ public class CameraInputHandler : MonoBehaviour, IDragHandler, IBeginDragHandler
             // カメラを移動させる新しい中心ワールド座標
             Vector2 newPosition = startCameraWorldPosition - worldDelta;
 
-            CameraManager.Instance.SetCameraPosition(newPosition);
+            TrySetCameraPosition(newPosition);
         }
     }
 
@@ -136,7 +166,76 @@ public class CameraInputHandler : MonoBehaviour, IDragHandler, IBeginDragHandler
         // ズーム制限（任意）：極端なズームを避けるための最小/最大値
         // newRelativeSize = Mathf.Clamp(newRelativeSize, 0.5f, 5.0f); 
 
-        CameraManager.Instance.SetRelativeCameraSize(newRelativeSize);
+        TrySetRelativeCameraSize(newRelativeSize);
+    }
+
+
+    private void TrySetCameraPosition(Vector2 newPosition)
+    {
+        if (CameraManager.Instance == null || mainCamera == null) return;
+
+        // カメラの現在のOrthographic Size (画面の高さの半分)
+        float halfHeight = mainCamera.orthographicSize;
+        // アスペクト比から画面の幅の半分を計算
+        float halfWidth = halfHeight * mainCamera.aspect;
+
+        // X軸の制限
+        float targetMinX = minX + halfWidth;
+        float targetMaxX = maxX - halfWidth;
+        if (targetMinX > targetMaxX)
+            return;
+
+        // Y軸の制限
+        float targetMinY = minY + halfHeight;
+        float targetMaxY = maxY - halfHeight;
+        if (targetMinY > targetMaxY)
+            return;
+
+        // Clampを適用して、新しい中心座標を計算
+        // ただし、境界がカメラのサイズより狭い場合（例えばmaxX - minX < halfWidth * 2）は、
+        // Min/Maxが逆転する可能性があるため、Mathf.Min/Mathf.Maxで安全に処理します。
+
+        float finalX = Mathf.Clamp(newPosition.x, targetMinX, targetMaxX);
+        float finalY = Mathf.Clamp(newPosition.y, targetMinY, targetMaxY);
+
+        Vector2 finalPosition = new Vector2(finalX, finalY);
+
+        CameraManager.Instance.SetCameraPosition(finalPosition);
+    }
+
+    // ★追加: カメラサイズを制限付きで設定する
+    private void TrySetRelativeCameraSize(float newRelativeSize)
+    {
+        if (CameraManager.Instance == null || mainCamera == null) return;
+
+        // ズーム制限（任意）：極端なズームを避けるための最小/最大値
+        float clampedSize = Mathf.Clamp(newRelativeSize, minRelativeSize, maxRelativeSize);
+
+        float defaultHalfHeight = CameraManager.Instance.DefaultOrthographicSize;
+        float aspect = mainCamera.aspect;
+
+        // 1. X軸方向のサイズ制限を計算
+
+        // X軸方向で境界内におさまるかチェック
+        // (maxX - minX)は境界の幅。これが画面の幅(currentHalfWidth * 2)よりも小さければ、
+        // 画面の幅を境界の幅に合わせて縮小しなければならない。
+        // 境界の幅に完全に収まる最大の relativeSize を計算
+        float maxWidthRelativeSize = (maxX - minX) / (defaultHalfHeight * aspect * 2);
+        clampedSize = Mathf.Min(clampedSize, maxWidthRelativeSize);
+
+        // 2. Y軸方向のサイズ制限を計算
+
+        // 境界の高さに完全に収まる最大の relativeSize を計算
+        float maxHeightRelativeSize = (maxY - minY) / (defaultHalfHeight * 2);
+        clampedSize = Mathf.Min(clampedSize, maxHeightRelativeSize);
+
+        // --- 制限処理の終了 ---
+
+        CameraManager.Instance.SetRelativeCameraSize(clampedSize);
+
+        // サイズ変更後、カメラが範囲外に出ていないかを確認し、必要なら位置を補正
+        // (サイズの変更でカメラの視界が広がった結果、端のオブジェクトが範囲外に出るのを防ぐ)
+        TrySetCameraPosition(CameraManager.Instance.GetWorldPosition());
     }
 
     // --- イベントハンドラ (フラグ管理と初期値設定) ---
