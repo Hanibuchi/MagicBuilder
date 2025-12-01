@@ -47,6 +47,8 @@ public class CameraManager : MonoBehaviour
         }
     }
 
+    float currentRelativeSize = 1;
+
     /// <summary>
     /// 画面の映す範囲を、標準サイズ(1)に対する相対的な大きさ（相似比）で変更します。
     /// 相対的な大きさは Orthographic Size の逆数に比例します。
@@ -57,19 +59,28 @@ public class CameraManager : MonoBehaviour
     {
         if (mainCamera == null || !mainCamera.orthographic) return;
 
+        currentRelativeSize = relativeSize;
         // relativeSizeが大きいほど、画面が大きく（より広く）映る = Orthographic Sizeが大きくなる
         // Orthographic Size = デフォルトサイズ * relativeSize
         mainCamera.orthographicSize = _defaultOrthographicSize * relativeSize;
     }
 
+    public float GetSize()
+    {
+        return currentRelativeSize;
+    }
+
+    Vector2 currentWorldPos;
     /// <summary>
     /// 指定されたワールド座標を中心としてカメラが映すように移動します。
     /// Z座標はカメラの現在のZ座標を維持します。
     /// </summary>
     /// <param name="worldPosition">カメラの中心としたいワールド座標。</param>
-    public void SetCameraPosition(Vector3 worldPosition)
+    public void SetCameraPosition(Vector2 worldPosition)
     {
         if (mainCamera == null) return;
+
+        currentWorldPos = worldPosition;
 
         // カメラのZ座標は変更せず、XとY座標を更新
         Vector3 newPosition = new Vector3(
@@ -79,6 +90,11 @@ public class CameraManager : MonoBehaviour
         );
 
         mainCamera.transform.position = newPosition;
+    }
+
+    public Vector2 GetWorldPosition()
+    {
+        return currentWorldPos;
     }
 
     // public float test_size = 2;
