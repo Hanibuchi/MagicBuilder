@@ -337,7 +337,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_TargetDisplay: 0
 --- !u!224 &66593226
 RectTransform:
@@ -890,7 +890,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clearCondition: 1
   stagePrefabs:
-  - {fileID: 5006268731125347042, guid: bcc1f67afad4f5346988e29a2d33ad21, type: 3}
+  - {fileID: 3860825592120938575, guid: bcc1f67afad4f5346988e29a2d33ad21, type: 3}
   - {fileID: 6306026796900488691, guid: 10a201b20e740d34eb8bff9441b6a070, type: 3}
   - {fileID: 7392074133839499513, guid: f42be52611030404190647f40a5834df, type: 3}
   - {fileID: 3662070909763656479, guid: 1c1c5d9e44b6dd04d92b73a086d622b4, type: 3}
@@ -955,10 +955,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 66593226}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -221.00314, y: -37.491806}
-  m_SizeDelta: {x: 803.345, y: 532.4275}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &838069393
 MonoBehaviour:
@@ -989,7 +989,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
