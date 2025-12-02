@@ -12,6 +12,8 @@ public class StageConfig : ScriptableObject
     public string stageName = "New Stage";
     public string subStageName = "New SubStage";
 
+    public string SceneName = "Stage_";
+
     [Tooltip("ステージの勝利条件。")]
     public StageClearCondition clearCondition = StageClearCondition.SpecificBossDefeated;
 

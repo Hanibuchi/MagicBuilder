@@ -85,6 +85,13 @@ public class StageStarter : MonoBehaviour
         Debug.Log($"ステージ '{stageName}' の開始を通知します。");
         stageStartListener.OnStageStart(targetConfig);
     }
+
+
+    public string test_StageName;
+    public void Test()
+    {
+        StartStageByName(test_StageName);
+    }
 }
 
 // IStageStartListener.cs

@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageName: New Stage
   subStageName: New SubStage
+  SceneName: Stage_Template
   clearCondition: 1
-  enemyPhases: []
+  enemyPhases:
+  - {fileID: 11400000, guid: c7ccc81a04475ce4a8f84a9a24402982, type: 2}
   stageType: 0

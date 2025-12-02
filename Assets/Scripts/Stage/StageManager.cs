@@ -41,6 +41,7 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
     private void Awake()
     {
         Instance = this;
+        ApplyStageConfigFromGameManager();
 
         // 1. StageCommonシーンのAdditiveロード
         LoadCommonScene();
@@ -50,6 +51,21 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
 
         // 3. プレイヤーのInstantiate
         InstantiatePlayer();
+    }
+
+    /// <summary>
+    /// GameManagerからステージ設定を取得し、このStageManagerに適用します。
+    /// GameManagerがない場合は、インスペクタで設定されたデバッグ用の設定を使用します。
+    /// </summary>
+    private void ApplyStageConfigFromGameManager()
+    {
+        if (GameManager.Instance != null && GameManager.Instance.CurrentStageConfig != null)
+        {
+            this.stageConfig = GameManager.Instance.CurrentStageConfig;
+            Debug.Log($"StageManager: GameManagerからステージ設定 '{stageConfig.stageName}' を取得しました。");
+        }
+
+        this.clearCondition = stageConfig.clearCondition;
     }
 
     // --- プライベートメソッド ---
@@ -197,12 +213,9 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
     public void StartPhase()
     {
         EnemyPhaseExecutor.Instance.SetSpawnPoint(enemySpawnPoint.position);
-        EnemyPhaseExecutor.Instance.StartPhase(test_phases, () => { spawnComplete = true; });
+        EnemyPhaseExecutor.Instance.StartPhase(stageConfig.enemyPhases, () => { spawnComplete = true; });
         EnemyCounter.Instance.SetZeroNotifier(this);
     }
-
-    public EnemyPhaseConfig[] test_phases;
-
 
     /// <summary>
     /// ボスとして指定された敵が倒されたときに呼び出されます。
