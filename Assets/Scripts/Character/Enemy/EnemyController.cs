@@ -357,6 +357,8 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
     public override void NotifyDie()
     {
         enemyMovement?.ApplyStun();
+        if (characterHealth != null)
+            ScoreManager.Instance?.AddScore(characterHealth.maxHealth);
         base.NotifyDie();
         GetComponent<SpellDropper>()?.DropSpells();
         GetComponent<BossClearNotifier>()?.NotifyDefeated();
