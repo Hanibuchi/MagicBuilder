@@ -354,8 +354,11 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         NotifyDie();
     }
 
+    bool isDead = false; // ボス敵が複数回死亡通知される可能性があるため、フラグで制御
     public override void NotifyDie()
     {
+        if (isDead) return;
+        isDead = true;
         enemyMovement?.ApplyStun();
         if (characterHealth != null)
             ScoreManager.Instance?.AddScore(characterHealth.maxHealth);
