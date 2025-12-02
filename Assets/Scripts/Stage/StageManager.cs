@@ -123,6 +123,7 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
 
     private void Start()
     {
+        GameTimerManager.Instance.StartTimer();
         StartPhase();
     }
 
@@ -167,6 +168,7 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         if (isStageClear) return; // 既にクリア済みの場合は何もしない
         isStageClear = true;
         Debug.Log("🎉 ステージクリア！");
+        GameTimerManager.Instance.StopTimer();
         // ★ 追加: 全ての敵に死亡通知を送る
         OnStageClearForceDie?.Invoke();
 
