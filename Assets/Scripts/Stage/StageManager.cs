@@ -126,8 +126,70 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         Debug.Log($"プレイヤーを位置: {playerSpawnPoint.position} にInstantiateしました。");
     }
 
+    [Header("クリア条件UI設定")]
+    [Tooltip("ステージクリア条件に対応するUIプレハブのリスト")]
+    [SerializeField]
+    private List<ClearConditionUIMapping> clearConditionUIMappings = new List<ClearConditionUIMapping>();
+
+    [System.Serializable]
+    public class ClearConditionUIMapping
+    {
+        public StageClearCondition condition; // 対応するクリア条件
+        public GameObject uiPrefab;          // 生成するClearConditionUIプレハブ
+    }
+
     private void Start()
     {
+        InstantiateClearConditionUI();
+    }
+
+    /// <summary>
+    /// 設定されたクリア条件に対応するClearConditionUIをInstantiateします。
+    /// </summary>
+    private void InstantiateClearConditionUI()
+    {
+        GameObject targetPrefab = null;
+
+        // 現在のクリア条件に対応するプレハブをリストから探す
+        foreach (var mapping in clearConditionUIMappings)
+        {
+            if (mapping.condition == clearCondition)
+            {
+                targetPrefab = mapping.uiPrefab;
+                break;
+            }
+        }
+
+        if (targetPrefab == null)
+        {
+            Debug.LogWarning($"現在のクリア条件 ({clearCondition}) に対応するClearConditionUIプレハブが設定されていません。UIを表示せずにゲームを開始します。");
+            StartGameImmediately();
+            return;
+        }
+
+        // UIを生成
+        GameObject uiInstance = Instantiate(targetPrefab);
+        ClearConditionUI uiController = uiInstance.GetComponent<ClearConditionUI>();
+
+        if (uiController == null)
+        {
+            Debug.LogError($"生成されたClearConditionUIプレハブに ClearConditionUI コンポーネントが見つかりません。");
+            Destroy(uiInstance);
+            StartGameImmediately();
+            return;
+        }
+
+        // UIが閉じられた（クリックされた）後に実行するコールバックを設定
+        uiController.SetAction(StartGameImmediately);
+        Debug.Log($"クリア条件UI ({clearCondition}) をInstantiateしました。");
+    }
+
+    /// <summary>
+    /// UI表示なし、またはUIが閉じられた後に実行される、実際のゲーム開始処理。
+    /// </summary>
+    private void StartGameImmediately()
+    {
+        Debug.Log("ゲーム開始処理を実行します。");
         GameTimerManager.Instance.StartTimer();
         StartPhase();
     }
