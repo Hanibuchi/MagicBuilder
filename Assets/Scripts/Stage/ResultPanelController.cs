@@ -62,15 +62,6 @@ public class ResultPanelController : MonoBehaviour
 
     // --- Unityライフサイクルメソッド ---
 
-    void Start()
-    {
-        // 1. 表示開始時のアニメーションを再生 (AnimatorのStartTriggerを想定)
-        if (TryGetComponent<Animator>(out var animator))
-        {
-            animator.SetTrigger("Start");
-        }
-    }
-
     /// <summary>
     /// ボタンに対応する外部メソッドを登録します。
     /// </summary>
@@ -163,9 +154,17 @@ public class ResultPanelController : MonoBehaviour
     // 必要に応じて、時間を "分:秒.ミリ秒" 形式に整形するヘルパーメソッドを追加
     private string FormatTime(float totalSeconds)
     {
-        int minutes = Mathf.FloorToInt(totalSeconds / 60f);
-        int seconds = Mathf.FloorToInt(totalSeconds % 60f);
-        int milliseconds = Mathf.FloorToInt((totalSeconds * 1000f) % 1000f);
-        return string.Format("{0:00}:{1:00}.{2:000}", minutes, seconds, milliseconds);
+        TimeSpan timeSpan = TimeSpan.FromSeconds(totalSeconds);
+
+        // 💡 3600秒（1時間）未満の場合
+        if (totalSeconds < 3600f)
+        {
+            return timeSpan.ToString(@"mm\:ss");
+        }
+        // 💡 3600秒（1時間）以上の場合
+        else
+        {
+            return timeSpan.ToString(@"hh\:mm\:ss");
+        }
     }
 }

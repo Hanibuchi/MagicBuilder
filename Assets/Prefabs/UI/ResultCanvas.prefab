@@ -829,7 +829,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 150}
-  m_SizeDelta: {x: 800, y: 72}
+  m_SizeDelta: {x: 1200, y: 72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1034726937633690459
 CanvasRenderer:
@@ -859,9 +859,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '1-1
-
-'
+  m_text: 'NewStage '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 73089ea78f08b0a4bb8ddd12402cd703, type: 2}
   m_sharedMaterial: {fileID: 1827484319605294730, guid: 73089ea78f08b0a4bb8ddd12402cd703, type: 2}
@@ -1567,6 +1565,7 @@ GameObject:
   - component: {fileID: 5259155013643774239}
   - component: {fileID: 6028452472400847326}
   - component: {fileID: 5205396653048966116}
+  - component: {fileID: 9156791249896254796}
   m_Layer: 5
   m_Name: ResultCanvas
   m_TagString: Untagged
@@ -1732,6 +1731,28 @@ MonoBehaviour:
   retryButton: {fileID: 6396354017857530777}
   nextStageButton: {fileID: 8549275502344065575}
   spellChangeButton: {fileID: 2424317400194431633}
+--- !u!95 &9156791249896254796
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6345627378744446381}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 95fc6748cd5be344b9d9f99e40f89e9d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6613659516246574012
 GameObject:
   m_ObjectHideFlags: 0

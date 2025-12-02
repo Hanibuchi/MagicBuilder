@@ -10,6 +10,7 @@ public class StageConfig : ScriptableObject
     [Header("ステージ基本情報")]
     [Tooltip("ステージの識別名。")]
     public string stageName = "New Stage";
+    public string subStageName = "New SubStage";
 
     [Tooltip("ステージの勝利条件。")]
     public StageClearCondition clearCondition = StageClearCondition.SpecificBossDefeated;

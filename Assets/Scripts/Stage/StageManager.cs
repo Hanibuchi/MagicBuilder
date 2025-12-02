@@ -10,6 +10,11 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
 
     public static StageManager Instance { get; private set; }
 
+    [Header("ステージ設定アセット")]
+    [Tooltip("このステージの設定情報を持つStageConfigアセット")]
+    [SerializeField]
+    private StageConfig stageConfig;
+
     [Header("ステージクリア設定")]
     [SerializeField]
     private StageClearCondition clearCondition = StageClearCondition.SpecificBossDefeated;
@@ -160,43 +165,145 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
 
 
     private bool isStageClear = false;
+    private bool isGameOver = false; // ★ 追加: ゲームオーバーフラグ
     /// <summary>
     /// ステージクリア時の処理を実行します。
     /// </summary>
     private void HandleStageClear()
     {
-        if (isStageClear) return; // 既にクリア済みの場合は何もしない
+        if (isStageClear || isGameOver) return;
         isStageClear = true;
         Debug.Log("🎉 ステージクリア！");
         GameTimerManager.Instance.StopTimer();
-        // ★ 追加: 全ての敵に死亡通知を送る
-        OnStageClearForceDie?.Invoke();
 
-        StartCoroutine(DelayAndPauseGame());
+        StartCoroutine(DelayAndPauseGameOnGameClear());
     }
     public static Action OnStageClearForceDie;
 
     [Header("ステージクリア設定")] // 追記
     [Tooltip("クリア後の演出時間（秒）。この時間後にゲームが停止します。")]
     [SerializeField] private float clearDelaySeconds = 1f; // 例として3.0秒
-    [SerializeField] private float clearDelaySeconds2 = 1f; // 例として3.0秒
 
     /// <summary>
     /// 指定された秒数だけ待機した後、ゲームを停止します。
     /// </summary>
-    private IEnumerator DelayAndPauseGame() // 追記
+    private IEnumerator DelayAndPauseGameOnGameClear() // 追記
     {
-        Debug.Log($"クリア演出のため {clearDelaySeconds} 秒間待機します...");
         Time.timeScale = 0.5f;
-
-        // 指定された秒数だけ待機
-        yield return new WaitForSeconds(clearDelaySeconds);
-
+        yield return new WaitForSecondsRealtime(clearDelaySeconds);
+        OnStageClearForceDie?.Invoke(); // 全ての敵に死亡通知を送る
         Time.timeScale = 1f;
 
-        yield return new WaitForSeconds(clearDelaySeconds2);
+        yield return new WaitForSecondsRealtime(clearDelaySeconds);
         PlayerController.Instance.Victory();
-        Debug.Log("ゲームを一時停止しました。");
+
+        yield return new WaitForSecondsRealtime(clearDelaySeconds);
+        InstantiateResultPanel(true); // 勝利 (isVictory: true) でリザルトを表示
+    }
+
+    // ★ 新規追加: ゲームオーバー時の処理を実行します。
+    /// <summary>
+    /// ゲームオーバー時の処理を実行します。（主にプレイヤーHPが0になった時などに呼び出す）
+    /// </summary>
+    public void HandleGameOver()
+    {
+        if (isStageClear || isGameOver) return;
+        isGameOver = true;
+        Debug.Log("💀 ゲームオーバー！");
+        GameTimerManager.Instance.StopTimer(); // タイマーを停止
+        // ゲームオーバー演出（コルーチン）
+        StartCoroutine(DelayAndPauseGameOnGameOver());
+    }
+
+    [SerializeField] private float gameOverDelaySeconds = 1f; // 例として3.0秒
+    private IEnumerator DelayAndPauseGameOnGameOver()
+    {
+        Time.timeScale = 0.5f;
+        yield return new WaitForSecondsRealtime(gameOverDelaySeconds);
+
+        Time.timeScale = 1f;
+        yield return new WaitForSecondsRealtime(gameOverDelaySeconds);
+
+        Time.timeScale = 0f;
+        InstantiateResultPanel(false); // 敗北 (isVictory: false) でリザルトを表示
+        Debug.Log("ゲームオーバー後、ゲームを一時停止しました。");
+    }
+
+    [Header("UI設定")]
+    [Tooltip("ステージクリア/ゲームオーバー時にInstantiateするリザルトパネルのPrefab")]
+    [SerializeField] private GameObject resultPanelPrefab;
+    private const string VICTORY_MESSAGE = "勝利！"; // StageResultData用
+    private const string DEFEAT_MESSAGE = "もう一度挑戦しましょう！"; // StageResultData用
+
+    /// <summary>
+    /// リザルトパネルをInstantiateし、結果データを設定します。
+    /// </summary>
+    private void InstantiateResultPanel(bool isVictory)
+    {
+        if (resultPanelPrefab == null)
+        {
+            Debug.LogError("リザルトパネルPrefabが設定されていません！");
+            return;
+        }
+
+        // プレハブをInstantiate
+        GameObject panelInstance = Instantiate(resultPanelPrefab);
+        ResultPanelController controller = panelInstance.GetComponent<ResultPanelController>();
+
+        if (controller == null)
+        {
+            Debug.LogError("Instantiateされたプレハブに ResultPanelController が見つかりません！");
+            return;
+        }
+
+        // データの準備
+        // ※ 本来はStageDataなどから取得しますが、ここでは仮のデータまたは既存マネージャーから取得
+        ResultPanelController.StageResultData data = new ResultPanelController.StageResultData
+        {
+            stageName = stageConfig.stageName,
+            stageSubName = stageConfig.subStageName,
+            score = Mathf.RoundToInt(ScoreManager.Instance.GetTotalScore()), // ScoreManagerから取得
+            clearTimeSeconds = GameTimerManager.Instance.GetElapsedTime(), // GameTimerManagerから取得
+            message = isVictory ? VICTORY_MESSAGE : DEFEAT_MESSAGE
+        };
+
+        // UIへの設定と表示制御
+        if (isVictory)
+        {
+            controller.DisplayVictory(data);
+        }
+        else
+        {
+            controller.DisplayDefeat(data);
+        }
+
+        // ボタンアクションの設定（例：シーン遷移処理を実装）
+        // ※ この部分の具体的な実装は、プロジェクトのシーン管理によって異なります。
+        Action onStageSelect = () =>
+        {
+            Debug.Log("ステージセレクトへ");
+            Time.timeScale = 1f;
+            /* SceneManager.LoadScene("StageSelectScene"); */
+        };
+        Action onRetry = () =>
+        {
+            Debug.Log("リトライ");
+            Time.timeScale = 1f;
+            // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        };
+        Action onNextStage = () =>
+        {
+            Debug.Log("次のステージへ");
+            Time.timeScale = 1f; /* 次のステージへ遷移 */
+        };
+        Action onSpellChange = () =>
+        {
+            Debug.Log("呪文変更へ");
+            Time.timeScale = 1f; /* 呪文変更画面へ遷移 */
+        };
+
+        controller.SetupActions(onStageSelect, onRetry, onNextStage, onSpellChange);
+        Debug.Log($"リザルトパネルをInstantiateし、{(isVictory ? "勝利" : "敗北")}結果を設定しました。");
     }
 }
 
