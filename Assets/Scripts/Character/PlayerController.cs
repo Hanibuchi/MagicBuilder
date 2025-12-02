@@ -77,4 +77,10 @@ public class PlayerController : MyCharacterController
         if (animator == null || !animator.enabled) return;
         animator.SetTrigger(VICTORY_TRIGGER);
     }
+
+    public override void NotifyDie()
+    {
+        base.NotifyDie();
+        StageManager.Instance.GameOver();
+    }
 }

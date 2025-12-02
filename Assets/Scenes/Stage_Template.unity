@@ -907,8 +907,8 @@ MonoBehaviour:
   enemySpawnPoint: {fileID: 1899820376}
   test_phases:
   - {fileID: 11400000, guid: c7ccc81a04475ce4a8f84a9a24402982, type: 2}
-  clearDelaySeconds: 1
-  gameOverDelaySeconds: 1
+  clearDelaySeconds: 1.5
+  gameOverDelaySeconds: 1.5
   resultPanelPrefab: {fileID: 6345627378744446381, guid: ebe979ea95cfa9941a8abafc4c3f6172, type: 3}
 --- !u!4 &827964235
 Transform:

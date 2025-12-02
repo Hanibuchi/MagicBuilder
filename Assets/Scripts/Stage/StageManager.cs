@@ -182,7 +182,7 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
 
     [Header("ステージクリア設定")] // 追記
     [Tooltip("クリア後の演出時間（秒）。この時間後にゲームが停止します。")]
-    [SerializeField] private float clearDelaySeconds = 1f; // 例として3.0秒
+    [SerializeField] private float clearDelaySeconds = 1.5f; // 例として3.0秒
 
     /// <summary>
     /// 指定された秒数だけ待機した後、ゲームを停止します。
@@ -201,11 +201,16 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         InstantiateResultPanel(true); // 勝利 (isVictory: true) でリザルトを表示
     }
 
+    public void GameOver()
+    {
+        HandleGameOver();
+    }
+
     // ★ 新規追加: ゲームオーバー時の処理を実行します。
     /// <summary>
     /// ゲームオーバー時の処理を実行します。（主にプレイヤーHPが0になった時などに呼び出す）
     /// </summary>
-    public void HandleGameOver()
+    void HandleGameOver()
     {
         if (isStageClear || isGameOver) return;
         isGameOver = true;
@@ -215,7 +220,7 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         StartCoroutine(DelayAndPauseGameOnGameOver());
     }
 
-    [SerializeField] private float gameOverDelaySeconds = 1f; // 例として3.0秒
+    [SerializeField] private float gameOverDelaySeconds = 1.5f; // 例として3.0秒
     private IEnumerator DelayAndPauseGameOnGameOver()
     {
         Time.timeScale = 0.5f;
@@ -224,7 +229,7 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         Time.timeScale = 1f;
         yield return new WaitForSecondsRealtime(gameOverDelaySeconds);
 
-        Time.timeScale = 0f;
+        // Time.timeScale = 0f;
         InstantiateResultPanel(false); // 敗北 (isVictory: false) でリザルトを表示
         Debug.Log("ゲームオーバー後、ゲームを一時停止しました。");
     }
