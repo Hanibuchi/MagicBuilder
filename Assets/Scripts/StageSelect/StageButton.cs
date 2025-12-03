@@ -17,21 +17,19 @@ public class StageButton : MonoBehaviour
 
     // 内部で保持するステージ情報
     private string stageIdentifier;
-    private string subStageName;
 
     /// <summary>
     /// ボタンにステージ情報を設定し、OnClickイベントを設定します。
     /// </summary>
     /// <param name="identifier">StageConfigに登録されているステージの識別名。</param>
     /// <param name="subName">UIに表示するサブステージ名。</param>
-    public void Setup(string identifier, string subName)
+    public void Setup(string identifier, string displayName, string subName)
     {
         stageIdentifier = identifier;
-        subStageName = subName;
 
         // UI表示名の設定
         if (stageNameText != null)
-            stageNameText.text = identifier;
+            stageNameText.text = displayName;
 
         if (subStageNameText != null)
             subStageNameText.text = subName;
@@ -56,7 +54,7 @@ public class StageButton : MonoBehaviour
         // StageStarterのシングルトンインスタンスを通じてステージを開始
         if (StageStarter.Instance != null)
         {
-            Debug.Log($"ステージボタンクリック: {subStageName} ({stageIdentifier})");
+            Debug.Log($"ステージボタンクリック:  ({stageIdentifier})");
             // StageStarterのメソッドを呼び出す
             StageStarter.Instance.StartStageByName(stageIdentifier);
             // ステージ開始後はステージ選択UIを閉じるなどの処理が必要に応じて追加される

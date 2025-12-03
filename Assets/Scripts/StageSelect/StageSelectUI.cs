@@ -144,7 +144,7 @@ public class StageSelectUI : MonoBehaviour
             Debug.LogWarning($"ステージID '{islandID}' に対応するステージが設定されていません。");
             return;
         }
-
+        int num = 1;
         // 2. リストに基づいてボタンを生成
         foreach (var entry in stageEntries)
         {
@@ -158,7 +158,8 @@ public class StageSelectUI : MonoBehaviour
             {
                 var stageInfo = StageStarter.Instance.GetStageInfoByName(entry);
                 // StageButtonに識別子と表示名を設定
-                stageButton.Setup(stageInfo.stageName, stageInfo.subStageName);
+                stageButton.Setup(stageInfo.stageName, num.ToString(), stageInfo.subStageName);
+                num++;
             }
             else
             {
