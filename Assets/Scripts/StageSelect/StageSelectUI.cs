@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Linq;
+using TMPro;
 
 /// <summary>
 /// 選択された島に対応するステージ一覧を表示するUIを管理するクラス。
@@ -19,6 +20,9 @@ public class StageSelectUI : MonoBehaviour
     [Tooltip("ステージボタンを配置する親となるTransform。")]
     [SerializeField]
     private Transform stageButtonParent;
+
+    [SerializeField]
+    TextMeshProUGUI islandNameText;
 
     [Header("プレハブ設定")]
     [Tooltip("ステージボタンのプレハブ。StageButtonコンポーネントがアタッチされている必要があります。")]
@@ -131,6 +135,7 @@ public class StageSelectUI : MonoBehaviour
             Destroy(child.gameObject);
         }
 
+        islandNameText.text = islandStageMapConfig.GetIslandNameByID(islandID);
         // 1. 紐づけ設定からステージリストを取得
         string[] stageEntries = islandStageMapConfig.GetStagesForIsland(islandID);
 
@@ -145,7 +150,7 @@ public class StageSelectUI : MonoBehaviour
         {
             // ボタンのインスタンス化
             GameObject buttonObject = Instantiate(stageButtonPrefab, stageButtonParent);
-            
+
             // StageButtonコンポーネントを取得
             StageButton stageButton = buttonObject.GetComponent<StageButton>();
 

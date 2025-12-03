@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb1eec60172363f42914c5f4dc80a68c, type: 3}
+  m_Name: IslandStageMap
+  m_EditorClassIdentifier: 
+  islandStageMap:
+  - islandID: forest
+    islandName: "\u6A39\u6D77"
+    stages:
+    - 1-1
+    - 1-2
+  - islandID: desert
+    islandName: "\u5E72\u304B\u3089\u3073\u305F\u90FD"
+    stages:
+    - 2-1
+  - islandID: volcanic
+    islandName: "\u6D3B\u706B\u5C71"
+    stages:
+    - 3-1
+  - islandID: ice
+    islandName: "\u6975\u5BD2\u306E\u5730"
+    stages:
+    - 4-1
+  - islandID: sky
+    islandName: "\u5929\u7A7A\u306E\u5BAE\u6BBF"
+    stages:
+    - 5-1
+  - islandID: magic
+    islandName: "\u9B54\u65CF\u306E\u7A7A\u5CF6"
+    stages:
+    - 6-1

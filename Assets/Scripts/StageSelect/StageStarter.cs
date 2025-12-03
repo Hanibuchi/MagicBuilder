@@ -97,11 +97,11 @@ public class StageStarter : MonoBehaviour
     }
 
 
-    public string test_StageName;
-    public void Test()
-    {
-        StartStageByName(test_StageName);
-    }
+    // public string test_StageName;
+    // public void Test()
+    // {
+    //     StartStageByName(test_StageName);
+    // }
 }
 
 // IStageStartListener.cs
