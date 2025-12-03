@@ -1,4 +1,5 @@
 // StageListConfig.cs
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -9,4 +10,15 @@ public class StageListConfig : ScriptableObject
 {
     [Tooltip("ゲーム内の全てのステージ設定の配列。インスペクタから設定します。")]
     public StageConfig[] stages;
+
+    public StageConfig GetStageInfoByName(string stageName)
+    {
+        if (stages == null)
+        {
+            Debug.LogError("StageListConfig: stages 配列が設定されていません。");
+            return null;
+        }
+
+        return stages.FirstOrDefault(config => config != null && config.stageName == stageName);
+    }
 }

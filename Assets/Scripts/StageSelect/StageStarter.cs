@@ -53,6 +53,17 @@ public class StageStarter : MonoBehaviour
         Debug.Log($"StageStartListener ({listener.GetType().Name}) が登録されました。");
     }
 
+    public StageConfig GetStageInfoByName(string stageName)
+    {
+        if (stageListConfig == null || stageListConfig.stages == null)
+        {
+            Debug.LogError("StageListConfigが設定されていないか、ステージリストが空です。");
+            return null;
+        }
+
+        return stageListConfig.GetStageInfoByName(stageName);
+    }
+
     /// <summary>
     /// 識別用の名前を引数に持ち、ゲーム開始のトリガーとなるメソッド。
     /// </summary>
@@ -72,8 +83,7 @@ public class StageStarter : MonoBehaviour
         }
 
         // 1. 名前でStageConfigを探す
-        StageConfig targetConfig = stageListConfig.stages
-            .FirstOrDefault(config => config != null && config.stageName == stageName);
+        StageConfig targetConfig = stageListConfig.GetStageInfoByName(stageName);
 
         if (targetConfig == null)
         {

@@ -65,6 +65,7 @@ public class IslandSelector : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     public void Select()
     {
         // 💡 未選択 -> 選択状態への遷移
+        if (isSelected == true) return;
 
         isSelected = true;
 
@@ -80,6 +81,7 @@ public class IslandSelector : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     public void Normalize()
     {
         // 💡 選択 -> 非選択状態への遷移 (もう一度クリックされた場合)
+        if (isSelected == false) return;
 
         isSelected = false;
 
