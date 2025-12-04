@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 6699311755747580873}
   - component: {fileID: 4546611197100831174}
   - component: {fileID: 7964615351401005564}
+  - component: {fileID: 4993278617823054869}
+  - component: {fileID: 660633983741741484}
   m_Layer: 5
   m_Name: InventoryCanvas
   m_TagString: Untagged
@@ -102,6 +104,40 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!95 &4993278617823054869
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3572532766964508380}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5ba0a358296c865429710fab713f172c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!225 &660633983741741484
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3572532766964508380}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4717149787153771348
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,9 +240,6 @@ MonoBehaviour:
   scrollSpeed: 10
   inventoryUIPosY_Min: -50
   dropTargetRect: {fileID: 6769042010849098729}
-  test_delayTime: 2
-  test_spell: {fileID: 11400000, guid: 6c9d9dfe2f68e9144b91bb04a7bd8513, type: 2}
-  test_rect: {fileID: 0}
 --- !u!1 &5593462710761235338
 GameObject:
   m_ObjectHideFlags: 0
