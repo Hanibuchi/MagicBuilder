@@ -17,14 +17,16 @@ public class StageButton : MonoBehaviour
 
     // 内部で保持するステージ情報
     private string stageIdentifier;
+    StageSelectUI stageSelectUI;
 
     /// <summary>
     /// ボタンにステージ情報を設定し、OnClickイベントを設定します。
     /// </summary>
     /// <param name="identifier">StageConfigに登録されているステージの識別名。</param>
     /// <param name="subName">UIに表示するサブステージ名。</param>
-    public void Setup(string identifier, string displayName, string subName)
+    public void Setup(StageSelectUI stageSelectUI, string identifier, string displayName, string subName)
     {
+        this.stageSelectUI = stageSelectUI;
         stageIdentifier = identifier;
 
         // UI表示名の設定
@@ -58,7 +60,7 @@ public class StageButton : MonoBehaviour
             // StageStarterのメソッドを呼び出す
             StageStarter.Instance.StartStageByName(stageIdentifier);
             // ステージ開始後はステージ選択UIを閉じるなどの処理が必要に応じて追加される
-            // 例: StageSelectUI.Instance.NormalizeUI();
+            stageSelectUI.OnIslandDeselected();
         }
         else
         {

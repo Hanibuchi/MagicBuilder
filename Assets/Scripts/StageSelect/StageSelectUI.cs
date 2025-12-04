@@ -158,7 +158,7 @@ public class StageSelectUI : MonoBehaviour
             {
                 var stageInfo = StageStarter.Instance.GetStageInfoByName(entry);
                 // StageButtonに識別子と表示名を設定
-                stageButton.Setup(stageInfo.stageName, num.ToString(), stageInfo.subStageName);
+                stageButton.Setup(this, stageInfo.stageName, num.ToString(), stageInfo.subStageName);
                 num++;
             }
             else
