@@ -14474,6 +14474,10 @@ PrefabInstance:
       value: forest
       objectReference: {fileID: 0}
     - target: {fileID: 8680269148888360590, guid: 8d120e7fab06ed34492f1d080a6db72e, type: 3}
+      propertyPath: selectOffset.y
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680269148888360590, guid: 8d120e7fab06ed34492f1d080a6db72e, type: 3}
       propertyPath: onIslandSelected.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}

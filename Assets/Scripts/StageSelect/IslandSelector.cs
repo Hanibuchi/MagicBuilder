@@ -62,6 +62,8 @@ public class IslandSelector : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         }
     }
 
+    [SerializeField] Vector2 selectOffset = new(0, .7f);
+
     public void Select()
     {
         // 💡 未選択 -> 選択状態への遷移
@@ -74,7 +76,7 @@ public class IslandSelector : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
         // 2. 外部メソッドの実行（島の識別子を引数に渡す）
         onIslandSelected?.Invoke(islandID);
-        CameraInputHandler.Instance.MoveCameraTo(transform.position);
+        CameraInputHandler.Instance.MoveCameraTo((Vector2)transform.position + selectOffset);
 
         Debug.Log($"島を選択: {islandID}");
     }
