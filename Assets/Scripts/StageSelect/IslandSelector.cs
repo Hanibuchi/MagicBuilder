@@ -74,6 +74,7 @@ public class IslandSelector : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
         // 2. 外部メソッドの実行（島の識別子を引数に渡す）
         onIslandSelected?.Invoke(islandID);
+        CameraInputHandler.Instance.MoveCameraTo(transform.position);
 
         Debug.Log($"島を選択: {islandID}");
     }

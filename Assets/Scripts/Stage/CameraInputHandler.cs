@@ -1,3 +1,5 @@
+using Mono.Cecil.Cil;
+using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,16 +10,15 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class CameraInputHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
+    public static CameraInputHandler Instance { get; private set; }
     [SerializeField] private Transform limitPointA;
     [SerializeField] private Transform limitPointB;
 
-    // ★追加: カメラが移動できる境界のワールド座標
     private float minX;
     private float maxX;
     private float minY;
     private float maxY;
 
-    // ★追加: カメラのズーム制限 (任意)
     [SerializeField] float minRelativeSize = 1f; // 最小ズーム (最大拡大)
     [SerializeField] float maxRelativeSize = 5.0f; // 最大ズーム (最小拡大)
 
@@ -33,6 +34,13 @@ public class CameraInputHandler : MonoBehaviour, IDragHandler, IBeginDragHandler
 
     private void Awake()
     {
+        // シングルトンの設定
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
         // メインカメラの取得
         mainCamera = Camera.main;
         if (mainCamera == null)
@@ -58,14 +66,20 @@ public class CameraInputHandler : MonoBehaviour, IDragHandler, IBeginDragHandler
             Debug.LogWarning("CameraInputHandler: limitPointAまたはlimitPointBが設定されていません。カメラの移動範囲制限は無効になります。");
     }
 
+
+    [SerializeField] private float moveSpeed = 5.0f; // カメラの移動速度 (Lerpの係数)
+    Vector3 currentPosition;
+    private Vector2 targetWorldPosition; // カメラが目指すワールド座標
+    private bool isSmoothMoving = false; // スムーズ移動中フラグ
+
     private void Update()
     {
         // CameraManagerのインスタンスがない場合は処理を中断
         if (CameraManager.Instance == null || mainCamera == null) return;
 
-
         if (isDragging)
         {
+            isSmoothMoving = false;
             // 複数の指の入力を処理
             int touchCount = Input.touchCount;
             // 1. カメラ移動 (1本以上の指でドラッグ中)
@@ -77,6 +91,36 @@ public class CameraInputHandler : MonoBehaviour, IDragHandler, IBeginDragHandler
                 HandlePinchZoom();
             }
         }
+        else
+        {
+            if (isSmoothMoving)
+            {
+                // Lerpで現在の位置から目標位置へ滑らかに移動
+                currentPosition = Vector2.Lerp(currentPosition, targetWorldPosition, Time.deltaTime * moveSpeed);
+
+                // 目標にほぼ到達したらスムーズ移動を終了
+                if (Vector2.Distance(currentPosition, targetWorldPosition) < 0.01f)
+                {
+                    currentPosition = targetWorldPosition;
+                    isSmoothMoving = false;
+                }
+
+                TrySetCameraPosition(new(currentPosition.x, currentPosition.y));
+            }
+        }
+    }
+
+    /// <summary>
+    /// カメラを指定されたワールド座標へ徐々に移動させます。
+    /// 移動先の座標は、現在のカメラサイズと移動制限エリアに基づいてクランプされます。
+    /// </summary>
+    /// <param name="worldPosition">移動したいワールド座標の中心。</param>
+    public void MoveCameraTo(Vector2 worldPosition)
+    {
+        currentPosition = mainCamera.transform.position;
+        // 移動目標位置を計算。境界チェックも同時に行う。
+        targetWorldPosition = worldPosition;
+        isSmoothMoving = true;
     }
 
     // --- カメラ移動の実装 ---
