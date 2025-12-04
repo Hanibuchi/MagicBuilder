@@ -130,9 +130,27 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         public GameObject uiPrefab;          // 生成するClearConditionUIプレハブ
     }
 
+    [Tooltip("InstantiateClearConditionUIを実行するまでの待機時間（秒）")]
+    public float startDelayTime = 1.0f; // デフォルト値を設定しておくと便利
+
     private void Start()
     {
+        StartCoroutine(DelayedStartRoutine());
+    }
+
+    /// <summary>
+    /// 指定された時間待機してからクリア条件UIを生成するコルーチン
+    /// </summary>
+    private IEnumerator DelayedStartRoutine()
+    {
+        // 指定された時間だけ待機
+        // 
+        yield return new WaitForSeconds(startDelayTime);
+
+        // 待機後に本来実行したかったメソッドを呼び出す
         InstantiateClearConditionUI();
+
+        // 必要に応じて、待機後の他の初期化処理などをここに追加
     }
 
     /// <summary>
