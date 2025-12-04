@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2553107621763501963
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8880201772059244043}
+  - component: {fileID: 1005104091691891962}
+  m_Layer: 0
+  m_Name: SpellDatabase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8880201772059244043
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2553107621763501963}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.91800267, y: 0.6869633, z: -0.014533824}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1005104091691891962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2553107621763501963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86cfa58c32263d146a3c96b22a52e730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allSpells:
+  - type: 1
+    spellAsset: {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
+  - type: 2
+    spellAsset: {fileID: 11400000, guid: 6c9d9dfe2f68e9144b91bb04a7bd8513, type: 2}
+  - type: 3
+    spellAsset: {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
+  - type: 4
+    spellAsset: {fileID: 11400000, guid: a3a38a67181760f4283b87dbec380a68, type: 2}
+  - type: 5
+    spellAsset: {fileID: 11400000, guid: 7ec1dcb74d1e1f64cbc082ae8771f40d, type: 2}
+  - type: 6
+    spellAsset: {fileID: 11400000, guid: 6f106bb0c829b614dbf4d7f863cad4ef, type: 2}
+  - type: 7
+    spellAsset: {fileID: 11400000, guid: 1ae5b79ace718244a92dfb03c51f91d4, type: 2}
+  - type: 8
+    spellAsset: {fileID: 11400000, guid: 0d95613ceee16444aa8e41b156d25c40, type: 2}
+  - type: 9
+    spellAsset: {fileID: 11400000, guid: 54fdeaf1e456d8843845f8b704afde19, type: 2}
+  - type: 12
+    spellAsset: {fileID: 11400000, guid: 645133f780521974dbe2acd65646acdb, type: 2}
+  - type: 13
+    spellAsset: {fileID: 11400000, guid: 6abafd8e81b8866468c46b473fdd1073, type: 2}
+  - type: 14
+    spellAsset: {fileID: 11400000, guid: 43bf6d9cd2bbe1345b07935ed43c6996, type: 2}
+  - type: 15
+    spellAsset: {fileID: 11400000, guid: 0e90aacf1978eb94aa4bf7f8d59eff8f, type: 2}
+  - type: 16
+    spellAsset: {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}

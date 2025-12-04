@@ -43,9 +43,6 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         Instance = this;
         ApplyStageConfigFromGameManager();
 
-        // 1. StageCommonシーンのAdditiveロード
-        LoadCommonScene();
-
         // 2. ステージ固有のPrefabのInstantiate
         InstantiateStageElements();
 
@@ -69,27 +66,6 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
     }
 
     // --- プライベートメソッド ---
-
-    /// <summary>
-    /// StageCommonシーンがロードされていない場合、Additiveでロードします。
-    /// </summary>
-    private void LoadCommonScene()
-    {
-        // SceneManager.GetSceneByNameで、現在ロードされているシーンの中から指定された名前のシーンを探す
-        Scene commonScene = SceneManager.GetSceneByName(StageCommonSceneName);
-
-        // シーンが存在しない、または無効な場合はロードする
-        if (!commonScene.isLoaded)
-        {
-            // Additiveでシーンをロードし、現在のステージシーンに追加する
-            SceneManager.LoadScene(StageCommonSceneName, LoadSceneMode.Additive);
-            Debug.Log($"{StageCommonSceneName} シーンをロードしました。");
-        }
-        else
-        {
-            Debug.Log($"{StageCommonSceneName} シーンは既にロードされています。");
-        }
-    }
 
     /// <summary>
     /// インスペクタで指定されたステージ固有のPrefabをInstantiateします。

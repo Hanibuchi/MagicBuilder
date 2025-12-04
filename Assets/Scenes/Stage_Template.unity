@@ -377,6 +377,7 @@ MonoBehaviour:
   limitPointB: {fileID: 1282764341}
   minRelativeSize: 1
   maxRelativeSize: 5
+  moveSpeed: 5
 --- !u!114 &66593228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -958,6 +959,16 @@ MonoBehaviour:
   - {fileID: 4566236321816154798, guid: 408ed9a2b6c06dd428bdd6c5c8235ad6, type: 3}
   - {fileID: 1885488079702365206, guid: d1617606c44ac7544bae927f2b140dd4, type: 3}
   - {fileID: 6161974499472744229, guid: a9da2ff405ae0a64c9b7f7cbbe73fd7d, type: 3}
+  - {fileID: 9069459541675591178, guid: aad9387d9fc7dd549acab1fec467e307, type: 3}
+  - {fileID: 6161974499472744229, guid: a9da2ff405ae0a64c9b7f7cbbe73fd7d, type: 3}
+  - {fileID: 9069459541675591178, guid: aad9387d9fc7dd549acab1fec467e307, type: 3}
+  - {fileID: 5759084045261191099, guid: dbb1db1cb17ad194e972bd3c152945f3, type: 3}
+  - {fileID: 6125433878100999710, guid: 1903b4e2879efda438988ae4f3254ff4, type: 3}
+  - {fileID: 7947291031725460665, guid: 0cd430676d424ff4cbe277ec01b62048, type: 3}
+  - {fileID: 1225695060226195990, guid: 944293f54400114458112c6f3db8ac78, type: 3}
+  - {fileID: 7253163533302216265, guid: 8a887cff34e10d5479618f9d310b5b57, type: 3}
+  - {fileID: 2553107621763501963, guid: 75e9216351554de49bb048bc71c48a1f, type: 3}
+  - {fileID: 8074706864468871309, guid: 95e94c8ca27f2094bb8c59fc3967c2e2, type: 3}
   playerPrefab: {fileID: 5255534377115560913, guid: 864d69398cbad294a89daf01f91bb0a9, type: 3}
   playerSpawnPoint: {fileID: 1008364732}
   enemySpawnPoint: {fileID: 1899820376}

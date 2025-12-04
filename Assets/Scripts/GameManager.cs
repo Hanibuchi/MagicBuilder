@@ -1,4 +1,5 @@
 // GameManager.cs
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour, IStageStartListener
 
     // --- シングルトン ---
     public static GameManager Instance { get; private set; }
+    const string STAGE_COMMON_SCENE_NAME = "Stage_Common";
 
     private void Awake()
     {
@@ -26,18 +28,6 @@ public class GameManager : MonoBehaviour, IStageStartListener
         {
             Destroy(gameObject);
         }
-    }
-
-    private void Start()
-    {
-        // 起動時にStageStarterに自身をリスナーとして登録する（ステージ選択画面などがある場合、
-        // StageSelectControllerなどから登録される方が自然ですが、デバッグ用にここに記述）
-        // StageSelectControllerがロードされた際にそちらで登録するのが理想です。
-        // StageStarter starter = FindObjectOfType<StageStarter>();
-        // if (starter != null)
-        // {
-        //     starter.SetStageStartListener(this);
-        // }
     }
 
     // --- IStageStartListener の実装 ---
@@ -60,9 +50,10 @@ public class GameManager : MonoBehaviour, IStageStartListener
 
         // 2. ステージシーンをロード
         Debug.Log($"GameManager: ステージシーン '{config.SceneName}' をロードします。");
-        
+
         // LoadSceneMode.Singleでロードすると、現在のシーン（例：ステージ選択シーン）をアンロードし、
         // StageManagerを持つStage_Gameplayシーンをロードします。
-        SceneManager.LoadScene(config.SceneName);
+        SceneTransitionManager.Instance.LoadScenesWithTransition(config.SceneName);
+        // SceneTransitionManager.Instance.LoadScenesWithTransition(new List<string> { config.SceneName, STAGE_COMMON_SCENE_NAME });
     }
 }
