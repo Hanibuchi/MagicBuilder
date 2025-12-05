@@ -114,7 +114,7 @@ Transform:
   m_GameObject: {fileID: 3370558526934959748}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.6141921}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -166,6 +166,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8070372990278633882}
+  - component: {fileID: 8995174906580874285}
   m_Layer: 0
   m_Name: magc_circle
   m_TagString: Untagged
@@ -189,6 +190,21 @@ Transform:
   - {fileID: 313933690606196412}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8995174906580874285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4625990114907629602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 920eb48f04db370449679e2f9d246881, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClipToPlay: {fileID: 8300000, guid: 6a55b1210d28e48f9be508821dfab1d3, type: 3}
+  delayInSeconds: 0
+  volume: 1
 --- !u!1 &5501682710121230727
 GameObject:
   m_ObjectHideFlags: 0

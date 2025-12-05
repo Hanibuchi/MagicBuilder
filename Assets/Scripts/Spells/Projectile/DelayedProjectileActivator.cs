@@ -70,5 +70,7 @@ public class DelayedProjectileActivator : MonoBehaviour
         if (TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
             // 3. ExampleSpell.csで設定された初期速度を保存する (Start()実行時には速度が設定済みのはず)
             rb.linearVelocity = initialVelocity;
+        if (TryGetComponent(out SpellProjectileDamageSource component))
+            component.PlayLaunchSound();
     }
 }

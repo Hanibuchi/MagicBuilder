@@ -31,5 +31,16 @@ public class ProjectileDamageSource : DamageSourceBase
         // 指定した時間経過後に自身を破棄
         if (autoDestroy)
             Destroy(gameObject, destroyTime);
+        PlayLaunchSound();
+    }
+
+    [SerializeField] AudioClip launchSound;
+    /// <summary>
+    /// 再生する発射音を設定し、再生します。
+    /// </summary>
+    public void PlayLaunchSound()
+    {
+        if (launchSound != null)
+            AudioSource.PlayClipAtPoint(launchSound, Camera.main.transform.position);
     }
 }

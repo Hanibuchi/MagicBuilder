@@ -34,6 +34,7 @@ public class SpellProjectileDamageSource : DamageSourceBase
         base.Awake();
     }
 
+    [SerializeField] bool playLaunchSound = true;
     bool isLaunched = false;
     void Launch()
     {
@@ -43,7 +44,8 @@ public class SpellProjectileDamageSource : DamageSourceBase
         if (animator == null)
             animator = GetComponent<Animator>();
 
-        PlayLaunchSound();
+        if (playLaunchSound)
+            PlayLaunchSound();
     }
 
     /// <summary>
@@ -83,14 +85,16 @@ public class SpellProjectileDamageSource : DamageSourceBase
     /// </summary>
     public void PlayLaunchSound()
     {
-        AudioSource.PlayClipAtPoint(launchSound, transform.position);
+        if (launchSound != null)
+            AudioSource.PlayClipAtPoint(launchSound, Camera.main.transform.position);
     }
     /// <summary>
     /// 再生するヒット音を設定し、再生します。Animationから呼び出されることを想定。
     /// </summary>
     public void PlayDestroySound()
     {
-        AudioSource.PlayClipAtPoint(destroySound, transform.position);
+        if (destroySound != null)
+            AudioSource.PlayClipAtPoint(destroySound, Camera.main.transform.position);
     }
 }
 

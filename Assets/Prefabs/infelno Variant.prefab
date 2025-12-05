@@ -100,6 +100,14 @@ PrefabInstance:
       propertyPath: m_Offset.x
       value: 0.6850454
       objectReference: {fileID: 0}
+    - target: {fileID: 8600365097350075244, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
+      propertyPath: launchSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 5e1a9f876d3dafd47bc6b3dde25135fa, type: 3}
+    - target: {fileID: 8600365097350075244, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
+      propertyPath: playLaunchSound
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3784312975397243327, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
     m_RemovedGameObjects: []
@@ -154,7 +162,6 @@ MonoBehaviour:
   localSpawnOffset: {x: 1.2, y: 0, z: 0}
   matchRotation: 1
   matchProjectileModifier: 1
-  matchScale: 0
 --- !u!114 &6385625881979512774
 MonoBehaviour:
   m_ObjectHideFlags: 0

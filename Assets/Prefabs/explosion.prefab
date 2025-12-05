@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1405153890113068789}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.47, y: 2.81, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -125,6 +125,7 @@ MonoBehaviour:
     waterDamage: 0
     temperatureDamage: 10
     knockback: 0
+  launchSound: {fileID: 8300000, guid: dce0fc50c98b24282867ddc791aa869d, type: 3}
 --- !u!58 &6649835676375905100
 CircleCollider2D:
   m_ObjectHideFlags: 0

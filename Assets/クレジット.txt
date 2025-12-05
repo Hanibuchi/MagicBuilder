@@ -1,0 +1,15 @@
+*音楽、効果音*
+- 魔王魂
+
+- Free Sound Effects Pack
+https://assetstore.unity.com/packages/audio/sound-fx/free-sound-effects-pack-155776
+Olivier Girardot
+Standard Unity Asset Store EULA
+
+イラスト
+- 2D Platformer Tileset
+https://assetstore.unity.com/packages/2d/environments/2d-platformer-tileset-173155
+Danil Chernyaev
+Standard Unity Asset Store EULA
+
+- AI-Generated Images by Google's Gemini

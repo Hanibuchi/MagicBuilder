@@ -16,5 +16,6 @@ MonoBehaviour:
   subStageName: "\u6700\u521D\u306E\u30B9\u30C6\u30FC\u30B8"
   SceneName: Stage_Template
   clearCondition: 1
-  enemyPhases: []
+  enemyPhases:
+  - {fileID: 11400000, guid: 76aa54129f39d174c8d33a8ea85a183a, type: 2}
   stageType: 0

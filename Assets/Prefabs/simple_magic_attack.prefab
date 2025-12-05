@@ -150,9 +150,8 @@ MonoBehaviour:
   damageSourceType: 0
   maxPierceCount: 1
   animator: {fileID: 4652757309359089412}
-  audioSource: {fileID: 5956907676402865218}
   launchSound: {fileID: 8300000, guid: 06ada5590eba8d6489b36c6f3c54ff78, type: 3}
-  destroySound: {fileID: 8300000, guid: 673e0c563e49943e983f44f0fb941436, type: 3}
+  destroySound: {fileID: 0}
 --- !u!82 &5956907676402865218
 AudioSource:
   m_ObjectHideFlags: 0
