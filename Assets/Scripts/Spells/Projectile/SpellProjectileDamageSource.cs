@@ -13,12 +13,35 @@ public class SpellProjectileDamageSource : DamageSourceBase
     // publicかつ[System.Serializable]な構造体であるDamageを直接SerializeFieldとして定義することで、
     // インスペクタと外部スクリプトの両方から編集可能になります。
     Damage damageData;
-    const string HIT_TRIGGER = "hit";
+    const string DESTROY_TRIGGER = "Destroy";
+
+    [SerializeField] Animator animator;
 
     // --- IDamageSourceの実装 ---
     public void Initialize(float strength, SpellContext spellContext)
     {
+        Launch();
         damageData = spellContext.damage;
+    }
+
+    protected override void Awake()
+    {
+        Launch();
+        base.Awake();
+    }
+
+    bool isLaunched = false;
+    void Launch()
+    {
+        if (isLaunched) return;
+        isLaunched = true;
+
+        if (animator == null)
+            animator = GetComponent<Animator>();
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
+
+        PlayLaunchSound();
     }
 
     /// <summary>
@@ -33,5 +56,36 @@ public class SpellProjectileDamageSource : DamageSourceBase
     void OnCollisionEnter2D(Collision2D collision)
     {
         Destroy();
+    }
+
+    public override void Destroy()
+    {
+        animator?.SetTrigger(DESTROY_TRIGGER);
+    }
+
+    /// <summary>
+    /// 即座にオブジェクトを破壊する。アニメーションから呼び出す想定。
+    /// </summary>
+    public void DestroyImd()
+    {
+        Destroy(gameObject);
+    }
+
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip launchSound;
+    [SerializeField] AudioClip destroySound;
+    /// <summary>
+    /// 再生する発射音を設定し、再生します。
+    /// </summary>
+    public void PlayLaunchSound()
+    {
+        AudioSource.PlayClipAtPoint(launchSound, transform.position);
+    }
+    /// <summary>
+    /// 再生するヒット音を設定し、再生します。Animationから呼び出されることを想定。
+    /// </summary>
+    public void PlayDestroySound()
+    {
+        AudioSource.PlayClipAtPoint(destroySound, transform.position);
     }
 }

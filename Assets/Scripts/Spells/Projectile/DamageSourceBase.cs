@@ -22,7 +22,7 @@ public class DamageSourceBase : MonoBehaviour, IDamageSource
     // 実行時に使用する現在の貫通回数
     private int currentPierceCount;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         // 貫通回数を初期化
         currentPierceCount = maxPierceCount;
@@ -88,7 +88,7 @@ public class DamageSourceBase : MonoBehaviour, IDamageSource
     /// <summary>
     /// このオブジェクトを破棄します。
     /// </summary>
-    public void Destroy()
+    public virtual void Destroy()
     {
         Destroy(gameObject);
     }
