@@ -117,6 +117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageSourceType: 1
   maxPierceCount: 1
+  autoDestroy: 1
   destroyTime: 10
   damageData:
     baseDamage: 0

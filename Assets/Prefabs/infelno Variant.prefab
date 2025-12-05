@@ -42,11 +42,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4436742148866070240, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.526707
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4436742148866070240, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.8190842
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4436742148866070240, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -87,7 +87,7 @@ PrefabInstance:
     - target: {fileID: 4652757309359089412, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 75a83abbe76a39c4eb8916923cfbfdc5, type: 2}
+      objectReference: {fileID: 22100000, guid: da470db55e7e1d94bb6fad175b30a16b, type: 2}
     - target: {fileID: 5706498535635540185, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -153,7 +153,8 @@ MonoBehaviour:
   startEffectPrefab: {fileID: 1405153890113068789, guid: 3db3f4acc26d0654099ecd96c99228db, type: 3}
   localSpawnOffset: {x: 1.2, y: 0, z: 0}
   matchRotation: 1
-  matchScale: 1
+  matchProjectileModifier: 1
+  matchScale: 0
 --- !u!114 &6385625881979512774
 MonoBehaviour:
   m_ObjectHideFlags: 0

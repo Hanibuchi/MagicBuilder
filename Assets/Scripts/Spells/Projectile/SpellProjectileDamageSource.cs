@@ -20,6 +20,10 @@ public class SpellProjectileDamageSource : DamageSourceBase
     // --- IDamageSourceの実装 ---
     public void Initialize(float strength, SpellContext spellContext)
     {
+        var components = GetComponents<ISpellProjectileInitListener>();
+        foreach (var component in components)
+            component?.Initialize(strength, spellContext);
+
         Launch();
         damageData = spellContext.damage;
     }
@@ -38,8 +42,6 @@ public class SpellProjectileDamageSource : DamageSourceBase
 
         if (animator == null)
             animator = GetComponent<Animator>();
-        if (audioSource == null)
-            audioSource = GetComponent<AudioSource>();
 
         PlayLaunchSound();
     }
@@ -61,6 +63,9 @@ public class SpellProjectileDamageSource : DamageSourceBase
     public override void Destroy()
     {
         animator?.SetTrigger(DESTROY_TRIGGER);
+        var components = GetComponents<ISpellProjectileDestroyListener>();
+        foreach (var component in components)
+            component?.Destroy();
     }
 
     /// <summary>
@@ -71,7 +76,6 @@ public class SpellProjectileDamageSource : DamageSourceBase
         Destroy(gameObject);
     }
 
-    [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip launchSound;
     [SerializeField] AudioClip destroySound;
     /// <summary>
@@ -88,4 +92,14 @@ public class SpellProjectileDamageSource : DamageSourceBase
     {
         AudioSource.PlayClipAtPoint(destroySound, transform.position);
     }
+}
+
+public interface ISpellProjectileInitListener
+{
+    void Initialize(float strength, SpellContext spellContext);
+}
+
+public interface ISpellProjectileDestroyListener
+{
+    void Destroy();
 }

@@ -3,11 +3,11 @@ using UnityEngine;
 /// <summary>
 /// Projectileの開始時など、特定GameObjectの生成時にエフェクトをスポーンさせるマネージャー。
 /// </summary>
-public class ProjectileEndEffectSpawner : MonoBehaviour
+public class ProjectileEndEffectSpawner : MonoBehaviour, ISpellProjectileInitListener, ISpellProjectileDestroyListener
 {
     [Header("起動設定")]
-    [Tooltip("このコンポーネントが破棄（OnDestroy）されたときにエフェクトをスポーンさせるかどうか。")]
-    [SerializeField] private bool spawnOnDestroy = true; // デフォルトをtrueに設定
+    [Tooltip("このコンポーネントがSpellProjectileDamageSourceから直接呼び出されたときにエフェクトをスポーンさせるかどうか。")]
+    [SerializeField] private bool spawnOnDestroy = true;
 
     [Header("エフェクト設定")]
     [Tooltip("スポーンさせるエフェクトのPrefab。")]
@@ -19,22 +19,16 @@ public class ProjectileEndEffectSpawner : MonoBehaviour
     [Tooltip("エフェクトをスポーンさせる際、このオブジェクトの回転を適用するかどうか。")]
     [SerializeField] private bool matchRotation = true;
 
-    [Tooltip("エフェクトをスポーンさせる際、このオブジェクトのスケールを適用するかどうか。")]
-    [SerializeField] private bool matchScale = true;
+    [Tooltip("エフェクトをスポーンさせる際、このオブジェクトのProjectileModifierを適用するかどうか。")]
 
-
-    void OnDestroy()
-    {
-        if (spawnOnDestroy)
-            SpawnEndEffect();
-    }
+    [SerializeField] bool matchProjectileModifier = false;
 
     public void SpawnEndEffect()
     {
         float scale = transform.lossyScale.x;
         // 1. スポーン位置を計算
         // このGameObjectの座標に、ローカルオフセットを足すことでワールド座標を取得
-        Vector3 spawnPosition = transform.TransformPoint(scale * localSpawnOffset);
+        Vector3 spawnPosition = transform.TransformPoint(localSpawnOffset);
 
         // 2. スポーン回転を決定
         Quaternion spawnRotation = matchRotation ? transform.rotation : Quaternion.identity;
@@ -50,15 +44,24 @@ public class ProjectileEndEffectSpawner : MonoBehaviour
             );
 
             // 補足: 親子関係を設定したい場合は以下を使用 (今回は要求されていないためコメントアウト)
-            // spawnedEffect.transform.SetParent(transform); 
-            if (matchScale)
-            {
-                spawnedEffect.transform.localScale = transform.localScale;
-            }
+            if (matchProjectileModifier && spellContext != null)
+                spellContext.ProjectileModifier?.Invoke(spawnedEffect);
         }
         else
         {
             Debug.LogWarning($"CastEffectManager: {gameObject.name} に Start Effect Prefab が設定されていません。", this);
         }
+    }
+
+    SpellContext spellContext;
+    public void Initialize(float strength, SpellContext spellContext)
+    {
+        this.spellContext = spellContext;
+    }
+
+    public void Destroy()
+    {
+        if (spawnOnDestroy)
+            SpawnEndEffect();
     }
 }

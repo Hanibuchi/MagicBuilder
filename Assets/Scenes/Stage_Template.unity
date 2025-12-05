@@ -945,7 +945,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cf6534e3d23e50438ee2d96faadbb41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageConfig: {fileID: 11400000, guid: 508a070ab32b50543ac81ad80352df24, type: 2}
+  stageConfig: {fileID: 11400000, guid: 4b8250a657e13c545b4af63dba66b6da, type: 2}
   clearCondition: 0
   stagePrefabs:
   - {fileID: 3860825592120938575, guid: bcc1f67afad4f5346988e29a2d33ad21, type: 3}
@@ -977,6 +977,7 @@ MonoBehaviour:
     uiPrefab: {fileID: 798243388910477293, guid: abfc63549b009ef458b2270d7f6cf56e, type: 3}
   - condition: 1
     uiPrefab: {fileID: 7289494422299341494, guid: f66165da31057784a9b01d08f0e85d66, type: 3}
+  startDelayTime: 1
   clearDelaySeconds: 1.5
   gameOverDelaySeconds: 1.5
   resultPanelPrefab: {fileID: 6345627378744446381, guid: ebe979ea95cfa9941a8abafc4c3f6172, type: 3}
