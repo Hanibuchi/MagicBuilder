@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15585514c90835c4da6f5f5c264a72e0, type: 3}
-  m_Name: test2_CustomDropSpawnerConfig
+  m_Script: {fileID: 11500000, guid: f5c15d6a2a4cd60418b1bdd9064a2d84, type: 3}
+  m_Name: Goblin
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 3738908839911435214, guid: 541b412a452207d45909e95a7ee45512, type: 3}
-  customDroppableSpells: []
+  conditionType: 1
+  conditionValue: 5
+  spawnerConfig: {fileID: 11400000, guid: 21e18de0a90fc2046b44c6694c118687, type: 2}
+  nextPhases: []

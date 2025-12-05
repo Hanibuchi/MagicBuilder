@@ -9,10 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5c15d6a2a4cd60418b1bdd9064a2d84, type: 3}
-  m_Name: test2_EnemyPhase
+  m_Script: {fileID: 11500000, guid: 113e83f56845440428399972105dc8b7, type: 3}
+  m_Name: Bat
   m_EditorClassIdentifier: 
-  conditionType: 1
-  conditionValue: 5
-  spawnerConfig: {fileID: 11400000, guid: 34e9cb2235068ee45af80fd876d0a6d7, type: 2}
-  nextPhases: []
+  enemyPrefab: {fileID: 133917716359229411, guid: a85e5e272b9727a4db18153d0132e4f4, type: 3}

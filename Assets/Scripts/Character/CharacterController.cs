@@ -74,6 +74,7 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
         // collider.enabled = false;
         if (animator == null || !animator.enabled) return;
         animator.SetTrigger(DIE_TRIGGER);
+        PlayHitSound();
     }
 
     /// <summary>

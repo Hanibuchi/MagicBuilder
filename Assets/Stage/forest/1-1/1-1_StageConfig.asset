@@ -17,5 +17,11 @@ MonoBehaviour:
   SceneName: Stage_Template
   clearCondition: 1
   enemyPhases:
-  - {fileID: 11400000, guid: 76aa54129f39d174c8d33a8ea85a183a, type: 2}
+  - {fileID: 11400000, guid: 41b3b7ded40105e4e85b08be7588c0e5, type: 2}
+  - {fileID: 11400000, guid: 46a515402faaf2c45b27b6d135a90dee, type: 2}
+  - {fileID: 11400000, guid: 234bfa7c4d6c18c408c4f18b467babf6, type: 2}
+  - {fileID: 11400000, guid: edb681d8b717ddf47a041e07a67666ca, type: 2}
+  - {fileID: 11400000, guid: 3de6588f8b476224d86a22f37a896ace, type: 2}
+  - {fileID: 11400000, guid: b440d69c097bf38428eab6942f1b5faf, type: 2}
+  - {fileID: 11400000, guid: efd8c7e88cb91104a86de1e0d9564364, type: 2}
   stageType: 0
