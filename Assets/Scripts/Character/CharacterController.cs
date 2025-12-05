@@ -45,6 +45,7 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
 
         // 例: 基本/全てのダメージで共通の"Hit"アニメーションを再生
         animator.SetTrigger(HIT_TRIGGER);
+        PlayHitSound();
 
         DamageTextManager.Instance.ShowDamageText(damageValue, damageType, transform.position);
     }
@@ -97,6 +98,7 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
 
     public virtual void OnFireStunStart()
     {
+        PlayFireStunSound();
         Debug.Log("FireStun started");
     }
 
@@ -107,6 +109,7 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
 
     public virtual void OnFreezeStunStart()
     {
+        PlayFreezeStunSound();
     }
 
     public virtual void OnFreezeStunEnd()
@@ -119,5 +122,33 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
 
     public virtual void OnIceSlowEnd()
     {
+    }
+
+
+    [SerializeField] AudioClip hitSound;
+    [SerializeField] float hitSoundVolume = 1.0f;
+
+    public void PlayHitSound()
+    {
+        if (hitSound != null)
+            AudioSource.PlayClipAtPoint(hitSound, Camera.main.transform.position, hitSoundVolume);
+    }
+
+    [SerializeField] AudioClip fireStunSound;
+    [SerializeField] float fireStunSoundVolume = 1.0f;
+
+    public void PlayFireStunSound()
+    {
+        if (fireStunSound != null)
+            AudioSource.PlayClipAtPoint(fireStunSound, Camera.main.transform.position, fireStunSoundVolume);
+    }
+
+    [SerializeField] AudioClip freezeStunSound;
+    [SerializeField] float freezeStunSoundVolume = 1.0f;
+
+    public void PlayFreezeStunSound()
+    {
+        if (freezeStunSound != null)
+            AudioSource.PlayClipAtPoint(freezeStunSound, Camera.main.transform.position, freezeStunSoundVolume);
     }
 }
