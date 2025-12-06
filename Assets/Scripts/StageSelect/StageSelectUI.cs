@@ -62,6 +62,8 @@ public class StageSelectUI : MonoBehaviour
     }
 
     // --- 外部から呼び出されるメソッド (IslandSelectorと連携) ---
+    [SerializeField] AudioClip islandSelectSound;
+    [SerializeField] float islandSelectSoundVolume = 1.0f;
 
     /// <summary>
     /// IslandSelectorから呼び出され、新しい島が選択されたことを通知します。
@@ -69,12 +71,16 @@ public class StageSelectUI : MonoBehaviour
     /// <param name="islandID">選択された島の識別子。</param>
     public void OnIslandSelected(string islandID)
     {
+        Debug.Log($"島が選択されました: {islandID}");
         // 1. 他の島の選択解除
         NormalizeAllOtherIslands(islandID);
 
         // 2. UIの表示アニメーション開始
         gameObject.SetActive(true);
         uiAnimator.SetTrigger(selectAnimTrigger);
+
+        if (SoundManager.Instance != null && islandSelectSound != null)
+            SoundManager.Instance.PlaySE(islandSelectSound, islandSelectSoundVolume);
 
         // 3. ステージボタンの生成と表示
         GenerateStageButtons(islandID);
