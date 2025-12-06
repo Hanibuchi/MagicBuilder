@@ -239,6 +239,8 @@ MonoBehaviour:
   moveDownButton: {fileID: 889231118190257665}
   scrollSpeed: 10
   inventoryUIPosY_Min: -50
+  moveInventorySound: {fileID: 8300000, guid: 0994c12e202f342459a4212e7287f7e8, type: 3}
+  moveInventorySoundVolume: 1
   dropTargetRect: {fileID: 6769042010849098729}
 --- !u!1 &5593462710761235338
 GameObject:

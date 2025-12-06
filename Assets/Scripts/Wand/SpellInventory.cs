@@ -225,6 +225,10 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         }
     }
 
+
+    [SerializeField] AudioClip moveInventorySound; // ドラッグ開始時に再生するAudioClip
+    [SerializeField] float moveInventorySoundVolume = 1.0f;
+
     /// <summary>
     /// インベントリを上に移動させる。
     /// </summary>
@@ -232,6 +236,7 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
     {
         if (isInventoryUp) return; // すでに上がっていたら何もしない
 
+        PlayMoveInventorySound();
         targetPosY = inventoryUIPosY_Max;
         isInventoryUp = true;
         moveUpButton.gameObject.SetActive(false);
@@ -246,11 +251,18 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
     {
         if (!isInventoryUp) return; // すでに下がっていたら何もしない
 
+        PlayMoveInventorySound();
         targetPosY = inventoryUIPosY_Min;
         isInventoryUp = false;
         moveUpButton.gameObject.SetActive(true);
         moveDownButton.gameObject.SetActive(false);
         Debug.Log("インベントリを下に移動します。");
+    }
+
+    void PlayMoveInventorySound()
+    {
+        if (SoundManager.Instance != null && moveInventorySound != null)
+            SoundManager.Instance.PlaySE(moveInventorySound, moveInventorySoundVolume);
     }
 
     void Update()
