@@ -1,6 +1,7 @@
 // StageStarter.cs
 using UnityEngine;
 using System.Linq;
+using System.Collections.Generic;
 
 /// <summary>
 /// ステージ開始のトリガーとなるクラス。
@@ -15,8 +16,7 @@ public class StageStarter : MonoBehaviour
     [SerializeField]
     private StageListConfig stageListConfig;
 
-    // ゲーム開始を通知するためのインスタンス（登録できるのは1つのみ）
-    private IStageStartListener stageStartListener;
+    private List<IStageStartListener> stageStartListeners = new List<IStageStartListener>();
 
     private void Awake()
     {
@@ -44,12 +44,7 @@ public class StageStarter : MonoBehaviour
             return;
         }
 
-        if (stageStartListener != null && stageStartListener != listener)
-        {
-            Debug.LogWarning("StageStartListenerは既に登録されています。新しいインスタンスに上書きします。");
-        }
-
-        stageStartListener = listener;
+        stageStartListeners.Add(listener);
         Debug.Log($"StageStartListener ({listener.GetType().Name}) が登録されました。");
     }
 
@@ -70,7 +65,7 @@ public class StageStarter : MonoBehaviour
     /// <param name="stageName">開始したいステージのStageConfigに設定された名前</param>
     public void StartStageByName(string stageName)
     {
-        if (stageStartListener == null)
+        if (stageStartListeners == null)
         {
             Debug.LogError("ステージ開始通知用のリスナー (IStageStartListener) が登録されていません！");
             return;
@@ -93,7 +88,8 @@ public class StageStarter : MonoBehaviour
 
         // 2. リスナーに通知
         Debug.Log($"ステージ '{stageName}' の開始を通知します。");
-        stageStartListener.OnStageStart(targetConfig);
+        foreach (var stageStartListener in stageStartListeners)
+            stageStartListener?.OnStageStart(targetConfig);
     }
 
 
