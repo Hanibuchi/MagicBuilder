@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 287619285694468492}
   - component: {fileID: -8637763047155977215}
   - component: {fileID: 1255961539740624513}
+  - component: {fileID: 5981366074365681528}
   m_Layer: 9
   m_Name: barrier0
   m_TagString: Untagged
@@ -92,6 +93,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 8003807749010863776}
+  playHitSoundOnDead: 1
+  hitSound: {fileID: 8300000, guid: b9eff218e132a4e76be78840eca96fb2, type: 3}
+  hitSoundVolume: 0.5
+  fireStunSound: {fileID: 0}
+  fireStunSoundVolume: 1
+  freezeStunSound: {fileID: 0}
+  freezeStunSoundVolume: 1
+  dieSound: {fileID: 8300000, guid: b9eff218e132a4e76be78840eca96fb2, type: 3}
+  dieSoundVolume: 1
 --- !u!50 &287619285694468492
 Rigidbody2D:
   serializedVersion: 5
@@ -177,6 +187,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj: {fileID: 2719851900670582441}
+--- !u!114 &5981366074365681528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2719851900670582441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 920eb48f04db370449679e2f9d246881, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClipToPlay: {fileID: 8300000, guid: 24eaeae153b524bb6a55fdcc7ee3c735, type: 3}
+  delayInSeconds: 0
+  volume: 1
 --- !u!1 &6291488981705466162
 GameObject:
   m_ObjectHideFlags: 0

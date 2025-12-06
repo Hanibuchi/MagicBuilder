@@ -77,6 +77,8 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
         animator.SetTrigger(DIE_TRIGGER);
         if (playHitSoundOnDead)
             PlayHitSound();
+
+        PlayDieSound();
     }
 
     /// <summary>
@@ -153,5 +155,14 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
     {
         if (SoundManager.Instance != null && freezeStunSound != null)
             SoundManager.Instance.PlaySE(freezeStunSound, freezeStunSoundVolume);
+    }
+
+    [SerializeField] AudioClip dieSound;
+    [SerializeField] float dieSoundVolume = 1.0f;
+
+    public void PlayDieSound()
+    {
+        if (SoundManager.Instance != null && dieSound != null)
+            SoundManager.Instance.PlaySE(dieSound, dieSoundVolume);
     }
 }
