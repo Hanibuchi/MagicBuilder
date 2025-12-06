@@ -327,6 +327,15 @@ public abstract class SpellBase : ScriptableObject
         }
         return dropUIInstance;
     }
+
+    [SerializeField]
+    private AudioClip spellDropSound; // ドラッグ開始時に再生するAudioClip
+    [SerializeField] float spellDropSoundVolume = 1.0f;
+    public void GetDropSound(out AudioClip clip, out float volume)
+    {
+        clip = spellDropSound;
+        volume = spellDropSoundVolume;
+    }
 }
 
 /// <summary>

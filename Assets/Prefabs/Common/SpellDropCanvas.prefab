@@ -99,5 +99,7 @@ MonoBehaviour:
   dropCanvas: {fileID: 8990788390414791669}
   animationDuration: 1
   arcHeight: 300
+  dropSound: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
+  dropSoundVolume: 1
   test_startPosRect: {fileID: 0}
   test_spellData: {fileID: 11400000, guid: 6c9d9dfe2f68e9144b91bb04a7bd8513, type: 2}

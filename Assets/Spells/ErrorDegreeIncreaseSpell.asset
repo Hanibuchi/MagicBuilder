@@ -17,4 +17,6 @@ MonoBehaviour:
   icon: {fileID: 3422573988808639745, guid: 926b2e59fa449e74a92407a129deff1d, type: 3}
   uiPrefab: {fileID: 5499559984272135055, guid: a8aa928887aa65d429d07a9b1f220163, type: 3}
   dropUIPrefab: {fileID: 1104287654635820185, guid: af09b9e47e48e2b4593b9a8e28d2e8f0, type: 3}
+  spellDropSound: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
+  spellDropSoundVolume: 1
   additionalErrorDegree: 30

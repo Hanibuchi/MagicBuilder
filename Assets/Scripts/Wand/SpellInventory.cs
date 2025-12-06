@@ -346,6 +346,15 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         // 1. データリストに追加
         availableSpells.Add(spellToAdd);
 
+        if (SoundManager.Instance != null)
+        {
+            spellToAdd.GetDropSound(out AudioClip clip, out float volume);
+            if (clip != null)
+            {
+                SoundManager.Instance.PlaySE(clip, volume);
+            }
+        }
+
         // 2. UIを再構築 (新しい呪文のUIも含まれる)
         // ※ RebuildUIが呼ばれる前に、DeactivateSpellUIsの処理で、新しく追加された
         //    呪文UIが非アクティブ化されないように注意が必要です。（現状のコードでは大丈夫です）
