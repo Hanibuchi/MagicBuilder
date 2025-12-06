@@ -21,6 +21,11 @@ https://assetstore.unity.com/packages/audio/sound-fx/force-field-sci-fi-collecti
 Alpine Audio
 Standard Unity Asset Store EULA
 
+- FREE Casual Game SFX Pack
+https://assetstore.unity.com/packages/audio/sound-fx/free-casual-game-sfx-pack-54116
+Dustyroom
+Standard Unity Asset Store EULA
+
 イラスト
 - 2D Platformer Tileset
 https://assetstore.unity.com/packages/2d/environments/2d-platformer-tileset-173155

@@ -60,6 +60,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   extendedTriggerUI: {fileID: 3077664445379522187}
+  spellDropSound: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
+  spellDropSoundVolume: 1
 --- !u!95 &1252407050445683559
 Animator:
   serializedVersion: 7

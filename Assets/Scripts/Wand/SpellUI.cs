@@ -44,9 +44,14 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     }
 
     // --- ドラッグ処理 ---
-
+    [SerializeField]
+    private AudioClip dragStartClip; // ドラッグ開始時に再生するAudioClip
+    [SerializeField] float dragStartClipVolume = 1.0f;
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (dragStartClip != null)
+            AudioSource.PlayClipAtPoint(dragStartClip, Camera.main.transform.position, dragStartClipVolume);
+
         dropSuccess = false;
         spellContainerUI.NotifyDragBegin(index);
         // 1. ドラッグ開始時に、自身をCanvasの最前面に移動
