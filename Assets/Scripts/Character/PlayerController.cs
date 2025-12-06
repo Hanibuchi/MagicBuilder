@@ -91,7 +91,7 @@ public class PlayerController : MyCharacterController
 
     public void PlayDieSound()
     {
-        if (dieSound != null)
-            AudioSource.PlayClipAtPoint(dieSound, Camera.main.transform.position, dieSoundVolume);
+        if (SoundManager.Instance != null && dieSound != null)
+            SoundManager.Instance.PlaySE(dieSound, dieSoundVolume);
     }
 }

@@ -133,8 +133,8 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
 
     public void PlayHitSound()
     {
-        if (hitSound != null)
-            AudioSource.PlayClipAtPoint(hitSound, Camera.main.transform.position, hitSoundVolume);
+        if (SoundManager.Instance != null && hitSound != null)
+            SoundManager.Instance.PlaySE(hitSound, hitSoundVolume);
     }
 
     [SerializeField] AudioClip fireStunSound;
@@ -142,8 +142,8 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
 
     public void PlayFireStunSound()
     {
-        if (fireStunSound != null)
-            AudioSource.PlayClipAtPoint(fireStunSound, Camera.main.transform.position, fireStunSoundVolume);
+        if (SoundManager.Instance != null && fireStunSound != null)
+            SoundManager.Instance.PlaySE(fireStunSound, fireStunSoundVolume);
     }
 
     [SerializeField] AudioClip freezeStunSound;
@@ -151,7 +151,7 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
 
     public void PlayFreezeStunSound()
     {
-        if (freezeStunSound != null)
-            AudioSource.PlayClipAtPoint(freezeStunSound, Camera.main.transform.position, freezeStunSoundVolume);
+        if (SoundManager.Instance != null && freezeStunSound != null)
+            SoundManager.Instance.PlaySE(freezeStunSound, freezeStunSoundVolume);
     }
 }
