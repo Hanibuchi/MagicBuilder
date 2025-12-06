@@ -79,22 +79,25 @@ public class SpellProjectileDamageSource : DamageSourceBase
     }
 
     [SerializeField] AudioClip launchSound;
+    [SerializeField] float launchSoundVolume = 1.0f;
     [SerializeField] AudioClip destroySound;
+    [SerializeField] float destroySoundVolume = 1.0f;
+
     /// <summary>
     /// 再生する発射音を設定し、再生します。
     /// </summary>
     public void PlayLaunchSound()
     {
-        if (launchSound != null)
-            AudioSource.PlayClipAtPoint(launchSound, Camera.main.transform.position);
+        if (SoundManager.Instance != null && launchSound != null)
+            SoundManager.Instance.PlaySE(launchSound, launchSoundVolume);
     }
     /// <summary>
     /// 再生するヒット音を設定し、再生します。Animationから呼び出されることを想定。
     /// </summary>
     public void PlayDestroySound()
     {
-        if (destroySound != null)
-            AudioSource.PlayClipAtPoint(destroySound, Camera.main.transform.position);
+        if (SoundManager.Instance != null && destroySound != null)
+            SoundManager.Instance.PlaySE(destroySound, destroySoundVolume);
     }
 }
 

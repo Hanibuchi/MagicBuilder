@@ -35,12 +35,13 @@ public class ProjectileDamageSource : DamageSourceBase
     }
 
     [SerializeField] AudioClip launchSound;
+    [SerializeField] float launchSoundVolume = 1.0f;
     /// <summary>
     /// 再生する発射音を設定し、再生します。
     /// </summary>
     public void PlayLaunchSound()
     {
-        if (launchSound != null)
-            AudioSource.PlayClipAtPoint(launchSound, Camera.main.transform.position);
+        if (SoundManager.Instance != null && launchSound != null)
+            SoundManager.Instance.PlaySE(launchSound, launchSoundVolume);
     }
 }

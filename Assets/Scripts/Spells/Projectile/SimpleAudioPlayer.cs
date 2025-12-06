@@ -32,11 +32,11 @@ public class SimpleAudioPlayer : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         // クリップが設定されているか確認します
-        if (audioClipToPlay != null)
+        if (SoundManager.Instance != null && audioClipToPlay != null)
         {
             // PlayClipAtPointを使って、指定座標でオーディオを再生します
             // この関数は、再生のための一時的なGameObjectを作成し、再生後に破棄します。
-            AudioSource.PlayClipAtPoint(audioClipToPlay, Camera.main.transform.position, volume);
+            SoundManager.Instance.PlaySE(audioClipToPlay, volume);
         }
         else
         {
