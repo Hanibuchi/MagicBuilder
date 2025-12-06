@@ -82,5 +82,16 @@ public class PlayerController : MyCharacterController
     {
         base.NotifyDie();
         StageManager.Instance.GameOver();
+        PlayDieSound();
+    }
+
+
+    [SerializeField] AudioClip dieSound;
+    [SerializeField] float dieSoundVolume = 1.0f;
+
+    public void PlayDieSound()
+    {
+        if (dieSound != null)
+            AudioSource.PlayClipAtPoint(dieSound, Camera.main.transform.position, dieSoundVolume);
     }
 }

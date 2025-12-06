@@ -65,6 +65,7 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
         _statusModel.IceSlow(duration);
     }
 
+    [SerializeField] private bool playHitSoundOnDead = true;
     /// <summary>
     /// 死亡を通知し、死亡アニメーションのトリガーを設定します。
     /// </summary>
@@ -74,7 +75,8 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
         // collider.enabled = false;
         if (animator == null || !animator.enabled) return;
         animator.SetTrigger(DIE_TRIGGER);
-        PlayHitSound();
+        if (playHitSoundOnDead)
+            PlayHitSound();
     }
 
     /// <summary>
