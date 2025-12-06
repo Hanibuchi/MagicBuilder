@@ -48,14 +48,23 @@ public class StageButton : MonoBehaviour
         }
     }
 
+    [SerializeField] AudioClip clickSound;
+    [SerializeField] float clickSoundVolume = 1.0f;
+    bool clicked = false;
     /// <summary>
     /// ステージボタンがクリックされたときに呼び出されます。
     /// </summary>
     private void OnStageSelected()
     {
+        if (clicked) return;
+        clicked = true;
+
         // StageStarterのシングルトンインスタンスを通じてステージを開始
         if (StageStarter.Instance != null)
         {
+            if (SoundManager.Instance != null && clickSound != null)
+                SoundManager.Instance.PlaySE(clickSound, clickSoundVolume);
+
             Debug.Log($"ステージボタンクリック:  ({stageIdentifier})");
             // StageStarterのメソッドを呼び出す
             StageStarter.Instance.StartStageByName(stageIdentifier);

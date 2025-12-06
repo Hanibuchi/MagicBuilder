@@ -138,6 +138,8 @@ MonoBehaviour:
   stageNameText: {fileID: 8789525114320144912}
   subStageNameText: {fileID: 692885388466093007}
   button: {fileID: 643603339653220729}
+  clickSound: {fileID: 8300000, guid: 2667a0a008b044e218b63df62e2be749, type: 3}
+  clickSoundVolume: 1
 --- !u!1 &8335134019247698491
 GameObject:
   m_ObjectHideFlags: 0
