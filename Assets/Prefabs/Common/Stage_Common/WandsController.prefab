@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 437216aabcacca547918d450514dc824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  changeWandSound: {fileID: 8300000, guid: 0994c12e202f342459a4212e7287f7e8, type: 3}
+  changeWandSoundVolume: 1
   test_wand:
   - type: 0
     spells:

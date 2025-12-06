@@ -62,6 +62,8 @@ MonoBehaviour:
   extendedTriggerUI: {fileID: 3077664445379522187}
   spellDropSound: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
   spellDropSoundVolume: 1
+  highlightSound: {fileID: 8300000, guid: 0994c12e202f342459a4212e7287f7e8, type: 3}
+  highlightSoundVolume: 1
 --- !u!95 &1252407050445683559
 Animator:
   serializedVersion: 7

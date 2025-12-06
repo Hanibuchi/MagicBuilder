@@ -69,6 +69,12 @@ public class WandsController : MonoBehaviour, WandSwitchListener
 
         Test();// テスト用。本格的な処理は後々実装。
     }
+
+
+    [SerializeField]
+    private AudioClip changeWandSound; // ドラッグ開始時に再生するAudioClip
+    [SerializeField] float changeWandSoundVolume = 1.0f;
+
     /// <summary>
     /// WandSwitchListenerインターフェースの実装。
     /// 実際の切り替え処理はAttackManagerに委譲する。
@@ -86,6 +92,9 @@ public class WandsController : MonoBehaviour, WandSwitchListener
         }
         SpellInventory.Instance.DeactivateSpellUIs(wand.GetSpells());
         WandAppearanceManager.Instance.ChangeAppearance(wand.type);
+
+        if (SoundManager.Instance != null && changeWandSound != null)
+            SoundManager.Instance.PlaySE(changeWandSound, changeWandSoundVolume);
     }
 
     [SerializeField] List<Wand> test_wand;
