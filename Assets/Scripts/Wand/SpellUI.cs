@@ -49,8 +49,8 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     [SerializeField] float dragStartClipVolume = 1.0f;
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (dragStartClip != null)
-            AudioSource.PlayClipAtPoint(dragStartClip, Camera.main.transform.position, dragStartClipVolume);
+        if (SoundManager.Instance != null && dragStartClip != null)
+            SoundManager.Instance.PlaySE(dragStartClip, dragStartClipVolume);
 
         dropSuccess = false;
         spellContainerUI.NotifyDragBegin(index);

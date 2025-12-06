@@ -50,8 +50,8 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 
         if (droppedSpellUI != null)
         {
-            if (spellDropSound != null)
-                AudioSource.PlayClipAtPoint(spellDropSound, Camera.main.transform.position, spellDropSoundVolume);
+            if (SoundManager.Instance != null && spellDropSound != null)
+                SoundManager.Instance.PlaySE(spellDropSound, spellDropSoundVolume);
 
             SpellBase spellToAdd = droppedSpellUI.GetSpellData();
             droppedSpellUI.NotifyDropSuccess();

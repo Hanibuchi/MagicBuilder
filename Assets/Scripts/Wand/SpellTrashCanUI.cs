@@ -21,8 +21,8 @@ public class SpellTrashCanUI : MonoBehaviour, IDropHandler
 
         if (droppedSpellUI != null)
         {
-            if (throwSound != null)
-                AudioSource.PlayClipAtPoint(throwSound, Camera.main.transform.position, throwSoundVolume);
+            if (SoundManager.Instance != null && throwSound != null)
+                SoundManager.Instance.PlaySE(throwSound, throwSoundVolume);
             // 2. SpellUIが持つインターフェース ISpellContainer を通じて、
             //    元の杖UIに「削除が成功した」ことを通知します。
             //    これにより、
