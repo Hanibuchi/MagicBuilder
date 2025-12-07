@@ -19,6 +19,13 @@ public class ClearConditionUI : MonoBehaviour, IPointerClickHandler
         onClosedAction = onClosed;
     }
 
+    [SerializeField] AudioClip showSound;
+    private void Start()
+    {
+        if (SoundManager.Instance != null && showSound != null)
+            SoundManager.Instance.PlaySE(showSound);
+    }
+
     // アニメーションが完了した後にクリックを有効にするかどうか
     private bool isReadyToStartGame = false;
 
@@ -34,12 +41,16 @@ public class ClearConditionUI : MonoBehaviour, IPointerClickHandler
         Debug.Log("クリア条件UI: クリックによるゲーム開始準備完了。");
     }
 
+    [SerializeField] AudioClip clickedSound;
     const string GAME_START_TRIGGER = "GameStart";
     public void OnPointerClick(PointerEventData eventData)
     {
         if (isReadyToStartGame)
         {
             GetComponent<Animator>().SetTrigger(GAME_START_TRIGGER);
+
+            if (SoundManager.Instance != null && clickedSound != null)
+                SoundManager.Instance.PlaySE(clickedSound);
         }
     }
 
