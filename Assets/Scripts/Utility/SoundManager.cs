@@ -63,6 +63,37 @@ public class SoundManager : MonoBehaviour
         SetVolume(parameterName, db);
     }
 
+    // --- 音量取得メソッド (Audio Mixer経由) ---
+    public float GetBGMVolume0to1()
+    {
+        return GetVolume0to1(BGM_VOLUME_PARAM);
+    }
+
+    public float GetSEVolume0to1()
+    {
+        return GetVolume0to1(SE_VOLUME_PARAM);
+    }
+
+    // 実際のミキサーからdB値を取得し、0.0〜1.0に変換するロジック
+    private float GetVolume0to1(string parameterName)
+    {
+        float db;
+        // Audio Mixerから現在のボリューム値（dB）を取得
+        if (mixer.GetFloat(parameterName, out db))
+        {
+            // -80dB (SetVolume0to1で設定される最低値) は音量0として扱う
+            if (db <= -79f) return 0f;
+
+            // dB値をリニアな音量（0.0～1.0）に変換
+            // volume = 10^(db / 20)
+            // Mathf.Pow(10f, db / 20f)
+            return Mathf.Pow(10f, db / 20f);
+        }
+
+        // 取得に失敗した場合のフォールバック (通常は1.0を返す)
+        return 1f;
+    }
+
     public void StopBGMWithFade(float duration = 1.0f)
     {
         // BGMのAudioSourceが再生中でない場合は何もしない

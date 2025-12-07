@@ -33,3 +33,8 @@ Danil Chernyaev
 Standard Unity Asset Store EULA
 
 - AI-Generated Images by Google's Gemini
+
+- Violet Themed UI
+https://assetstore.unity.com/packages/2d/gui/violet-themed-ui-235559
+Giniel Villacote
+Standard Unity Asset Store EULA
