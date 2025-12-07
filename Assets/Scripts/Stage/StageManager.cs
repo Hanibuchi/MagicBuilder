@@ -257,13 +257,21 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
 
     [Header("ステージクリア設定")] // 追記
     [Tooltip("クリア後の演出時間（秒）。この時間後にゲームが停止します。")]
-    [SerializeField] private float clearDelaySeconds = 1.5f; // 例として3.0秒
+    [SerializeField] private float clearDelaySeconds = 2f; // 例として3.0秒
 
+    [SerializeField] AudioClip bossDestroySound;
+    [SerializeField] AudioClip clearSound;
     /// <summary>
     /// 指定された秒数だけ待機した後、ゲームを停止します。
     /// </summary>
     private IEnumerator DelayAndPauseGameOnGameClear() // 追記
     {
+        if (SoundManager.Instance != null && bossDestroySound != null)
+        {
+            SoundManager.Instance.StopBGMWithFade(0.5f);
+            SoundManager.Instance.PlaySE(bossDestroySound);
+        }
+
         Time.timeScale = 0.5f;
         yield return new WaitForSecondsRealtime(clearDelaySeconds);
         OnStageClearForceDie?.Invoke(); // 全ての敵に死亡通知を送る
@@ -271,6 +279,9 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
 
         yield return new WaitForSecondsRealtime(clearDelaySeconds);
         PlayerController.Instance.Victory();
+
+        if (SoundManager.Instance != null && clearSound != null)
+            SoundManager.Instance.PlaySE(clearSound);
 
         yield return new WaitForSecondsRealtime(clearDelaySeconds);
         InstantiateResultPanel(true); // 勝利 (isVictory: true) でリザルトを表示
