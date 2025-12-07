@@ -130,14 +130,16 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         public GameObject uiPrefab;          // 生成するClearConditionUIプレハブ
     }
 
-    [Tooltip("InstantiateClearConditionUIを実行するまでの待機時間（秒）")]
-    public float startDelayTime = 1.0f; // デフォルト値を設定しておくと便利
+
+
 
     private void Start()
     {
         StartCoroutine(DelayedStartRoutine());
     }
 
+    [Tooltip("InstantiateClearConditionUIを実行するまでの待機時間（秒）")]
+    public float startDelayTime = 1.0f; // デフォルト値を設定しておくと便利
     /// <summary>
     /// 指定された時間待機してからクリア条件UIを生成するコルーチン
     /// </summary>
@@ -194,6 +196,7 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         Debug.Log($"クリア条件UI ({clearCondition}) をInstantiateしました。");
     }
 
+    [SerializeField] AudioClip bGM;
     /// <summary>
     /// UI表示なし、またはUIが閉じられた後に実行される、実際のゲーム開始処理。
     /// </summary>
@@ -202,6 +205,9 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         Debug.Log("ゲーム開始処理を実行します。");
         GameTimerManager.Instance.StartTimer();
         StartPhase();
+
+        if (SoundManager.Instance != null && bGM != null)
+            SoundManager.Instance.PlayBGM(bGM);
     }
 
     public void StartPhase()

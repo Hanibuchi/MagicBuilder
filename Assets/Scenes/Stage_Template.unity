@@ -837,6 +837,7 @@ MonoBehaviour:
   - condition: 1
     uiPrefab: {fileID: 7289494422299341494, guid: f66165da31057784a9b01d08f0e85d66, type: 3}
   startDelayTime: 1
+  bGM: {fileID: 8300000, guid: a22f9bc6792cd124d8e50f8495aeb072, type: 3}
   clearDelaySeconds: 1.5
   gameOverDelaySeconds: 1.5
   resultPanelPrefab: {fileID: 6345627378744446381, guid: ebe979ea95cfa9941a8abafc4c3f6172, type: 3}
