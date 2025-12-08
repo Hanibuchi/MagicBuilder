@@ -220,6 +220,7 @@ public class CharacterHealth : MonoBehaviour
         {
             case CharacterElement.Fire:
                 // 火属性の場合: 水ダメージ3倍、木ダメージ0.5倍
+                fireMod = 0f;
                 waterMod *= 3.0f;
                 woodMod *= 0.5f;
                 iceMod *= 5.0f;
@@ -227,15 +228,18 @@ public class CharacterHealth : MonoBehaviour
             case CharacterElement.Wood:
                 // 木属性の場合: 火ダメージ3倍、水ダメージ0.5倍
                 fireMod *= 3.0f; // FireDamageに適用
+                woodMod = 0f;
                 waterMod *= 0.5f;
                 break;
             case CharacterElement.Water:
                 // 水属性の場合: 木ダメージ3倍、火ダメージ0.5倍
-                woodMod *= 3.0f;
                 fireMod *= 0.5f; // FireDamageに適用
+                woodMod *= 3.0f;
+                waterMod = 0f;
                 break;
             case CharacterElement.Ice:
                 fireMod *= 5.0f;
+                iceMod = 0f;
                 break;
             default:
                 break;
