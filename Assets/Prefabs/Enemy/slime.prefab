@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2889533034855982833}
   - component: {fileID: 6578264611719283476}
-  m_Layer: 10
+  m_Layer: 16
   m_Name: base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 9076936378721177696}
   - component: {fileID: 3054214445999646573}
   - component: {fileID: 476603648058067127}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: sensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,7 +380,6 @@ GameObject:
   - component: {fileID: 7224741444940645311}
   - component: {fileID: 1394745703564179622}
   - component: {fileID: 5269055859707311788}
-  - component: {fileID: 3976017126703981615}
   - component: {fileID: 7809496392863742821}
   m_Layer: 10
   m_Name: anim
@@ -454,19 +453,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetController: {fileID: 74969639956603153}
---- !u!114 &3976017126703981615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8286987012176087518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74fb619ca190ee64d9fcf303f221393a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _healthComponent: {fileID: 1375723898961235931}
 --- !u!58 &7809496392863742821
 CircleCollider2D:
   m_ObjectHideFlags: 0
