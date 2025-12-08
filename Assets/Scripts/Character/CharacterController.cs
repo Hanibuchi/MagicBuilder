@@ -42,6 +42,7 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
         }
     }
 
+    [SerializeField] Transform damageTextSpawnPoint;
     /// <summary>
     /// ダメージを受け取ったことを通知し、アニメーション表示処理を委譲します。
     /// </summary>
@@ -53,7 +54,12 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
         animator.SetTrigger(HIT_TRIGGER);
         PlayHitSound();
 
-        DamageTextManager.Instance.ShowDamageText(damageValue, damageType, transform.position);
+        Vector3 spawnPoint;
+        if (damageTextSpawnPoint != null)
+            spawnPoint = damageTextSpawnPoint.position;
+        else
+            spawnPoint = transform.position;
+        DamageTextManager.Instance.ShowDamageText(damageValue, damageType, spawnPoint);
     }
 
     public void NotifyFireStun(float duration)
