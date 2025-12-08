@@ -36,17 +36,20 @@ public class ClearConditionUI : MonoBehaviour, IPointerClickHandler
     /// </summary>
     public void ReadyToStartGame()
     {
+        clicked = false;
         isReadyToStartGame = true;
         // 例として、デバッグログを表示
         Debug.Log("クリア条件UI: クリックによるゲーム開始準備完了。");
     }
 
+    bool clicked = false;
     [SerializeField] AudioClip clickedSound;
     const string GAME_START_TRIGGER = "GameStart";
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (isReadyToStartGame)
+        if (isReadyToStartGame && !clicked)
         {
+            clicked = true;
             GetComponent<Animator>().SetTrigger(GAME_START_TRIGGER);
 
             if (SoundManager.Instance != null && clickedSound != null)
