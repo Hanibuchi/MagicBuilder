@@ -19,7 +19,6 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     private IAimController aimController;
 
     // 発射開始地点のスクリーン座標を格納するフィールド
-    private Vector2 startPointScreenPosition;
     private bool isAiming = false;
 
     private void Awake()
@@ -76,7 +75,6 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
             return;
         }
 
-        startPointScreenPosition = Camera.main.WorldToScreenPoint(startPointTransform.position);
         isAiming = true;
     }
 
@@ -89,7 +87,7 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
         // 1. ドラッグの変位（画面座標）を計算
         // 現在のドラッグ位置から、発射開始地点のスクリーン座標を引く
-        Vector2 dragDelta = eventData.position - startPointScreenPosition;
+        Vector2 dragDelta = eventData.position - (Vector2)Camera.main.WorldToScreenPoint(startPointTransform.position);
 
         // 2. 角度と強さを計算
         CalculateAimParameters(dragDelta, out float angle, out float power);
@@ -107,7 +105,7 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
         // 1. ドラッグの変位（画面座標）を計算
         // 現在のドラッグ位置から、発射開始地点のスクリーン座標を引く
-        Vector2 dragDelta = eventData.position - startPointScreenPosition;
+        Vector2 dragDelta = eventData.position - (Vector2)Camera.main.WorldToScreenPoint(startPointTransform.position);
 
         // 2. 角度と強さを計算
         CalculateAimParameters(dragDelta, out float angle, out float power);
