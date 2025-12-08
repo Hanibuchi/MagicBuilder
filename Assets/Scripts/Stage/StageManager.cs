@@ -32,8 +32,6 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
 
     // --- 定数 ---
 
-    private const string StageCommonSceneName = "Stage_Common";
-
     [SerializeField] Transform enemySpawnPoint;
 
     // --- Unityライフサイクルメソッド ---
@@ -239,15 +237,15 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
     }
 
 
-    private bool isStageClear = false;
-    private bool isGameOver = false; // ★ 追加: ゲームオーバーフラグ
+    private bool gameEnd = false;
+    public bool GameEnd => gameEnd;
     /// <summary>
     /// ステージクリア時の処理を実行します。
     /// </summary>
     private void HandleStageClear()
     {
-        if (isStageClear || isGameOver) return;
-        isStageClear = true;
+        if (gameEnd) return;
+        gameEnd = true;
         Debug.Log("🎉 ステージクリア！");
         GameTimerManager.Instance.StopTimer();
 
@@ -298,8 +296,8 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
     /// </summary>
     void HandleGameOver()
     {
-        if (isStageClear || isGameOver) return;
-        isGameOver = true;
+        if (gameEnd) return;
+        gameEnd = true;
         Debug.Log("💀 ゲームオーバー！");
         GameTimerManager.Instance.StopTimer(); // タイマーを停止
         // ゲームオーバー演出（コルーチン）
