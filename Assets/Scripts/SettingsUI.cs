@@ -124,6 +124,8 @@ public class SettingsUI : MonoBehaviour
         text.text = percentage.ToString() + "%";
     }
 
+    private float timeScale = 1f;
+
     /// <summary>
     /// 設定パネルを開くボタンが押されたときに呼び出されます。
     /// </summary>
@@ -142,6 +144,8 @@ public class SettingsUI : MonoBehaviour
         openButton.interactable = false;
         closeButton.interactable = true;
         isPanelOpen = true;
+        timeScale = Time.timeScale;
+        Time.timeScale = 0f;
     }
 
     /// <summary>
@@ -161,6 +165,7 @@ public class SettingsUI : MonoBehaviour
         openButton.interactable = true;
         closeButton.interactable = false;
         isPanelOpen = false;
+        Time.timeScale = timeScale;
     }
 
     /// <summary>

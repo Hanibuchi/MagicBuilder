@@ -273,17 +273,17 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         }
 
         Time.timeScale = 0.5f;
-        yield return new WaitForSecondsRealtime(clearDelaySeconds);
+        yield return new WaitForSeconds(clearDelaySeconds * 0.5f);
         OnStageClearForceDie?.Invoke(); // 全ての敵に死亡通知を送る
         Time.timeScale = 1f;
 
-        yield return new WaitForSecondsRealtime(clearDelaySeconds);
+        yield return new WaitForSeconds(clearDelaySeconds);
         PlayerController.Instance.Victory();
 
         if (SoundManager.Instance != null && clearSound != null)
             SoundManager.Instance.PlaySE(clearSound);
 
-        yield return new WaitForSecondsRealtime(clearDelaySeconds);
+        yield return new WaitForSeconds(clearDelaySeconds);
         InstantiateResultPanel(true); // 勝利 (isVictory: true) でリザルトを表示
     }
 
@@ -310,10 +310,10 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
     private IEnumerator DelayAndPauseGameOnGameOver()
     {
         Time.timeScale = 0.5f;
-        yield return new WaitForSecondsRealtime(gameOverDelaySeconds);
+        yield return new WaitForSeconds(gameOverDelaySeconds * 0.5f);
 
         Time.timeScale = 1f;
-        yield return new WaitForSecondsRealtime(gameOverDelaySeconds);
+        yield return new WaitForSeconds(gameOverDelaySeconds);
 
         // Time.timeScale = 0f;
         InstantiateResultPanel(false); // 敗北 (isVictory: false) でリザルトを表示
