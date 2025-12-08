@@ -11,6 +11,12 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
     protected const string HIT_TRIGGER = "damage";          // ダメージを受けた時のアニメーション
     protected const string DIE_TRIGGER = "die";          // 死亡時のアニメーション
     protected const string FIRE_TRIGGER = "attack";
+    protected const string FIRE_STUN_TRIGGER = "fireStun";
+    protected const string FIRE_STUN_END_TRIGGER = "fireStunEnd";
+    protected const string FREEZE_STUN_TRIGGER = "freezeStun";
+    protected const string FREEZE_STUN_END_TRIGGER = "freezeStunEnd";
+    protected const string ICE_SLOW_TRIGGER = "iceSlow";
+    protected const string ICE_SLOW_END_TRIGGER = "iceSlowEnd";
 
     private StatusEffectModel _statusModel;
 
@@ -104,29 +110,35 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
     public virtual void OnFireStunStart()
     {
         PlayFireStunSound();
+        animator.SetTrigger(FIRE_STUN_TRIGGER);
         Debug.Log("FireStun started");
     }
 
     public virtual void OnFireStunEnd()
     {
+        animator.SetTrigger(FIRE_STUN_END_TRIGGER);
         Debug.Log("FireStun ended");
     }
 
     public virtual void OnFreezeStunStart()
     {
         PlayFreezeStunSound();
+        animator.SetTrigger(FREEZE_STUN_TRIGGER);
     }
 
     public virtual void OnFreezeStunEnd()
     {
+        animator.SetTrigger(FREEZE_STUN_END_TRIGGER);
     }
 
     public virtual void OnIceSlowStart()
     {
+        animator.SetTrigger(ICE_SLOW_TRIGGER);
     }
 
     public virtual void OnIceSlowEnd()
     {
+        animator.SetTrigger(ICE_SLOW_END_TRIGGER);
     }
 
 
