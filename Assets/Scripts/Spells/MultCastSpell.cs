@@ -12,7 +12,7 @@ public class MultCastSpell : SpellBase
     public int[] relativeSpellGroupOffsets = { 1 };
 
     [Tooltip("発射間隔のランダム性の係数。0のとき間隔0")]
-    public float delayMultiplier = 0.01f;
+    public float delayMultiplier = 0.05f;
 
     // ----------------------------------------------------------------------------------
     // 抽象メソッドの実装

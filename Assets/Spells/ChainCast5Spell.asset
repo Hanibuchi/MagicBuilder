@@ -20,5 +20,5 @@ MonoBehaviour:
   spellDropSound: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
   spellDropSoundVolume: 1
   relativeSpellGroupOffsets: 0100000002000000030000000400000005000000
-  delayMultiplier: 0.01
+  delayMultiplier: 0.05
   additionalErrorDegree: 2
