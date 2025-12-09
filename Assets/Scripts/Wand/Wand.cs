@@ -19,8 +19,6 @@ public class Wand
 
     // 呪文リストの変更を監視するリスナーのリスト
     private ISpellListChangeListener listener;
-    [SerializeField] Sprite sprite;
-    public Sprite Sprite => sprite;
 
     /// <summary>
     /// 現在の杖にセットされている呪文リストを取得します。
@@ -91,8 +89,8 @@ public interface ISpellListChangeListener
 public enum WandType
 {
     Default,
-    Crystal,
-    Steam,
+    Water,
+    Ice,
+    Fire,
     Wood,
-    Dark,
 }

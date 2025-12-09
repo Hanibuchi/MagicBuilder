@@ -20,6 +20,20 @@ public class WandsController : MonoBehaviour, WandSwitchListener
     private List<WandController> wandControllers = new List<WandController>();
     public WandController[] WandControllers => wandControllers.ToArray();
 
+    [Serializable]
+    public class WandSprite
+    {
+        public WandType wandType;
+        public Sprite sprite;
+    }
+    [SerializeField] List<WandSprite> wandSprites;
+
+    Sprite GetSprite(WandType wandType)
+    {
+        var wandSprite = wandSprites.FirstOrDefault(ws => ws.wandType == wandType);
+        return wandSprite != null ? wandSprite.sprite : null;
+    }
+
     /// <summary>
     /// 新しい杖（Wand）を生成し、AttackManagerに追加します。
     /// また、対応するWandUIとWandControllerも生成・初期化します。
@@ -44,7 +58,7 @@ public class WandsController : MonoBehaviour, WandSwitchListener
         int newWandIndex = attackManager.playerWands.Count;
 
         // 5. WandControllerの初期化と関連付け
-        wandController.Initialize(newWand, wandUI);
+        wandController.Initialize(newWand, wandUI, GetSprite(newWand.type));
         attackManager.playerWands.Add(newWand);
         wandControllers.Add(wandController);
 

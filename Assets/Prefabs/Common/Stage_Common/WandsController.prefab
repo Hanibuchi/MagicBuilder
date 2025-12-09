@@ -44,6 +44,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 437216aabcacca547918d450514dc824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wandSprites:
+  - wandType: 0
+    sprite: {fileID: -115740529236340053, guid: 2e69467cfff73bc4cb18f1a109d26ca0, type: 3}
+  - wandType: 1
+    sprite: {fileID: -5265215603963773043, guid: c4314b1012e639747bfb82bc1ebbcdd5, type: 3}
+  - wandType: 2
+    sprite: {fileID: 3282382071364735620, guid: c4314b1012e639747bfb82bc1ebbcdd5, type: 3}
+  - wandType: 3
+    sprite: {fileID: 6492906738683769071, guid: c4314b1012e639747bfb82bc1ebbcdd5, type: 3}
+  - wandType: 4
+    sprite: {fileID: 6096887357460432995, guid: c4314b1012e639747bfb82bc1ebbcdd5, type: 3}
   changeWandSound: {fileID: 8300000, guid: 0994c12e202f342459a4212e7287f7e8, type: 3}
   changeWandSoundVolume: 1
   test_wand:
