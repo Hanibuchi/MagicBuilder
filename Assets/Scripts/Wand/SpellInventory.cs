@@ -408,48 +408,13 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         return screenPoint;
     }
 
-    // [SerializeField] float test_delayTime;
-    // [SerializeField] SpellBase test_spell;
-    // /// <summary>
-    // /// 遅延処理のテストを開始するメソッド
-    // /// </summary>
-    // public void Test()
-    // {
-    //     // コルーチンを開始
-    //     StartCoroutine(TestCoroutine());
-    // }
-
-    // /// <summary>
-    // /// test_delayTime秒後にAddSpellToInventoryを実行するコルーチン
-    // /// </summary>
-    // public IEnumerator TestCoroutine()
-    // {
-    //     // test_delayTime秒間待機
-    //     yield return new WaitForSeconds(test_delayTime);
-
-    //     // 待機後にAddSpellToInventoryを実行
-    //     AddSpellToInventory(test_spell);
-
-    //     Debug.Log($"遅延時間 {test_delayTime}秒後に呪文 '{test_spell.spellName}' をインベントリに追加しました。");
-    // }
-
-    // [SerializeField] RectTransform test_rect;
-    // public void Test2()
-    // {
-    //     Camera uiCamera = test_rect.GetComponentInParent<Canvas>().renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main;
-
-    //     // UIの中心のワールド座標を取得（これ自体はあまり使わないが中間ステップとして）
-    //     Vector3 uiWorldPosition = test_rect.position;
-
-    //     // ワールド座標からスクリーン座標に変換
-    //     // RectTransformUtility.WorldToScreenPointを使用するのが一般的ですが、
-    //     // 階層を無視して「スクリーン上のどこか」を取得するだけなら、
-    //     // 実際にはそのUI要素のピボット（position）が既にスクリーン座標に近い値を持っていることが多いです。
-    //     // シンプルにCanvas内のpositionを取得し、画面サイズで正規化して利用する方法もありますが、
-    //     // 確実に取得するなら以下の方法です。
-
-    //     // 確実な方法: 画面の中央からの相対位置ではなく、Rawなスクリーン座標を取得
-    //     Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(uiCamera, uiWorldPosition);
-    //     Debug.Log($"Screen Point: {screenPoint}");
-    // }
+    const string HIDE_TRIGGER = "Hide";
+    [SerializeField] Animator animator;
+    public void Hide()
+    {
+        if (animator != null)
+        {
+            animator.SetTrigger(HIDE_TRIGGER);
+        }
+    }
 }

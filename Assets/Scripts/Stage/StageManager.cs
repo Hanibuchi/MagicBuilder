@@ -236,7 +236,12 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         }
     }
 
-
+    void OnGameEnd()
+    {
+        GameTimerManager.Instance.StopTimer(); // タイマーを停止
+        WandUIManager.Instance.Hide();
+        SpellInventory.Instance.Hide();
+    }
     private bool gameEnd = false;
     public bool GameEnd => gameEnd;
     /// <summary>
@@ -247,9 +252,7 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         if (gameEnd) return;
         gameEnd = true;
         Debug.Log("🎉 ステージクリア！");
-        GameTimerManager.Instance.StopTimer();
-
-        WandUIManager.Instance.Hide();
+        OnGameEnd();
         StartCoroutine(DelayAndPauseGameOnGameClear());
     }
     public static Action OnStageClearForceDie;
@@ -299,10 +302,8 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
     {
         if (gameEnd) return;
         gameEnd = true;
+        OnGameEnd();
         Debug.Log("💀 ゲームオーバー！");
-        GameTimerManager.Instance.StopTimer(); // タイマーを停止
-
-        WandUIManager.Instance.Hide();
         // ゲームオーバー演出（コルーチン）
         StartCoroutine(DelayAndPauseGameOnGameOver());
     }
