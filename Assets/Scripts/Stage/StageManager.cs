@@ -249,6 +249,7 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         Debug.Log("🎉 ステージクリア！");
         GameTimerManager.Instance.StopTimer();
 
+        WandUIManager.Instance.Hide();
         StartCoroutine(DelayAndPauseGameOnGameClear());
     }
     public static Action OnStageClearForceDie;
@@ -300,6 +301,8 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         gameEnd = true;
         Debug.Log("💀 ゲームオーバー！");
         GameTimerManager.Instance.StopTimer(); // タイマーを停止
+
+        WandUIManager.Instance.Hide();
         // ゲームオーバー演出（コルーチン）
         StartCoroutine(DelayAndPauseGameOnGameOver());
     }

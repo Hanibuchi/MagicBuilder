@@ -214,6 +214,16 @@ public class WandUIManager : MonoBehaviour
 
         Debug.Log($"杖切り替えUIを更新: 現在のIndex={newIndex}, Next={canSwitchNext}, Prev={canSwitchPrev}");
     }
+
+    const string HIDE_TRIGGER = "Hide";
+    [SerializeField] Animator animator;
+    public void Hide()
+    {
+        if (animator != null)
+        {
+            animator.SetTrigger(HIDE_TRIGGER);
+        }
+    }
 }
 
 /// <summary>
