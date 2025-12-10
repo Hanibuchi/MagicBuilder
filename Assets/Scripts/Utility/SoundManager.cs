@@ -13,8 +13,12 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource bgmSource;
     [SerializeField] private AudioSource seSource;
 
+    // AudioMixer用
     const string BGM_VOLUME_PARAM = "BGM_Volume";
     const string SE_VOLUME_PARAM = "SE_Volume";
+    // PlayerPrefs用
+    const string BGM_VOLUME_SAVE_KEY = "Save_BGM_Volume_0to1";
+    const string SE_VOLUME_SAVE_KEY = "Save_SE_Volume_0to1";
 
     // シングルトンの初期化処理
     private void Awake()
@@ -23,11 +27,26 @@ public class SoundManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            LoadVolumes();
         }
         else
         {
             Destroy(gameObject);
         }
+    }
+
+    /// <summary>
+    /// PlayerPrefsから音量設定をロードし、Audio Mixerに適用する
+    /// </summary>
+    private void LoadVolumes()
+    {
+        // BGM音量のロード (デフォルトは1.0)
+        float loadedBGMVolume = GetBGMVolume0to1();
+        SetBGMVolume0to1(loadedBGMVolume);
+
+        // SE音量のロード (デフォルトは1.0)
+        float loadedSEVolume = GetSEVolume0to1();
+        SetSEVolume0to1(loadedSEVolume);
     }
 
     // --- BGM再生メソッド ---
@@ -52,10 +71,14 @@ public class SoundManager : MonoBehaviour
     public void SetBGMVolume0to1(float volume)
     {
         SetVolume0to1(BGM_VOLUME_PARAM, volume);
+        PlayerPrefs.SetFloat(BGM_VOLUME_SAVE_KEY, volume);
+        PlayerPrefs.Save();
     }
     public void SetSEVolume0to1(float volume)
     {
         SetVolume0to1(SE_VOLUME_PARAM, volume);
+        PlayerPrefs.SetFloat(SE_VOLUME_SAVE_KEY, volume);
+        PlayerPrefs.Save();
     }
     void SetVolume0to1(string parameterName, float volume)
     {
@@ -66,32 +89,12 @@ public class SoundManager : MonoBehaviour
     // --- 音量取得メソッド (Audio Mixer経由) ---
     public float GetBGMVolume0to1()
     {
-        return GetVolume0to1(BGM_VOLUME_PARAM);
+        return PlayerPrefs.GetFloat(BGM_VOLUME_SAVE_KEY, 1.0f);
     }
 
     public float GetSEVolume0to1()
     {
-        return GetVolume0to1(SE_VOLUME_PARAM);
-    }
-
-    // 実際のミキサーからdB値を取得し、0.0〜1.0に変換するロジック
-    private float GetVolume0to1(string parameterName)
-    {
-        float db;
-        // Audio Mixerから現在のボリューム値（dB）を取得
-        if (mixer.GetFloat(parameterName, out db))
-        {
-            // -80dB (SetVolume0to1で設定される最低値) は音量0として扱う
-            if (db <= -79f) return 0f;
-
-            // dB値をリニアな音量（0.0～1.0）に変換
-            // volume = 10^(db / 20)
-            // Mathf.Pow(10f, db / 20f)
-            return Mathf.Pow(10f, db / 20f);
-        }
-
-        // 取得に失敗した場合のフォールバック (通常は1.0を返す)
-        return 1f;
+        return PlayerPrefs.GetFloat(SE_VOLUME_SAVE_KEY, 1.0f);
     }
 
     public void StopBGMWithFade(float duration = 1.0f)
