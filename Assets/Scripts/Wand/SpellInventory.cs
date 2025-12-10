@@ -9,7 +9,9 @@ using System.Collections;
 // ISpellContainer を実装
 public class SpellInventory : MonoBehaviour, ISpellContainer
 {
-
+    [Header("Inventory Settings")]
+    [Tooltip("インベントリに格納できる呪文の最大数")]
+    public int maxInventoryCount = 30; // 追加: 最大値
     public static SpellInventory Instance { get; private set; }
     public List<SpellBase> availableSpells = new List<SpellBase>();
     [SerializeField] private RectTransform inventoryFrame;
@@ -355,6 +357,14 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
             return;
         }
 
+        if (availableSpells.Count >= maxInventoryCount)
+        {
+            Debug.LogWarning($"インベントリが満杯です。呪文 '{spellToAdd.spellName}' は追加できませんでした。(上限: {maxInventoryCount})");
+            // インベントリ満杯SEを再生
+            PlayInventoryFullSound();
+            return;
+        }
+
         // 1. データリストに追加
         availableSpells.Add(spellToAdd);
 
@@ -375,6 +385,18 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         Debug.Log($"呪文 '{spellToAdd.spellName}' をインベントリに追加しました。");
         // スクロールが必要になる可能性があるので、スクロール制御も更新
         UpdateScroll();
+    }
+
+    [Header("Sound Settings")]
+    [SerializeField] AudioClip inventoryFullSound; // インベントリ満杯時のSE
+    [SerializeField] float inventoryFullSoundVolume = 1.0f;
+    /// <summary>
+    /// インベントリ満杯時のSEを再生します。
+    /// </summary>
+    void PlayInventoryFullSound()
+    {
+        if (SoundManager.Instance != null && inventoryFullSound != null)
+            SoundManager.Instance.PlaySE(inventoryFullSound, inventoryFullSoundVolume);
     }
 
     [SerializeField] RectTransform dropTargetRect;

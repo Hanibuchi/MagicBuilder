@@ -229,6 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d715ceaf8c8956840ad73cf614794068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxInventoryCount: 30
   availableSpells:
   - {fileID: 11400000, guid: 6c9d9dfe2f68e9144b91bb04a7bd8513, type: 2}
   - {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
@@ -241,6 +242,8 @@ MonoBehaviour:
   inventoryUIPosY_Min: -50
   moveInventorySound: {fileID: 8300000, guid: 0994c12e202f342459a4212e7287f7e8, type: 3}
   moveInventorySoundVolume: 1
+  inventoryFullSound: {fileID: 8300000, guid: 40b5a999145a1eb48a24e5ce2e3fff7c, type: 3}
+  inventoryFullSoundVolume: 1
   dropTargetRect: {fileID: 6769042010849098729}
   animator: {fileID: 4993278617823054869}
 --- !u!1 &5593462710761235338
