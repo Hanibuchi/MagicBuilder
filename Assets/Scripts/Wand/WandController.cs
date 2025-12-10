@@ -72,6 +72,21 @@ public class WandController : IWandEditor, ISpellListChangeListener
 
     public bool CanAddSpell(bool isMovingFromSelf)
     {
-        return false;
+        if (managedWand == null)
+        {
+            Debug.LogError("管理対象のWandデータが設定されていません。");
+            return false;
+        }
+
+        // 判定ロジックはWandデータ（モデル）側で行う
+        bool canInsert = managedWand.CanAddSpell(isMovingFromSelf);
+
+        if (!canInsert)
+        {
+            // 新規追加失敗の場合のみログを出す (UIへのフィードバックに利用)
+            Debug.Log($"呪文追加不可: 杖 '{managedWand.type}' は最大呪文数 ({managedWand.maxSpellCount}) に達しています。");
+        }
+
+        return canInsert;
     }
 }

@@ -13,6 +13,9 @@ public class Wand
     [Tooltip("この杖の種類")]
     public WandType type = WandType.Default;
 
+    [Tooltip("この杖に追加できる呪文の最大数。")]
+    public int maxSpellCount = 12; // デフォルト値として12を設定
+
     [Header("呪文スロット")]
     [Tooltip("この杖にセットされている呪文の配列。")]
     [SerializeReference] public List<SpellBase> spells = new List<SpellBase>();
@@ -69,6 +72,36 @@ public class Wand
             }
         }
         return totalCooldown;
+    }
+
+    /// <summary>
+    /// 指定された呪文をこの杖に挿入できるかどうかを判定する。
+    /// </summary>
+    /// <param name="isMovingFromSelf">挿入を試みている呪文が、もともとこの杖に属していたか (移動) どうか。</param>
+    /// <returns>挿入可能であればtrue、そうでなければfalse。</returns>
+    public bool CanAddSpell(bool isMovingFromSelf)
+    {
+        // 1. 杖の中での移動（配置換え）の場合
+        if (isMovingFromSelf)
+        {
+            // 呪文の総数は変わらないため、常に挿入可能
+            return true;
+        }
+
+        // 2. 新規の呪文を追加する場合
+        // 現在の呪文数と最大許容数を比較
+        int currentCount = spells.Count;
+
+        if (currentCount < maxSpellCount)
+        {
+            // 最大スロット数に達していないため、追加可能
+            return true;
+        }
+        else
+        {
+            // 最大スロット数に達しているため、追加不可
+            return false;
+        }
     }
 }
 
