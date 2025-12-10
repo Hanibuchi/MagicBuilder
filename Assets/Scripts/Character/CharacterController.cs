@@ -85,12 +85,16 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
     {
         // if (gameObject.TryGetComponent<Collider2D>(out Collider2D collider))
         // collider.enabled = false;
-        if (animator == null || !animator.enabled) return;
-        animator.SetTrigger(DIE_TRIGGER);
+        NotifyDieSilent();
         if (playHitSoundOnDead)
             PlayHitSound();
 
         PlayDieSound();
+    }
+    public void NotifyDieSilent()
+    {
+        if (animator == null || !animator.enabled) return;
+        animator.SetTrigger(DIE_TRIGGER);
     }
 
     /// <summary>
