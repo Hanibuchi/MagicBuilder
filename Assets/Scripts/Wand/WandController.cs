@@ -69,4 +69,9 @@ public class WandController : IWandEditor, ISpellListChangeListener
         // WandUIを最新の呪文リストに基づいて再構築する
         wandUI.RebuildUI(spells.ToArray());
     }
+
+    public bool CanAddSpell(bool isMovingFromSelf)
+    {
+        return false;
+    }
 }

@@ -58,6 +58,22 @@ public class WandUI : MonoBehaviour, ISpellContainer
     }
 
     /// <summary>
+    /// SpacingUIからの要求に基づき、ドラッグ中の呪文を挿入可能か判定する。
+    /// </summary>
+    /// <param name="isMovingFromSelf">挿入を試みている呪文が、もともとこのWandUIに属していたかどうか。</param>
+    /// <returns>挿入可能であればtrue。</returns>
+    public bool CanDropSpell(bool isMovingFromSelf)
+    {
+        if (wandEditor == null)
+        {
+            Debug.LogError("WandEditorが設定されていません。挿入判定ができません。");
+            return false;
+        }
+        // Editor側の新しい判定メソッドを呼び出す
+        return wandEditor.CanAddSpell(isMovingFromSelf);
+    }
+
+    /// <summary>
     /// SpellUI/SpacingUIから呪文の追加リクエストを受け取る。
     /// </summary>
     public void NotifySpellAdded(int index, SpellBase spell)
@@ -119,9 +135,12 @@ public class WandUI : MonoBehaviour, ISpellContainer
     /// SpacingUIがPointerEnterイベントを受け取ったことを通知する。
     /// この通知を受け取ったWandUIは、他のSpacingUIのハイライトを解除する。
     /// </summary>
-    public void NotifySpacingUIEntered(SpacingUI enteredSpacing)
+    /// <param name="enteredSpacing">Enterイベントが発生したSpacingUI。</param>
+    /// <returns>呪文の追加が可能であればtrue。</returns>
+    public void NotifySpellEntered(SpacingUI enteredSpacing)
     {
         // ハイライトの排他制御
+        // ※ 追加可能でない場合でも、他のSpacingUIのハイライトは解除する必要があります。
         foreach (var element in uiElements)
         {
             SpacingUI spacing = element.GetComponent<SpacingUI>();
@@ -193,4 +212,11 @@ public interface IWandEditor
     /// </summary>
     /// <param name="index">削除する呪文の位置（0から始まる）。</param>
     void RemoveSpell(int index);
+
+    /// <summary>
+    /// 指定された呪文をこの杖に追加できるかどうかを判定する。
+    /// </summary>
+    /// <param name="isMovingFromSelf">追加を試みている呪文が、もともとこの杖に属していたか (移動) どうか。</param>
+    /// <returns>追加可能であればtrue、そうでなければfalse。</returns>
+    bool CanAddSpell(bool isMovingFromSelf);
 }
