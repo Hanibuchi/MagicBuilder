@@ -48,11 +48,7 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
     /// </summary>
     public void NotifyDamage(DamageType damageType, float damageValue)
     {
-        if (animator == null || !animator.enabled || characterHealth.IsDead) return;
-
-        // 例: 基本/全てのダメージで共通の"Hit"アニメーションを再生
-        animator.SetTrigger(HIT_TRIGGER);
-        PlayHitSound();
+        if (animator == null || !animator.enabled) return;
 
         Vector3 spawnPoint;
         if (damageTextSpawnPoint != null)
@@ -60,6 +56,13 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
         else
             spawnPoint = transform.position;
         DamageTextManager.Instance.ShowDamageText(damageValue, damageType, spawnPoint);
+
+        if (!characterHealth.IsDead) // ヒット音は出したくないが、ダメージ表示はしたい
+        {
+            // 例: 基本/全てのダメージで共通の"Hit"アニメーションを再生
+            animator.SetTrigger(HIT_TRIGGER);
+            PlayHitSound();
+        }
     }
 
     public void NotifyFireStun(float duration)

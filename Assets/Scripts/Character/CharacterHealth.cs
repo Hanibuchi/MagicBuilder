@@ -163,7 +163,6 @@ public class CharacterHealth : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
-            return;
         }
 
         // 3. 受けたダメージによる状態異常処理
