@@ -3,6 +3,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 /// <summary>
 /// 呪文と呪文の間にあるスペース。呪文のドロップ（追加）を受け付ける。
@@ -18,6 +19,7 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     private const string NormalTrigger = "Normal";
 
     [SerializeField] ExtendedSpacingTriggerUI extendedTriggerUI;
+    [SerializeField] Image image;
 
     void Awake()
     {
@@ -116,6 +118,15 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
         if (extendedTriggerUI != null)
         {
             extendedTriggerUI.gameObject.SetActive(isActive);
+        }
+        SetImageAlpha(isActive);
+    }
+
+    void SetImageAlpha(bool isActive)
+    {
+        if (image != null)
+        {
+            image.color = isActive ? new Color(image.color.r, image.color.g, image.color.b, 0.5f) : new Color(image.color.r, image.color.g, image.color.b, 0f);
         }
     }
 }

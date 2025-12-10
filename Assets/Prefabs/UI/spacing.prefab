@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9093045707194449961}
   - component: {fileID: 1210085284418734159}
   - component: {fileID: 1252407050445683559}
+  - component: {fileID: 7161372032381714530}
   m_Layer: 5
   m_Name: spacing
   m_TagString: Untagged
@@ -60,10 +61,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   extendedTriggerUI: {fileID: 3077664445379522187}
+  image: {fileID: 7161372032381714530}
   spellDropSound: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
   spellDropSoundVolume: 1
-  highlightSound: {fileID: 8300000, guid: 0994c12e202f342459a4212e7287f7e8, type: 3}
-  highlightSoundVolume: 1
 --- !u!95 &1252407050445683559
 Animator:
   serializedVersion: 7
@@ -86,6 +86,36 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7161372032381714530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443911027144441222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -5162353624195298216, guid: 8a855987d811b0048a3620b27220c422, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &1801443571806695437
 GameObject:
   m_ObjectHideFlags: 0
