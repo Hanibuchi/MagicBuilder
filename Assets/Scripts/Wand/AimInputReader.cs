@@ -110,11 +110,11 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         // 2. 角度と強さを計算
         CalculateAimParameters(dragDelta, out float angle, out float power);
 
-        // 3. IAimControllerのメソッドを呼び出し、魔法を発射
-        aimController.ReleaseMagic(angle, power);
-
         isAiming = false;
         aimController.ClearAimLine();
+
+        // 3. IAimControllerのメソッドを呼び出し、魔法を発射
+        aimController.ReleaseMagic(angle, power);
     }
 
     /// <summary>

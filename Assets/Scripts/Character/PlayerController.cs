@@ -56,7 +56,10 @@ public class PlayerController : MyCharacterController
     {
         if (animator == null || !animator.enabled) return;
         if (reset)
+        {
+            animator.ResetTrigger(AIM_TRIGGER);
             return;
+        }
 
         // 1. 角度を0度から90度の範囲にクランプ（制限）
         // 例: -45 -> 0, 125 -> 90, 45 -> 45
