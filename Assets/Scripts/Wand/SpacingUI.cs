@@ -60,6 +60,7 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
             {
                 // 挿入不可の場合、処理を中断
                 StopHighlight();
+                PlayInventoryFullSound();
                 return;
             }
 
@@ -152,5 +153,16 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
         {
             image.color = isActive ? new Color(image.color.r, image.color.g, image.color.b, 0.5f) : new Color(image.color.r, image.color.g, image.color.b, 0f);
         }
+    }
+
+    [Header("Sound Settings")]
+    [SerializeField] AudioClip inventoryFullSound; // インベントリ満杯時のSE
+    /// <summary>
+    /// インベントリ満杯時のSEを再生します。
+    /// </summary>
+    void PlayInventoryFullSound()
+    {
+        if (SoundManager.Instance != null && inventoryFullSound != null)
+            SoundManager.Instance.PlaySE(inventoryFullSound);
     }
 }

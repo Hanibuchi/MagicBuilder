@@ -64,6 +64,7 @@ MonoBehaviour:
   image: {fileID: 7161372032381714530}
   spellDropSound: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
   spellDropSoundVolume: 1
+  inventoryFullSound: {fileID: 8300000, guid: 40b5a999145a1eb48a24e5ce2e3fff7c, type: 3}
 --- !u!95 &1252407050445683559
 Animator:
   serializedVersion: 7
