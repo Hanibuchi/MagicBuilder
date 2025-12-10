@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: barrier5 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4249120576296064341, guid: ded1fd2499f01314284f1395f226162e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.89
+      objectReference: {fileID: 0}
     - target: {fileID: 4283708535566409029, guid: ded1fd2499f01314284f1395f226162e, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 0.84
