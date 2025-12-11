@@ -72,8 +72,24 @@ public class StageSelectUI : MonoBehaviour
     public void OnIslandSelected(string islandID)
     {
         Debug.Log($"島が選択されました: {islandID}");
-        // 1. 他の島の選択解除
-        NormalizeAllOtherIslands(islandID);
+        if (allIslandSelectors == null) return;
+
+        foreach (var selector in allIslandSelectors)
+        {
+            if (selector == null) continue;
+
+            if (selector.islandID == islandID)
+            {
+                // 新しく選択された島
+                currentSelectedIsland = selector;
+                selector.Select();
+            }
+            else
+            {
+                // 他の全ての島を非選択状態へ
+                selector.Normalize();
+            }
+        }
 
         // 2. UIの表示アニメーション開始
         gameObject.SetActive(true);
@@ -97,36 +113,6 @@ public class StageSelectUI : MonoBehaviour
     }
 
     // --- 内部ヘルパーメソッド ---
-
-    /// <summary>
-    /// 新しく選択された島以外の全てのIslandSelectorを非選択状態(Normalize)にします。
-    /// </summary>
-    /// <param name="newlySelectedIslandID">新しく選択された島のID。</param>
-    private void NormalizeAllOtherIslands(string newlySelectedIslandID)
-    {
-        if (allIslandSelectors == null) return;
-
-        // 現在選択中のIslandSelectorを更新
-        IslandSelector newIsland = null;
-
-        foreach (var selector in allIslandSelectors)
-        {
-            if (selector == null) continue;
-
-            if (selector.islandID == newlySelectedIslandID)
-            {
-                // 新しく選択された島
-                newIsland = selector;
-                // ここではSelect()がIslandSelector側で既に呼ばれているので何もしない
-            }
-            else
-            {
-                // 他の全ての島を非選択状態へ
-                selector.Normalize();
-            }
-        }
-        currentSelectedIsland = newIsland;
-    }
 
 
     /// <summary>

@@ -12,6 +12,11 @@ public class GameManager : MonoBehaviour, IStageStartListener
     // ★ 外部からStageConfigへのアクセスが必要な場合のPublicプロパティ
     public StageConfig CurrentStageConfig { get; private set; }
 
+    /// <summary>
+    /// ステージ選択画面に遷移した際、自動的に選択を試みるターゲットステージの名前。
+    /// </summary>
+    public string StageSelectTargetStageName;
+
     // --- シングルトン ---
     public static GameManager Instance { get; private set; }
     const string STAGE_COMMON_SCENE_NAME = "Stage_Common";

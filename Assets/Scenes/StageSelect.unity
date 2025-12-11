@@ -851,6 +851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fd39419f8355c643bcc1b45ecc2ee00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StageSelectTargetStageName: 4-1
 --- !u!4 &433685025
 Transform:
   m_ObjectHideFlags: 0
@@ -1182,7 +1183,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageListConfig: {fileID: 11400000, guid: a913743c035d39741b49b95e008dd19b, type: 2}
-  test_stageID: 2-1
 --- !u!4 &653852053
 Transform:
   m_ObjectHideFlags: 0
@@ -11860,6 +11860,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bGM: {fileID: 8300000, guid: 78bad6852ea46bf4fb72e16fe5e8bb5e, type: 3}
+  stageSelectUI: {fileID: 826938147}
+  islandStageMapConfig: {fileID: 11400000, guid: 308115efb2fda7b428f76ea1ca1fdd31, type: 2}
 --- !u!4 &1496857790
 Transform:
   m_ObjectHideFlags: 0

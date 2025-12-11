@@ -1,5 +1,6 @@
 // IslandStageMappingConfig.cs
 
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -49,5 +50,25 @@ public class IslandStageMappingConfig : ScriptableObject
             }
         }
         return null; // 見つからない場合
+    }
+
+
+    /// <summary>
+    /// ステージ名から、それが属する島のIDを IslandStageMappingConfig を使って検索します。
+    /// </summary>
+    /// <param name="stageName">検索したいステージ名。</param>
+    /// <returns>対応する島のID。見つからない場合はnull。</returns>
+    public string GetIslandIDForStage(string stageName)
+    {
+        if (islandStageMap == null) return null;
+
+        foreach (var islandData in islandStageMap)
+        {
+            if (islandData != null && islandData.stages != null && islandData.stages.Contains(stageName))
+            {
+                return islandData.islandID;
+            }
+        }
+        return null;
     }
 }

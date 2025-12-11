@@ -33,7 +33,7 @@ public class StageStarter : MonoBehaviour
     }
 
     /// <summary>
-    /// IStageStartListenerを登録します。登録できるのは一つだけです。
+    /// IStageStartListenerを登録します。
     /// </summary>
     /// <param name="listener">登録するIStageStartListenerインスタンス (通常はGameManager)</param>
     public void SetStageStartListener(IStageStartListener listener)
