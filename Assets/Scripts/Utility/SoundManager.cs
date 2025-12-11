@@ -27,12 +27,16 @@ public class SoundManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            LoadVolumes();
         }
         else
         {
             Destroy(gameObject);
         }
+    }
+
+    void Start()
+    {
+        LoadVolumes();
     }
 
     /// <summary>
