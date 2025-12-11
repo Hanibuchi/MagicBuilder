@@ -93,10 +93,15 @@ public class StageStarter : MonoBehaviour
     }
 
 
-    // public string test_StageName;
-    // public void Test()
+    // public string test_stageID = "2-1";
+    // public void Test_Unlock()
     // {
-    //     StartStageByName(test_StageName);
+    //     StageUnlockManager.Instance.UnlockStage(test_stageID);
+    // }
+    // public void Test_IsUnlocked()
+    // {
+    //     bool isUnlocked = StageUnlockManager.Instance.IsStageUnlocked(test_stageID);
+    //     Debug.Log($"ステージ {test_stageID} の解放状態: {isUnlocked}");
     // }
 }
 

@@ -1182,6 +1182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageListConfig: {fileID: 11400000, guid: a913743c035d39741b49b95e008dd19b, type: 2}
+  test_stageID: 2-1
 --- !u!4 &653852053
 Transform:
   m_ObjectHideFlags: 0
@@ -6202,7 +6203,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 653852052}
         m_TargetAssemblyTypeName: StageStarter, Assembly-CSharp
-        m_MethodName: Test
+        m_MethodName: Test_IsUnlocked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9866,6 +9867,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8da90dead880ee24794eeabd35d50a2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1355433058
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1355433060}
+  - component: {fileID: 1355433059}
+  m_Layer: 0
+  m_Name: StageUnlockManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1355433059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355433058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70f5a6741aeda71449b1128411900b07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageListConfig: {fileID: 11400000, guid: a913743c035d39741b49b95e008dd19b, type: 2}
+  firstStageID: 1-1
+--- !u!4 &1355433060
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355433058}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1395302325
 GameObject:
   m_ObjectHideFlags: 0
@@ -14751,3 +14798,4 @@ SceneRoots:
   - {fileID: 826938151}
   - {fileID: 1146671468}
   - {fileID: 1589453956}
+  - {fileID: 1355433060}
