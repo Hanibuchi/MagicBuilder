@@ -62,33 +62,39 @@ public class IslandSelector : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         }
     }
 
-    [SerializeField] Vector2 selectOffset = new(0, .7f);
     void Selected()
     {
         // 💡 未選択 -> 選択状態への遷移
         if (isSelected == true) return;
 
-        isSelected = true;
         // 2. 外部メソッドの実行（島の識別子を引数に渡す）
         onIslandSelected?.Invoke(islandID);
     }
+    [SerializeField] Transform selectTransform;
     public void Select()
     {
+        isSelected = true;
         // 1. アニメーションを「選択状態」へ
         islandAnimator.SetTrigger(selectTriggerName);
 
-        CameraInputHandler.Instance.MoveCameraTo((Vector2)transform.position + selectOffset);
+        if (selectTransform != null)
+            CameraInputHandler.Instance.MoveCameraTo((Vector2)selectTransform.position);
+        else
+        {
+            Debug.LogError("SelectTransformが設定されていません。", this);
+            CameraInputHandler.Instance.MoveCameraTo((Vector2)transform.position);
+        }
 
         Debug.Log($"島を選択: {islandID}");
     }
     void Normalized()
     {
         if (isSelected == false) return;
-        isSelected = false;
         onIslandDeselected?.Invoke();
     }
     public void Normalize()
     {
+        isSelected = false;
         // 1. アニメーションを「非選択状態」へ
         islandAnimator.SetTrigger(normalizedTriggerName);
         Debug.Log($"島の選択を解除: {islandID}");

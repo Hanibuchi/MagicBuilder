@@ -110,6 +110,9 @@ public class StageSelectUI : MonoBehaviour
         // UIの非表示アニメーション開始
         uiAnimator.SetTrigger(normalizedAnimTrigger);
         currentSelectedIsland = null;
+
+        foreach (var selector in allIslandSelectors)
+            selector?.Normalize();
     }
 
     // --- 内部ヘルパーメソッド ---
