@@ -338,6 +338,14 @@ public abstract class SpellBase : ScriptableObject
         volume = spellDropSoundVolume;
     }
 
+    [Tooltip("呪文の説明文")]
+    [TextArea(1, 3)]
+    [SerializeField] string spellDescription = "";
+
+    public string GetDescription()
+    {
+        return spellDescription;
+    }
     protected List<SpellDescriptionItem> detailItems = new();
     /// <summary>
     /// 呪文の詳細説明パネルに表示するための項目リストを取得します。
