@@ -117,7 +117,6 @@ public class StageSelectUI : MonoBehaviour
 
     // --- 内部ヘルパーメソッド ---
 
-
     /// <summary>
     /// 既存のボタンを全て削除し、指定された島のステージボタンを生成します。
     /// </summary>
@@ -139,6 +138,17 @@ public class StageSelectUI : MonoBehaviour
             Debug.LogWarning($"ステージID '{islandID}' に対応するステージが設定されていません。");
             return;
         }
+
+        // StageUnlockManagerのインスタンスを取得
+        if (StageUnlockManager.Instance == null)
+        {
+            Debug.LogError("StageUnlockManagerが見つかりません。ステージの解放状態を判定できません。", this);
+            return;
+        }
+
+        // 最新到達ステージIDを取得 (このIDの次のステージが「NEW!」となる)
+        string latestReachedStageId = StageUnlockManager.Instance.GetLatestReachedStageID();
+
         int num = 1;
         // 2. リストに基づいてボタンを生成
         foreach (var entry in stageEntries)
@@ -152,8 +162,39 @@ public class StageSelectUI : MonoBehaviour
             if (stageButton != null)
             {
                 var stageInfo = StageStarter.Instance.GetStageInfoByName(entry);
-                // StageButtonに識別子と表示名を設定
-                stageButton.Setup(this, stageInfo.stageName, num.ToString(), stageInfo.subStageName);
+                string displayStageName = num.ToString();
+                string displaySubName = stageInfo.subStageName;
+                bool isUnlocked = StageUnlockManager.Instance.IsStageUnlocked(stageInfo.stageName);
+
+
+                if (isUnlocked)// 1. 解放済みの場合
+                {
+                    // StageButtonに識別子と表示名を設定
+                    stageButton.Setup(this, stageInfo.stageName, displayStageName, displaySubName);
+                    Debug.Log($"latestReachedStageId: {latestReachedStageId}, entry: {entry}");
+                    if (latestReachedStageId == entry)
+                        // 最新到達ステージの次のステージであれば、NEW!マークを表示
+                        stageButton.ShowNewStageIndicator();
+                    else
+                        // 既に到達済みのステージ（latestIndex以下）は、NEW!マークを非表示
+                        stageButton.HideNewStageIndicator();
+                }
+                else
+                {
+                    // 3. 未解放の場合
+
+                    // 表示名を???にする
+                    displaySubName = "???";
+
+                    // StageButtonに識別子と表示名を設定
+                    stageButton.Setup(this, stageInfo.stageName, displayStageName, displaySubName);
+
+                    // ボタンを無効化
+                    stageButton.DisableButton();
+                    // 未解放なのでNEW!マークは表示しない（非表示にする）
+                    stageButton.HideNewStageIndicator();
+                }
+
                 num++;
             }
             else

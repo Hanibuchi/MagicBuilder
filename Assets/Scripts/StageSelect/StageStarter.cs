@@ -93,7 +93,7 @@ public class StageStarter : MonoBehaviour
     }
 
 
-    // public string test_stageID = "2-1";
+    public string test_stageID = "2-1";
     // public void Test_Unlock()
     // {
     //     StageUnlockManager.Instance.UnlockStage(test_stageID);
@@ -108,11 +108,11 @@ public class StageStarter : MonoBehaviour
     //     bool updated = StageUnlockManager.Instance.UpdateLatestReachedStage(test_stageID);
     //     Debug.Log($"最新到達ステージIDの更新結果: {updated}");
     // }
-    // public void Test_GetLatestReachedStageID()
-    // {
-    //     string latestStageID = StageUnlockManager.Instance.GetLatestReachedStageID();
-    //     Debug.Log($"最新到達ステージID: {latestStageID}");
-    // }
+    public void Test_GetLatestReachedStageID()
+    {
+        string latestStageID = StageUnlockManager.Instance.GetLatestReachedStageID();
+        Debug.Log($"最新到達ステージID: {latestStageID}");
+    }
 }
 
 // IStageStartListener.cs
