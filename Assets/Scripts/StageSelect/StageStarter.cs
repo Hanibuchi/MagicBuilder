@@ -103,6 +103,16 @@ public class StageStarter : MonoBehaviour
     //     bool isUnlocked = StageUnlockManager.Instance.IsStageUnlocked(test_stageID);
     //     Debug.Log($"ステージ {test_stageID} の解放状態: {isUnlocked}");
     // }
+    // public void Test_UpdateLatestReachedStage()
+    // {
+    //     bool updated = StageUnlockManager.Instance.UpdateLatestReachedStage(test_stageID);
+    //     Debug.Log($"最新到達ステージIDの更新結果: {updated}");
+    // }
+    // public void Test_GetLatestReachedStageID()
+    // {
+    //     string latestStageID = StageUnlockManager.Instance.GetLatestReachedStageID();
+    //     Debug.Log($"最新到達ステージID: {latestStageID}");
+    // }
 }
 
 // IStageStartListener.cs
