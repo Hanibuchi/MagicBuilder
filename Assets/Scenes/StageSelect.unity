@@ -1183,6 +1183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageListConfig: {fileID: 11400000, guid: a913743c035d39741b49b95e008dd19b, type: 2}
+  test_stageID: 2-1
 --- !u!4 &653852053
 Transform:
   m_ObjectHideFlags: 0
@@ -6201,9 +6202,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 653852052}
-        m_TargetAssemblyTypeName: StageStarter, Assembly-CSharp
-        m_MethodName: Test_GetLatestReachedStageID
+      - m_Target: {fileID: 655938785}
+        m_TargetAssemblyTypeName: CameraInputHandler, Assembly-CSharp
+        m_MethodName: Test
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

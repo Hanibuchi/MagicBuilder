@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using NUnit.Framework.Internal;
 /// <summary>
 /// 全ての具体的な呪文クラスの抽象基底クラス。
 /// ScriptableObjectを継承することで、Unity Inspectorで設定可能なデータアセットとして扱えます。
@@ -335,6 +336,26 @@ public abstract class SpellBase : ScriptableObject
     {
         clip = spellDropSound;
         volume = spellDropSoundVolume;
+    }
+
+    protected List<SpellDescriptionItem> detailItems = new();
+    /// <summary>
+    /// 呪文の詳細説明パネルに表示するための項目リストを取得します。
+    /// 具体的な呪文クラスはこれをオーバーライドして動的な情報を追加できます。
+    /// </summary>
+    /// <returns>SpellDescriptionItemのリスト</returns>
+    public virtual List<SpellDescriptionItem> GetDescriptionDetails()
+    {
+        detailItems.Clear();
+
+        // クールタイム項目を動的に生成
+        detailItems.Add(new SpellDescriptionItem
+        {
+            icon = SpellCommonData.Instance.coolDownIcon,
+            descriptionText = $"{cooldown:F2} 秒"
+        });
+
+        return detailItems;
     }
 }
 
