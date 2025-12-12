@@ -6203,7 +6203,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 653852052}
         m_TargetAssemblyTypeName: StageStarter, Assembly-CSharp
-        m_MethodName: Test_IsUnlocked
+        m_MethodName: Test_GetLatestReachedStageID
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

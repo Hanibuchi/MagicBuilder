@@ -40,19 +40,16 @@ public class StageSelectController : MonoBehaviour, IStageStartListener
             Debug.LogError("StageSelectController: StageSelectUI または IslandStageMappingConfig が設定されていません。");
         }
         // GameManagerをStageStarterのリスナーとして登録
-        if (GameManager.Instance != null)
-        {
-            starter.SetStageStartListener(GameManager.Instance);
-            Debug.Log("StageSelectController: GameManagerをStageStarterに登録しました。");
-
-            // ステージ選択UIの自動選択処理
-            AutomaticallySelectIsland();
-        }
-        else
+        if (GameManager.Instance == null)
         {
             Debug.LogError("GameManagerインスタンスが見つかりません。登録できませんでした。");
         }
 
+        starter.SetStageStartListener(GameManager.Instance);
+        Debug.Log("StageSelectController: GameManagerをStageStarterに登録しました。");
+
+        // ステージ選択UIの自動選択処理
+        AutomaticallySelectIsland();
 
         if (SoundManager.Instance != null && bGM != null)
         {
@@ -67,13 +64,13 @@ public class StageSelectController : MonoBehaviour, IStageStartListener
     {
         if (GameManager.Instance == null || stageSelectUI == null || islandStageMapConfig == null) return;
 
-        string targetStageName = GameManager.Instance.StageSelectTargetStageName;
-
-        if (string.IsNullOrEmpty(targetStageName))
+        if (string.IsNullOrEmpty(GameManager.Instance.StageSelectTargetStageName)) // ゲーム開始時or再開時
         {
             Debug.Log("自動選択のためのステージ識別子が見つかりませんでした。");
-            return;
+            // 最新到達ステージIDを取得して設定。ゲーム開始時は最初のステージ、ゲーム再開時は最新のステージが返される。
+            GameManager.Instance.StageSelectTargetStageName = StageUnlockManager.Instance.GetLatestReachedStageID();
         }
+        string targetStageName = GameManager.Instance.StageSelectTargetStageName;
 
         // IslandStageMappingConfigから、指定されたステージを含む島IDを検索
         string islandIDToSelect = islandStageMapConfig.GetIslandIDForStage(targetStageName);

@@ -244,6 +244,11 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
     }
     private bool gameEnd = false;
     public bool GameEnd => gameEnd;
+
+
+    [Tooltip("全ステージのリスト設定を持つScriptableObject。")]
+    // StageListConfigのインスタンスをインスペクタから設定できるようにする
+    public StageListConfig stageListConfig;
     /// <summary>
     /// ステージクリア時の処理を実行します。
     /// </summary>
@@ -254,6 +259,30 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         Debug.Log("🎉 ステージクリア！");
         OnGameEnd();
         StartCoroutine(DelayAndPauseGameOnGameClear());
+
+        if (stageListConfig == null)
+        {
+            Debug.LogError("StageListConfigが設定されていません。");
+            return;
+        }
+        var nextStage = stageListConfig.GetNextStageInfoByName(stageConfig.stageName);
+        if (nextStage == null)
+        {
+            Debug.LogWarning($"次のステージが存在しません。現在のステージ '{stageConfig.stageName}' は最後のステージです。");
+        }
+        // このステージの次のステージを最新のステージとして登録しようと試みる。最新のステージでない場合（つまり再プレイ時）何もせず、最新のステージの場合、ステージ選択画面になったときにそのステージの島が選択されるようにする。
+        else
+        {
+            if (StageUnlockManager.Instance.UpdateLatestReachedStage(nextStage.stageName))
+            {
+                GameManager.Instance.StageSelectTargetStageName = nextStage.stageName;
+                Debug.Log($"最新のステージとして '{nextStage.stageName}' を登録しました。");
+            }
+            else
+            {
+                Debug.Log($"最新のステージとして '{nextStage.stageName}' を登録しませんでした。");
+            }
+        }
     }
     public static Action OnStageClearForceDie;
 
@@ -372,22 +401,30 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
 
         // ボタンアクションの設定（例：シーン遷移処理を実装）
         // ※ この部分の具体的な実装は、プロジェクトのシーン管理によって異なります。
+        bool clicked = false;
         Action onStageSelect = () =>
         {
+            if (clicked) return;
+            clicked = true;
             Debug.Log("ステージセレクトへ");
             Time.timeScale = 1f;
-            /* SceneManager.LoadScene("StageSelectScene"); */
+            GameManager.Instance.LoadStageSelectScene();
         };
         Action onRetry = () =>
         {
+            if (clicked) return;
+            clicked = true;
             Debug.Log("リトライ");
             Time.timeScale = 1f;
-            // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            GameManager.Instance.OnStageStart(stageConfig);
         };
         Action onNextStage = () =>
         {
+            if (clicked) return;
+            clicked = true;
             Debug.Log("次のステージへ");
             Time.timeScale = 1f; /* 次のステージへ遷移 */
+            GameManager.Instance.LoadStageSelectScene();
         };
         Action onSpellChange = () =>
         {

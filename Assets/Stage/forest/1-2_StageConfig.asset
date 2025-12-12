@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageName: 1-2
   subStageName: "2\u756A\u76EE\u306E\u30B9\u30C6\u30FC\u30B8"
-  SceneName: Stage_1
+  SceneName: Stage_Template
   clearCondition: 1
-  enemyPhases: []
+  enemyPhases:
+  - {fileID: 11400000, guid: edb681d8b717ddf47a041e07a67666ca, type: 2}
   stageType: 0

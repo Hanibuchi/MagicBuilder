@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour, IStageStartListener
 
     // --- シングルトン ---
     public static GameManager Instance { get; private set; }
-    const string STAGE_COMMON_SCENE_NAME = "Stage_Common";
 
     private void Awake()
     {
@@ -52,6 +51,8 @@ public class GameManager : MonoBehaviour, IStageStartListener
         // 1. ステージ構成情報を保持
         CurrentStageConfig = config;
         Debug.Log($"GameManager: ステージ設定 '{config.stageName}' を保持しました。");
+        // ステージ選択画面に遷移した際、自動的に選択を試みるターゲットステージの名前を更新
+        StageSelectTargetStageName = config.stageName;
 
         // 2. ステージシーンをロード
         Debug.Log($"GameManager: ステージシーン '{config.SceneName}' をロードします。");
@@ -60,5 +61,11 @@ public class GameManager : MonoBehaviour, IStageStartListener
         // StageManagerを持つStage_Gameplayシーンをロードします。
         SceneTransitionManager.Instance.LoadScenesWithTransition(config.SceneName);
         // SceneTransitionManager.Instance.LoadScenesWithTransition(new List<string> { config.SceneName, STAGE_COMMON_SCENE_NAME });
+    }
+
+    const string STAGE_SELECT_SCENE_NAME = "StageSelect";
+    public void LoadStageSelectScene()
+    {
+        SceneTransitionManager.Instance.LoadScenesWithTransition(STAGE_SELECT_SCENE_NAME);
     }
 }

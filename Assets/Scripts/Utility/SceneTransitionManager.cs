@@ -55,7 +55,6 @@ public class SceneTransitionManager : MonoBehaviour
 
     /// <summary>
     /// 指定されたシーン名へ遷移を開始する。
-    /// 最初のシーンは通常ロード、2番目以降のシーンはAdditiveロードする。
     /// </summary>
     /// <param name="sceneNames">遷移先のシーン名のリスト</param>
     public void LoadScenesWithTransition(string sceneNames)

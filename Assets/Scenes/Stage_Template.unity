@@ -838,6 +838,7 @@ MonoBehaviour:
     uiPrefab: {fileID: 7289494422299341494, guid: f66165da31057784a9b01d08f0e85d66, type: 3}
   startDelayTime: 1
   bGM: {fileID: 8300000, guid: a22f9bc6792cd124d8e50f8495aeb072, type: 3}
+  stageListConfig: {fileID: 11400000, guid: a913743c035d39741b49b95e008dd19b, type: 2}
   clearDelaySeconds: 2
   bossDestroySound: {fileID: 8300000, guid: 626aeda33e0134a66a6257c865d0c5c0, type: 3}
   clearSound: {fileID: 8300000, guid: 2667a0a008b044e218b63df62e2be749, type: 3}
@@ -1082,9 +1083,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
-        m_MethodName: Test
+      - m_Target: {fileID: 827964234}
+        m_TargetAssemblyTypeName: StageManager, Assembly-CSharp
+        m_MethodName: NotifyBossDefeatedForClear
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
