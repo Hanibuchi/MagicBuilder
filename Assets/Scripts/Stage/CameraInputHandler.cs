@@ -64,6 +64,11 @@ public class CameraInputHandler : MonoBehaviour, IDragHandler, IBeginDragHandler
             Debug.LogWarning("CameraInputHandler: limitPointAまたはlimitPointBが設定されていません。カメラの移動範囲制限は無効になります。");
     }
 
+    void Start()
+    {
+        CameraManager.Instance.SetOrthographicSize();
+    }
+
 
     [SerializeField] private float moveSpeed = 5.0f; // カメラの移動速度 (Lerpの係数)
     Vector3 currentPosition;

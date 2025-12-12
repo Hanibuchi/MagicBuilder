@@ -9,8 +9,6 @@ public class CameraManager : MonoBehaviour
     // シングルトンインスタンス
     public static CameraManager Instance { get; private set; }
 
-    private Camera mainCamera; // インスペクターで設定するメインカメラ
-
     private float _defaultOrthographicSize; // 起動時のデフォルトOrthographic Size
     public float DefaultOrthographicSize => _defaultOrthographicSize;
 
@@ -29,18 +27,15 @@ public class CameraManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        SetOrthographicSize();
+    }
 
-        // mainCameraが設定されているか確認
-        if (mainCamera == null)
-        {
-            // 設定されていなければ、メインカメラタグのカメラを探す
-            mainCamera = Camera.main;
-        }
-
+    public void SetOrthographicSize()
+    {
         // カメラのOrthographic Size（画面の高さの半分のワールド座標での大きさ）をデフォルトとして保存
-        if (mainCamera != null && mainCamera.orthographic)
+        if (Camera.main != null && Camera.main.orthographic)
         {
-            _defaultOrthographicSize = mainCamera.orthographicSize;
+            _defaultOrthographicSize = Camera.main.orthographicSize;
         }
         else
         {
@@ -58,12 +53,12 @@ public class CameraManager : MonoBehaviour
     /// <param name="relativeSize">標準サイズを1としたときの相対的な画面の大きさ（相似比）。</param>
     public void SetRelativeCameraSize(float relativeSize)
     {
-        if (mainCamera == null || !mainCamera.orthographic) return;
+        if (Camera.main == null || !Camera.main.orthographic) return;
 
         currentRelativeSize = relativeSize;
         // relativeSizeが大きいほど、画面が大きく（より広く）映る = Orthographic Sizeが大きくなる
         // Orthographic Size = デフォルトサイズ * relativeSize
-        mainCamera.orthographicSize = _defaultOrthographicSize * relativeSize;
+        Camera.main.orthographicSize = _defaultOrthographicSize * relativeSize;
     }
 
     public float GetSize()
@@ -79,7 +74,7 @@ public class CameraManager : MonoBehaviour
     /// <param name="worldPosition">カメラの中心としたいワールド座標。</param>
     public void SetCameraPosition(Vector2 worldPosition)
     {
-        if (mainCamera == null) return;
+        if (Camera.main == null) return;
 
         currentWorldPos = worldPosition;
 
@@ -87,10 +82,10 @@ public class CameraManager : MonoBehaviour
         Vector3 newPosition = new Vector3(
             worldPosition.x,
             worldPosition.y,
-            mainCamera.transform.position.z // 現在のZを維持
+            Camera.main.transform.position.z // 現在のZを維持
         );
 
-        mainCamera.transform.position = newPosition;
+        Camera.main.transform.position = newPosition;
     }
 
     public Vector2 GetWorldPosition()
