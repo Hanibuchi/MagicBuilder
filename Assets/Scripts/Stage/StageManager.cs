@@ -273,6 +273,7 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         // このステージの次のステージを最新のステージとして登録しようと試みる。最新のステージでない場合（つまり再プレイ時）何もせず、最新のステージの場合、ステージ選択画面になったときにそのステージの島が選択されるようにする。
         else
         {
+            StageUnlockManager.Instance.UnlockStage(nextStage.stageName);
             if (StageUnlockManager.Instance.UpdateLatestReachedStage(nextStage.stageName))
             {
                 GameManager.Instance.StageSelectTargetStageName = nextStage.stageName;
