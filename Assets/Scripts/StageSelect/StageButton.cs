@@ -2,7 +2,7 @@
 
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI; // Buttonを使用
+using UnityEngine.UI; 
 
 /// <summary>
 /// ステージ選択UIに表示される個々のステージボタンを管理するクラス。
@@ -14,6 +14,9 @@ public class StageButton : MonoBehaviour
     public TextMeshProUGUI stageNameText; // ステージ名を表示するTextコンポーネント
     public TextMeshProUGUI subStageNameText; // サブステージ名を表示するTextMeshProUGUIコンポーネント
     public Button button; // ボタンコンポーネント
+    [Tooltip("新しく解放されたステージであることを示すUI要素 (例: 'NEW!'マーク)")]
+    [SerializeField] // 新規追加
+    private GameObject newStageIndicator; // 新ステージであることを示すUI要素
 
     // 内部で保持するステージ情報
     private string stageIdentifier;
@@ -46,6 +49,10 @@ public class StageButton : MonoBehaviour
         {
             Debug.LogError("StageButton: Buttonコンポーネントが設定されていません。", this);
         }
+
+        // 初期状態としてインジケータは非表示にしておく
+        if (newStageIndicator != null) // 新規追加
+            newStageIndicator.SetActive(false); // 新規追加
     }
 
     [SerializeField] AudioClip clickSound;
@@ -74,6 +81,54 @@ public class StageButton : MonoBehaviour
         else
         {
             Debug.LogError("StageButton: StageStarter.Instanceが見つかりません！");
+        }
+    }
+
+    // --- 新規追加メソッド ---
+
+    /// <summary>
+    /// ボタンを無効化し、クリックできないようにします。
+    /// </summary>
+    public void DisableButton() // 新規追加
+    {
+        if (button != null)
+        {
+            button.interactable = false;
+            // 視覚的に無効であることが分かるような処理をここに追加することもできます
+            // 例: ボタンのColorBlockを変更する
+        }
+    }
+
+    /// <summary>
+    /// ボタンを有効化し、クリックできるようにします。
+    /// </summary>
+    public void EnableButton() // 新規追加
+    {
+        if (button != null)
+        {
+            button.interactable = true;
+        }
+    }
+
+    /// <summary>
+    /// 新しく解放されたことを示すインジケータを表示します。
+    /// </summary>
+    public void ShowNewStageIndicator() // 新規追加
+    {
+        if (newStageIndicator != null)
+        {
+            newStageIndicator.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// 新しく解放されたことを示すインジケータを非表示にします。
+    /// </summary>
+    public void HideNewStageIndicator() // 新規追加
+    {
+        if (newStageIndicator != null)
+        {
+            newStageIndicator.SetActive(false);
         }
     }
 }
