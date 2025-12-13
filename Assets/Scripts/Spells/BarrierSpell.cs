@@ -109,11 +109,28 @@ public class BarrierSpell : SpellBase
             rotation
         );
 
+        if (barrierGO.TryGetComponent(out CharacterHealth health))
+        {
+            health.maxHealth = barrierHP;
+        }
+
         // 4. 速度は追加しない（静止バリアのため）
 
         // 5. 投射物修正ロジックの実行
         ModifyProjectile(context, barrierGO);
 
         Debug.Log($"[{spellName}]を発射！バリアの種類インデックス:{targetIndex}、角度:{rotationZ}°、強さ:{strength}");
+    }
+    [SerializeField] float barrierHP = 50;
+
+    public override List<SpellDescriptionItem> GetDescriptionDetails()
+    {
+        base.GetDescriptionDetails();
+        detailItems.Add(new SpellDescriptionItem
+        {
+            icon = SpellCommonData.Instance.HPIcon,
+            descriptionText = barrierHP.ToString(),
+        });
+        return detailItems;
     }
 }

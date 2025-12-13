@@ -14,6 +14,10 @@ public class SpellCommonData : ScriptableObject
     [Tooltip("クールタイム項目に使用するアイコン")]
     public Sprite coolDownIcon;
 
+    [Tooltip("HPに使用するアイコン")]
+    public Sprite HPIcon;
+
+
     // ランタイムでInstanceを設定するためのヘルパーメソッド
     private void OnEnable()
     {
