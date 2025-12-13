@@ -360,7 +360,7 @@ public abstract class SpellBase : ScriptableObject
         detailItems.Add(new SpellDescriptionItem
         {
             icon = SpellCommonData.Instance.coolDownIcon,
-            descriptionText = $"{cooldown:F2} 秒"
+            descriptionText = $"{cooldown:F1} 秒"
         });
 
         return detailItems;

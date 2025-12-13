@@ -17,6 +17,8 @@ public class SpellCommonData : ScriptableObject
     [Tooltip("HPに使用するアイコン")]
     public Sprite HPIcon;
 
+    [Tooltip("スケールに使用するアイコン")]
+    public Sprite scaleIcon;
 
     // ランタイムでInstanceを設定するためのヘルパーメソッド
     private void OnEnable()

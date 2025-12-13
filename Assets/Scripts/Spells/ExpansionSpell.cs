@@ -43,4 +43,16 @@ public class ExpansionSpell : SpellBase
             wandSpells, currentSpellIndex, rotationZ, strength, context
         );
     }
+
+
+    public override List<SpellDescriptionItem> GetDescriptionDetails()
+    {
+        base.GetDescriptionDetails();
+        detailItems.Add(new SpellDescriptionItem
+        {
+            icon = SpellCommonData.Instance.scaleIcon,
+            descriptionText = "×" + scaleMultiplier.ToString(),
+        });
+        return detailItems;
+    }
 }
