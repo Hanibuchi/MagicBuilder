@@ -120,4 +120,53 @@ public class ExampleSpell : SpellBase
         else
             return new int[0];
     }
+
+    public override List<SpellDescriptionItem> GetDescriptionDetails()
+    {
+        base.GetDescriptionDetails();
+        if (damage.baseDamage != 0)
+            detailItems.Add(new SpellDescriptionItem
+            {
+                icon = SpellCommonData.Instance.damageIcon,
+                descriptionText = damage.baseDamage.ToString(),
+            });
+        if (damage.FireDamage > 0)
+            detailItems.Add(new SpellDescriptionItem
+            {
+                icon = SpellCommonData.Instance.fireDamageIcon,
+                descriptionText = damage.FireDamage.ToString(),
+            });
+        if (damage.IceDamage > 0)
+            detailItems.Add(new SpellDescriptionItem
+            {
+                icon = SpellCommonData.Instance.iceDamageIcon,
+                descriptionText = damage.IceDamage.ToString(),
+            });
+        if (damage.waterDamage != 0)
+            detailItems.Add(new SpellDescriptionItem
+            {
+                icon = SpellCommonData.Instance.waterDamageIcon,
+                descriptionText = damage.waterDamage.ToString(),
+            });
+        if (damage.woodDamage != 0)
+            detailItems.Add(new SpellDescriptionItem
+            {
+                icon = SpellCommonData.Instance.woodDamageIcon,
+                descriptionText = damage.woodDamage.ToString(),
+            });
+        if (damage.knockback > 0)
+            detailItems.Add(new SpellDescriptionItem
+            {
+                icon = SpellCommonData.Instance.knockbackIcon,
+                descriptionText = damage.knockback.ToString(),
+            });
+        if (errorDegree != 0)
+            detailItems.Add(new SpellDescriptionItem
+            {
+                icon = SpellCommonData.Instance.errorDegreeIcon,
+                descriptionText = errorDegree.ToString() + "度",
+            });
+
+        return detailItems;
+    }
 }

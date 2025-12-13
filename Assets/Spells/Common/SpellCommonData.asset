@@ -14,3 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coolDownIcon: {fileID: -8801819111103863087, guid: 12d33c45df2a46642bbc13c03009055b, type: 3}
   HPIcon: {fileID: 21300000, guid: 097aa0cbb13e9d94da95ce9ccc760a73, type: 3}
+  scaleIcon: {fileID: 8990501944409046213, guid: 671bf8acd14b9f544b66b1539931b698, type: 3}
+  errorDegreeIcon: {fileID: 3422573988808639745, guid: 926b2e59fa449e74a92407a129deff1d, type: 3}
+  damageIcon: {fileID: -6490321034816805919, guid: 645d5009f90f1804ab28fa2119bc9f9d, type: 3}
+  fireDamageIcon: {fileID: 0}
+  iceDamageIcon: {fileID: 0}
+  waterDamageIcon: {fileID: 0}
+  woodDamageIcon: {fileID: 0}
+  knockbackIcon: {fileID: 0}

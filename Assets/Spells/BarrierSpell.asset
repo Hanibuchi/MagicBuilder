@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43a8d2a37957b9a45a81cecfe16eb118, type: 3}
   m_Name: BarrierSpell
   m_EditorClassIdentifier: 
-  cooldown: 0.5
+  cooldown: 2
   spellName: "\u30D0\u30EA\u30A2"
   icon: {fileID: 8790154677910664958, guid: 45488465b9fd3cc4c80011555bbadd6f, type: 3}
   uiPrefab: {fileID: 5499559984272135055, guid: a8aa928887aa65d429d07a9b1f220163, type: 3}

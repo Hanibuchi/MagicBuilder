@@ -19,4 +19,5 @@ MonoBehaviour:
   dropUIPrefab: {fileID: 1104287654635820185, guid: af09b9e47e48e2b4593b9a8e28d2e8f0, type: 3}
   spellDropSound: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
   spellDropSoundVolume: 1
+  spellDescription: "\u8AA4\u5DEE\u3092\u6E1B\u5C11\u3055\u305B\u308B\u3002"
   additionalErrorDegree: -30

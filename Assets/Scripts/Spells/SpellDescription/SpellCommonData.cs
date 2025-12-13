@@ -22,6 +22,20 @@ public class SpellCommonData : ScriptableObject
 
     [Tooltip("誤差角度に使用するアイコン")]
     public Sprite errorDegreeIcon;
+    
+    [Tooltip("通常ダメージに使用するアイコン")]
+    public Sprite damageIcon;
+    
+    [Tooltip("炎ダメージに使用するアイコン")]
+    public Sprite fireDamageIcon;
+    [Tooltip("氷ダメージに使用するアイコン")]
+    public Sprite iceDamageIcon;
+    [Tooltip("水ダメージに使用するアイコン")]
+    public Sprite waterDamageIcon;
+    [Tooltip("木ダメージに使用するアイコン")]
+    public Sprite woodDamageIcon;
+    [Tooltip("ノックバックに使用するアイコン")]
+    public Sprite knockbackIcon;
 
     // ランタイムでInstanceを設定するためのヘルパーメソッド
     private void OnEnable()
