@@ -32,11 +32,18 @@ public class SpellDescriptionUI : MonoBehaviour, IPointerClickHandler
     [Tooltip("各詳細項目（クールタイムなど）を表示するためのプレハブ")]
     [SerializeField] private GameObject detailItemPrefab;
 
+    [Header("アニメーション設定")]
+    [Tooltip("詳細説明パネルのアニメーターコンポーネント")]
+    [SerializeField] private Animator panelAnimator;
 
     private SpellBase currentlyDisplayedSpell = null;
     private List<GameObject> activeDetailItems = new List<GameObject>();
     // 現在表示されているドロップUIのGameObjectを保持するためのフィールドを追加
     private GameObject currentDropUI = null;
+    private bool isHiding = false;
+    private bool isShow = false;
+
+    private float timeScale = 1f;
     private void Awake()
     {
         if (Instance == null)
@@ -55,19 +62,20 @@ public class SpellDescriptionUI : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        HideDescription();
+        if (isHiding) return;
+        StartHideAnimation();
     }
 
     /// <summary>
     /// 指定されたSpellBaseの詳細説明パネルを表示します。
     /// </summary>
     /// <param name="spell">表示するSpellBaseインスタンス。</param>
-    public void ShowDescription(SpellBase spell)
+    public void StartShowAnimation(SpellBase spell)
     {
         if (currentlyDisplayedSpell == spell) return;
         if (spell == null)
         {
-            HideDescription();
+            StartHideAnimation(); // nullの場合は非表示アニメーション
             return;
         }
 
@@ -117,19 +125,57 @@ public class SpellDescriptionUI : MonoBehaviour, IPointerClickHandler
             }
         }
 
+        isHiding = false; // 表示中は非表示アニメーションフラグをリセット
         // 3. パネルを表示
         detailPanelRoot.SetActive(true);
+        if (panelAnimator != null)
+        {
+            panelAnimator.SetTrigger("Show"); // アニメーターの"Show"トリガーを起動
+        }
     }
 
     /// <summary>
-    /// 詳細説明パネルを非表示にし、データをリセットします。
+    /// アニメーションから呼ばれるメソッド。
     /// </summary>
-    private void HideDescription()
+    public void ShowDexcription()
+    {
+        if (isShow) return;
+        isShow = true;
+        timeScale = Time.timeScale;
+        Time.timeScale = 0f; // 時間停止
+    }
+
+    private void StartHideAnimation()
+    {
+        // 非表示中でなければアニメーションを開始
+        if (isHiding || !detailPanelRoot.activeSelf) return;
+
+        if (!isShow) return;
+        isShow = false;
+        Time.timeScale = timeScale;
+
+        isHiding = true; // 非表示アニメーション開始フラグ
+        if (panelAnimator != null)
+        {
+            panelAnimator.SetTrigger("Hide"); // アニメーターの"Hide"トリガーを起動
+        }
+        else
+        {
+            // アニメーターがない場合は即座に非表示処理を実行
+            HideDescription();
+        }
+    }
+
+    /// <summary>
+    /// 詳細説明パネルを非表示にし、データをリセットします。アニメーションから呼ばれる。
+    /// </summary>
+    public void HideDescription()
     {
         detailPanelRoot.SetActive(false);
         currentlyDisplayedSpell = null;
         ClearDetailItems();
         ClearDropUI(); // アイコンクリアを追加
+        isHiding = false; // フラグをリセット
     }
 
     /// <summary>
@@ -159,6 +205,6 @@ public class SpellDescriptionUI : MonoBehaviour, IPointerClickHandler
     public SpellBase Test_spell;
     public void Test()
     {
-        ShowDescription(Test_spell);
+        StartShowAnimation(Test_spell);
     }
 }
