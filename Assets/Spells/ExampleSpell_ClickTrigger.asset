@@ -19,15 +19,16 @@ MonoBehaviour:
   dropUIPrefab: {fileID: 1104287654635820185, guid: af09b9e47e48e2b4593b9a8e28d2e8f0, type: 3}
   spellDropSound: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
   spellDropSoundVolume: 1
+  spellDescription: "\u30AF\u30EA\u30C3\u30AF\u3059\u308B\u3068\u53F3\u306E\u546A\u6587\u304C\u9045\u308C\u3066\u767A\u5C04\u3055\u308C\u308B\u4E00\u822C\u653B\u6483\u9B54\u6CD5\u3002"
   trajectoryPrefabInterval: 0.1
   maxPredictionTime: 5
   projectilePrefab: {fileID: 396131387130879284, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
   strengthMultiplier: 20
   errorDegree: 2
   damage:
-    baseDamage: 0
+    baseDamage: 5
     woodDamage: 0
     waterDamage: 0
     temperatureDamage: 0
-    knockback: 0
+    knockback: 20
   isClickTrigger: 1

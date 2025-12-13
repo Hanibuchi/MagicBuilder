@@ -56,6 +56,8 @@ public class ExampleSpell : SpellBase
     [Tooltip("発射角に追加する誤差の標準偏差（度）。平均0の正規分布に従います。")]
     [SerializeField] float errorDegree = 1f; // 例として1度を設定
     [SerializeField] Damage damage; // 例として1度を設定
+    [Header("説明設定")]
+    [SerializeField] DamageSourceType damageType;
 
     public override void FireSpell(
         List<SpellBase> wandSpells, int currentSpellIndex,
@@ -166,6 +168,34 @@ public class ExampleSpell : SpellBase
                 icon = SpellCommonData.Instance.errorDegreeIcon,
                 descriptionText = errorDegree.ToString() + "度",
             });
+        switch (damageType)
+        {
+            case DamageSourceType.SingleHit:
+                detailItems.Add(new SpellDescriptionItem
+                {
+                    icon = null,
+                    descriptionText = "単発ヒット",
+                });
+                break;
+            case DamageSourceType.AreaOfEffect:
+                detailItems.Add(new SpellDescriptionItem
+                {
+                    icon = null,
+                    descriptionText = "範囲攻撃",
+                });
+                break;
+            case DamageSourceType.MultiHit:
+                detailItems.Add(new SpellDescriptionItem
+                {
+                    icon = null,
+                    descriptionText = "多段攻撃",
+                });
+                break;
+            default:
+                Debug.LogWarning("Unknown DamageSourceType");
+                break;
+
+        }
 
         return detailItems;
     }

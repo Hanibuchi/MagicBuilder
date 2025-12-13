@@ -16,9 +16,9 @@ MonoBehaviour:
   HPIcon: {fileID: 21300000, guid: 097aa0cbb13e9d94da95ce9ccc760a73, type: 3}
   scaleIcon: {fileID: 8990501944409046213, guid: 671bf8acd14b9f544b66b1539931b698, type: 3}
   errorDegreeIcon: {fileID: 3422573988808639745, guid: 926b2e59fa449e74a92407a129deff1d, type: 3}
-  damageIcon: {fileID: -6490321034816805919, guid: 645d5009f90f1804ab28fa2119bc9f9d, type: 3}
-  fireDamageIcon: {fileID: 0}
-  iceDamageIcon: {fileID: 0}
-  waterDamageIcon: {fileID: 0}
-  woodDamageIcon: {fileID: 0}
-  knockbackIcon: {fileID: 0}
+  damageIcon: {fileID: -8922265790511915355, guid: e325ced96e9ec804d8af77dcb30f42ae, type: 3}
+  fireDamageIcon: {fileID: 4185457144042899887, guid: e325ced96e9ec804d8af77dcb30f42ae, type: 3}
+  iceDamageIcon: {fileID: -7113419174583132538, guid: e325ced96e9ec804d8af77dcb30f42ae, type: 3}
+  waterDamageIcon: {fileID: -2970737076664800877, guid: e325ced96e9ec804d8af77dcb30f42ae, type: 3}
+  woodDamageIcon: {fileID: 4860122933818633569, guid: e325ced96e9ec804d8af77dcb30f42ae, type: 3}
+  knockbackIcon: {fileID: 7461208997203385897, guid: 002832e2e52787d45a48afea7e27baf1, type: 3}
