@@ -55,6 +55,7 @@ public class SpellDescriptionUI : MonoBehaviour, IPointerClickHandler
         {
             Destroy(gameObject);
         }
+        Debug.Log("SpellDescriptionUI Awake");
 
         // 初期状態では非表示
         detailPanelRoot.SetActive(false);

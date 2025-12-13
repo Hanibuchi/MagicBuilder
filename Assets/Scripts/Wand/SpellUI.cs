@@ -8,7 +8,7 @@ using System.Collections;
 /// <summary>
 /// 杖に組み込まれている呪文のUI。ドラッグによる削除と並び替えの起点となる。
 /// </summary>
-public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler
 {
     public int index;
     public ISpellContainer spellContainerUI;
@@ -113,6 +113,26 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
             frame.color = disableColor;
             iconImage.material = disableMaterial;
             raycastTargetImage.raycastTarget = false;
+        }
+    }
+
+    /// <summary>
+    /// クリック（タップ）されたときに呪文の詳細説明を表示する。
+    /// </summary>
+    /// <param name="eventData"></param>
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        // SpellBaseデータがない場合は何もしない
+        if (spellData == null) return;
+
+        // ドラッグ操作ではないことを確認（今回の目的には不要かもしれませんが、念のため）
+        if (eventData.dragging) return;
+
+        // シングルトン経由で詳細パネルの表示を開始
+        if (SpellDescriptionUI.Instance != null)
+        {
+            // 自身の持つ呪文データを渡して表示アニメーションを開始
+            SpellDescriptionUI.Instance.StartShowAnimation(spellData);
         }
     }
 }
