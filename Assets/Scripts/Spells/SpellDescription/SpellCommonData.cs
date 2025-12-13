@@ -20,6 +20,9 @@ public class SpellCommonData : ScriptableObject
     [Tooltip("スケールに使用するアイコン")]
     public Sprite scaleIcon;
 
+    [Tooltip("誤差角度に使用するアイコン")]
+    public Sprite errorDegreeIcon;
+
     // ランタイムでInstanceを設定するためのヘルパーメソッド
     private void OnEnable()
     {
