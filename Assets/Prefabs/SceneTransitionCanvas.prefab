@@ -497,10 +497,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u30DE\u30B8\u30C3\u30AF \u30D3\u30EB\u30C0\u30FC"
+  m_text: "\u30DE\u30B8\u30C3\u30AF\u30D3\u30EB\u30C0\u30FC"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 71e1b75076f2dd24da8b8054eaa044ca, type: 2}
-  m_sharedMaterial: {fileID: -5787979075659869700, guid: 71e1b75076f2dd24da8b8054eaa044ca, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: a1b470075d8753447b8faefff227b8a2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -534,7 +534,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -8
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
