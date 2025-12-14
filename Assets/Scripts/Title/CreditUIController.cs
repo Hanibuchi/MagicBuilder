@@ -19,6 +19,12 @@ public class CreditUIController : MonoBehaviour
     [Tooltip("UIオブジェクトを制御するAnimator (非表示アニメーションを含む)")]
     public Animator animator;
 
+    [Header("サウンド設定")]
+    [Tooltip("UIが開いた時に鳴らすSE")]
+    public AudioClip openSE;
+    [Tooltip("UIが閉じる時に鳴らすSE")]
+    public AudioClip closeSE;
+
     // ボタンが既に押されたかどうかを追跡
     private bool isClosing = false;
 
@@ -60,6 +66,10 @@ public class CreditUIController : MonoBehaviour
         {
             Debug.LogError("CloseButton が設定されていません。", this);
         }
+        if (SoundManager.Instance != null && openSE != null)
+        {
+            SoundManager.Instance.PlaySE(openSE);
+        }
     }
 
     /// <summary>
@@ -74,6 +84,11 @@ public class CreditUIController : MonoBehaviour
 
         // ボタンの操作を無効にする（再クリック防止）
         closeButton.interactable = false;
+
+        if (SoundManager.Instance != null && closeSE != null)
+        {
+            SoundManager.Instance.PlaySE(closeSE);
+        }
 
         // 3. アニメーションを再生
         if (animator != null)

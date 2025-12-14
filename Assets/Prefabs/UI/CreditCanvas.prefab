@@ -708,6 +708,8 @@ MonoBehaviour:
   creditText: {fileID: 7009762615235508039}
   closeButton: {fileID: 1146666006507927132}
   animator: {fileID: 2275845977434810293}
+  openSE: {fileID: 8300000, guid: 7bd6b897eb5ca4b7d88a205c4a51640c, type: 3}
+  closeSE: {fileID: 8300000, guid: 5039414d94a6e4e70a5ab9e8833e992a, type: 3}
 --- !u!95 &2275845977434810293
 Animator:
   serializedVersion: 7
