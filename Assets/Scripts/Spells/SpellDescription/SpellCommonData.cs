@@ -8,7 +8,34 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "SpellCommonData", menuName = "Wand System/Spell Common Data")]
 public class SpellCommonData : ScriptableObject
 {
-    public static SpellCommonData Instance { get; private set; } // Static Instance
+    // 静的インスタンスのプライベートフィールド
+    private static SpellCommonData _instance;
+
+    /// <summary>
+    /// SpellCommonDataのシングルトンインスタンスを取得します。
+    /// 初めてアクセスされた時に、"Resources"フォルダからアセットをロードします。
+    /// </summary>
+    public static SpellCommonData Instance
+    {
+        get
+        {
+            // インスタンスがまだ設定されていない場合
+            if (_instance == null)
+            {
+                // Resourcesフォルダからアセットをロードします。
+                // アセットの名前は "SpellCommonData" とします。
+                _instance = Resources.Load<SpellCommonData>("SpellCommonData");
+
+                // ロードに失敗した場合（アセットが見つからない場合など）
+                if (_instance == null)
+                {
+                    Debug.LogError("SpellCommonDataアセットが見つかりません。" +
+                                   "アセットが 'Resources' フォルダ内に 'SpellCommonData.asset' という名前で存在するか確認してください。");
+                }
+            }
+            return _instance;
+        }
+    }
 
     [Header("共通アイコン")]
     [Tooltip("クールタイム項目に使用するアイコン")]
@@ -22,10 +49,10 @@ public class SpellCommonData : ScriptableObject
 
     [Tooltip("誤差角度に使用するアイコン")]
     public Sprite errorDegreeIcon;
-    
+
     [Tooltip("通常ダメージに使用するアイコン")]
     public Sprite damageIcon;
-    
+
     [Tooltip("炎ダメージに使用するアイコン")]
     public Sprite fireDamageIcon;
     [Tooltip("氷ダメージに使用するアイコン")]
@@ -37,13 +64,13 @@ public class SpellCommonData : ScriptableObject
     [Tooltip("ノックバックに使用するアイコン")]
     public Sprite knockbackIcon;
 
-    // ランタイムでInstanceを設定するためのヘルパーメソッド
-    private void OnEnable()
-    {
-        // プロジェクト起動時などに一度だけ設定されることを想定
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-    }
+    // // ランタイムでInstanceを設定するためのヘルパーメソッド
+    // private void OnEnable()
+    // {
+    //     // プロジェクト起動時などに一度だけ設定されることを想定
+    //     if (Instance == null)
+    //     {
+    //         Instance = this;
+    //     }
+    // }
 }
