@@ -54,11 +54,31 @@ public class SoundManager : MonoBehaviour
     }
 
     // --- BGM再生メソッド ---
-    public void PlayBGM(AudioClip clip)
+    /// <summary>
+    /// BGMを再生します。
+    /// </summary>
+    /// <param name="clip">再生するオーディオクリップ</param>
+    /// <param name="startTime">再生を開始する秒数 (デフォルトは0秒)</param>
+    public void PlayBGM(AudioClip clip, float startTime = 0f)
     {
         if (clip == null) return;
+
+        // 既存のクリップを設定
         bgmSource.clip = clip;
         bgmSource.loop = true;
+
+        // 新しい引数startTimeを適用
+        // AudioSource.timeに秒数を設定することで、その位置から再生が始まります。
+        if (startTime >= 0f && startTime < clip.length)
+        {
+            bgmSource.time = startTime;
+        }
+        else
+        {
+            // startTimeがクリップの長さを超えている、または負の値の場合は、最初から再生 (または何もしない)
+            bgmSource.time = 0f;
+        }
+
         bgmSource.Play();
     }
 

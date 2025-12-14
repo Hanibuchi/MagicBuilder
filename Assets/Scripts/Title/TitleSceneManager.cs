@@ -14,6 +14,9 @@ public class TitleSceneManager : MonoBehaviour
     // ボタンがクリックされた後に多重クリックを防ぐためのフラグ
     private bool isTransitioning = false;
 
+    [SerializeField] AudioClip bGM;
+    [SerializeField] float bgmStartTime = 1.0f;
+
     void Start()
     {
         // GameManagerの存在を確認（既にDontDestroyOnLoadされているはず）
@@ -33,6 +36,9 @@ public class TitleSceneManager : MonoBehaviour
         {
             Debug.LogError("Start Buttonが設定されていません。インスペクタで設定してください。");
         }
+
+        if (SoundManager.Instance != null && bGM != null)
+            SoundManager.Instance.PlayBGM(bGM, bgmStartTime);
     }
 
     /// <summary>
@@ -48,12 +54,15 @@ public class TitleSceneManager : MonoBehaviour
 
         // 遷移フラグを立てる
         isTransitioning = true;
-        
+
         // ボタンのインタラクションを無効にし、多重クリックを視覚的にも防ぐ
         if (startButton != null)
         {
             startButton.interactable = false;
         }
+
+        if (SoundManager.Instance != null && bGM != null)
+            SoundManager.Instance.StopBGMWithFade();
 
         Debug.Log("ゲーム開始ボタンがクリックされました。ステージ選択画面へ遷移します。");
 
