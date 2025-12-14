@@ -64,13 +64,12 @@ public class SpellCommonData : ScriptableObject
     [Tooltip("ノックバックに使用するアイコン")]
     public Sprite knockbackIcon;
 
-    // // ランタイムでInstanceを設定するためのヘルパーメソッド
-    // private void OnEnable()
-    // {
-    //     // プロジェクト起動時などに一度だけ設定されることを想定
-    //     if (Instance == null)
-    //     {
-    //         Instance = this;
-    //     }
-    // }
+    [Tooltip("呪文UIプレハブ")] // ランクや種類別でUIを変えるってなったときは、これを複数作ってSpellBaseの子クラスのCreateUIから参照する。
+    public GameObject spellUIPrefab;
+
+    [Tooltip("ドロップUIプレハブ")]
+    public GameObject dropUIPrefab;
+
+    [Tooltip("保持情報UIプレハブ")]
+    public GameObject holdInfoUIPrefab;
 }

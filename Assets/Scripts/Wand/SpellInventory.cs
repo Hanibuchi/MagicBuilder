@@ -111,9 +111,9 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
     /// </summary>
     private void CreateSpellUI(int index, SpellBase spell)
     {
-        if (spell == null || spell.uiPrefab == null)
+        if (spell == null)
         {
-            Debug.LogError($"Index {index} の呪文 '{spell.spellName}' に uiPrefab が設定されていません。");
+            Debug.LogError($"spell is null");
             return;
         }
 

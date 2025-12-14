@@ -290,7 +290,6 @@ public abstract class SpellBase : ScriptableObject
 
     [Header("UI")]
     public Sprite icon;
-    public GameObject uiPrefab;
 
     /// <summary>
     /// このSpellBaseに対応するSpellUIインスタンスを生成する。
@@ -298,7 +297,7 @@ public abstract class SpellBase : ScriptableObject
     public virtual SpellUI CreateUI()
     {
         // プレハブから生成
-        SpellUI uiInstance = Instantiate(uiPrefab).GetComponent<SpellUI>();
+        SpellUI uiInstance = Instantiate(SpellCommonData.Instance.spellUIPrefab).GetComponent<SpellUI>();
         // アイコンを設定
         uiInstance.SetData(this);
 
@@ -306,22 +305,19 @@ public abstract class SpellBase : ScriptableObject
     }
 
 
-    [Tooltip("ドロップ時のアニメーションに使用するUIプレハブ。nullの場合は uiPrefab を使用。")]
-    public GameObject dropUIPrefab;
-
     /// <summary>
     /// 呪文がワールドからドロップしてインベントリに回収される際のアニメーションに使用するUIオブジェクトを生成します。
     /// </summary>
     /// <returns>生成されたUIオブジェクトのGameObject。</returns>
     public virtual GameObject CreateDropUI()
     {
-        if (dropUIPrefab == null)
+        if (SpellCommonData.Instance.dropUIPrefab == null)
         {
-            Debug.LogError($"呪文 '{spellName}' に dropUIPrefabが設定されていません。");
+            Debug.LogError($"SpellCommonData.Instance.dropUIPrefab is null");
             return null;
         }
         // UIオブジェクトを生成
-        GameObject dropUIInstance = Instantiate(dropUIPrefab);
+        GameObject dropUIInstance = Instantiate(SpellCommonData.Instance.dropUIPrefab);
         if (dropUIInstance.TryGetComponent<SpellDropUI>(out var spellDropUI))
         {
             spellDropUI.SetData(this);

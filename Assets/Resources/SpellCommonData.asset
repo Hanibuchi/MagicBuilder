@@ -22,3 +22,6 @@ MonoBehaviour:
   waterDamageIcon: {fileID: -2970737076664800877, guid: e325ced96e9ec804d8af77dcb30f42ae, type: 3}
   woodDamageIcon: {fileID: 4860122933818633569, guid: e325ced96e9ec804d8af77dcb30f42ae, type: 3}
   knockbackIcon: {fileID: 7461208997203385897, guid: 002832e2e52787d45a48afea7e27baf1, type: 3}
+  spellUIPrefab: {fileID: 5499559984272135055, guid: a8aa928887aa65d429d07a9b1f220163, type: 3}
+  dropUIPrefab: {fileID: 1104287654635820185, guid: af09b9e47e48e2b4593b9a8e28d2e8f0, type: 3}
+  holdInfoUIPrefab: {fileID: 0}
