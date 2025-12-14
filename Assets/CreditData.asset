@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29239a3f27456d14f96e47df279ebe1c, type: 3}
+  m_Name: CreditData
+  m_EditorClassIdentifier: 
+  creditTextContent: "\u30DE\u30B8\u30C3\u30AF\u30D3\u30EB\u30C0\u30FC\n\n\u5236\u4F5C:
+    \u30CF\u30CB\u30C6\u30C3\u30AF\n\n*\u97F3\u697D\u3001\u52B9\u679C\u97F3*\r\n-
+    \u9B54\u738B\u9B42\r\n\r\n- Free Sound Effects Pack\r\nhttps://assetstore.unity.com/packages/audio/sound-fx/free-sound-effects-pack-155776\r\nOlivier
+    Girardot\r\nStandard Unity Asset Store EULA\r\n\r\n- Shapeforms Audio Free Sound
+    Effects\r\nhttps://assetstore.unity.com/packages/audio/sound-fx/shapeforms-audio-free-sound-effects-183649\r\nShapeforms\r\nStandard
+    Unity Asset Store EULA\r\n\r\n- Shooting Sound\r\nhttps://assetstore.unity.com/packages/audio/sound-fx/shooting-sound-177096\r\nB.G.M\r\nStandard
+    Unity Asset Store EULA\r\n\r\n- Force Field - Sci-Fi Collection\r\nhttps://assetstore.unity.com/packages/audio/sound-fx/force-field-sci-fi-collection-113256\r\nAlpine
+    Audio\r\nStandard Unity Asset Store EULA\r\n\r\n- FREE Casual Game SFX Pack\r\nhttps://assetstore.unity.com/packages/audio/sound-fx/free-casual-game-sfx-pack-54116\r\nDustyroom\r\nStandard
+    Unity Asset Store EULA\r\n\r\n\u30A4\u30E9\u30B9\u30C8\r\n- 2D Platformer Tileset\r\nhttps://assetstore.unity.com/packages/2d/environments/2d-platformer-tileset-173155\r\nDanil
+    Chernyaev\r\nStandard Unity Asset Store EULA\r\n\r\n- AI-Generated Images by
+    Google's Gemini\r\n\r\n- Violet Themed UI\r\nhttps://assetstore.unity.com/packages/2d/gui/violet-themed-ui-235559\r\nGiniel
+    Villacote\r\nStandard Unity Asset Store EULA"
