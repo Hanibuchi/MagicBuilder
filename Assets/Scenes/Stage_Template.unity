@@ -3604,6 +3604,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1990671667137167062, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990671667137167062, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990671667137167062, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2638004996136024203, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2638004996136024203, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4239378513297414253, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
       propertyPath: m_Name
       value: SettingsCanvas
@@ -3686,6 +3706,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4829104322451378853, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6706234363715936535, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6706234363715936535, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7927411831301064385, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7927411831301064385, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7927411831301064385, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
