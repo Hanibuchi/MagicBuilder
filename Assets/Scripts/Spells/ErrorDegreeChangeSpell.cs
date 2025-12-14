@@ -25,14 +25,14 @@ public class ErrorDegreeChangeSpell : SpellBase
     public override List<SpellDescriptionItem> GetDescriptionDetails()
     {
         base.GetDescriptionDetails();
-        string text;
+        string text = "誤差 : ";
         if (additionalErrorDegree > 0)
         {
-            text = "+" + additionalErrorDegree.ToString() + "度";
+            text += "+" + additionalErrorDegree.ToString() + "度";
         }
         else
         {
-            text = additionalErrorDegree.ToString() + "度";
+            text += additionalErrorDegree.ToString() + "度";
         }
         detailItems.Add(new SpellDescriptionItem
         {

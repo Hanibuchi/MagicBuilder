@@ -129,7 +129,7 @@ public class BarrierSpell : SpellBase
         detailItems.Add(new SpellDescriptionItem
         {
             icon = SpellCommonData.Instance.HPIcon,
-            descriptionText = barrierHP.ToString(),
+            descriptionText = "耐久値 : " + barrierHP.ToString(),
         });
         return detailItems;
     }

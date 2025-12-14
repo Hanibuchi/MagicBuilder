@@ -51,7 +51,7 @@ public class ExpansionSpell : SpellBase
         detailItems.Add(new SpellDescriptionItem
         {
             icon = SpellCommonData.Instance.scaleIcon,
-            descriptionText = "×" + scaleMultiplier.ToString(),
+            descriptionText = "膨張率 : ×" + scaleMultiplier.ToString(),
         });
         return detailItems;
     }

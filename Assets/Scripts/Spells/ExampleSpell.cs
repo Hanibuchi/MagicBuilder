@@ -130,43 +130,43 @@ public class ExampleSpell : SpellBase
             detailItems.Add(new SpellDescriptionItem
             {
                 icon = SpellCommonData.Instance.damageIcon,
-                descriptionText = damage.baseDamage.ToString(),
+                descriptionText = "ダメージ : " + damage.baseDamage.ToString(),
             });
         if (damage.FireDamage > 0)
             detailItems.Add(new SpellDescriptionItem
             {
                 icon = SpellCommonData.Instance.fireDamageIcon,
-                descriptionText = damage.FireDamage.ToString(),
+                descriptionText = "炎ダメージ : " + damage.FireDamage.ToString(),
             });
         if (damage.IceDamage > 0)
             detailItems.Add(new SpellDescriptionItem
             {
                 icon = SpellCommonData.Instance.iceDamageIcon,
-                descriptionText = damage.IceDamage.ToString(),
+                descriptionText = "氷ダメージ : " + damage.IceDamage.ToString(),
             });
         if (damage.waterDamage != 0)
             detailItems.Add(new SpellDescriptionItem
             {
                 icon = SpellCommonData.Instance.waterDamageIcon,
-                descriptionText = damage.waterDamage.ToString(),
+                descriptionText = "水ダメージ : " + damage.waterDamage.ToString(),
             });
         if (damage.woodDamage != 0)
             detailItems.Add(new SpellDescriptionItem
             {
                 icon = SpellCommonData.Instance.woodDamageIcon,
-                descriptionText = damage.woodDamage.ToString(),
+                descriptionText = "木ダメージ : " + damage.woodDamage.ToString(),
             });
         if (damage.knockback > 0)
             detailItems.Add(new SpellDescriptionItem
             {
                 icon = SpellCommonData.Instance.knockbackIcon,
-                descriptionText = damage.knockback.ToString(),
+                descriptionText = "ノックバック : " + damage.knockback.ToString(),
             });
         if (errorDegree != 0)
             detailItems.Add(new SpellDescriptionItem
             {
                 icon = SpellCommonData.Instance.errorDegreeIcon,
-                descriptionText = errorDegree.ToString() + "度",
+                descriptionText = "誤差 : " + errorDegree.ToString() + "度",
             });
         switch (damageType)
         {
@@ -174,21 +174,21 @@ public class ExampleSpell : SpellBase
                 detailItems.Add(new SpellDescriptionItem
                 {
                     icon = null,
-                    descriptionText = "単発ヒット",
+                    descriptionText = "ダメージタイプ : 単発ヒット",
                 });
                 break;
             case DamageSourceType.AreaOfEffect:
                 detailItems.Add(new SpellDescriptionItem
                 {
                     icon = null,
-                    descriptionText = "範囲攻撃",
+                    descriptionText = "ダメージタイプ : 範囲攻撃",
                 });
                 break;
             case DamageSourceType.MultiHit:
                 detailItems.Add(new SpellDescriptionItem
                 {
                     icon = null,
-                    descriptionText = "多段攻撃",
+                    descriptionText = "ダメージタイプ : 多段ヒット",
                 });
                 break;
             default:
