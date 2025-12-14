@@ -51,7 +51,20 @@ public class SpellDatabase : ScriptableObject
 
     [Header("全ての呪文データのリスト")]
     [Tooltip("InspectorでSpellTypeとSpellBaseアセットを設定します。")]
-    public List<SpellDataEntry> allSpells = new List<SpellDataEntry>();
+    public List<SpellDataEntry> allSpells = new List<SpellDataEntry>();// いつかprivateにする。
+
+    /// <summary>
+    /// データベースに登録されている、有効な全ての呪文のSpellTypeリストを取得します。
+    /// </summary>
+    public List<SpellType> GetAllRegisteredSpellTypes()
+    {
+        // アセットがnullではないエントリのSpellTypeのみを抽出
+        return allSpells
+               .Where(e => e.spellAsset != null)
+               .Select(e => e.type)
+               .Distinct()
+               .ToList();
+    }
 
     // 高速検索のための辞書。一度初期化すれば再構築は不要。
     private Dictionary<SpellType, SpellBase> _spellDictionary;

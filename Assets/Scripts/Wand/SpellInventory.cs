@@ -36,6 +36,7 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
 
     void Start()
     {
+        // デバッグ用。本番では変更する。
         availableSpells = SpellDatabase.Instance.allSpells.Select(e => e.spellAsset).ToList();
 
         // 初期位置を最小Y座標として保存
