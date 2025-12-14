@@ -17,6 +17,10 @@ public class TitleSceneManager : MonoBehaviour
     [SerializeField] AudioClip bGM;
     [SerializeField] float bgmStartTime = 1.0f;
 
+    [Header("サウンド設定")]
+    [Tooltip("ステージ選択画面へ遷移する時に鳴らすSE")]
+    [SerializeField] AudioClip transitionSE;
+
     void Start()
     {
         // GameManagerの存在を確認（既にDontDestroyOnLoadされているはず）
@@ -61,6 +65,8 @@ public class TitleSceneManager : MonoBehaviour
             startButton.interactable = false;
         }
 
+        if (SoundManager.Instance != null && transitionSE != null)
+            SoundManager.Instance.PlaySE(transitionSE);
         if (SoundManager.Instance != null && bGM != null)
             SoundManager.Instance.StopBGMWithFade();
 

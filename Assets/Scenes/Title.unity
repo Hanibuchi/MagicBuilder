@@ -1695,6 +1695,7 @@ MonoBehaviour:
   startButton: {fileID: 1695264868}
   bGM: {fileID: 8300000, guid: 8b2a0c0d3b5d459469536d67d4339657, type: 3}
   bgmStartTime: 14.7
+  transitionSE: {fileID: 8300000, guid: a0ca8964c08d54c5dbebf245bdc474ca, type: 3}
 --- !u!1 &1703086326
 GameObject:
   m_ObjectHideFlags: 0
