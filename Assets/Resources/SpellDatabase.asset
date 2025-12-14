@@ -32,9 +32,9 @@ MonoBehaviour:
   - type: 9
     spellAsset: {fileID: 11400000, guid: 54fdeaf1e456d8843845f8b704afde19, type: 2}
   - type: 10
-    spellAsset: {fileID: 0}
+    spellAsset: {fileID: 11400000, guid: 28ccbd075847d8740bfae4910880bad8, type: 2}
   - type: 11
-    spellAsset: {fileID: 0}
+    spellAsset: {fileID: 11400000, guid: dd8d82e802947664db3bd58352a5f544, type: 2}
   - type: 12
     spellAsset: {fileID: 11400000, guid: 645133f780521974dbe2acd65646acdb, type: 2}
   - type: 13

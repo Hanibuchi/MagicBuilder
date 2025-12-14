@@ -13,10 +13,10 @@ using System.Linq;
 public class SpellDatabase : ScriptableObject
 {
     // --- シングルトン実装（Resourcesロードによる遅延初期化） ---
-    
+
     // Resourcesフォルダ内のこのアセットのパス。
     // Unityの慣例により、Resources直下に配置する場合はフォルダ名を含めません。
-    private const string DATABASE_RESOURCE_PATH = "SpellDatabase"; 
+    private const string DATABASE_RESOURCE_PATH = "SpellDatabase";
 
     private static SpellDatabase _instance;
     /// <summary>
@@ -55,6 +55,8 @@ public class SpellDatabase : ScriptableObject
 
     // 高速検索のための辞書。一度初期化すれば再構築は不要。
     private Dictionary<SpellType, SpellBase> _spellDictionary;
+    // 辞書のキーを SpellBase に変更し、値として SpellType を保持する（逆引き用）
+    private Dictionary<SpellBase, SpellType> _reverseSpellDictionary;
 
     /// <summary>
     /// SpellDataEntryリストから辞書を構築します。（ScriptableObjectロード後に実行）
@@ -67,6 +69,8 @@ public class SpellDatabase : ScriptableObject
         {
             // ToDictionaryを使って、allSpellsリストから一発で辞書を作成
             _spellDictionary = allSpells.ToDictionary(e => e.type, e => e.spellAsset);
+            // SpellBaseからSpellTypeを引く辞書 (新規)
+            _reverseSpellDictionary = allSpells.ToDictionary(e => e.spellAsset, e => e.type);
         }
         catch (System.ArgumentException e)
         {
@@ -98,6 +102,19 @@ public class SpellDatabase : ScriptableObject
 
         Debug.LogError($"SpellType.{type} に対応する呪文アセットがデータベースに見つかりません！");
         return null;
+    }
+
+    /// <summary>
+    /// SpellBaseアセットから対応するSpellTypeを取得します。（EquippedSpellManagerが使用）
+    /// </summary>
+    public SpellType GetSpellType(SpellBase asset)
+    {
+        if (_reverseSpellDictionary.TryGetValue(asset, out SpellType type))
+        {
+            return type;
+        }
+        Debug.LogError($"アセット {asset.name} に対応する SpellType がデータベースに見つかりません！");
+        return SpellType.None;
     }
 
     // --- 補助クラス（必要に応じて別途ファイルに分割しても良い） ---
