@@ -6,6 +6,7 @@ using System.Linq;
 /// <summary>
 /// 持ち込み呪文の管理ロジック。
 /// シングルトンパターン（MonoBehaviour）。PlayerPrefsで永続化を行う。
+/// 持ち込み呪文は固定配列として扱い、編集は上書きロジックで行われます。
 /// </summary>
 public class EquippedSpellManager : MonoBehaviour
 {
@@ -26,8 +27,8 @@ public class EquippedSpellManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            LoadEquippedSpells(); // Awakeでもロードを実行
             LoadCapacity();
+            LoadEquippedSpells(); // Capacityロード後に実行
         }
         else if (Instance != this)
         {
@@ -37,8 +38,9 @@ public class EquippedSpellManager : MonoBehaviour
 
     // --- 内部データとオブザーバー ---
 
-    // 持ち込み呪文を格納するリスト。SpellBaseはScriptableObjectなので直接参照を保持。
-    List<SpellBase> _equippedSpells = new List<SpellBase>();
+    // 持ち込み呪文を格納する配列。SpellBaseはScriptableObjectなので直接参照を保持。
+    // 固定長（最大スロット数）となり、空きスロットは null で表現します。
+    private SpellBase[] _equippedSpells = new SpellBase[DEFAULT_CAPACITY];
 
     // 持ち込み可能な最大スロット数
     private int _maxCapacity = DEFAULT_CAPACITY;
@@ -51,30 +53,34 @@ public class EquippedSpellManager : MonoBehaviour
     /// <summary>
     /// PlayerPrefsに現在の持ち込み呪文リストを保存します。
     /// SpellDatabaseを利用し、SpellTypeのカンマ区切り文字列として保存します。
+    /// null要素は "NULL" または空文字として保存することを想定します。
     /// </summary>
     private void SaveEquippedSpells()
     {
-        var spellTypes = _equippedSpells
-        .Select(spell => SpellDatabase.Instance.GetSpellType(spell).ToString())
+        // null の場合は空文字 "" を、それ以外は SpellType の文字列を使用
+        var spellTypeStrings = _equippedSpells
+        .Select(spell => spell == null ? "" : SpellDatabase.Instance.GetSpellType(spell).ToString())
         .ToList();
 
-        // intのリストをカンマ区切り文字列に変換
-        string dataToSave = string.Join(",", spellTypes);
+        // 文字列の配列をカンマ区切り文字列に変換
+        string dataToSave = string.Join(",", spellTypeStrings);
         PlayerPrefs.SetString(PLAYERPREFS_KEY_SPELLS, dataToSave);
         PlayerPrefs.Save();
     }
 
     /// <summary>
     /// PlayerPrefsから持ち込み呪文リストを読み込み、_equippedSpellsを復元します。
-    /// PlayerPrefsにはSpellTypeのカンマ区切り文字列が保存されている前提です。
+    /// PlayerPrefsにはSpellTypeまたは空文字のカンマ区切り文字列が保存されている前提です。
     /// </summary>
     private void LoadEquippedSpells()
     {
+        // _equippedSpells のサイズを現在の _maxCapacity に設定
+        _equippedSpells = new SpellBase[_maxCapacity];
+
         // 1. 保存されたカンマ区切り文字列を取得
         if (!PlayerPrefs.HasKey(PLAYERPREFS_KEY_SPELLS))
         {
-            // キーが存在しない場合は、初期化処理を行うか、何もしない
-            Debug.Log("持ち込み呪文の保存データが見つかりませんでした。");
+            Debug.Log("持ち込み呪文の保存データが見つかりませんでした。初期状態で開始します。");
             return;
         }
 
@@ -82,29 +88,36 @@ public class EquippedSpellManager : MonoBehaviour
 
         if (string.IsNullOrEmpty(dataToLoad))
         {
-            // データが空の場合はリストをクリアして終了
-            _equippedSpells.Clear();
+            // データが空の場合は null で初期化（既に new で初期化済み）
             return;
         }
 
         // 2. 文字列をSpellTypeのリストに変換
         var spellTypeStrings = dataToLoad.Split(',');
 
-        var loadedSpells = new List<SpellBase>(); // 戻り値として_equippedSpellsに設定するリスト
-
-        foreach (var spellTypeString in spellTypeStrings)
+        for (int i = 0; i < spellTypeStrings.Length; i++)
         {
+            // 最大容量を超過している要素は無視
+            if (i >= _maxCapacity) break;
+
+            var spellTypeString = spellTypeStrings[i];
+
+            // 空文字（保存時の null 要素）の場合はスキップし、null のままにする
+            if (string.IsNullOrEmpty(spellTypeString))
+            {
+                _equippedSpells[i] = null;
+                continue;
+            }
+
             // 文字列をSpellTypeのEnumにパース
-            // ここでエラー処理としてTryParseを使用するとより堅牢になります
             if (System.Enum.TryParse(spellTypeString, out SpellType type))
             {
                 // SpellDatabaseを利用してSpellTypeからSpellBaseのインスタンスを取得
-                // ここで、SpellDatabaseにGetSpellAsset(SpellType type)のようなメソッドがある前提
                 var spellInstance = SpellDatabase.Instance.GetSpellAsset(type);
 
                 if (spellInstance != null)
                 {
-                    loadedSpells.Add(spellInstance);
+                    _equippedSpells[i] = spellInstance;
                 }
                 else
                 {
@@ -116,9 +129,6 @@ public class EquippedSpellManager : MonoBehaviour
                 Debug.LogError($"無効なSpellType文字列が保存されていました: {spellTypeString}");
             }
         }
-
-        // 3. 復元したリストをメンバ変数に設定
-        _equippedSpells = loadedSpells;
     }
 
     /// <summary>
@@ -144,10 +154,11 @@ public class EquippedSpellManager : MonoBehaviour
     /// <summary>
     /// 現在の持ち込み呪文リストを取得します。
     /// 外部からの変更を防ぐため、読み取り専用のコピーを返します。
+    /// (null要素を含むことがあります)
     /// </summary>
     public IReadOnlyList<SpellBase> GetEquippedSpells()
     {
-        // 外部からリストが直接操作されないように、新しいリストとして返す
+        // 外部から配列が直接操作されないように、新しいリストとして返す
         return new List<SpellBase>(_equippedSpells);
     }
 
@@ -161,34 +172,37 @@ public class EquippedSpellManager : MonoBehaviour
 
     /// <summary>
     /// インデックスを指定して持ち込み呪文を削除します。
+    /// 実際には、そのスロットを null で上書きします。
     /// </summary>
     /// <param name="index">削除したい呪文のインデックス</param>
     public void RemoveSpell(int index)
     {
-        if (index >= 0 && index < _equippedSpells.Count)
+        if (index >= 0 && index < _maxCapacity)
         {
-            _equippedSpells.RemoveAt(index);
+            _equippedSpells[index] = null; // nullで上書き
 
             SaveEquippedSpells();
             NotifyEquippedSpellsChanged();
         }
         else
         {
-            Debug.LogError($"無効なインデックス {index} で呪文を削除しようとしました。現在のスロット数: {_equippedSpells.Count}");
+            Debug.LogError($"無効なインデックス {index} で呪文を削除しようとしました。現在の最大スロット数: {_maxCapacity}");
         }
     }
 
     /// <summary>
-    /// インデックスを指定して持ち込み呪文を追加または置き換えます。
+    /// インデックスを指定して持ち込み呪文を置き換えます。
+    /// 既に呪文がセットされていても上書きされます。
     /// </summary>
-    /// <param name="index">追加/置き換えたいインデックス</param>
-    /// <param name="spellAsset">追加するSpellBaseアセット</param>
-    /// <returns>追加に成功した場合は true、最大数を超えているなどの理由で失敗した場合は false</returns>
-    public bool InsertSpell(int index, SpellBase spellAsset)
+    /// <param name="index">セット/置き換えたいインデックス</param>
+    /// <param name="spellAsset">セットするSpellBaseアセット</param>
+    /// <returns>セットに成功した場合は true、インデックスが無効な場合は false</returns>
+    public bool SetSpell(int index, SpellBase spellAsset)
     {
         if (spellAsset == null)
         {
-            Debug.LogError("追加しようとした呪文アセットがnullです。");
+            // nullをセットしたい場合は RemoveSpell を利用
+            Debug.LogError("追加しようとした呪文アセットがnullです。スロットを空ける場合は RemoveSpell(index) を利用してください。");
             return false;
         }
 
@@ -198,16 +212,7 @@ public class EquippedSpellManager : MonoBehaviour
             return false;
         }
 
-        if (_equippedSpells.Count < _maxCapacity)
-        {
-            _equippedSpells.Insert(index, spellAsset);
-        }
-        else
-        {
-            // 最大数を超えて追加しようとした
-            Debug.LogWarning($"持ち込みスロットは既に満杯です (最大: {_maxCapacity})。");
-            return false;
-        }
+        _equippedSpells[index] = spellAsset;
 
         SaveEquippedSpells();
         NotifyEquippedSpellsChanged();
@@ -216,13 +221,24 @@ public class EquippedSpellManager : MonoBehaviour
 
     /// <summary>
     /// 持ち込める呪文の最大数を増やします。
+    /// 配列のサイズ変更に伴い、既存の呪文は保持しつつ配列を再構築します。
     /// </summary>
     /// <param name="amount">増加させる数</param>
     public void IncreaseCapacity(int amount = 1)
     {
         if (amount <= 0) return;
 
-        _maxCapacity += amount;
+        int newCapacity = _maxCapacity + amount;
+
+        // 新しい配列を作成し、既存の呪文をコピー
+        SpellBase[] newSpells = new SpellBase[newCapacity];
+        for (int i = 0; i < _equippedSpells.Length; i++)
+        {
+            newSpells[i] = _equippedSpells[i];
+        }
+
+        _equippedSpells = newSpells;
+        _maxCapacity = newCapacity;
 
         SaveCapacity();
         NotifyMaxCapacityChanged();
@@ -256,6 +272,7 @@ public class EquippedSpellManager : MonoBehaviour
 
     private void NotifyEquippedSpellsChanged()
     {
+        // 配列の内容を新しいリストとしてオブザーバーに通知
         _observer?.OnEquippedSpellsChanged(new List<SpellBase>(_equippedSpells));
     }
 
@@ -263,6 +280,7 @@ public class EquippedSpellManager : MonoBehaviour
     {
         _observer?.OnMaxCapacityChanged(_maxCapacity);
     }
+
     // [SerializeField] int test_index;
     // [SerializeField] SpellBase test_spellBase;
     // public void Test_Remove()
@@ -271,7 +289,7 @@ public class EquippedSpellManager : MonoBehaviour
     // }
     // public void Test_Insert()
     // {
-    //     InsertSpell(test_index, test_spellBase);
+    //     SetSpell(test_index, test_spellBase);
     // }
     // [SerializeField] List<SpellBase> test_getSpells;
     // public void Test_Get()
@@ -291,6 +309,7 @@ public interface IEquippedSpellsObserver
 {
     /// <summary>
     /// 持ち込み呪文リストが変更されたときに呼び出されます。
+    /// (固定配列の内容がリストとして渡されます。null要素を含むことがあります)
     /// </summary>
     /// <param name="currentSpells">変更後の持ち込み呪文のリスト</param>
     void OnEquippedSpellsChanged(List<SpellBase> currentSpells);
