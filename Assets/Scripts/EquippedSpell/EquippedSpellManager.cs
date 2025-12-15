@@ -18,21 +18,30 @@ public class EquippedSpellManager : MonoBehaviour
 
     // --- シングルトン実装 ---
 
-    public static EquippedSpellManager Instance { get; private set; }
+    private static EquippedSpellManager _instance;
+    public static EquippedSpellManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                GameObject singletonObject = new GameObject(nameof(EquippedSpellManager));
+                _instance = singletonObject.AddComponent<EquippedSpellManager>();
+                // シーンを跨いでも破棄されないように設定
+                DontDestroyOnLoad(singletonObject);
+                _instance.LoadCapacity();
+                _instance.LoadEquippedSpells();
+            }
+            return _instance;
+        }
+    }
 
     // Awakeでインスタンスを設定し、2つ目が生成されないようにする
     private void Awake()
     {
-        if (Instance == null)
+        if (_instance != null && _instance != this)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-            LoadCapacity();
-            LoadEquippedSpells(); // Capacityロード後に実行
-        }
-        else if (Instance != this)
-        {
-            Destroy(gameObject); // 既に存在するインスタンスがあれば破棄
+            Destroy(gameObject);
         }
     }
 

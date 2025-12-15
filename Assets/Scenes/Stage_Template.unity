@@ -1154,26 +1154,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 648184871}
-  - component: {fileID: 648184870}
+  - component: {fileID: 648184872}
   m_Layer: 0
-  m_Name: EquippedSpellManager
+  m_Name: EquippedSpellModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &648184870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 648184869}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c8216ffe63e61248b38afee8eba1d69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &648184871
 Transform:
   m_ObjectHideFlags: 0
@@ -1182,13 +1170,28 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 648184869}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &648184872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 648184869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1a5802db84f1da45af332e10298c6f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  test_spellTypeToAdd: 1
+  test_slotIndex: 0
+  test_capacityIncreaseAmount: 1
 --- !u!1 &724628114
 GameObject:
   m_ObjectHideFlags: 0
@@ -2258,9 +2261,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SpellHoldInfoManager, Assembly-CSharp
-        m_MethodName: Test_LogCurrentStatus
+      - m_Target: {fileID: 648184872}
+        m_TargetAssemblyTypeName: EquippedSpellModel, Assembly-CSharp
+        m_MethodName: Test_LogAllStatuses
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2838,9 +2841,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SpellHoldInfoManager, Assembly-CSharp
-        m_MethodName: Test_UnlockSpell
+      - m_Target: {fileID: 648184872}
+        m_TargetAssemblyTypeName: EquippedSpellModel, Assembly-CSharp
+        m_MethodName: Test_SetSpellToSlot
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2971,9 +2974,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SpellHoldInfoManager, Assembly-CSharp
-        m_MethodName: Test_IncreaseSpellCount
+      - m_Target: {fileID: 648184872}
+        m_TargetAssemblyTypeName: EquippedSpellModel, Assembly-CSharp
+        m_MethodName: Test_RemoveSpellFromSlot
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
