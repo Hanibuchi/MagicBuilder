@@ -30,11 +30,12 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
 
 
     [Header("非アクティブ設定")]
-    [Tooltip("非アクティブ時のフレームの色")]
-    [SerializeField] private Color disableColor = Color.gray;
+    [Tooltip("ロック時のフレームの色")]
+    [SerializeField] private Color lockColor = Color.gray;
 
-    [Tooltip("非アクティブ時のアイコンに適用するマテリアル")]
+    [Tooltip("非所持のアイコンに適用するマテリアル")]
     [SerializeField] private Material disableMaterial;
+    [SerializeField] private Sprite lockSprite;
 
     // --- 内部データ ---
 
@@ -45,18 +46,6 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
 
     // 外部通知用（登録できるのは1つのみ）
     private IEquippedSpellIconUIObserver _observer;
-
-
-    /// <summary>
-    /// 初期化処理。通常時の色を保持します。
-    /// </summary>
-    private void Awake()
-    {
-        if (frameImage != null)
-        {
-            _activeColor = frameImage.color;
-        }
-    }
 
     // --- 公開メソッド ---
 
@@ -75,15 +64,6 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
     public void SetData(SpellBase data)
     {
         _spellData = data;
-        if (iconImage != null && data != null && data.icon != null)
-        {
-            iconImage.sprite = data.icon;
-            iconImage.enabled = true; // データがあればアイコンを表示
-        }
-        else
-        {
-            iconImage.enabled = false; // データがなければアイコンを非表示
-        }
     }
 
     /// <summary>
@@ -103,9 +83,51 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
     {
         _slotIndex = newIndex;
         _isEquippedSlot = isEquipped;
-        this.gameObject.name = isEquipped
-            ? $"EquippedIcon_{newIndex}_({_spellData?.spellName ?? "Empty"})"
-            : $"HoldIcon_({_spellData?.spellName ?? "Hold"})";
+    }
+
+    public void SetIcon(bool active)
+    {
+        iconImage.sprite = active ? _spellData?.icon : lockSprite;
+    }
+    public void SetShowDescription(bool active)
+    {
+        showDescription = active;
+    }
+
+    bool frameActive = true;
+    public void SetFrameColor(bool active)
+    {
+        if (frameImage == null) return;
+        if (active)
+        {
+            frameActive = true;
+            frameImage.color = _activeColor;
+            iconImage.material = null;
+        }
+        else
+        {
+            if (!frameActive) return;
+            frameActive = false;
+            _activeColor = frameImage.color;
+            frameImage.color = lockColor;
+            iconImage.material = disableMaterial;
+        }
+    }
+
+    /// <summary>
+    /// UIをアクティブ/非アクティブ状態に設定します。
+    /// </summary>
+    /// <param name="active">アクティブ状態にするか</param>
+    public void SetActive(bool active)
+    {
+        if (raycastTargetImage == null)
+        {
+            Debug.LogWarning("Missing required components in EquippedSpellIconUI"); return;
+        }
+        if (active)
+            raycastTargetImage.raycastTarget = true; // クリック/ドラッグを有効化
+        else
+            raycastTargetImage.raycastTarget = false; // クリック/ドラッグを無効化
     }
 
     /// <summary>
@@ -128,41 +150,14 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
         }
     }
 
-    /// <summary>
-    /// UIをアクティブ/非アクティブ状態に設定します。
-    /// SpellUIのSetActiveの実装を参考にしています。
-    /// </summary>
-    /// <param name="active">アクティブ状態にするか</param>
-    public void SetActive(bool active)
-    {
-        if (frameImage == null || iconImage == null || raycastTargetImage == null)
-        {
-            Debug.LogWarning("Missing required components in EquippedSpellIconUI"); return;
-        }
-        if (active)
-        {
-            frameImage.color = _activeColor;
-            iconImage.material = null;
-            raycastTargetImage.raycastTarget = true; // クリック/ドラッグを有効化
-        }
-        else
-        {
-            frameImage.color = disableColor;
-            iconImage.material = disableMaterial;
-            raycastTargetImage.raycastTarget = false; // クリック/ドラッグを無効化
-        }
-    }
-
     // --- ドラッグ処理の実装 ---
 
-    private Vector3 _originalPosition;
     private bool _dropSuccess = false; // ドロップが成功したか
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (_spellData == null) return; // 呪文データがない場合はドラッグ不可
 
-        _originalPosition = transform.position;
         _dropSuccess = false;
 
         // 1. ドラッグ開始通知
@@ -241,13 +236,14 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
 
     // --- ポインタークリック処理 ---
 
+    bool showDescription = true;
     /// <summary>
     /// クリック（タップ）されたときに呪文の詳細説明を表示する。
     /// </summary>
     public void OnPointerClick(PointerEventData eventData)
     {
         // SpellBaseデータがない、またはドラッグ操作の場合は何もしない
-        if (_spellData == null || eventData.dragging) return;
+        if (_spellData == null || eventData.dragging || !showDescription) return;
 
         // シングルトン経由で詳細パネルの表示を開始
         if (SpellDescriptionUI.Instance != null)
