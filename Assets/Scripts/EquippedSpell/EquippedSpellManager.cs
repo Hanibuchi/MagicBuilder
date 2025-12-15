@@ -242,6 +242,7 @@ public class EquippedSpellManager : MonoBehaviour
 
         SaveCapacity();
         NotifyMaxCapacityChanged();
+        NotifyEquippedSpellsChanged();
     }
 
     // --- オブザーバー管理と通知 ---
@@ -259,7 +260,6 @@ public class EquippedSpellManager : MonoBehaviour
 
         // 登録直後に最新の情報を通知する
         NotifyEquippedSpellsChanged();
-        NotifyMaxCapacityChanged();
     }
 
     /// <summary>
