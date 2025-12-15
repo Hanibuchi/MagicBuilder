@@ -304,6 +304,32 @@ public abstract class SpellBase : ScriptableObject
         return uiInstance;
     }
 
+    /// <summary>
+    /// このSpellBaseに対応するEquippedSpellIconUIインスタンスを生成します。
+    /// </summary>
+    public virtual EquippedSpellIconUI CreateEquippedIconUI()
+    {
+        if (SpellCommonData.Instance.equippedSpellIconUIPrefab == null)
+        {
+            Debug.LogError($"SpellCommonData.Instance.equippedSpellIconUIPrefab is null.");
+            return null;
+        }
+
+        // プレハブから生成
+        // EquippedSpellIconUIがアタッチされているプレハブを SpellCommonData が保持している前提
+        EquippedSpellIconUI uiInstance = Instantiate(SpellCommonData.Instance.equippedSpellIconUIPrefab).GetComponent<EquippedSpellIconUI>();
+
+        if (uiInstance == null)
+        {
+            Debug.LogError($"Instantiated prefab from equippedSpellIconUIPrefab does not contain EquippedSpellIconUI component.");
+            return null;
+        }
+
+        // 呪文データを設定
+        uiInstance.SetData(this);
+
+        return uiInstance;
+    }
 
     /// <summary>
     /// 呪文がワールドからドロップしてインベントリに回収される際のアニメーションに使用するUIオブジェクトを生成します。

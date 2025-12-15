@@ -70,6 +70,6 @@ public class SpellCommonData : ScriptableObject
     [Tooltip("ドロップUIプレハブ")]
     public GameObject dropUIPrefab;
 
-    [Tooltip("保持情報UIプレハブ")]
-    public GameObject holdInfoUIPrefab;
+    [Tooltip("EquippedSpellIconUIコンポーネントがアタッチされたUIプレハブ")]
+    public GameObject equippedSpellIconUIPrefab;
 }
