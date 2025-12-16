@@ -94,12 +94,13 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
         showDescription = active;
     }
 
-    bool frameActive = true;
+    bool frameActive = true; // デフォルトでアクティブな状態であることを想定
     public void SetFrameColor(bool active)
     {
         if (frameImage == null) return;
         if (active)
         {
+            if (frameActive) return;
             frameActive = true;
             frameImage.color = _activeColor;
             iconImage.material = null;
