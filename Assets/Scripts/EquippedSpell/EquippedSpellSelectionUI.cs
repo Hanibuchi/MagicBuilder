@@ -11,7 +11,7 @@ using TMPro; // TextMeshProUGUIを使用
 /// EquippedSpellModelからデータを取得し、UIに反映します。
 /// 呪文アイコンや空スロットからのドラッグ＆ドロップイベントを受け取り、コントローラークラスに変更を伝達します。
 /// </summary>
-public class EquippedSpellSelectionUIController : MonoBehaviour,
+public class EquippedSpellSelectionUI : MonoBehaviour,
     IEquippedEmptySlotObserver,
     IEquippedSpellIconUIObserver
 {
@@ -402,5 +402,5 @@ public interface IEquippedSpellUIProvider
     void RemoveSpell(int index);
 
     // UI側の再構築をキックするためのコールバック登録（必要に応じて）
-    void SetUIController(EquippedSpellSelectionUIController controller);
+    void SetUIController(EquippedSpellSelectionUI controller);
 }
