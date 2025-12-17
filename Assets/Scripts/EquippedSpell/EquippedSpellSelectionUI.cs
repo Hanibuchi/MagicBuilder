@@ -370,6 +370,73 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
         _draggedSpellData = null;
         _draggedFromSlotIndex = -1;
     }
+
+
+
+
+
+
+    // --- デバッグ・テスト用設定項目 ---
+
+    [Header("--- Test Settings ---")]
+    [SerializeField] private List<SpellBase> test_manualEquippedSpells = new List<SpellBase>();
+    
+    [Tooltip("テスト用の所持状況データ。インスペクタで要素を追加して試せます")]
+    [SerializeField] private List<TestHoldStatusData> test_manualHoldStatuses = new List<TestHoldStatusData>();
+
+    [System.Serializable]
+    public struct TestHoldStatusData
+    {
+        public SpellType type;
+        public bool isUnlocked;
+        public int totalCount;
+        public int equippedCount;
+    }
+
+    // --- テスト用公開メソッド (Buttonから呼び出し可能) ---
+
+    /// <summary>
+    /// インスペクタの test_manualHoldStatuses リストの内容を UI に反映します。
+    /// </summary>
+    public void Test_ApplyHoldSpells()
+    {
+        List<SpellHoldStatus> statusList = new List<SpellHoldStatus>();
+        foreach (var data in test_manualHoldStatuses)
+        {
+            statusList.Add(new SpellHoldStatus(data.type, data.isUnlocked, data.totalCount, data.equippedCount));
+        }
+        
+        SetHoldSpells(statusList.AsReadOnly());
+        Debug.Log("<color=cyan>[Test]</color> 保持リストのテストデータを適用しました。");
+    }
+
+    /// <summary>
+    /// インスペクタの test_manualEquippedSpells リストの内容を UI に反映します。
+    /// </summary>
+    public void Test_ApplyEquippedSpells()
+    {
+        SetEquippedSpells(test_manualEquippedSpells.AsReadOnly());
+        Debug.Log("<color=lime>[Test]</color> 持ち込みスロットのテストデータを適用しました。");
+    }
+
+    /// <summary>
+    /// 全てのテスト用データを一括で適用します。
+    /// </summary>
+    public void Test_ApplyAll()
+    {
+        Test_ApplyHoldSpells();
+        Test_ApplyEquippedSpells();
+    }
+
+    /// <summary>
+    /// 現在のページを強制的にリロードします（UIの再描画チェック用）。
+    /// </summary>
+    public void Test_ForceRebuild()
+    {
+        RebuildHoldList();
+        RebuildEquippedSlots();
+        Debug.Log("<color=yellow>[Test]</color> UIの再構築を強制実行しました。");
+    }
 }
 
 
