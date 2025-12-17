@@ -79,9 +79,15 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
     // 依存コンポーネントの書き換え
     private IEquippedSpellUIProvider _provider;
 
-    public void SetInterface(IEquippedSpellUIProvider provider)
+    public void Init(IEquippedSpellUIProvider provider)
     {
         _provider = provider;
+        // 初期データの反映
+        _allSpellStatuses = _provider.GetAllSpellStatuses();
+        _currentEquippedSpells = _provider.GetCurrentEquippedSpells();
+
+        RebuildHoldList();
+        RebuildEquippedSlots();
     }
 
 
@@ -91,22 +97,19 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
 
 
 
-    public void OnAllSpellStatusesChanged(IReadOnlyList<SpellHoldStatus> allSpellStatuses)
+    public void SetHoldSpells(IReadOnlyList<SpellHoldStatus> allSpellStatuses)
     {
         // 呪文の所持状況、利用可能数が変わった
         _allSpellStatuses = allSpellStatuses;
         RebuildHoldList(); // 保持リストのUIを更新
-        RebuildEquippedSlots(); // 利用可能数が変わった場合、装備スロットのUIも更新が必要
         Debug.Log("[Controller Proxy] AllSpellStatusesChanged. UI Rebuilded.");
     }
 
-    public void OnEquippedSpellsChanged(IReadOnlyList<SpellBase> equippedSpells)
+    public void SetEquippedSpells(IReadOnlyList<SpellBase> equippedSpells)
     {
         // 持ち込みスロットの内容が変わった
         _currentEquippedSpells = equippedSpells;
-        RebuildEquippedSlots(); // 持ち込みスロットのUIを更新
-                                // ※ RecalculateAllSpellStatusesAndNotify() の中で OnEquippedSpellsChanged が呼ばれるため、
-                                //    このメソッドが呼ばれる時点では _allSpellStatuses の更新も同時に行われていることが期待される。
+        RebuildEquippedSlots();
         Debug.Log("[Controller Proxy] EquippedSpellsChanged. Equipped Slots Rebuilded.");
     }
 
@@ -149,23 +152,10 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
                     iconUI.transform.SetParent(equippedSlotParent, false);
                     iconUI.SetSlotIndex(i, true); // 持ち込みスロットとして設定
                     iconUI.SetObserver(this);
-
-                    // ステータスを更新
-                    var status = _allSpellStatuses.FirstOrDefault(s => s.Type == SpellDatabase.Instance.GetSpellType(spell));
-                    if (status != null && !status.IsUnlocked)
-                    {
-                        // 装備されているが、Modelの最新情報ではアンロックされていない場合 (ありえないはずだが念のため)
-                        iconUI.SetFrameColor(false); // グレーアウト
-                        iconUI.SetIcon(false);       // ロックアイコン
-                        iconUI.SetActive(false);     // 操作不可
-                    }
-                    else
-                    {
-                        iconUI.SetFrameColor(true); // 通常色
-                        iconUI.SetIcon(true);       // 通常アイコン
-                        iconUI.SetActive(true);     // 操作可能
-                    }
-                    iconUI.SetAvailableCount(status != null ? status.AvailableCount : -1); // 持ち込みスロットでは非表示になるが念のため
+                    iconUI.SetFrameColor(true); // 通常色
+                    iconUI.SetIcon(true);       // 通常アイコン
+                    iconUI.SetActive(true);     // 操作可能
+                    iconUI.SetAvailableCount(-1);
 
                     _equippedSlotUIs.Add(iconUI);
                 }
@@ -361,11 +351,7 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
     {
         // 呪文UIがドロップに成功し、持ち込みスロットから呪文が抜き取られたことを通知
         // (空スロット/別のスロットにドロップされた際、EquippedSpellIconUI側で呼ばれる)
-        if (_draggedFromSlotIndex != slotIndex)
-        {
-            // 持ち込みリスト->持ち込みリストの移動のうち、自分以外の場所にドロップした場合、元いたスロットを空にしないと呪文が複製されてしまう。
-            _provider.RemoveSpell(slotIndex);
-        }
+        _provider.RemoveSpell(slotIndex);
 
         // ドラッグ状態をリセット (重要)
         _draggedSpellData = null;
