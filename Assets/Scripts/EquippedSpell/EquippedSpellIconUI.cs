@@ -43,6 +43,7 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
     private SpellBase _spellData; // このUIが表す呪文のデータ
     private Color _activeColor; // 通常時のフレームの色
     private bool _isEquippedSlot = false; // 持ち込みスロットとして機能しているか (保持リストのUIと区別)
+    public bool IsEquippedSlot => _isEquippedSlot;
 
     // 外部通知用（登録できるのは1つのみ）
     private IEquippedSpellIconUIObserver _observer;
