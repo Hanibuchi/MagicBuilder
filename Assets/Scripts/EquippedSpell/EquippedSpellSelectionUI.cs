@@ -567,12 +567,8 @@ public interface IEquippedSpellUIProvider
     // データの取得
     IReadOnlyList<SpellHoldStatus> GetAllSpellStatuses();
     IReadOnlyList<SpellBase> GetCurrentEquippedSpells();
-    int GetMaxCapacity();
 
     // 操作の実行
     void SetSpell(int index, SpellBase spell);
     void RemoveSpell(int index);
-
-    // UI側の再構築をキックするためのコールバック登録（必要に応じて）
-    void SetUIController(EquippedSpellSelectionUI controller);
 }
