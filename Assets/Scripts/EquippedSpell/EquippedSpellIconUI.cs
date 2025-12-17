@@ -179,6 +179,9 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
             _observer?.NotifyHoldListDragBegin(_spellData);
         }
 
+        SetAvailableCount(-1);
+        raycastTargetImage.raycastTarget = false;
+
         // 2. 自身をCanvasの最前面に移動
         RectTransform root = DraggingSpellRootProvider.Instance?.GetRootTransform();
         if (root != null)

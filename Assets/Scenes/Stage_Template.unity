@@ -2335,9 +2335,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 772726503}
-        m_TargetAssemblyTypeName: EquippedSpellSelectionUI, Assembly-CSharp
-        m_MethodName: Test_ApplyAll
+      - m_Target: {fileID: 2042060998}
+        m_TargetAssemblyTypeName: EquippedSpellController, Assembly-CSharp
+        m_MethodName: Test_ApplyAndSaveManualStatuses
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2949,9 +2949,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 648184872}
-        m_TargetAssemblyTypeName: EquippedSpellModel, Assembly-CSharp
-        m_MethodName: Test_SetSpellToSlot
+      - m_Target: {fileID: 2042060998}
+        m_TargetAssemblyTypeName: EquippedSpellController, Assembly-CSharp
+        m_MethodName: Test_ResetAllData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3374,6 +3374,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _selectionUI: {fileID: 772726503}
+  test_manualHoldStatuses:
+  - type: 1
+    isUnlocked: 1
+    totalCount: 3
+    equippedCount: 0
+  - type: 2
+    isUnlocked: 1
+    totalCount: 2
+    equippedCount: 0
+  - type: 3
+    isUnlocked: 0
+    totalCount: 1
+    equippedCount: 0
+  - type: 4
+    isUnlocked: 1
+    totalCount: 0
+    equippedCount: 0
 --- !u!4 &2042060999
 Transform:
   m_ObjectHideFlags: 0
