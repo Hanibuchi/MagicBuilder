@@ -3,6 +3,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 /// <summary>
 /// 持ち込み呪文の選択画面でUIに表示するための情報を提供するモデル。
@@ -386,6 +387,7 @@ public interface IEquippedSpellModelObserver
 /// <summary>
 /// 持ち込み呪文選択UIに表示するために必要な、個々の呪文のステータス情報。
 /// </summary>
+[Serializable]
 public class SpellHoldStatus
 {
     public SpellType Type { get; private set; }
