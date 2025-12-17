@@ -1673,6 +1673,7 @@ MonoBehaviour:
   pageStatusText: {fileID: 1290890816}
   spellsPerPage: 16
   emptySlotUIPrefab: {fileID: 3837778128026960708, guid: ed9cbcd2aca24e14e92694a164dc2c00, type: 3}
+  increaseCapacityButton: {fileID: 170341521721145619}
   test_manualEquippedSpells:
   - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
   - {fileID: 11400000, guid: 6c9d9dfe2f68e9144b91bb04a7bd8513, type: 2}
@@ -3374,6 +3375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _selectionUI: {fileID: 772726503}
+  test_canAffordUpgrade: 1
   test_manualHoldStatuses:
   - type: 1
     isUnlocked: 1
@@ -5295,6 +5297,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 098236d6279afa54388406d30589c564, type: 3}
+--- !u!114 &170341521721145619 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6398043474655166659, guid: 098236d6279afa54388406d30589c564, type: 3}
+  m_PrefabInstance: {fileID: 170341521721145618}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &181364939921764091
 RectTransform:
   m_ObjectHideFlags: 0

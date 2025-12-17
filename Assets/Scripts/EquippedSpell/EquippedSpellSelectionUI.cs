@@ -66,6 +66,9 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
     // ドラッグ元のスロットインデックス (-1は保持リストから)
     private int _draggedFromSlotIndex = -1;
 
+    [Header("容量拡張UI")]
+    [SerializeField] private Button increaseCapacityButton;
+
     // --- Unity イベント関数 ---
 
     private void Start()
@@ -73,6 +76,10 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
         // ページ切り替えボタンのリスナー登録
         prevPageButton?.onClick.AddListener(() => ChangePage(-1));
         nextPageButton?.onClick.AddListener(() => ChangePage(1));
+        increaseCapacityButton?.onClick.AddListener(() =>
+        {
+            _provider.RequestIncreaseCapacity();
+        });
     }
 
 
@@ -571,4 +578,5 @@ public interface IEquippedSpellUIProvider
     // 操作の実行
     void SetSpell(int index, SpellBase spell);
     void RemoveSpell(int index);
+    void RequestIncreaseCapacity();
 }

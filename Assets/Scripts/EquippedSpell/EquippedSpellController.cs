@@ -117,9 +117,39 @@ public class EquippedSpellController : MonoBehaviour,
         EquippedSpellManager.Instance.RemoveSpell(index);
     }
 
+    /// <summary>
+    /// UIからの容量増加リクエストを処理します。
+    /// </summary>
+    public void RequestIncreaseCapacity()
+    {
+        if (CanIncreaseCapacity())
+        {
+            // 条件を満たしていればManagerの容量増加を呼び出す
+            EquippedSpellManager.Instance.IncreaseCapacity();
+            Debug.Log("<color=lime>[Controller]</color> 容量を1増やしました。");
+        }
+        else
+        {
+            Debug.LogWarning("<color=orange>[Controller]</color> 容量を増やすための条件を満たしていません。");
+        }
+    }
+    /// <summary>
+    /// 容量を増やせる状態（コスト支払いなど）にあるかチェックします。
+    /// 具体的なロジックは今後実装。
+    /// </summary>
+    private bool CanIncreaseCapacity()
+    {
+        // 今後はここで所持金マネージャー等を参照する
+        // 現時点ではインスペクタから設定したテスト用フラグを返す
+        return test_canAffordUpgrade;
+    }
+
 
 
     // --- デバッグ・テスト用機能 ---
+    [Header("--- Capacity Upgrade Settings ---")]
+    [Tooltip("テスト用：容量増加の条件（所持金など）を満たしているか")]
+    [SerializeField] private bool test_canAffordUpgrade = true;
 
     [System.Serializable]
     public struct TestHoldStatusData
