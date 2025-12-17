@@ -1676,6 +1676,7 @@ MonoBehaviour:
   test_manualEquippedSpells:
   - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
   - {fileID: 11400000, guid: 6c9d9dfe2f68e9144b91bb04a7bd8513, type: 2}
+  - {fileID: 0}
   test_manualHoldStatuses:
   - type: 1
     isUnlocked: 1
@@ -1692,6 +1693,10 @@ MonoBehaviour:
   - type: 4
     isUnlocked: 0
     totalCount: 0
+    equippedCount: 0
+  - type: 5
+    isUnlocked: 1
+    totalCount: 3
     equippedCount: 0
 --- !u!1 &827964233
 GameObject:
