@@ -5,8 +5,8 @@ using System.Collections.Generic;
 /// 持ち込み呪文選択画面のコントローラー。
 /// Modelからの変更通知をUIに伝え、UIからの操作をModel/Managerに反映させる橋渡しを行います。
 /// </summary>
-public class EquippedSpellController : MonoBehaviour, 
-    IEquippedSpellModelObserver, 
+public class EquippedSpellController : MonoBehaviour,
+    IEquippedSpellModelObserver,
     IEquippedSpellUIProvider
 {
     // --- シングルトン実装 ---
@@ -115,5 +115,70 @@ public class EquippedSpellController : MonoBehaviour,
     public void RemoveSpell(int index)
     {
         EquippedSpellManager.Instance.RemoveSpell(index);
+    }
+
+
+
+    // --- デバッグ・テスト用機能 ---
+
+    [System.Serializable]
+    public struct TestHoldStatusData
+    {
+        public SpellType type;
+        public bool isUnlocked;
+        public int totalCount;
+        public int equippedCount;
+    }
+
+    [Header("--- Test Data Persistence ---")]
+    [Tooltip("このリストの内容をSpellHoldInfoManagerに強制適用します")]
+    [SerializeField] private List<TestHoldStatusData> test_manualHoldStatuses = new List<TestHoldStatusData>();
+
+    /// <summary>
+    /// インスペクタで設定した test_manualHoldStatuses をセーブデータ(Manager)に反映し、
+    /// UIを強制リロードします。
+    /// </summary>
+    public void Test_ApplyAndSaveManualStatuses()
+    {
+        if (SpellHoldInfoManager.Instance == null) return;
+
+        Debug.Log("<color=orange>[Test]</color> データの強制上書きを開始します...");
+
+        foreach (var data in test_manualHoldStatuses)
+        {
+            // 現在の保持数を一度リセットするために、0になるまで減らす（または初期化メソッドが必要）
+            // ここでは簡易的に現在の数を取得して差分を調整します
+            int currentCount = SpellHoldInfoManager.Instance.GetSpellCount(data.type);
+
+            // 保持数の調整
+            if (data.totalCount > currentCount)
+            {
+                for (int i = 0; i < (data.totalCount - currentCount); i++)
+                    SpellHoldInfoManager.Instance.IncreaseSpellCount(data.type);
+            }
+            else if (data.totalCount < currentCount)
+            {
+                for (int i = 0; i < (currentCount - data.totalCount); i++)
+                    SpellHoldInfoManager.Instance.DecreaseSpellCount(data.type);
+            }
+
+            // アンロック状態の適用
+            if (data.isUnlocked)
+            {
+                SpellHoldInfoManager.Instance.UnlockSpell(data.type);
+            }
+        }
+
+        Debug.Log("<color=lime>[Test]</color> データの適用が完了しました。UIをリロードします。");
+        // Model経由で最新のデータを取得し、UIに通知されるのを待ちます（Managerが変更されるとModelに通知が行くため自動で走ります）
+    }
+
+    /// <summary>
+    /// 全てのセーブデータを削除して初期状態に戻します。
+    /// </summary>
+    public void Test_ResetAllData()
+    {
+        PlayerPrefs.DeleteAll();
+        Debug.Log("<color=red>[Test]</color> PlayerPrefsを全削除しました。再起動が必要です。");
     }
 }
