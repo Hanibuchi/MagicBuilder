@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro; // TextMeshProUGUIを使用
+using TMPro;
 
 /// <summary>
 /// 持ち込み呪文選択画面のUI全体を管理するコントローラークラス。
@@ -126,7 +126,7 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
     /// <summary>
     /// 持ち込みスロットUIを現在の _currentEquippedSpells に基づいて再構築します。
     /// </summary>
-    private void RebuildEquippedSlots()
+    private void RebuildEquippedSlots(bool drag = false)
     {
         // 既存のUIをすべて破棄
         foreach (var ui in _equippedSlotUIs)
@@ -138,47 +138,66 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
         }
         _equippedSlotUIs.Clear();
 
+        if (!drag)
+            DestroyIconUI();
+
         // 最大スロット数に基づいて新しいUIを生成
         for (int i = 0; i < _currentEquippedSpells.Count; i++)
         {
             SpellBase spell = _currentEquippedSpells[i];
 
+            UnityEngine.Component component;
             if (spell != null)
             {
                 // 呪文データが存在する場合: EquippedSpellIconUIを生成
                 EquippedSpellIconUI iconUI = spell.CreateEquippedIconUI();
-                if (iconUI != null)
+                if (iconUI == null)
                 {
-                    iconUI.transform.SetParent(equippedSlotParent, false);
-                    iconUI.SetSlotIndex(i, true); // 持ち込みスロットとして設定
-                    iconUI.SetObserver(this);
-                    iconUI.SetFrameColor(true); // 通常色
-                    iconUI.SetIcon(true);       // 通常アイコン
-                    iconUI.SetDrag(true);     // 操作可能
-                    iconUI.SetAvailableCount(-1);
-
-                    _equippedSlotUIs.Add(iconUI);
+                    Debug.LogError("Failed to create EquippedSpellIconUI for spell: " + spell.spellName);
+                    continue;
                 }
+                iconUI.transform.SetParent(equippedSlotParent, false);
+                iconUI.SetSlotIndex(i, true); // 持ち込みスロットとして設定
+                iconUI.SetObserver(this);
+                iconUI.SetFrameColor(true); // 通常色
+                iconUI.SetIcon(true);       // 通常アイコン
+                iconUI.SetDrag(true);     // 操作可能
+                iconUI.SetAvailableCount(-1);
+                component = iconUI;
             }
             else
             {
-                // 呪文データが存在しない場合: EquippedEmptySlotUIを生成
-                if (emptySlotUIPrefab != null)
+                if (emptySlotUIPrefab == null)
                 {
-                    EquippedEmptySlotUI emptyUI = Instantiate(emptySlotUIPrefab, equippedSlotParent);
-                    emptyUI.Initialize(i);
-                    emptyUI.SetObserver(this);
-                    _equippedSlotUIs.Add(emptyUI);
+                    Debug.LogError("EmptySlotUIPrefab is not assigned.");
+                    continue;
                 }
+
+                // 呪文データが存在しない場合: EquippedEmptySlotUIを生成
+                EquippedEmptySlotUI emptyUI = Instantiate(emptySlotUIPrefab, equippedSlotParent);
+                emptyUI.Initialize(i);
+                emptyUI.SetObserver(this);
+                component = emptyUI;
             }
+            component.transform.SetSiblingIndex(i);
+            _equippedSlotUIs.Add(component);
         }
         Debug.Log($"[Controller] Equipped Slots Rebuilt.");
+    }
+
+    void DestroyIconUI()
+    {
+        if (draggingIconUI != null)
+        {
+            Destroy(draggingIconUI.gameObject);
+            draggingIconUI = null;
+        }
     }
 
     /// <summary>
     /// 保持呪文リストのUIを現在の _allSpellStatuses に基づいて再構築し、現在のページを反映します。
     /// </summary>
-    private void RebuildHoldList()
+    private void RebuildHoldList(bool drag = false)
     {
         // 既存のUIをすべて破棄
         foreach (var ui in _holdListSpellUIs)
@@ -189,6 +208,9 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
             }
         }
         _holdListSpellUIs.Clear();
+
+        if (!drag)
+            DestroyIconUI();
 
         // フィルタリングとソート
         var sortedStatuses = _allSpellStatuses
@@ -304,9 +326,16 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
 
 
     // --- IEquippedSpellIconUIObserver の実装 (アイコンUIからのドラッグ/ドロップ) ---
+    EquippedSpellIconUI draggingIconUI;
 
     public void NotifyEquippedDragBegin(SpellBase draggedSpell, int fromSlotIndex)
     {
+        draggingIconUI = (EquippedSpellIconUI)_equippedSlotUIs[fromSlotIndex];
+        _equippedSlotUIs[fromSlotIndex] = null;
+
+        RebuildEquippedSlots(true);
+        ReplaceEquippedSlotWithEmpty(fromSlotIndex);
+
         // 持ち込みスロットからのドラッグ開始（並び替え・解除）
         _draggedSpellData = draggedSpell;
         _draggedFromSlotIndex = fromSlotIndex;
@@ -314,11 +343,101 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
         // _provider.RemoveSpell(fromSlotIndex);
     }
 
+    // --- 指定したインデックスのスロットを空にするメソッド ---
+    /// <summary>
+    /// 指定されたインデックスの持ち込みスロットUIを削除し、空スロットUIに差し替えます。
+    /// </summary>
+    /// <param name="index">対象のスロットインデックス</param>
+    public void ReplaceEquippedSlotWithEmpty(int index)
+    {
+        if (index < 0 || index >= _equippedSlotUIs.Count) return;
+
+        // 1. 既存のUI（アイコン等）を破棄
+        var oldUI = _equippedSlotUIs[index];
+        if (oldUI != null && oldUI.gameObject != null)
+        {
+            Destroy(oldUI.gameObject);
+        }
+
+        // 2. 空スロットUIを生成
+        if (emptySlotUIPrefab != null)
+        {
+            EquippedEmptySlotUI emptyUI = Instantiate(emptySlotUIPrefab, equippedSlotParent);
+            emptyUI.Initialize(index);
+            emptyUI.SetObserver(this);
+
+            // 階層順序を元のインデックスに合わせる
+            emptyUI.transform.SetSiblingIndex(index);
+
+            // リスト内の参照を更新
+            _equippedSlotUIs[index] = emptyUI;
+        }
+
+        Debug.Log($"[UI Update] Slot {index} replaced with empty.");
+    }
+
     public void NotifyHoldListDragBegin(SpellBase draggedSpell)
     {
-        // 保持リストからのドラッグ開始（装備）
+        // 1. ドラッグが開始されたUIを特定
+        // 現在表示されているUIリストの中から、該当する呪文を持つものを探す
+        int index = _holdListSpellUIs.FindIndex(ui => ui != null && ui.GetSpellData() == draggedSpell);
+        if (index == -1)
+        {
+            Debug.LogError($"[UI] Drag Begin: {draggedSpell.spellName} not found in hold list.");
+            return;
+        }
+
+        // 2. ドラッグ中のUIとして保持し、リストから参照を外す
+        // これにより、直後の RebuildHoldList(true) 内の Destroy ループから除外される
+        draggingIconUI = _holdListSpellUIs[index];
+        _holdListSpellUIs[index] = null;
+
+        // 3. 保持リストのUIを再構築
+        // 引数 true により、draggingIconUI が破棄されるのを防ぐ
+        RebuildHoldList(true);
+
+        // 5. 新しく生成された保持リスト側のUI表示を調整
+        // 手に持っている分（ドラッグ中）の1つを差し引いた個数を表示させる
+        DecrementHoldListCount(draggedSpell);
+
+        Debug.Log($"[UI] Hold List Drag Begin: {draggedSpell.spellName}. UI rebuilt and count adjusted.");
+
+        // 4. ドラッグ情報をセット
         _draggedSpellData = draggedSpell;
         _draggedFromSlotIndex = -1;
+    }
+
+    // --- 保持リストの特定呪文の数を減らすメソッド ---
+    /// <summary>
+    /// 指定された呪文に対応する保持リスト内のUIの表示個数を1減らします。
+    /// 0になった場合はドラッグ不可に設定します。
+    /// </summary>
+    /// <param name="spell">対象の呪文データ</param>
+    public void DecrementHoldListCount(SpellBase spell)
+    {
+        if (spell == null) return;
+
+        // 現在のページに表示されているUIの中から、該当する呪文を探す
+        var targetUI = _holdListSpellUIs.Find(ui => ui.GetSpellData() == spell);
+
+        if (targetUI != null)
+        {
+            // 現在の残り数を取得して減らす（AvailableCountはUI側で保持されている想定）
+            int newCount = targetUI.AvailableCount - 1;
+
+            // UI上の数値を更新
+            targetUI.SetAvailableCount(newCount);
+
+            // 0以下になったらドラッグを禁止する
+            if (newCount <= 0)
+            {
+                targetUI.SetDrag(false);
+                // 必要に応じてグレーアウト処理などを追加
+                // targetUI.SetFrameColor(false); 
+            }
+
+            Debug.Log($"[UI Update] {spell.spellName} count decremented to {newCount}.");
+        }
     }
 
     public void NotifySpellDroppedOnEquippedSlot(SpellBase droppedSpell, int targetSlotIndex)

@@ -127,12 +127,15 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
         _canDrag = active;
     }
 
+    int availableCount = -1;
+    public int AvailableCount => availableCount;
     /// <summary>
     /// 持ち込みに使用可能な残り所持数を表示します。-1で非表示
     /// </summary>
     /// <param name="count">表示する残り所持数</param>
     public void SetAvailableCount(int count)
     {
+        availableCount = count;
         if (countText != null)
         {
             // 持ち込みスロットの場合は所持数を表示しないか、空にする
