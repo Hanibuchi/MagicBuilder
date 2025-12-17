@@ -115,20 +115,16 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
         }
     }
 
+
+    private bool _canDrag = true; // ドラッグ可能フラグを追加
     /// <summary>
-    /// UIをアクティブ/非アクティブ状態に設定します。
+    /// このアイコンのドラッグ操作の有効/無効を切り替えます。
+    /// クリック判定（詳細表示など）には影響しません。
     /// </summary>
-    /// <param name="active">アクティブ状態にするか</param>
-    public void SetActive(bool active)
+    /// <param name="active">ドラッグを許可するかどうか</param>
+    public void SetDrag(bool active)
     {
-        if (raycastTargetImage == null)
-        {
-            Debug.LogWarning("Missing required components in EquippedSpellIconUI"); return;
-        }
-        if (active)
-            raycastTargetImage.raycastTarget = true; // クリック/ドラッグを有効化
-        else
-            raycastTargetImage.raycastTarget = false; // クリック/ドラッグを無効化
+        _canDrag = active;
     }
 
     /// <summary>
@@ -158,6 +154,13 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (_spellData == null) return; // 呪文データがない場合はドラッグ不可
+
+        if (!_canDrag)
+        {
+            // ドラッグ不可なら、このイベント自体を「なかったこと」にする
+            eventData.pointerDrag = null;
+            return;
+        }
 
         _dropSuccess = false;
 

@@ -154,7 +154,7 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
                     iconUI.SetObserver(this);
                     iconUI.SetFrameColor(true); // 通常色
                     iconUI.SetIcon(true);       // 通常アイコン
-                    iconUI.SetActive(true);     // 操作可能
+                    iconUI.SetDrag(true);     // 操作可能
                     iconUI.SetAvailableCount(-1);
 
                     _equippedSlotUIs.Add(iconUI);
@@ -227,7 +227,6 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
             {
                 // アンロック済み
                 iconUI.SetIcon(true);       // 通常アイコン
-                iconUI.SetActive(true);     // 操作可能
                 iconUI.SetShowDescription(true); // 詳細表示可能
 
                 if (status.TotalCount > 0)
@@ -235,11 +234,12 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
                     // 所持している
                     iconUI.SetFrameColor(true); // 通常色 (利用可能数の有無に関わらず所持していれば色付き)
                     iconUI.SetAvailableCount(status.AvailableCount);
+                    iconUI.SetDrag(true);     // 操作可能
                     if (status.AvailableCount <= 0)
                     {
                         // 在庫なし（装備スロットが埋まっているなど）
                         // アイコンは色付きのまま（所持はしているため）
-                        iconUI.SetActive(false); // ドラッグ操作は不可
+                        iconUI.SetDrag(false); // ドラッグ操作は不可
                     }
                 }
                 else
@@ -247,7 +247,7 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
                     // アンロック済みだが所持していない
                     iconUI.SetFrameColor(false); // グレーアウト
                     iconUI.SetAvailableCount(-1); // 所持数非表示
-                    iconUI.SetActive(false); // ドラッグ操作不可
+                    iconUI.SetDrag(false); // ドラッグ操作不可
                 }
             }
             else
@@ -256,7 +256,7 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
                 iconUI.SetIcon(false);          // ロックアイコン
                 iconUI.SetFrameColor(false);    // グレーアウト
                 iconUI.SetAvailableCount(-1);   // 所持数非表示
-                iconUI.SetActive(false);        // 操作不可
+                iconUI.SetDrag(false);        // 操作不可
                 iconUI.SetShowDescription(false); // 詳細表示不可
                 // TODO: UIを「？」マークなどにする処理があれば追加
             }
@@ -380,7 +380,7 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
 
     [Header("--- Test Settings ---")]
     [SerializeField] private List<SpellBase> test_manualEquippedSpells = new List<SpellBase>();
-    
+
     [Tooltip("テスト用の所持状況データ。インスペクタで要素を追加して試せます")]
     [SerializeField] private List<TestHoldStatusData> test_manualHoldStatuses = new List<TestHoldStatusData>();
 
@@ -405,7 +405,7 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
         {
             statusList.Add(new SpellHoldStatus(data.type, data.isUnlocked, data.totalCount, data.equippedCount));
         }
-        
+
         SetHoldSpells(statusList.AsReadOnly());
         Debug.Log("<color=cyan>[Test]</color> 保持リストのテストデータを適用しました。");
     }
