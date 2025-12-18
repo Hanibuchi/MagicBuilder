@@ -67,6 +67,7 @@ MonoBehaviour:
   lockColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   disableMaterial: {fileID: 2100000, guid: c4b05297923c32544aad1a4b94c274e6, type: 2}
   lockSprite: {fileID: 21300000, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  dragStartClip: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
 --- !u!114 &1634923563139719074
 MonoBehaviour:
   m_ObjectHideFlags: 0

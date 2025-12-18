@@ -153,6 +153,8 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
 
     // --- ドラッグ処理の実装 ---
 
+    [SerializeField]
+    private AudioClip dragStartClip; // ドラッグ開始時に再生するAudioClip
     private bool _dropSuccess = false; // ドロップが成功したか
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -165,6 +167,9 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
             eventData.pointerDrag = null;
             return;
         }
+
+        if (SoundManager.Instance != null && dragStartClip != null)
+            SoundManager.Instance.PlaySE(dragStartClip);
 
         _dropSuccess = false;
 

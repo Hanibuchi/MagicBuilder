@@ -135,6 +135,7 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
     // UIが表示中かどうか
     public bool IsVisible { get; private set; } = false;
 
+    [SerializeField] AudioClip openClip;
     Action closeCallback;
     /// <summary>
     /// UIを表示するアニメーションを開始します
@@ -149,6 +150,7 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
         this.gameObject.SetActive(true); // オブジェクト自体をアクティブに
         animator.SetTrigger(OPEN_PARAM);
         animator.ResetTrigger(CLOSE_PARAM);
+        SoundManager.Instance?.PlaySE(openClip);
 
         // UIが開く際の最新データを反映
         if (_provider != null)
@@ -158,6 +160,7 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
         }
     }
 
+    [SerializeField] AudioClip closeClip;
     /// <summary>
     /// UIを閉じるアニメーションを開始します
     /// </summary>
@@ -169,6 +172,8 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
         IsVisible = false;
         animator.SetTrigger(CLOSE_PARAM);
         animator.ResetTrigger(OPEN_PARAM);
+
+        SoundManager.Instance?.PlaySE(closeClip);
     }
 
     /// <summary>
@@ -387,12 +392,20 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
         {
             _currentPage = newPage;
 
+            PlayChangePageSound();
             // アニメーションの実行
             PlayPageAnimation(direction);
 
             // UIの再構築
             RebuildHoldList();
         }
+    }
+
+    [SerializeField] AudioClip pageMoveInventorySound;
+    void PlayChangePageSound()
+    {
+        if (SoundManager.Instance != null && pageMoveInventorySound != null)
+            SoundManager.Instance.PlaySE(pageMoveInventorySound);
     }
 
     /// <summary>
@@ -431,8 +444,8 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
     /// </summary>
     public void NotifySpellDroppedOnEmptySlot(SpellBase droppedSpell, int targetSlotIndex)
     {
+        PlaySpellSetSound(droppedSpell);
         _provider.SetSpell(targetSlotIndex, droppedSpell);
-
         // Modelから変更通知が来て、UIが再構築されるのを待つ
     }
 
@@ -554,8 +567,21 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
 
     public void NotifySpellDroppedOnEquippedSlot(SpellBase droppedSpell, int targetSlotIndex)
     {
+        PlaySpellSetSound(droppedSpell);
         // 持ち込みスロット上に別の呪文UIがドロップされたとき（並び替え、または上書き）
         _provider.SetSpell(targetSlotIndex, droppedSpell);
+    }
+
+    void PlaySpellSetSound(SpellBase spellToAdd)
+    {
+        if (SoundManager.Instance != null && spellToAdd != null)
+        {
+            spellToAdd.GetDropSound(out AudioClip clip, out float volume);
+            if (clip != null)
+            {
+                SoundManager.Instance.PlaySE(clip, volume);
+            }
+        }
     }
 
     public void NotifyEquippedDragCanceled(int slotIndex)

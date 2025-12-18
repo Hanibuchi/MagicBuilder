@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class EquippedTrashAreaUI : MonoBehaviour, IDropHandler
 {
+    [SerializeField] private AudioClip dropSound;
     public void OnDrop(PointerEventData eventData)
     {
         // ドラッグされているアイコンを取得
@@ -17,11 +18,11 @@ public class EquippedTrashAreaUI : MonoBehaviour, IDropHandler
         if (draggedIcon != null && draggedIcon.IsEquippedSlot)
         {
             Debug.Log("[Trash] 装備解除を受理しました。");
-            
+            SoundManager.Instance?.PlaySE(dropSound);
             // アイコン側の「ドロップ成功時」の処理をキックする。
             // これにより、アイコン内部で NotifyEquippedSpellRemoved(index) が呼ばれ、
             // Controller 経由で Model/Manager のデータが削除される。
-            draggedIcon.NotifyDropSuccess(); 
+            draggedIcon.NotifyDropSuccess();
         }
     }
 }
