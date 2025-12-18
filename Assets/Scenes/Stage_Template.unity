@@ -1271,9 +1271,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: EquippedSpellController, Assembly-CSharp
-        m_MethodName: Test_ApplyAndSaveManualStatuses
+      - m_Target: {fileID: 827964234}
+        m_TargetAssemblyTypeName: StageManager, Assembly-CSharp
+        m_MethodName: NotifyBossDefeatedForClear
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

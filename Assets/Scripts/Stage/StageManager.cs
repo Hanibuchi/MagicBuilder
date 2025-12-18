@@ -471,8 +471,10 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         };
         Action onSpellChange = () =>
         {
+            if (clicked) return;
+            clicked = true;
             Debug.Log("呪文変更へ");
-            Time.timeScale = 1f; /* 呪文変更画面へ遷移 */
+            EquippedSpellController.Instance?.OpenSpellSelectionUI(() => { clicked = false; });
         };
 
         controller.SetupActions(onStageSelect, onRetry, onNextStage, onSpellChange);
