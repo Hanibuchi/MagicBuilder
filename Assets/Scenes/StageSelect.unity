@@ -14195,7 +14195,7 @@ GameObject:
   - component: {fileID: 6932502062571310691}
   - component: {fileID: 6932502062571310692}
   m_Layer: 5
-  m_Name: StageDetail
+  m_Name: StageInfoDisplayUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14382,7 +14382,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 70
+  m_SortingOrder: 50
   m_TargetDisplay: 0
 --- !u!1 &6315543181022161051
 GameObject:

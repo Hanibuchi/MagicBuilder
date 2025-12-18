@@ -170,7 +170,7 @@ public class StageSelectUI : MonoBehaviour
                 if (isUnlocked)// 1. 解放済みの場合
                 {
                     // StageButtonに識別子と表示名を設定
-                    stageButton.Setup(this, stageInfo.stageName, displayStageName, displaySubName);
+                    stageButton.Setup(this, stageInfo.stageName, displayStageName, stageInfo.subStageName, num);
                     Debug.Log($"latestReachedStageId: {latestReachedStageId}, entry: {entry}");
                     if (latestReachedStageId == entry)
                         // 最新到達ステージの次のステージであれば、NEW!マークを表示
@@ -187,7 +187,7 @@ public class StageSelectUI : MonoBehaviour
                     displaySubName = "???";
 
                     // StageButtonに識別子と表示名を設定
-                    stageButton.Setup(this, stageInfo.stageName, displayStageName, displaySubName);
+                    stageButton.Setup(this, stageInfo.stageName, displayStageName, displaySubName, num);
 
                     // ボタンを無効化
                     stageButton.DisableButton();
@@ -203,6 +203,41 @@ public class StageSelectUI : MonoBehaviour
                 Destroy(buttonObject); // 無効なオブジェクトを削除
             }
         }
+    }
+
+    private int currentShowingStageIndex = -1;
+
+    /// <summary>
+    /// ボタンが押された時に StageInfoDisplayUI を制御する
+    /// </summary>
+    public void HandleStageButtonClick(string identifier, int index)
+    {
+        Debug.Log($"HandleStageButtonClick: identifier={identifier}, index={index}");
+        if (StageInfoDisplayUI.Instance == null) return;
+
+        var stageInfo = StageStarter.Instance.GetStageInfoByName(identifier);
+        string islandName = islandStageMapConfig.GetIslandNameByID(currentSelectedIsland.islandID);
+
+        // すでに表示中の場合、アニメーションを判定
+        if (currentShowingStageIndex != -1)
+        {
+            if (index > currentShowingStageIndex)
+                StageInfoDisplayUI.Instance.PlayNextAnimation();
+            else if (index < currentShowingStageIndex)
+                StageInfoDisplayUI.Instance.PlayPrevAnimation();
+        }
+        Debug.Log($"HandleStageButtonClick: identifier={identifier}, index={index}");
+        // 情報の更新と表示
+        StageInfoDisplayUI.Instance.SetStageInfo(this, islandName, stageInfo.subStageName, identifier);
+        StageInfoDisplayUI.Instance.Open();
+
+        // 現在の状態を記録
+        currentShowingStageIndex = index;
+    }
+
+    public void OnStageInfoDisplayUIClosed()
+    {
+        currentShowingStageIndex = -1;
     }
 
     // --- アニメーションから呼び出すメソッド ---

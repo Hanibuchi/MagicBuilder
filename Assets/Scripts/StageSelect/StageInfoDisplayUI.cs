@@ -21,10 +21,12 @@ public class StageInfoDisplayUI : MonoBehaviour
     [SerializeField] private Animator rootAnimator;  // UI全体の開閉用 (Open/Close)
     [SerializeField] private Animator frameAnimator; // フレームのスライド用 (Next/Prev)
 
+    public static StageInfoDisplayUI Instance { get; private set; }
     private string currentStageIdentifier;
 
     private void Awake()
     {
+        Instance = this;
         // ボタンのイベントリスナー設定
         if (startButton != null)
             startButton.onClick.AddListener(OnStartButtonClicked);
@@ -34,13 +36,17 @@ public class StageInfoDisplayUI : MonoBehaviour
 
         if (closeButton != null)
             closeButton.onClick.AddListener(Close);
-    }
 
+        gameObject.SetActive(false);
+        close = true;
+    }
+    StageSelectUI stageSelectUI;
     /// <summary>
     /// ステージ情報をセットして表示を更新します。
     /// </summary>
-    public void SetStageInfo(string islandName, string stageSubName, string identifier)
+    public void SetStageInfo(StageSelectUI stageSelectUI, string islandName, string stageSubName, string identifier)
     {
+        this.stageSelectUI = stageSelectUI;
         currentStageIdentifier = identifier;
 
         if (islandNameText != null) islandNameText.text = islandName;
@@ -55,18 +61,15 @@ public class StageInfoDisplayUI : MonoBehaviour
     {
         if (!close) return;
         close = false;
+        gameObject.SetActive(true);
         if (rootAnimator != null)
         {
             rootAnimator.SetTrigger("Open");
             rootAnimator.ResetTrigger("Close");
         }
-        else
-        {
-            gameObject.SetActive(true);
-        }
     }
 
-    bool close = false;
+    [SerializeField] bool close = true;
     /// <summary>
     /// UIを閉じます。
     /// </summary>
@@ -83,6 +86,7 @@ public class StageInfoDisplayUI : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+        stageSelectUI.OnStageInfoDisplayUIClosed();
     }
 
     public void SetActiveFalse() // アニメーションから呼び出す用。
@@ -122,6 +126,7 @@ public class StageInfoDisplayUI : MonoBehaviour
         if (StageStarter.Instance != null)
         {
             StageStarter.Instance.StartStageByName(currentStageIdentifier);
+            stageSelectUI.OnIslandDeselected();
         }
         else
         {

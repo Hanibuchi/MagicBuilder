@@ -2,7 +2,7 @@
 
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 
 /// <summary>
 /// ステージ選択UIに表示される個々のステージボタンを管理するクラス。
@@ -21,16 +21,18 @@ public class StageButton : MonoBehaviour
     // 内部で保持するステージ情報
     private string stageIdentifier;
     StageSelectUI stageSelectUI;
+    private int stageIndex; // ステージの順番を保持
 
     /// <summary>
     /// ボタンにステージ情報を設定し、OnClickイベントを設定します。
     /// </summary>
     /// <param name="identifier">StageConfigに登録されているステージの識別名。</param>
     /// <param name="subName">UIに表示するサブステージ名。</param>
-    public void Setup(StageSelectUI stageSelectUI, string identifier, string displayName, string subName)
+    public void Setup(StageSelectUI stageSelectUI, string identifier, string displayName, string subName, int index)
     {
         this.stageSelectUI = stageSelectUI;
         stageIdentifier = identifier;
+        this.stageIndex = index; // インデックスを保持
 
         // UI表示名の設定
         if (stageNameText != null)
@@ -57,30 +59,18 @@ public class StageButton : MonoBehaviour
 
     [SerializeField] AudioClip clickSound;
     [SerializeField] float clickSoundVolume = 1.0f;
-    bool clicked = false;
     /// <summary>
     /// ステージボタンがクリックされたときに呼び出されます。
     /// </summary>
     private void OnStageSelected()
     {
-        if (clicked) return;
-        clicked = true;
 
-        // StageStarterのシングルトンインスタンスを通じてステージを開始
-        if (StageStarter.Instance != null)
+        if (stageSelectUI != null)
         {
             if (SoundManager.Instance != null && clickSound != null)
                 SoundManager.Instance.PlaySE(clickSound, clickSoundVolume);
 
-            Debug.Log($"ステージボタンクリック:  ({stageIdentifier})");
-            // StageStarterのメソッドを呼び出す
-            StageStarter.Instance.StartStageByName(stageIdentifier);
-            // ステージ開始後はステージ選択UIを閉じるなどの処理が必要に応じて追加される
-            stageSelectUI.OnIslandDeselected();
-        }
-        else
-        {
-            Debug.LogError("StageButton: StageStarter.Instanceが見つかりません！");
+            stageSelectUI.HandleStageButtonClick(stageIdentifier, stageIndex);
         }
     }
 
