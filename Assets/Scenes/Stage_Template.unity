@@ -1013,6 +1013,7 @@ MonoBehaviour:
   - {fileID: 8074706864468871309, guid: 95e94c8ca27f2094bb8c59fc3967c2e2, type: 3}
   - {fileID: 7411318191188818962, guid: baacb0141f097d54fa28889cc425ec3c, type: 3}
   - {fileID: 7885755934619046866, guid: f30f37d42814f2c43bb4ccdd254902d8, type: 3}
+  - {fileID: 2052082803983599290, guid: 604c1c26469ad3047a1533afde673226, type: 3}
   playerPrefab: {fileID: 5255534377115560913, guid: 864d69398cbad294a89daf01f91bb0a9, type: 3}
   playerSpawnPoint: {fileID: 1008364732}
   enemySpawnPoint: {fileID: 1899820376}
@@ -1270,7 +1271,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2042060998}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: EquippedSpellController, Assembly-CSharp
         m_MethodName: Test_ApplyAndSaveManualStatuses
         m_Mode: 1
@@ -1748,7 +1749,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2042060998}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: EquippedSpellController, Assembly-CSharp
         m_MethodName: Test_Open
         m_Mode: 1
@@ -2141,70 +2142,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2137911057}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2042060997
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2042060999}
-  - component: {fileID: 2042060998}
-  m_Layer: 0
-  m_Name: TestSpellEquipmentController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2042060998
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2042060997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b5f436ca4e67d244b8ba71118ebfacd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _selectionUI: {fileID: 0}
-  _selectionUIPrefab: {fileID: 121772102371822345, guid: 2eb37982de331964bb4b91d4daa760dd, type: 3}
-  test_canAffordUpgrade: 1
-  test_manualHoldStatuses:
-  - type: 1
-    isUnlocked: 1
-    totalCount: 3
-    equippedCount: 0
-  - type: 2
-    isUnlocked: 1
-    totalCount: 2
-    equippedCount: 0
-  - type: 3
-    isUnlocked: 0
-    totalCount: 1
-    equippedCount: 0
-  - type: 4
-    isUnlocked: 1
-    totalCount: 0
-    equippedCount: 0
---- !u!4 &2042060999
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2042060997}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2137911056
@@ -4225,4 +4162,3 @@ SceneRoots:
   - {fileID: 1282764341}
   - {fileID: 1401790249987251728}
   - {fileID: 648184871}
-  - {fileID: 2042060999}

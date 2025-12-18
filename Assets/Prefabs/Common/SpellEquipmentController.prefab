@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2052082803983599290
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1547684051152487569}
+  - component: {fileID: 179408103072522459}
+  m_Layer: 0
+  m_Name: SpellEquipmentController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1547684051152487569
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2052082803983599290}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &179408103072522459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2052082803983599290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b5f436ca4e67d244b8ba71118ebfacd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _selectionUIPrefab: {fileID: 121772102371822345, guid: 2eb37982de331964bb4b91d4daa760dd, type: 3}
+  test_canAffordUpgrade: 1
+  test_manualHoldStatuses:
+  - type: 1
+    isUnlocked: 1
+    totalCount: 3
+    equippedCount: 0
+  - type: 2
+    isUnlocked: 1
+    totalCount: 2
+    equippedCount: 0
+  - type: 3
+    isUnlocked: 0
+    totalCount: 1
+    equippedCount: 0
+  - type: 4
+    isUnlocked: 1
+    totalCount: 0
+    equippedCount: 0

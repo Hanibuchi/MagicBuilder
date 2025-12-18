@@ -26,7 +26,7 @@ public class EquippedSpellController : MonoBehaviour,
     }
 
     // --- 参照 ---
-    [SerializeField] private EquippedSpellSelectionUI _selectionUI;
+    EquippedSpellSelectionUI _selectionUI;
 
     private void Awake()
     {
