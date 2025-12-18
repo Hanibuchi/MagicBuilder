@@ -373,6 +373,10 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
         Debug.Log($"[Controller] Hold List Rebuilt. Page: {_currentPage}/{_totalPages}");
     }
 
+    [Header("ページ切り替えアニメーション")]
+    [SerializeField] private Animator pageAnimator; // ページ専用のアニメーター
+    [SerializeField] private string nextTriggerName = "Next"; // 次へ移動する時のトリガー
+    [SerializeField] private string prevTriggerName = "Prev"; // 前へ移動する時のトリガー
     /// <summary>
     /// ページ切り替え処理を実行します。
     /// </summary>
@@ -382,7 +386,30 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
         if (newPage != _currentPage)
         {
             _currentPage = newPage;
+
+            // アニメーションの実行
+            PlayPageAnimation(direction);
+
+            // UIの再構築
             RebuildHoldList();
+        }
+    }
+
+    /// <summary>
+    /// ページ移動方向に合わせたアニメーションを再生します
+    /// </summary>
+    /// <param name="direction">1なら次へ(Next), -1なら前へ(Prev)</param>
+    private void PlayPageAnimation(int direction)
+    {
+        if (pageAnimator == null) return;
+
+        if (direction > 0)
+        {
+            pageAnimator.SetTrigger(nextTriggerName);
+        }
+        else if (direction < 0)
+        {
+            pageAnimator.SetTrigger(prevTriggerName);
         }
     }
 
