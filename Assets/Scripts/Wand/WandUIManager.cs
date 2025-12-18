@@ -26,11 +26,13 @@ public class WandUIManager : MonoBehaviour
         {
             Instance = this;
             // シーンをまたいで保持する場合はDontDestroyOnLoad(gameObject);
+            transform.root.gameObject.SetActive(false);
         }
         else
         {
             Destroy(gameObject);
         }
+
     }
 
     /// <summary>
@@ -215,6 +217,10 @@ public class WandUIManager : MonoBehaviour
         Debug.Log($"杖切り替えUIを更新: 現在のIndex={newIndex}, Next={canSwitchNext}, Prev={canSwitchPrev}");
     }
 
+    public void Show()
+    {
+        transform.root.gameObject.SetActive(true);
+    }
     const string HIDE_TRIGGER = "Hide";
     [SerializeField] Animator animator;
     public void Hide()

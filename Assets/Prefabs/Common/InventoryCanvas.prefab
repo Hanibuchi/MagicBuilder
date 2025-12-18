@@ -230,9 +230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxInventoryCount: 30
-  availableSpells:
-  - {fileID: 11400000, guid: 6c9d9dfe2f68e9144b91bb04a7bd8513, type: 2}
-  - {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
+  availableSpells: []
   inventoryFrame: {fileID: 5308265045261281070}
   inventoryUI: {fileID: 8516619836412742917}
   gridLayout: {fileID: 8890868334795652976}

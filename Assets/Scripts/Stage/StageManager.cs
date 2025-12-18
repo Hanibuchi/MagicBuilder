@@ -193,6 +193,7 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         uiController.SetAction(StartGameImmediately);
         Debug.Log($"クリア条件UI ({clearCondition}) をInstantiateしました。");
     }
+
     [Header("開始時演出設定")]
     [Tooltip("持ち込み呪文がインベントリに入る間隔（秒）")]
     [SerializeField] private float spellDropInterval = 0.5f;
@@ -204,6 +205,8 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
     /// </summary>
     private void StartGameImmediately()
     {
+        WandUIManager.Instance.Show();
+        SpellInventory.Instance.Show();
         // 直接 StartPhase を呼ばず、呪文投入演出のコルーチンを開始する
         StartCoroutine(EquipSpellsSequenceRoutine());
     }
@@ -213,6 +216,7 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
     /// </summary>
     private IEnumerator EquipSpellsSequenceRoutine()
     {
+        yield return new WaitForSeconds(spellDropInterval);
         // 1. 持ち込み呪文のリストを取得
         var equippedSpells = EquippedSpellManager.Instance.GetEquippedSpells();
 

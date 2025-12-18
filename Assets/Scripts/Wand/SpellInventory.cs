@@ -26,6 +26,7 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         {
             Instance = this;
             // シーンをまたいで保持する場合はDontDestroyOnLoad(gameObject);
+            transform.root.gameObject.SetActive(false);
         }
         else
         {
@@ -37,7 +38,7 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
     void Start()
     {
         // デバッグ用。本番では変更する。
-        availableSpells = SpellDatabase.Instance.allSpells.Select(e => e.spellAsset).ToList();
+        // availableSpells = SpellDatabase.Instance.allSpells.Select(e => e.spellAsset).ToList();
 
         // 初期位置を最小Y座標として保存
         inventoryUIPosY_Min = inventoryUI.anchoredPosition.y;
@@ -429,6 +430,10 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(uiCamera, uiWorldPosition);
 
         return screenPoint;
+    }
+    public void Show()
+    {
+        transform.root.gameObject.SetActive(true);
     }
 
     const string HIDE_TRIGGER = "Hide";
