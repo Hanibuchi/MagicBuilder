@@ -69,6 +69,16 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
     [Header("容量拡張UI")]
     [SerializeField] private Button increaseCapacityButton;
 
+    [Header("装備解除（ゴミ箱）設定")]
+    [SerializeField] private EquippedTrashAreaUI trashArea;
+    void SetTrashArea(bool active)
+    {
+        if (trashArea != null)
+            trashArea.gameObject.SetActive(active);
+        else
+            Debug.LogError("trashArea is not assigned.");
+    }
+
     // --- Unity イベント関数 ---
 
     private void Start()
@@ -93,6 +103,7 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
         _allSpellStatuses = _provider.GetAllSpellStatuses();
         _currentEquippedSpells = _provider.GetCurrentEquippedSpells();
 
+        SetTrashArea(false);
         RebuildHoldList();
         RebuildEquippedSlots();
     }
@@ -346,8 +357,8 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
         // 持ち込みスロットからのドラッグ開始（並び替え・解除）
         _draggedSpellData = draggedSpell;
         _draggedFromSlotIndex = fromSlotIndex;
-        // ドラッグ開始と同時に、元のスロットを空スロットにする
-        // _provider.RemoveSpell(fromSlotIndex);
+
+        SetTrashArea(true);
     }
 
     // --- 指定したインデックスのスロットを空にするメソッド ---
@@ -459,8 +470,8 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
         // UIが元の状態に戻るように再構築を要求
         Debug.Log($"[Controller] Equipped Drag Canceled from slot {slotIndex}. Rebuilding Equipped Slots...");
         RebuildEquippedSlots();
-        // **注意**: EquippedSpellIconUI.CheckDropResultAndCleanUp() で親を EquippedSlotParent に戻す処理がないため、
-        // ここで再構築全体を行うことで、親の再設定とUIの復元を強制します。
+
+        SetTrashArea(false);
     }
 
     public void NotifyHoldListDragCanceled(SpellBase draggedSpell)
@@ -469,8 +480,6 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
         // UIが元の状態に戻るように再構築を要求
         Debug.Log($"[Controller] Hold List Drag Canceled for {draggedSpell.spellName}. Rebuilding Hold List...");
         RebuildHoldList();
-        // **注意**: EquippedSpellIconUI.CheckDropResultAndCleanUp() で親を HoldListContentParent に戻す処理がないため、
-        // ここで再構築全体を行うことで、親の再設定とUIの復元を強制します。
     }
 
     public void NotifyEquippedSpellRemoved(int slotIndex)
@@ -478,6 +487,8 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
         // 呪文UIがドロップに成功し、持ち込みスロットから呪文が抜き取られたことを通知
         // (空スロット/別のスロットにドロップされた際、EquippedSpellIconUI側で呼ばれる)
         _provider.RemoveSpell(slotIndex);
+
+        SetTrashArea(false);
 
         // ドラッグ状態をリセット (重要)
         _draggedSpellData = null;

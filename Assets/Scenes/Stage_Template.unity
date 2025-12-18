@@ -1763,6 +1763,7 @@ MonoBehaviour:
   spellsPerPage: 16
   emptySlotUIPrefab: {fileID: 3837778128026960708, guid: ed9cbcd2aca24e14e92694a164dc2c00, type: 3}
   increaseCapacityButton: {fileID: 170341521721145619}
+  trashArea: {fileID: 179687439}
   test_manualEquippedSpells:
   - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
   - {fileID: 11400000, guid: 6c9d9dfe2f68e9144b91bb04a7bd8513, type: 2}
