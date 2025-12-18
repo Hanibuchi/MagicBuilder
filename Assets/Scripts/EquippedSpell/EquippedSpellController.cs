@@ -144,6 +144,45 @@ public class EquippedSpellController : MonoBehaviour,
         return test_canAffordUpgrade;
     }
 
+    [Header("UI 生成設定")]
+    [Tooltip("UIのプレハブを割り当ててください")]
+    [SerializeField] private EquippedSpellSelectionUI _selectionUIPrefab;
+
+    /// <summary>
+    /// UIを生成（未生成の場合）し、Openアニメーションを再生します。
+    /// </summary>
+    public void OpenSpellSelectionUI(System.Action onCloseCallback = null)
+    {
+        // 1. UIがまだ生成されていなければ生成する
+        if (_selectionUI == null)
+        {
+            if (_selectionUIPrefab == null)
+            {
+                Debug.LogError("[Controller] SelectionUI Prefab がインスペクタで設定されていません。");
+                return;
+            }
+
+            // プレハブからインスタンス化
+            _selectionUI = Instantiate(_selectionUIPrefab);
+
+            // UIの初期化（Providerとして自身を渡す）
+            _selectionUI.Init(this);
+        }
+
+        // 2. Openメソッドを呼び出す
+        _selectionUI?.Open(onCloseCallback);
+
+        Debug.Log("<color=cyan>[Controller]</color> 呪文選択UIを開きました。");
+    }
+
+    /// <summary>
+    /// UIを閉じる処理
+    /// </summary>
+    public void CloseSpellSelectionUI()
+    {
+        _selectionUI?.Close();
+    }
+
 
 
     // --- デバッグ・テスト用機能 ---
@@ -210,5 +249,10 @@ public class EquippedSpellController : MonoBehaviour,
     {
         PlayerPrefs.DeleteAll();
         Debug.Log("<color=red>[Test]</color> PlayerPrefsを全削除しました。再起動が必要です。");
+    }
+
+    public void Test_Open()
+    {
+        OpenSpellSelectionUI();
     }
 }

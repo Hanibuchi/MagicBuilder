@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using System;
 
 /// <summary>
 /// 持ち込み呪文選択画面のUI全体を管理するコントローラークラス。
@@ -81,6 +82,22 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
 
     // --- Unity イベント関数 ---
 
+    // --- シングルトン実装 ---
+    public static EquippedSpellSelectionUI Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Start()
     {
         // ページ切り替えボタンのリスナー登録
@@ -111,7 +128,57 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
 
 
 
+    [Header("アニメーション設定")]
+    [SerializeField] private Animator animator;
+    static string OPEN_PARAM = "Open";
+    static string CLOSE_PARAM = "Close";
+    // UIが表示中かどうか
+    public bool IsVisible { get; private set; } = false;
 
+    Action closeCallback;
+    /// <summary>
+    /// UIを表示するアニメーションを開始します
+    /// </summary>
+    public void Open(Action callback)
+    {
+        if (animator == null) return;
+        closeCallback = callback;
+
+        if (IsVisible) return;
+        IsVisible = true;
+        this.gameObject.SetActive(true); // オブジェクト自体をアクティブに
+        animator.SetTrigger(OPEN_PARAM);
+        animator.ResetTrigger(CLOSE_PARAM);
+
+        // UIが開く際の最新データを反映
+        if (_provider != null)
+        {
+            SetHoldSpells(_provider.GetAllSpellStatuses());
+            SetEquippedSpells(_provider.GetCurrentEquippedSpells());
+        }
+    }
+
+    /// <summary>
+    /// UIを閉じるアニメーションを開始します
+    /// </summary>
+    public void Close()
+    {
+        if (animator == null) return;
+        if (!IsVisible) return;
+
+        IsVisible = false;
+        animator.SetTrigger(CLOSE_PARAM);
+        animator.ResetTrigger(OPEN_PARAM);
+    }
+
+    /// <summary>
+    /// アニメーションイベントから呼ばれることを想定した非アクティブ化メソッド
+    /// </summary>
+    public void OnCloseAnimationComplete()
+    {
+        this.gameObject.SetActive(false);
+        closeCallback?.Invoke();
+    }
 
 
 
