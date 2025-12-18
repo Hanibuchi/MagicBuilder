@@ -302,6 +302,9 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
         if (!drag)
             DestroyIconUI();
 
+
+        UpdateSpellsPerPage();
+
         // フィルタリングとソート
         var sortedStatuses = _allSpellStatuses
             .Where(s => s.Type != SpellType.None) // Noneタイプを除外
@@ -377,6 +380,56 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
         }
         Debug.Log($"[Controller] Hold List Rebuilt. Page: {_currentPage}/{_totalPages}");
     }
+
+
+    [Header("Layout Reference")]
+    [Tooltip("保持リストのレイアウト設定を取得するためのGridLayoutGroup")]
+    [SerializeField] private GridLayoutGroup holdListGridLayout;
+
+    // --- 内部メソッドの追加 ---
+
+    /// <summary>
+    /// GridLayoutGroupの設定とRectTransformのサイズから、1ページに収まる要素数を計算します。
+    /// </summary>
+    private void UpdateSpellsPerPage()
+    {
+        if (holdListGridLayout == null || holdListContentParent == null)
+        {
+            Debug.LogWarning("GridLayoutGroup or Parent RectTransform is not assigned.");
+            return;
+        }
+
+        // 親（Content）のサイズを取得
+        // CanvasUpdateを待たないとサイズが0の場合があるため、正確を期すならLayoutRebuilder等が必要な場合があります
+        Rect parentRect = holdListContentParent.rect;
+
+        // セルサイズと間隔を取得
+        Vector2 cellSize = holdListGridLayout.cellSize;
+        Vector2 spacing = holdListGridLayout.spacing;
+        RectOffset padding = holdListGridLayout.padding;
+
+        // 利用可能な幅と高さ（パディングを除く）
+        float availableWidth = parentRect.width - padding.left - padding.right;
+        float availableHeight = parentRect.height - padding.top - padding.bottom;
+
+        // 横に何個並ぶか
+        // (Width + spacing.x) / (cellSize.x + spacing.x) で計算
+        int columns = Mathf.FloorToInt((availableWidth + spacing.x) / (cellSize.x + spacing.x));
+
+        // 縦に何個並ぶか
+        int rows = Mathf.FloorToInt((availableHeight + spacing.y) / (cellSize.y + spacing.y));
+
+        // 0にならないようガード
+        columns = Mathf.Max(1, columns);
+        rows = Mathf.Max(1, rows);
+
+        // 新しいページあたりの表示数を設定
+        spellsPerPage = columns * rows;
+
+        Debug.Log($"[DynamicLayout] Columns: {columns}, Rows: {rows}, SpellsPerPage: {spellsPerPage}");
+    }
+
+
 
     [Header("ページ切り替えアニメーション")]
     [SerializeField] private Animator pageAnimator; // ページ専用のアニメーター
