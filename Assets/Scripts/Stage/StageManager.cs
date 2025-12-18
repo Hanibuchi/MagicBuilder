@@ -193,17 +193,59 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         uiController.SetAction(StartGameImmediately);
         Debug.Log($"クリア条件UI ({clearCondition}) をInstantiateしました。");
     }
-
+    [Header("開始時演出設定")]
+    [Tooltip("持ち込み呪文がインベントリに入る間隔（秒）")]
+    [SerializeField] private float spellDropInterval = 0.5f;
+    [Tooltip("最後の呪文が投入されてから敵の生成を開始するまでの予備待機時間")]
+    [SerializeField] private float postDropWaitTime = 1.0f;
     [SerializeField] AudioClip bGM;
     /// <summary>
     /// UI表示なし、またはUIが閉じられた後に実行される、実際のゲーム開始処理。
     /// </summary>
     private void StartGameImmediately()
     {
+        // 直接 StartPhase を呼ばず、呪文投入演出のコルーチンを開始する
+        StartCoroutine(EquipSpellsSequenceRoutine());
+    }
+
+    /// <summary>
+    /// 持ち込み呪文を一つずつインベントリに飛ばし、完了後にフェーズを開始するコルーチン
+    /// </summary>
+    private IEnumerator EquipSpellsSequenceRoutine()
+    {
+        // 1. 持ち込み呪文のリストを取得
+        var equippedSpells = EquippedSpellManager.Instance.GetEquippedSpells();
+
+        // プレイヤーのTransformを取得
+        Transform playerTransform = PlayerController.Instance.transform;
+
+        if (equippedSpells != null && equippedSpells.Count > 0)
+        {
+            Debug.Log($"{equippedSpells.Count} 個の持ち込み呪文を投入します。");
+
+            foreach (var spell in equippedSpells)
+            {
+                // 空スロット(null)はスキップ
+                if (spell == null) continue;
+
+                // SpellDropManager を通じて呪文を飛ばす
+                // 開始地点は PlayerController の position
+                SpellDropManager.Instance.DropSpell(playerTransform.position, spell);
+
+                // 設定された間隔だけ待機
+                yield return new WaitForSeconds(spellDropInterval);
+            }
+
+            // 全ての呪文を飛ばし終えた後、アニメーションが落ち着くまで少し待つ
+            yield return new WaitForSeconds(postDropWaitTime);
+        }
+
+        // 2. 演出完了後にフェーズ（敵の出現）を開始
+        Debug.Log("呪文投入演出が完了しました。敵のフェーズを開始します。");
+
         Debug.Log("ゲーム開始処理を実行します。");
         GameTimerManager.Instance.StartTimer();
         StartPhase();
-
         if (SoundManager.Instance != null && bGM != null)
             SoundManager.Instance.PlayBGM(bGM);
     }

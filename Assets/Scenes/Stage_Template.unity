@@ -1022,6 +1022,8 @@ MonoBehaviour:
   - condition: 1
     uiPrefab: {fileID: 7289494422299341494, guid: f66165da31057784a9b01d08f0e85d66, type: 3}
   startDelayTime: 1
+  spellDropInterval: 0.5
+  postDropWaitTime: 1
   bGM: {fileID: 8300000, guid: a22f9bc6792cd124d8e50f8495aeb072, type: 3}
   stageListConfig: {fileID: 11400000, guid: a913743c035d39741b49b95e008dd19b, type: 2}
   clearDelaySeconds: 2
@@ -1270,7 +1272,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2042060998}
         m_TargetAssemblyTypeName: EquippedSpellController, Assembly-CSharp
-        m_MethodName: Test_Open
+        m_MethodName: Test_ApplyAndSaveManualStatuses
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1748,7 +1750,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2042060998}
         m_TargetAssemblyTypeName: EquippedSpellController, Assembly-CSharp
-        m_MethodName: CloseSpellSelectionUI
+        m_MethodName: Test_Open
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
