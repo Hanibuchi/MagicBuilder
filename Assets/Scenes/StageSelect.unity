@@ -1260,7 +1260,7 @@ MonoBehaviour:
   - {fileID: 1198788033}
   - {fileID: 2078653050}
   - {fileID: 1186609816}
-  islandSelectSound: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
+  islandSelectSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
   islandSelectSoundVolume: 1
 --- !u!114 &826938148
 MonoBehaviour:
@@ -14753,6 +14753,8 @@ MonoBehaviour:
   closeButton: {fileID: 502537561}
   rootAnimator: {fileID: 6932502062571310691}
   frameAnimator: {fileID: 5534663146621634103}
+  closeSound: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
+  stageStartSound: {fileID: 8300000, guid: 2667a0a008b044e218b63df62e2be749, type: 3}
 --- !u!114 &7081373662631467313
 MonoBehaviour:
   m_ObjectHideFlags: 0

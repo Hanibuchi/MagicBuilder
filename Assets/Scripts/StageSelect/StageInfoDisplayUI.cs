@@ -69,7 +69,8 @@ public class StageInfoDisplayUI : MonoBehaviour
         }
     }
 
-    [SerializeField] bool close = true;
+    bool close = true;
+    [SerializeField] AudioClip closeSound;
     /// <summary>
     /// UIを閉じます。
     /// </summary>
@@ -77,6 +78,10 @@ public class StageInfoDisplayUI : MonoBehaviour
     {
         if (close) return;
         close = true;
+
+        if (SoundManager.Instance != null && closeSound != null)
+            SoundManager.Instance.PlaySE(closeSound);
+
         if (rootAnimator != null)
         {
             rootAnimator.SetTrigger("Close");
@@ -112,6 +117,7 @@ public class StageInfoDisplayUI : MonoBehaviour
             frameAnimator.SetTrigger("Prev");
     }
 
+    [SerializeField] AudioClip stageStartSound;
     bool stageStartClicked = false;
     /// <summary>
     /// ステージ開始ボタンが押された時の処理
@@ -121,6 +127,9 @@ public class StageInfoDisplayUI : MonoBehaviour
         if (stageStartClicked) return;
         stageStartClicked = true;
         if (string.IsNullOrEmpty(currentStageIdentifier)) return;
+
+        if (SoundManager.Instance != null && stageStartSound != null)
+            SoundManager.Instance.PlaySE(stageStartSound);
 
         // StageStarterを利用してステージを開始
         if (StageStarter.Instance != null)
