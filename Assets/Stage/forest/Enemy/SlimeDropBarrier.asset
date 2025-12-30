@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
   customDroppableSpells:
-  - spellData: {fileID: 11400000, guid: 6c9d9dfe2f68e9144b91bb04a7bd8513, type: 2}
+  - spellData: {fileID: 11400000, guid: 0d95613ceee16444aa8e41b156d25c40, type: 2}
     dropChance: 1
