@@ -238,85 +238,85 @@ public class SpellHoldInfoManager : MonoBehaviour
 
     // SpellHoldInfoManager.cs 内に追記
 
-    [Header("--- デバッグ/テスト用設定 ---")]
-    [Tooltip("テスト対象とする呪文の SpellType")]
-    public SpellType test_targetSpellType = SpellType.ExampleSpell;
+    // [Header("--- デバッグ/テスト用設定 ---")]
+    // [Tooltip("テスト対象とする呪文の SpellType")]
+    // public SpellType test_targetSpellType = SpellType.ExampleSpell;
 
-    [Tooltip("保持数を増減させる量")]
-    public int test_countChangeAmount = 1;
+    // [Tooltip("保持数を増減させる量")]
+    // public int test_countChangeAmount = 1;
 
 
     // ----------------------------------------------------------------------------------
     // デバッグ/テスト用メソッド (Buttonから呼び出し可能)
     // ----------------------------------------------------------------------------------
 
-    /// <summary>
-    /// 現在の保持数と開放状態をログに出力します。
-    /// </summary>
-    public void Test_LogCurrentStatus()
-    {
-        int count = GetSpellCount(test_targetSpellType);
-        bool unlocked = IsSpellUnlocked(test_targetSpellType);
+    // /// <summary>
+    // /// 現在の保持数と開放状態をログに出力します。
+    // /// </summary>
+    // public void Test_LogCurrentStatus()
+    // {
+    //     int count = GetSpellCount(test_targetSpellType);
+    //     bool unlocked = IsSpellUnlocked(test_targetSpellType);
 
-        Debug.Log($"<color=cyan>[SpellHoldInfoManager Test]</color> " +
-                  $"Target: **{test_targetSpellType}**\n" +
-                  $"- 保持数: {count}\n" +
-                  $"- 開放済み: {unlocked}");
-    }
+    //     Debug.Log($"<color=cyan>[SpellHoldInfoManager Test]</color> " +
+    //               $"Target: **{test_targetSpellType}**\n" +
+    //               $"- 保持数: {count}\n" +
+    //               $"- 開放済み: {unlocked}");
+    // }
 
-    /// <summary>
-    /// test_targetSpellType の保持数を test_countChangeAmount だけ増やします。
-    /// </summary>
-    public void Test_IncreaseSpellCount()
-    {
-        for (int i = 0; i < test_countChangeAmount; i++)
-        {
-            IncreaseSpellCount(test_targetSpellType);
-        }
-        Debug.Log($"<color=lime>[SpellHoldInfoManager Test]</color> " +
-                  $"**{test_targetSpellType}** の保持数を {test_countChangeAmount} 増やしました。現在の数: {GetSpellCount(test_targetSpellType)}");
-    }
+    // /// <summary>
+    // /// test_targetSpellType の保持数を test_countChangeAmount だけ増やします。
+    // /// </summary>
+    // public void Test_IncreaseSpellCount()
+    // {
+    //     for (int i = 0; i < test_countChangeAmount; i++)
+    //     {
+    //         IncreaseSpellCount(test_targetSpellType);
+    //     }
+    //     Debug.Log($"<color=lime>[SpellHoldInfoManager Test]</color> " +
+    //               $"**{test_targetSpellType}** の保持数を {test_countChangeAmount} 増やしました。現在の数: {GetSpellCount(test_targetSpellType)}");
+    // }
 
-    /// <summary>
-    /// test_targetSpellType の保持数を test_countChangeAmount だけ減らします。
-    /// </summary>
-    public void Test_DecreaseSpellCount()
-    {
-        int successfulDecrements = 0;
-        for (int i = 0; i < test_countChangeAmount; i++)
-        {
-            if (DecreaseSpellCount(test_targetSpellType))
-            {
-                successfulDecrements++;
-            }
-        }
-        Debug.Log($"<color=yellow>[SpellHoldInfoManager Test]</color> " +
-                  $"**{test_targetSpellType}** の保持数を {successfulDecrements} 減らしました。現在の数: {GetSpellCount(test_targetSpellType)}");
-    }
+    // /// <summary>
+    // /// test_targetSpellType の保持数を test_countChangeAmount だけ減らします。
+    // /// </summary>
+    // public void Test_DecreaseSpellCount()
+    // {
+    //     int successfulDecrements = 0;
+    //     for (int i = 0; i < test_countChangeAmount; i++)
+    //     {
+    //         if (DecreaseSpellCount(test_targetSpellType))
+    //         {
+    //             successfulDecrements++;
+    //         }
+    //     }
+    //     Debug.Log($"<color=yellow>[SpellHoldInfoManager Test]</color> " +
+    //               $"**{test_targetSpellType}** の保持数を {successfulDecrements} 減らしました。現在の数: {GetSpellCount(test_targetSpellType)}");
+    // }
 
-    /// <summary>
-    /// test_targetSpellType を開放済みにします。
-    /// </summary>
-    public void Test_UnlockSpell()
-    {
-        UnlockSpell(test_targetSpellType);
-        Debug.Log($"<color=lime>[SpellHoldInfoManager Test]</color> " +
-                  $"**{test_targetSpellType}** を強制的に開放済みにしました。状態: {IsSpellUnlocked(test_targetSpellType)}");
-    }
+    // /// <summary>
+    // /// test_targetSpellType を開放済みにします。
+    // /// </summary>
+    // public void Test_UnlockSpell()
+    // {
+    //     UnlockSpell(test_targetSpellType);
+    //     Debug.Log($"<color=lime>[SpellHoldInfoManager Test]</color> " +
+    //               $"**{test_targetSpellType}** を強制的に開放済みにしました。状態: {IsSpellUnlocked(test_targetSpellType)}");
+    // }
 
-    /// <summary>
-    /// PlayerPrefs の全データを削除し、Managerをリロードします。
-    /// </summary>
-    public void Test_ResetAllDataAndReload()
-    {
-        PlayerPrefs.DeleteAll();
-        // Unityエディタでテストする場合、再初期化のために一度オブジェクトを破棄してからインスタンスを再取得するのが確実です。
-        // シーン内に SpellHoldInfoManager の GameObject があることを前提とします。
-        Destroy(gameObject);
+    // /// <summary>
+    // /// PlayerPrefs の全データを削除し、Managerをリロードします。
+    // /// </summary>
+    // public void Test_ResetAllDataAndReload()
+    // {
+    //     PlayerPrefs.DeleteAll();
+    //     // Unityエディタでテストする場合、再初期化のために一度オブジェクトを破棄してからインスタンスを再取得するのが確実です。
+    //     // シーン内に SpellHoldInfoManager の GameObject があることを前提とします。
+    //     Destroy(gameObject);
 
-        // 次にアクセスしたときにシングルトンが再構築されます（ゲーム実行中のみ有効）
-        Debug.Log("<color=red>[SpellHoldInfoManager Test]</color> **全データ削除**しました。ゲームを再起動するか、手動で次のアクセスをトリガーしてください。");
-    }
+    //     // 次にアクセスしたときにシングルトンが再構築されます（ゲーム実行中のみ有効）
+    //     Debug.Log("<color=red>[SpellHoldInfoManager Test]</color> **全データ削除**しました。ゲームを再起動するか、手動で次のアクセスをトリガーしてください。");
+    // }
 }
 
 /// <summary>

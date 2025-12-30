@@ -370,6 +370,13 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         // 1. データリストに追加
         availableSpells.Add(spellToAdd);
 
+        // 呪文の保持情報を更新（未開放なら開放する）
+        SpellType type = SpellDatabase.Instance.GetSpellType(spellToAdd);
+        if (type != SpellType.None)
+        {
+            SpellHoldInfoManager.Instance.UnlockSpell(type);
+        }
+
         if (SoundManager.Instance != null)
         {
             spellToAdd.GetDropSound(out AudioClip clip, out float volume);
