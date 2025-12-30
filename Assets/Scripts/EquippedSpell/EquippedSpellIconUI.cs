@@ -258,6 +258,7 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
     /// </summary>
     public void OnPointerClick(PointerEventData eventData)
     {
+        // Debug.Log($"[EquippedSpellIconUI on {gameObject.name}] Pointer clicked., showDescription={showDescription}, eventData.dragging={eventData.dragging}");
         // SpellBaseデータがない、またはドラッグ操作の場合は何もしない
         if (_spellData == null || eventData.dragging || !showDescription) return;
 
