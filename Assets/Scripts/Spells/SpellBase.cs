@@ -16,6 +16,10 @@ public abstract class SpellBase : ScriptableObject
     [Tooltip("この呪文のゲーム内での表示名")]
     public string spellName = "未定義の呪文";
 
+    [Header("購入設定")]
+    [Tooltip("保有数ごとの購入コスト。インデックスが保有数に対応します。")]
+    public int[] purchaseCosts = new int[] { 100, 200, 400, 800 };
+
     /// <summary>
     /// 補助線（軌道予測）を表示するためのロジックを定義します。
     /// 処理内容: 発射角度と強さ、重力に基づいて軌道を計算し、プレハブを生成します。

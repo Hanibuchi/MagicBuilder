@@ -36,7 +36,7 @@ public class SpellDescriptionUI : MonoBehaviour, IPointerClickHandler
     [Tooltip("詳細説明パネルのアニメーターコンポーネント")]
     [SerializeField] private Animator panelAnimator;
 
-    private SpellBase currentlyDisplayedSpell = null;
+    protected SpellBase currentlyDisplayedSpell = null;
     private List<GameObject> activeDetailItems = new List<GameObject>();
     // 現在表示されているドロップUIのGameObjectを保持するためのフィールドを追加
     private GameObject currentDropUI = null;
@@ -44,7 +44,7 @@ public class SpellDescriptionUI : MonoBehaviour, IPointerClickHandler
     private bool isShow = false;
 
     private float timeScale = 1f;
-    private void Awake()
+    protected virtual void Awake()
     {
         if (Instance == null)
         {
@@ -71,7 +71,7 @@ public class SpellDescriptionUI : MonoBehaviour, IPointerClickHandler
     /// 指定されたSpellBaseの詳細説明パネルを表示します。
     /// </summary>
     /// <param name="spell">表示するSpellBaseインスタンス。</param>
-    public void StartShowAnimation(SpellBase spell)
+    public virtual void StartShowAnimation(SpellBase spell)
     {
         if (currentlyDisplayedSpell == spell) return;
         if (spell == null)
