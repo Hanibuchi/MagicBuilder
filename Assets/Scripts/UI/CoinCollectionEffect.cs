@@ -34,6 +34,13 @@ public class CoinCollectionEffect : MonoBehaviour
     [SerializeField, Tooltip("一度に生成される最大コイン数")]
     private int maxCoinCount = 20;
 
+    [Header("Audio")]
+    [SerializeField, Tooltip("コイン生成時に再生するSE")]
+    private AudioClip spawnSE;
+
+    [SerializeField, Tooltip("コイン回収（消失）時に再生するSE")]
+    private AudioClip collectSE;
+
     private void Awake()
     {
         if (Instance == null)
@@ -77,6 +84,12 @@ public class CoinCollectionEffect : MonoBehaviour
         GameObject coin = Instantiate(coinPrefab, transform);
         coin.transform.localPosition = randomOffset;
 
+        // 生成SEの再生
+        if (SoundManager.Instance != null && spawnSE != null)
+        {
+            SoundManager.Instance.PlaySE(spawnSE);
+        }
+
         // 一定時間その場で待機
         yield return new WaitForSeconds(waitDuration);
 
@@ -97,6 +110,12 @@ public class CoinCollectionEffect : MonoBehaviour
             // 目標地点へ移動
             coinTransform.position = Vector3.Lerp(startPos, targetTransform.position, t);
             yield return null;
+        }
+
+        // 回収SEの再生
+        if (SoundManager.Instance != null && collectSE != null)
+        {
+            SoundManager.Instance.PlaySE(collectSE);
         }
 
         // 到着したら破棄

@@ -13174,6 +13174,8 @@ MonoBehaviour:
   moveDuration: 0.8
   amountPerCoin: 10
   maxCoinCount: 100
+  spawnSE: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
+  collectSE: {fileID: 8300000, guid: f805c42d82cedf94fbd762dcfd9265cc, type: 3}
   test_amount: 5
 --- !u!1 &2124426926
 GameObject:
