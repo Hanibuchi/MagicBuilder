@@ -5442,8 +5442,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1411029799}
-        m_TargetAssemblyTypeName: SpellPurchaseUI, Assembly-CSharp
+      - m_Target: {fileID: 2081076983}
+        m_TargetAssemblyTypeName: CurrencyUI, Assembly-CSharp
         m_MethodName: Test
         m_Mode: 1
         m_Arguments:
@@ -9159,17 +9159,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6953512054995775334, guid: 8d120e7fab06ed34492f1d080a6db72e, type: 3}
   m_PrefabInstance: {fileID: 1104231139}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1411029799 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6738081601572021093, guid: 47708fb1c6368c341aa85e9655a70ba3, type: 3}
-  m_PrefabInstance: {fileID: 7610182503748210416}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89fe672a3ece588418b947f3cd688a4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1430211940
 GameObject:
   m_ObjectHideFlags: 0
@@ -13053,6 +13042,7 @@ GameObject:
   - component: {fileID: 2081076977}
   - component: {fileID: 2081076981}
   - component: {fileID: 2081076982}
+  - component: {fileID: 2081076983}
   m_Layer: 5
   m_Name: CurrencyCanvas
   m_TagString: Untagged
@@ -13188,6 +13178,22 @@ MonoBehaviour:
   spawnSE: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
   collectSE: {fileID: 8300000, guid: f805c42d82cedf94fbd762dcfd9265cc, type: 3}
   test_amount: 5
+--- !u!114 &2081076983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081076976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d524e2d5e321654b8d08e1cf8492515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currencyText: {fileID: 1577818860}
+  animator: {fileID: 2081076981}
+  updateDuration: 0.5
+  test_amount: 50
 --- !u!1 &2124426926
 GameObject:
   m_ObjectHideFlags: 0
