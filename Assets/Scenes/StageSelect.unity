@@ -5444,7 +5444,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2081076983}
         m_TargetAssemblyTypeName: CurrencyUI, Assembly-CSharp
-        m_MethodName: Test
+        m_MethodName: Test2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13193,6 +13193,7 @@ MonoBehaviour:
   currencyText: {fileID: 1577818860}
   animator: {fileID: 2081076981}
   updateDuration: 0.5
+  countSE: {fileID: 8300000, guid: 32d4b1811dda14a6cb9e059ee8ad17d2, type: 3}
   test_amount: 50
 --- !u!1 &2124426926
 GameObject:

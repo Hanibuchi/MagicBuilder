@@ -19,6 +19,10 @@ public class CurrencyUI : MonoBehaviour
     [SerializeField, Tooltip("数値が更新されるまでにかかる時間")]
     private float updateDuration = 0.5f;
 
+    [Header("音響設定")]
+    [SerializeField, Tooltip("数値が変化するたびに再生するSE")]
+    private AudioClip countSE;
+
     private int currentDisplayedValue;
     private Coroutine updateCoroutine;
 
@@ -81,14 +85,25 @@ public class CurrencyUI : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             float t = elapsed / updateDuration;
-            // イージング（必要なら）
-            currentDisplayedValue = (int)Mathf.Lerp(startValue, targetAmount, t);
-            UpdateText(currentDisplayedValue);
+            
+            int newValue = (int)Mathf.Lerp(startValue, targetAmount, t);
+            
+            // 値が変化した時だけ更新とSE再生
+            if (newValue != currentDisplayedValue)
+            {
+                currentDisplayedValue = newValue;
+                UpdateText(currentDisplayedValue);
+                PlayCountSE();
+            }
             yield return null;
         }
 
-        currentDisplayedValue = targetAmount;
-        UpdateText(currentDisplayedValue);
+        if (currentDisplayedValue != targetAmount)
+        {
+            currentDisplayedValue = targetAmount;
+            UpdateText(currentDisplayedValue);
+            PlayCountSE();
+        }
         updateCoroutine = null;
     }
 
@@ -97,6 +112,14 @@ public class CurrencyUI : MonoBehaviour
         if (currencyText != null)
         {
             currencyText.text = value.ToString();
+        }
+    }
+
+    private void PlayCountSE()
+    {
+        if (SoundManager.Instance != null && countSE != null)
+        {
+            SoundManager.Instance.PlaySE(countSE);
         }
     }
 
