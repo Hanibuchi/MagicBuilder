@@ -41,6 +41,8 @@ public class SpellPurchaseUI : SpellDescriptionUI
         {
             Destroy(gameObject);
         }
+        // 初期状態では非表示
+        detailPanelRoot.SetActive(false);
     }
 
     private void Start()

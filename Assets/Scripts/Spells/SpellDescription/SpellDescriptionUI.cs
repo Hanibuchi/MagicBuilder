@@ -15,7 +15,7 @@ public class SpellDescriptionUI : MonoBehaviour, IPointerClickHandler
 
     [Header("UI要素への参照")]
     [Tooltip("詳細説明パネル全体のルートGameObject")]
-    [SerializeField] private GameObject detailPanelRoot;
+    [SerializeField] protected GameObject detailPanelRoot;
 
     [Tooltip("呪文の名前を表示するTextMeshProUGUI")]
     [SerializeField] private TextMeshProUGUI spellNameText;

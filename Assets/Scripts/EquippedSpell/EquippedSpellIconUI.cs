@@ -263,11 +263,11 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
         if (_spellData == null || eventData.dragging || !showDescription) return;
 
         // シングルトン経由で詳細パネルの表示を開始
-        if (SpellDescriptionUI.Instance != null)
+        if (SpellPurchaseUI.Instance != null)
         {
             // 自身の持つ呪文データを渡して表示アニメーションを開始
             Debug.Log($"[EquippedSpellIconUI on {gameObject.name}] Clicked. Show description for {_spellData.spellName}.");
-            SpellDescriptionUI.Instance.StartShowAnimation(_spellData);
+            SpellPurchaseUI.Instance.StartShowAnimation(_spellData);
         }
     }
 
