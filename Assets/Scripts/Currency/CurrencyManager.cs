@@ -35,7 +35,7 @@ public class CurrencyManager : MonoBehaviour
 
     private void Awake()
     {
-        if (_instance = null)
+        if (_instance == null)
         {
             _instance = this;
             DontDestroyOnLoad(gameObject);

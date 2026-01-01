@@ -36,6 +36,15 @@ public class CurrencyUI : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        // 初期値の設定
+        if (CurrencyManager.Instance != null)
+        {
+            SetCurrencyText(CurrencyManager.Instance.CurrentCurrency, true);
+        }
+    }
+
     /// <summary>
     /// 通貨の表示テキストを更新します。
     /// </summary>
@@ -117,5 +126,17 @@ public class CurrencyUI : MonoBehaviour
     public void Test()
     {
         SetCurrencyText(test_amount);
+    }
+
+    public void Test2()
+    {
+        if (test_amount > 0)
+        {
+            CurrencyController.Instance.AddCurrency(test_amount);
+        }
+        else
+        {
+            CurrencyController.Instance.UseCurrency(-test_amount);
+        }
     }
 }

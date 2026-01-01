@@ -117,7 +117,7 @@ public class SpellPurchaseUI : SpellDescriptionUI
         int owned = SpellHoldInfoManager.Instance.GetSpellCount(type);
         int cost = GetCurrentCost(currentlyDisplayedSpell, owned);
 
-        if (CurrencyManager.Instance.SubtractCurrency(cost))
+        if (CurrencyController.Instance.UseCurrency(cost))
         {
             // 保有数を増やす
             SpellHoldInfoManager.Instance.IncreaseSpellCount(type);
