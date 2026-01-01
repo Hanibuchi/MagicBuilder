@@ -54,6 +54,10 @@ public class EquippedSpellManager : MonoBehaviour
     // 持ち込み可能な最大スロット数
     private int _maxCapacity = DEFAULT_CAPACITY;
 
+    [Header("容量拡張設定")]
+    [SerializeField, Tooltip("現在の最大容量ごとの拡張コスト。インデックスが現在の最大容量に対応します。")]
+    private int[] capacityUpgradeCosts = new int[] { 500, 1000, 2000, 4000 };
+
     // 変更通知用オブザーバー（1つのみ登録可能）
     private IEquippedSpellsObserver _observer;
 
@@ -177,6 +181,17 @@ public class EquippedSpellManager : MonoBehaviour
     public int GetMaxCapacity()
     {
         return _maxCapacity;
+    }
+
+    /// <summary>
+    /// 現在の容量に基づいた拡張コストを取得します。
+    /// </summary>
+    public int GetCapacityUpgradeCost()
+    {
+        if (capacityUpgradeCosts == null || capacityUpgradeCosts.Length == 0) return 0;
+
+        int index = Mathf.Clamp(_maxCapacity, 0, capacityUpgradeCosts.Length - 1);
+        return capacityUpgradeCosts[index];
     }
 
     /// <summary>
