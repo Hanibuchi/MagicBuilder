@@ -9232,7 +9232,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 3
-  m_Spacing: 0
+  m_Spacing: 4
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
@@ -13145,7 +13145,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: f0ee50c93e621c845b9ebafd64552e22, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -13190,6 +13190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d524e2d5e321654b8d08e1cf8492515, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currencyFrame: {fileID: 1430211940}
   currencyText: {fileID: 1577818860}
   animator: {fileID: 2081076981}
   updateDuration: 0.5

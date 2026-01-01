@@ -9,6 +9,7 @@ public class CurrencyUI : MonoBehaviour
     public static CurrencyUI Instance { get; private set; }
 
     [Header("UI要素")]
+    [SerializeField] GameObject currencyFrame;
     [SerializeField, Tooltip("通貨を表示するテキスト")]
     private TextMeshProUGUI currencyText;
 
@@ -38,6 +39,7 @@ public class CurrencyUI : MonoBehaviour
             Debug.LogWarning($"Duplicate CurrencyUI found on {gameObject.name}. Destroying.");
             Destroy(gameObject);
         }
+        currencyFrame.SetActive(false);
     }
 
     private void Start()
@@ -85,9 +87,9 @@ public class CurrencyUI : MonoBehaviour
         {
             elapsed += Time.unscaledDeltaTime;
             float t = elapsed / updateDuration;
-            
+
             int newValue = (int)Mathf.Lerp(startValue, targetAmount, t);
-            
+
             // 値が変化した時だけ更新とSE再生
             if (newValue != currentDisplayedValue)
             {
@@ -123,11 +125,16 @@ public class CurrencyUI : MonoBehaviour
         }
     }
 
+    bool show = false;
+
     /// <summary>
     /// UIを表示します。
     /// </summary>
     public void Show()
     {
+        if (show) return;
+        show = true;
+        currencyFrame.SetActive(true);
         if (animator != null)
         {
             animator.SetTrigger("Show");
@@ -139,6 +146,9 @@ public class CurrencyUI : MonoBehaviour
     /// </summary>
     public void Hide()
     {
+        if (!show) return;
+        show = false;
+        currencyFrame.SetActive(true);
         if (animator != null)
         {
             animator.SetTrigger("Hide");
