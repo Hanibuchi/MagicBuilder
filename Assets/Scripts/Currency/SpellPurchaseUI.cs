@@ -12,8 +12,24 @@ public class SpellPurchaseUI : SpellDescriptionUI
     [SerializeField, Tooltip("購入ボタン")]
     private Button purchaseButton;
 
+    [SerializeField, Tooltip("購入ボタンの画像コンポーネント")]
+    private Image purchaseButtonImage;
+
+    [SerializeField, Tooltip("購入可能な時のスプライト")]
+    private Sprite canBuySprite;
+
+    [SerializeField, Tooltip("購入不可能な時のスプライト")]
+    private Sprite cannotBuySprite;
+
     [SerializeField, Tooltip("金額と保有数を表示するテキスト (例: 100で購入(6))")]
     private TextMeshProUGUI costAndOwnedText;
+
+    [SerializeField, Tooltip("コスト表示の横にあるコインの画像")]
+    private Image costCoinImage;
+
+    [Header("音響設定")]
+    [SerializeField, Tooltip("購入成功時に再生するSE")]
+    private AudioClip purchaseSE;
 
     protected override void Awake()
     {
@@ -34,6 +50,7 @@ public class SpellPurchaseUI : SpellDescriptionUI
             purchaseButton.onClick.AddListener(OnPurchaseButtonClicked);
         }
     }
+
     public override void StartShowAnimation(SpellBase spell)
     {
         base.StartShowAnimation(spell);
@@ -55,10 +72,25 @@ public class SpellPurchaseUI : SpellDescriptionUI
 
         // テキストの更新: "金額で購入(保有数)"
         costAndOwnedText.text = $"{cost}で購入({owned})";
+
+        bool canAfford = CurrencyManager.Instance.CurrentCurrency >= cost;
+
         // 購入可能かどうかの判定（所持金チェック）
         if (purchaseButton != null)
         {
-            purchaseButton.interactable = CurrencyManager.Instance.CurrentCurrency >= cost;
+            purchaseButton.interactable = canAfford;
+        }
+
+        // スプライトの切り替え
+        if (purchaseButtonImage != null)
+        {
+            purchaseButtonImage.sprite = canAfford ? canBuySprite : cannotBuySprite;
+        }
+
+        // コイン画像の明度変更
+        if (costCoinImage != null)
+        {
+            costCoinImage.color = canAfford ? Color.white : new Color(0.5f, 0.5f, 0.5f, 1f);
         }
     }
 
@@ -70,14 +102,14 @@ public class SpellPurchaseUI : SpellDescriptionUI
         if (spell.purchaseCosts == null || spell.purchaseCosts.Length == 0) return 0;
 
         // 保有数が配列の範囲外なら最後の要素を返す
-        int index = Mathf.Min(ownedCount, spell.purchaseCosts.Length - 1);
+        int index = Mathf.Clamp(ownedCount, 0, spell.purchaseCosts.Length - 1);
         return spell.purchaseCosts[index];
     }
 
     /// <summary>
-    /// 購入ボタンが押された時の処理。
+    /// 購入ボタンがクリックされた時の処理。
     /// </summary>
-    private void OnPurchaseButtonClicked()
+    public void OnPurchaseButtonClicked()
     {
         if (currentlyDisplayedSpell == null) return;
 
@@ -87,10 +119,16 @@ public class SpellPurchaseUI : SpellDescriptionUI
 
         if (CurrencyManager.Instance.SubtractCurrency(cost))
         {
-            // 購入成功: SpellHoldInfoManagerの保有数を増やす
+            // 保有数を増やす
             SpellHoldInfoManager.Instance.IncreaseSpellCount(type);
 
-            // UIを更新
+            // SE再生
+            if (SoundManager.Instance != null && purchaseSE != null)
+            {
+                SoundManager.Instance.PlaySE(purchaseSE);
+            }
+
+            // UI更新
             UpdatePurchaseUI();
 
             Debug.Log($"{currentlyDisplayedSpell.spellName} を購入しました。現在の保有数: {SpellHoldInfoManager.Instance.GetSpellCount(type)}");
