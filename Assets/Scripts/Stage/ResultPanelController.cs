@@ -76,7 +76,7 @@ public class ResultPanelController : MonoBehaviour
         stageSelectButton?.onClick.AddListener(() => StartCoroutine(DelayExecuteAction(onStageSelect)));
         retryButton?.onClick.AddListener(() => StartCoroutine(DelayExecuteAction(onRetry)));
         nextStageButton?.onClick.AddListener(() => StartCoroutine(DelayExecuteAction(onNextStage)));
-        spellChangeButton?.onClick.AddListener(() => StartCoroutine(DelayExecuteAction(onSpellChange)));
+        spellChangeButton?.onClick.AddListener(() => onSpellChange?.Invoke());
     }
 
     /// <summary>
