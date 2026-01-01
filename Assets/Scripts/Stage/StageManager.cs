@@ -291,6 +291,8 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
     private bool gameEnd = false;
     public bool GameEnd => gameEnd;
 
+    // 報酬の付与
+    bool isFirstClear = true;
 
     [Tooltip("全ステージのリスト設定を持つScriptableObject。")]
     // StageListConfigのインスタンスをインスペクタから設定できるようにする
@@ -324,10 +326,12 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
             {
                 GameManager.Instance.StageSelectTargetStageName = nextStage.stageName;
                 Debug.Log($"最新のステージとして '{nextStage.stageName}' を登録しました。");
+                isFirstClear = true;
             }
             else
             {
                 Debug.Log($"最新のステージとして '{nextStage.stageName}' を登録しませんでした。");
+                isFirstClear = false;
             }
         }
     }
@@ -336,6 +340,12 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
     [Header("ステージクリア設定")] // 追記
     [Tooltip("クリア後の演出時間（秒）。この時間後にゲームが停止します。")]
     [SerializeField] private float clearDelaySeconds = 2f; // 例として3.0秒
+
+    [Header("報酬設定")]
+    [SerializeField, Tooltip("未クリアステージをクリアした時の報酬額")]
+    private int firstClearReward = 100;
+    [SerializeField, Tooltip("既クリアステージをクリアした時の報酬額")]
+    private int repeatClearReward = 10;
 
     [SerializeField] AudioClip bossDestroySound;
     [SerializeField] AudioClip clearSound;
@@ -440,6 +450,12 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         if (isVictory)
         {
             controller.DisplayVictory(data);
+
+            int reward = isFirstClear ? firstClearReward : repeatClearReward;
+            if (CurrencyController.Instance != null)
+            {
+                CurrencyController.Instance.AddCurrency(reward);
+            }
         }
         else
         {
