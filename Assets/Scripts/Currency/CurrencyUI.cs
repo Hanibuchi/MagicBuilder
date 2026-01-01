@@ -125,7 +125,8 @@ public class CurrencyUI : MonoBehaviour
         }
     }
 
-    bool show = false;
+    private bool show = false;
+    public bool IsShowing => show;
 
     /// <summary>
     /// UIを表示します。

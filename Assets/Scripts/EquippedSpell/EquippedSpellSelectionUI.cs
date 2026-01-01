@@ -135,6 +135,8 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
     // UIが表示中かどうか
     public bool IsVisible { get; private set; } = false;
 
+    private bool _wasCurrencyUIShowing;
+
     [SerializeField] AudioClip openClip;
     Action closeCallback;
     /// <summary>
@@ -147,6 +149,14 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
 
         if (IsVisible) return;
         IsVisible = true;
+
+        // CurrencyUIの状態を記録して表示
+        if (CurrencyUI.Instance != null)
+        {
+            _wasCurrencyUIShowing = CurrencyUI.Instance.IsShowing;
+            CurrencyUI.Instance.Show();
+        }
+
         this.gameObject.SetActive(true); // オブジェクト自体をアクティブに
         animator.SetTrigger(OPEN_PARAM);
         animator.ResetTrigger(CLOSE_PARAM);
@@ -170,6 +180,16 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
         if (!IsVisible) return;
 
         IsVisible = false;
+
+        // CurrencyUIの状態を元に戻す
+        if (CurrencyUI.Instance != null)
+        {
+            if (!_wasCurrencyUIShowing)
+            {
+                CurrencyUI.Instance.Hide();
+            }
+        }
+
         animator.SetTrigger(CLOSE_PARAM);
         animator.ResetTrigger(OPEN_PARAM);
 
