@@ -60,7 +60,7 @@ public class CurrencyController : MonoBehaviour
     private System.Collections.IEnumerator DelayedUIUpdate()
     {
         CurrencyUI.Instance.Show();
-        yield return new WaitForSeconds(uiUpdateDelay);
+        yield return new WaitForSecondsRealtime(uiUpdateDelay);
 
         if (CurrencyUI.Instance != null)
         {

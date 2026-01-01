@@ -83,7 +83,7 @@ public class CurrencyUI : MonoBehaviour
 
         while (elapsed < updateDuration)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
             float t = elapsed / updateDuration;
             
             int newValue = (int)Mathf.Lerp(startValue, targetAmount, t);

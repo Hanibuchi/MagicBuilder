@@ -77,7 +77,7 @@ public class CoinCollectionEffect : MonoBehaviour
     private IEnumerator SpawnAndAnimateCoin(float delay)
     {
         // 指定されたランダムな時間待機
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSecondsRealtime(delay);
 
         // 画面中央（このオブジェクトの位置）からランダムな位置に生成
         Vector2 randomOffset = Random.insideUnitCircle * spawnRadius;
@@ -91,7 +91,7 @@ public class CoinCollectionEffect : MonoBehaviour
         }
 
         // 一定時間その場で待機
-        yield return new WaitForSeconds(waitDuration);
+        yield return new WaitForSecondsRealtime(waitDuration);
 
         Transform coinTransform = coin.transform;
         Vector3 startPos = coinTransform.position;
@@ -99,7 +99,7 @@ public class CoinCollectionEffect : MonoBehaviour
 
         while (elapsed < moveDuration)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
             float t = elapsed / moveDuration;
 
             // イージング（加速しながら移動）
