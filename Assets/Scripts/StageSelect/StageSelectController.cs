@@ -51,6 +51,11 @@ public class StageSelectController : MonoBehaviour, IStageStartListener
         // ステージ選択UIの自動選択処理
         AutomaticallySelectIsland();
 
+        if (CurrencyUI.Instance != null)
+        {
+            CurrencyUI.Instance.Show();
+        }
+
         if (SoundManager.Instance != null && bGM != null)
         {
             SoundManager.Instance.PlayBGM(bGM);
@@ -90,6 +95,10 @@ public class StageSelectController : MonoBehaviour, IStageStartListener
 
     public void OnStageStart(StageConfig config)
     {
+        if (CurrencyUI.Instance != null)
+        {
+            CurrencyUI.Instance.Hide();
+        }
         SoundManager.Instance.StopBGMWithFade(0.5f);
     }
 }

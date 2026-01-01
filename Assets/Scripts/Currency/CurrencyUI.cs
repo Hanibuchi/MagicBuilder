@@ -148,10 +148,14 @@ public class CurrencyUI : MonoBehaviour
     {
         if (!show) return;
         show = false;
-        currencyFrame.SetActive(true);
         if (animator != null)
         {
+            currencyFrame.SetActive(true);
             animator.SetTrigger("Hide");
+        }
+        else
+        {
+            currencyFrame.SetActive(false);
         }
     }
 
