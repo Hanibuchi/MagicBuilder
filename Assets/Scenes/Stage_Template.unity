@@ -1014,6 +1014,8 @@ MonoBehaviour:
   - {fileID: 7411318191188818962, guid: baacb0141f097d54fa28889cc425ec3c, type: 3}
   - {fileID: 7885755934619046866, guid: f30f37d42814f2c43bb4ccdd254902d8, type: 3}
   - {fileID: 2052082803983599290, guid: 604c1c26469ad3047a1533afde673226, type: 3}
+  - {fileID: 1832366053387493158, guid: 47708fb1c6368c341aa85e9655a70ba3, type: 3}
+  - {fileID: 6441816997998351642, guid: 3087cb46b2b4ab047bad04a7ba846b46, type: 3}
   playerPrefab: {fileID: 5255534377115560913, guid: 864d69398cbad294a89daf01f91bb0a9, type: 3}
   playerSpawnPoint: {fileID: 1008364732}
   enemySpawnPoint: {fileID: 1899820376}
