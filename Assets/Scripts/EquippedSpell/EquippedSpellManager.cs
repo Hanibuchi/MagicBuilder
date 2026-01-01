@@ -29,6 +29,7 @@ public class EquippedSpellManager : MonoBehaviour
                 _instance = singletonObject.AddComponent<EquippedSpellManager>();
                 // シーンを跨いでも破棄されないように設定
                 DontDestroyOnLoad(singletonObject);
+                _instance.LoadConfig();
                 _instance.LoadCapacity();
                 _instance.LoadEquippedSpells();
             }
@@ -54,14 +55,25 @@ public class EquippedSpellManager : MonoBehaviour
     // 持ち込み可能な最大スロット数
     private int _maxCapacity = DEFAULT_CAPACITY;
 
-    [Header("容量拡張設定")]
-    [SerializeField, Tooltip("現在の最大容量ごとの拡張コスト。インデックスが現在の最大容量に対応します。")]
-    private int[] capacityUpgradeCosts = new int[] { 500, 1000, 2000, 4000 };
+    private EquippedSpellCapacityConfig _config;
 
     // 変更通知用オブザーバー（1つのみ登録可能）
     private IEquippedSpellsObserver _observer;
 
     // --- 永続化（PlayerPrefs） ---
+
+    /// <summary>
+    /// Resourcesから設定ファイルを読み込みます。
+    /// </summary>
+    private void LoadConfig()
+    {
+        _config = Resources.Load<EquippedSpellCapacityConfig>("EquippedSpellCapacityConfig");
+        if (_config == null)
+        {
+            Debug.LogError("EquippedSpellCapacityConfig が Resources/EquippedSpellCapacityConfig に見つかりません。デフォルト設定を使用します。");
+            // 必要に応じてデフォルト値を生成するか、エラーとして扱う
+        }
+    }
 
     /// <summary>
     /// PlayerPrefsに現在の持ち込み呪文リストを保存します。
@@ -188,10 +200,10 @@ public class EquippedSpellManager : MonoBehaviour
     /// </summary>
     public int GetCapacityUpgradeCost()
     {
-        if (capacityUpgradeCosts == null || capacityUpgradeCosts.Length == 0) return 0;
+        if (_config == null || _config.capacityUpgradeCosts == null || _config.capacityUpgradeCosts.Length == 0) return 0;
 
-        int index = Mathf.Clamp(_maxCapacity, 0, capacityUpgradeCosts.Length - 1);
-        return capacityUpgradeCosts[index];
+        int index = Mathf.Clamp(_maxCapacity, 0, _config.capacityUpgradeCosts.Length - 1);
+        return _config.capacityUpgradeCosts[index];
     }
 
     /// <summary>
