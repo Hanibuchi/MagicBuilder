@@ -3,6 +3,8 @@ using UnityEngine.Advertisements;
 
 public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityAdsLoadListener, IUnityAdsShowListener
 {
+    public static AdManager Instance { get; private set; }
+
     [SerializeField] private AdSettings settings; // 先ほど作ったScriptableObjectをアサイン
     [SerializeField] private bool testMode = true;
 
@@ -11,7 +13,16 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
 
     void Awake()
     {
-        InitializeAds();
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            InitializeAds();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void InitializeAds()
