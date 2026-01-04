@@ -71,4 +71,9 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
     {
         // 広告視聴完了後の報酬処理などをここに書く
     }
+
+    public void Test()
+    {
+        AdManager.Instance.ShowAd();
+    }
 }

@@ -5442,9 +5442,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2081076983}
-        m_TargetAssemblyTypeName: CurrencyUI, Assembly-CSharp
-        m_MethodName: Test2
+      - m_Target: {fileID: 1547114319}
+        m_TargetAssemblyTypeName: AdManager, Assembly-CSharp
+        m_MethodName: Test
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12817,17 +12817,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8da90dead880ee24794eeabd35d50a2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2081076983 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1152575627432867325, guid: 3087cb46b2b4ab047bad04a7ba846b46, type: 3}
-  m_PrefabInstance: {fileID: 3730257786358471232}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d524e2d5e321654b8d08e1cf8492515, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!81 &470036894707227285
