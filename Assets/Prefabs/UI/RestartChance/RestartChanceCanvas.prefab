@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 1647773315729776924}
   - component: {fileID: 6665669506695191895}
   - component: {fileID: 5082530436635535180}
+  - component: {fileID: 8253307250634586374}
+  - component: {fileID: 2009546517905862954}
   m_Layer: 5
   m_Name: RestartChanceCanvas
   m_TagString: Untagged
@@ -102,6 +104,35 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8253307250634586374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263555542929889462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a49f2582d5ad20409ea405f03201cd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 2009546517905862954}
+  timerFillImage: {fileID: 1465476230993358509}
+  adButton: {fileID: 714835811740679352}
+  countdownTime: 3
+  fadeDuration: 0.5
+--- !u!225 &2009546517905862954
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263555542929889462}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2347208601324697031
 GameObject:
   m_ObjectHideFlags: 0

@@ -119,6 +119,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &23406432 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8253307250634586374, guid: 37469532a6d19e34b9d677d4417fc67e, type: 3}
+  m_PrefabInstance: {fileID: 4863201246651640568}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a49f2582d5ad20409ea405f03201cd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &85323284
 GameObject:
   m_ObjectHideFlags: 0
@@ -5442,9 +5453,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1547114319}
-        m_TargetAssemblyTypeName: AdManager, Assembly-CSharp
-        m_MethodName: Test
+      - m_Target: {fileID: 23406432}
+        m_TargetAssemblyTypeName: ContinueAdUI, Assembly-CSharp
+        m_MethodName: Test_StartUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
