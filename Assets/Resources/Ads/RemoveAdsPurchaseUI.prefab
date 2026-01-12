@@ -349,7 +349,7 @@ GameObject:
   - component: {fileID: 4505326272396211238}
   - component: {fileID: 5299661373147516830}
   m_Layer: 5
-  m_Name: RestartChanceCanvas 1
+  m_Name: RemoveAdsPurchaseUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

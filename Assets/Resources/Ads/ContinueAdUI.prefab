@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8253307250634586374}
   - component: {fileID: 2009546517905862954}
   m_Layer: 5
-  m_Name: RestartChanceCanvas
+  m_Name: ContinueAdUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
