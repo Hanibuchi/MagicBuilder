@@ -70,13 +70,13 @@ public class AdController : MonoBehaviour
             continueAdUI.Init(
                 onAdRequested: () =>
                 {
-                    // 広告の表示を開始
+                    // 広告の表示を開始し、完了時に報酬を付与
                     Debug.Log("[AdController] 動画広告の表示をリクエストします。");
-                    AdManager.Instance.ShowAd();
-
-                    // 本来はAdManagerの視聴完了コールバックを待つべきですが、
-                    // 現状のAdManager実装に合わせてリクエスト時点で報酬を確定させています。
-                    onReward?.Invoke();
+                    AdManager.Instance.ShowAd(() =>
+                    {
+                        Debug.Log("[AdController] 動画広告の視聴が完了しました。報酬を付与します。");
+                        onReward?.Invoke();
+                    });
                 },
                 onTimeExpired: onCancel
             );

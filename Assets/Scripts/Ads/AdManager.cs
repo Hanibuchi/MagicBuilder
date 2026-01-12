@@ -10,6 +10,7 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
 
     private string _gameId;
     private string _adUnitId;
+    private System.Action _onShowComplete;
 
     void Awake()
     {
@@ -44,8 +45,9 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
         }
     }
 
-    public void ShowAd()
+    public void ShowAd(System.Action onComplete = null)
     {
+        _onShowComplete = onComplete;
         // 広告を表示する前にロードが必要
         Advertisement.Load(_adUnitId, this);
     }
@@ -70,6 +72,11 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
     public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
     {
         // 広告視聴完了後の報酬処理などをここに書く
+        if (placementId == _adUnitId && showCompletionState == UnityAdsShowCompletionState.COMPLETED)
+        {
+            _onShowComplete?.Invoke();
+            _onShowComplete = null;
+        }
     }
 
     public void Test()
