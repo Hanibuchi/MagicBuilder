@@ -8,7 +8,20 @@ using UnityEngine.Purchasing.Extension;
 /// </summary>
 public class IAPManager : MonoBehaviour, IDetailedStoreListener
 {
-    public static IAPManager Instance { get; private set; }
+    private static IAPManager _instance;
+    public static IAPManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                // なければ生成
+                GameObject go = new GameObject("IAPManager");
+                _instance = go.AddComponent<IAPManager>();
+            }
+            return _instance;
+        }
+    }
 
     private IStoreController storeController;
     private IExtensionProvider storeExtensionProvider;
@@ -24,12 +37,12 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
     private void Awake()
     {
         // シングルトンの設定
-        if (Instance != null && Instance != this)
+        if (_instance != null && _instance != this)
         {
             Destroy(gameObject);
             return;
         }
-        Instance = this;
+        _instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
@@ -48,7 +61,7 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
 
         // IAPの設定を構築
         var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-        
+
         // 広告削除（非消耗品）を登録
         builder.AddProduct(REMOVE_ADS, ProductType.NonConsumable);
 
@@ -136,7 +149,7 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
             // 購入成功のフラグを保存
             PlayerPrefs.SetInt("AdsRemoved", 1);
             PlayerPrefs.Save();
-            
+
             // TODO: ここで実際に広告を消す処理などを呼ぶ
         }
 
