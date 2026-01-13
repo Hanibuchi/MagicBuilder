@@ -47,14 +47,6 @@ public class AdController : MonoBehaviour
     /// <param name="onCancel">キャンセルまたは時間切れ時のコールバック</param>
     public void ShowContinueAdUI(Action onReward, Action onCancel)
     {
-        // IAPManagerを参照して広告非表示かチェック
-        if (IAPManager.Instance.IsAdsRemoved)
-        {
-            Debug.Log("[AdController] 広告非表示が有効なため、広告を表示せずに報酬を付与します。");
-            onReward?.Invoke();
-            return;
-        }
-
         // プレハブをResourcesからロードして生成（存在しない場合）
         if (continueAdUI == null)
         {
@@ -70,20 +62,29 @@ public class AdController : MonoBehaviour
             continueAdUI.Init(
                 onAdRequested: () =>
                 {
-                    // 広告の表示を開始し、完了時に報酬を付与、失敗/スキップ時にキャンセル処理を実行
-                    Debug.Log("[AdController] 動画広告の表示をリクエストします。");
-                    AdManager.Instance.ShowAd(
-                        onComplete: () =>
-                        {
-                            Debug.Log("[AdController] 動画広告の視聴が完了しました。報酬を付与します。");
-                            onReward?.Invoke();
-                        },
-                        onFailed: () =>
-                        {
-                            Debug.Log("[AdController] 動画広告がスキップまたは失敗しました。");
-                            onCancel?.Invoke();
-                        }
-                    );
+                    // IAPManagerを参照して広告非表示かチェック
+                    if (IAPManager.Instance.IsAdsRemoved)
+                    {
+                        Debug.Log("[AdController] 広告非表示が有効なため、広告を表示せずに報酬を付与します。");
+                        onReward?.Invoke();
+                    }
+                    else
+                    {
+                        // 広告の表示を開始し、完了時に報酬を付与、失敗/スキップ時にキャンセル処理を実行
+                        Debug.Log("[AdController] 動画広告の表示をリクエストします。");
+                        AdManager.Instance.ShowAd(
+                            onComplete: () =>
+                            {
+                                Debug.Log("[AdController] 動画広告の視聴が完了しました。報酬を付与します。");
+                                onReward?.Invoke();
+                            },
+                            onFailed: () =>
+                            {
+                                Debug.Log("[AdController] 動画広告がスキップまたは失敗しました。");
+                                onCancel?.Invoke();
+                            }
+                        );
+                    }
                 },
                 onTimeExpired: onCancel
             );
