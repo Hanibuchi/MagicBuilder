@@ -9,9 +9,13 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
     [SerializeField] private bool testMode = true;
 
     private string _gameId;
-    private string _adUnitId;
-    private System.Action _onShowComplete;
-    private System.Action _onShowFailed;
+    private string _interstitialId;
+    private string _rewardedId;
+    private string _bannerId;
+
+    private System.Action _onRewardedComplete;
+    private System.Action _onRewardedFailed;
+    private System.Action _onInterstitialComplete;
 
     void Awake()
     {
@@ -32,10 +36,14 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
         // プラットフォームごとにIDを切り替え
 #if UNITY_IOS
         _gameId = settings.iosGameId;
-        _adUnitId = settings.iosAdUnitId;
+        _interstitialId = settings.iosInterstitialId;
+        _rewardedId = settings.iosRewardedId;
+        _bannerId = settings.iosBannerId;
 #elif UNITY_ANDROID
         _gameId = settings.androidGameId;
-        _adUnitId = settings.androidAdUnitId;
+        _interstitialId = settings.androidInterstitialId;
+        _rewardedId = settings.androidRewardedId;
+        _bannerId = settings.androidBannerId;
 #else
         _gameId = "unused"; // 他プラットフォーム用
 #endif
@@ -46,46 +54,92 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
         }
     }
 
+    // --- 広告のロード (プレロード用) ---
+
+    public void LoadInterstitial() => Advertisement.Load(_interstitialId, this);
+    public void LoadRewarded() => Advertisement.Load(_rewardedId, this);
+    public void LoadBanner() => Advertisement.Banner.Load(_bannerId);
+
+    // --- 広告の表示 ---
+
+    /// <summary>
+    /// インタースティシャル広告を表示します。
+    /// </summary>
+    public void ShowInterstitial(System.Action onComplete = null)
+    {
+        _onInterstitialComplete = onComplete;
+        Advertisement.Show(_interstitialId, this);
+    }
+
+    /// <summary>
+    /// リワード広告を表示します。
+    /// </summary>
+    public void ShowRewarded(System.Action onComplete = null, System.Action onFailed = null)
+    {
+        _onRewardedComplete = onComplete;
+        _onRewardedFailed = onFailed;
+        Advertisement.Show(_rewardedId, this);
+    }
+
+    /// <summary>
+    /// 以前の共通メソッド(互換用)。リワード広告として動作させます。
+    /// </summary>
     public void ShowAd(System.Action onComplete = null, System.Action onFailed = null)
     {
-        _onShowComplete = onComplete;
-        _onShowFailed = onFailed;
-        // 広告を表示する前にロードが必要
-        Advertisement.Load(_adUnitId, this);
+        ShowRewarded(onComplete, onFailed);
+    }
+
+    // --- バナー広告の制御 ---
+
+    public void ShowBanner()
+    {
+        Advertisement.Banner.SetPosition(BannerPosition.BOTTOM_CENTER);
+        BannerOptions options = new BannerOptions
+        {
+            showCallback = () => Debug.Log("Banner showing"),
+            hideCallback = () => Debug.Log("Banner hidden")
+        };
+        Advertisement.Banner.Show(_bannerId, options);
+    }
+
+    public void HideBanner()
+    {
+        Advertisement.Banner.Hide();
     }
 
     // --- インターフェースの実装 ---
 
-    public void OnUnityAdsAdLoaded(string placementId)
+    public void OnInitializationComplete()
     {
-        // ロード完了後に表示
-        if (placementId == _adUnitId)
-        {
-            Advertisement.Show(_adUnitId, this);
-        }
+        Debug.Log("Ads Init Complete");
+        // 初期化完了時にプレロード
+        LoadInterstitial();
+        LoadRewarded();
+        LoadBanner();
     }
 
-    public void OnInitializationComplete() => Debug.Log("Ads Init Complete");
     public void OnInitializationFailed(UnityAdsInitializationError error, string message) => Debug.LogError($"Init Failed: {message}");
+
+    public void OnUnityAdsAdLoaded(string placementId)
+    {
+        Debug.Log($"Ad Loaded: {placementId}");
+    }
+
     public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message)
     {
         Debug.LogError($"Load Failed: {message}");
-        if (placementId == _adUnitId)
-        {
-            _onShowFailed?.Invoke();
-            _onShowFailed = null;
-            _onShowComplete = null;
-        }
+
+        _onRewardedFailed?.Invoke();
     }
 
     public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
     {
         Debug.LogError($"Show Failed: {message}");
-        if (placementId == _adUnitId)
+        if (placementId == _rewardedId)
         {
-            _onShowFailed?.Invoke();
-            _onShowFailed = null;
-            _onShowComplete = null;
+            _onRewardedFailed?.Invoke();
+            _onRewardedFailed = null;
+            _onRewardedComplete = null;
         }
     }
 
@@ -94,21 +148,33 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
 
     public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
     {
-        if (placementId == _adUnitId)
+        if (placementId == _rewardedId)
         {
             if (showCompletionState == UnityAdsShowCompletionState.COMPLETED)
             {
-                Debug.Log("[AdManager] 広告の視聴が完了しました。");
-                _onShowComplete?.Invoke();
+                Debug.Log("[AdManager] リワード広告の視聴が完了しました。");
+                _onRewardedComplete?.Invoke();
             }
             else
             {
-                Debug.Log($"[AdManager] 広告がスキップまたは中断されました: {showCompletionState}");
-                _onShowFailed?.Invoke();
+                Debug.Log($"[AdManager] リワード広告がスキップまたは中断されました: {showCompletionState}");
+                _onRewardedFailed?.Invoke();
             }
 
-            _onShowComplete = null;
-            _onShowFailed = null;
+            _onRewardedComplete = null;
+            _onRewardedFailed = null;
+
+            // 次回のためにロード
+            LoadRewarded();
+        }
+        else if (placementId == _interstitialId)
+        {
+            Debug.Log("[AdManager] インタースティシャル広告の表示が終了しました。");
+            _onInterstitialComplete?.Invoke();
+            _onInterstitialComplete = null;
+
+            // 次回のためにロード
+            LoadInterstitial();
         }
     }
 

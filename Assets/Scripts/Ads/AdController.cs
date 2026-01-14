@@ -72,7 +72,7 @@ public class AdController : MonoBehaviour
                     {
                         // 広告の表示を開始し、完了時に報酬を付与、失敗/スキップ時にキャンセル処理を実行
                         Debug.Log("[AdController] 動画広告の表示をリクエストします。");
-                        AdManager.Instance.ShowAd(
+                        AdManager.Instance.ShowRewarded(
                             onComplete: () =>
                             {
                                 Debug.Log("[AdController] 動画広告の視聴が完了しました。報酬を付与します。");
@@ -139,6 +139,6 @@ public class AdController : MonoBehaviour
         }
 
         Debug.Log("[AdController] インタースティシャル広告の表示をリクエストします。");
-        AdManager.Instance.ShowAd();
+        AdManager.Instance.ShowInterstitial();
     }
 }
