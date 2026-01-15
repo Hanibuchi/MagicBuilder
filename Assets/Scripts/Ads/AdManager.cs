@@ -17,6 +17,8 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
     private System.Action _onRewardedFailed;
     private System.Action _onInterstitialComplete;
 
+    private AdNetworkErrorUI _errorUIInstance;
+
     void Awake()
     {
         if (Instance == null)
@@ -107,6 +109,31 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
         Advertisement.Banner.Hide();
     }
 
+    private void ShowNetworkErrorUI(string placementId)
+    {
+        if (_errorUIInstance == null)
+        {
+            var prefab = Resources.Load<AdNetworkErrorUI>("Ads/AdNetworkErrorUI");
+            if (prefab == null) { Debug.LogWarning("AdNetworkErrorUI prefab not found in Resources."); return; }
+            _errorUIInstance = Instantiate(prefab);
+            DontDestroyOnLoad(_errorUIInstance.gameObject);
+        }
+
+        _errorUIInstance.Setup(() =>
+        {
+            _errorUIInstance.Hide();
+            if (placementId == _bannerId)
+            {
+                LoadBanner();
+            }
+            else
+            {
+                Advertisement.Load(placementId, this);
+            }
+        });
+        _errorUIInstance.Show();
+    }
+
     // --- インターフェースの実装 ---
 
     public void OnInitializationComplete()
@@ -130,6 +157,8 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
         Debug.LogError($"Load Failed: {message}");
 
         _onRewardedFailed?.Invoke();
+
+        ShowNetworkErrorUI(placementId);
     }
 
     public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
@@ -197,5 +226,10 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
     public void Test3()
     {
         AdController.Instance.ShowStageEndAd();
+    }
+
+    public void Test4()
+    {
+        ShowNetworkErrorUI("test");
     }
 }
