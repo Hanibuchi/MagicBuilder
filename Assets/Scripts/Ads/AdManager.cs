@@ -127,7 +127,7 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
             return;
         }
 
-        Advertisement.Banner.SetPosition(BannerPosition.BOTTOM_CENTER);
+        Advertisement.Banner.SetPosition(BannerPosition.TOP_RIGHT);
         BannerOptions options = new BannerOptions
         {
             showCallback = () => Debug.Log("Banner showing"),

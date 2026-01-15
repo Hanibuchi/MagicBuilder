@@ -126,6 +126,30 @@ public class AdController : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// バナー広告を表示します。広告非表示を購入済みの場合は表示しません。
+    /// </summary>
+    public void ShowBanner()
+    {
+        if (IAPManager.Instance.IsAdsRemoved)
+        {
+            Debug.Log("[AdController] 広告非表示が有効なため、バナー表示をスキップします。");
+            AdManager.Instance.HideBanner();
+            return;
+        }
+        AdManager.Instance.ShowBanner();
+    }
+
+    /// <summary>
+    /// バナー広告を非表示にします。
+    /// </summary>
+    public void HideBanner()
+    {
+        AdManager.Instance.HideBanner();
+    }
+
+
     private const string INTERSTITIAL_COUNT_KEY = "InterstitialAdCount";
 
     /// <summary>
