@@ -126,8 +126,12 @@ public class AdController : MonoBehaviour
         }
     }
 
+    private const string INTERSTITIAL_COUNT_KEY = "InterstitialAdCount";
+
     /// <summary>
     /// ステージ終了時などに呼び出され、通常の広告を表示します。
+    /// 3回目までは表示されず、4回目以降に表示されます。
+    /// カウントは PlayerPrefs に保存されます。
     /// 広告非表示を購入済みの場合は何も行いません。
     /// </summary>
     public void ShowStageEndAd()
@@ -135,6 +139,17 @@ public class AdController : MonoBehaviour
         if (IAPManager.Instance.IsAdsRemoved)
         {
             Debug.Log("[AdController] 広告非表示が有効なため、広告表示をスキップします。");
+            return;
+        }
+
+        int count = PlayerPrefs.GetInt(INTERSTITIAL_COUNT_KEY, 0);
+        count++;
+        PlayerPrefs.SetInt(INTERSTITIAL_COUNT_KEY, count);
+        PlayerPrefs.Save();
+
+        if (count < 4)
+        {
+            Debug.Log($"[AdController] 通算 {count} 回目のゲーム終了のため、広告表示をスキップします。(4回目から表示)");
             return;
         }
 
