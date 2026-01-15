@@ -86,4 +86,23 @@ public class PlayerController : MyCharacterController
         base.NotifyDie();
         StageManager.Instance.GameOver();
     }
+
+    /// <summary>
+    /// プレイヤーを復活させます。
+    /// </summary>
+    public void Revive()
+    {
+        if (characterHealth != null)
+        {
+            characterHealth.Revive();
+        }
+
+        if (animator != null && animator.enabled)
+        {
+            // 死亡アニメーションから復帰するために、トリガーをリセットまたは初期状態に戻す
+            animator.Rebind(); 
+            // animator.Rebind() は animator を初期状態(エントリー状態)に戻します。
+            // これにより、死亡アニメーションで止まっている場合に強制的にアイドル状態に戻せます。
+        }
+    }
 }

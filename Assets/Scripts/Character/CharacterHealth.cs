@@ -334,6 +334,18 @@ public class CharacterHealth : MonoBehaviour
         // 死亡時のアニメーションやゲームオーバー処理などを記述
         dieNotifier?.NotifyDie();
     }
+
+    /// <summary>
+    /// キャラクターを復活させ、体力を最大まで回復します。
+    /// </summary>
+    public void Revive()
+    {
+        isDead = false;
+        float previousHealth = currentHealth;
+        currentHealth = maxHealth;
+        healthNotifier?.NotifyHealthChange(maxHealth, previousHealth, currentHealth);
+        Debug.Log($"{gameObject.name}が復活しました！");
+    }
 }
 
 /// <summary>

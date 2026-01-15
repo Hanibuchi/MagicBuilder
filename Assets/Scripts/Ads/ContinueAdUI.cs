@@ -65,7 +65,7 @@ public class ContinueAdUI : MonoBehaviour
         float elapsed = 0f;
         while (elapsed < countdownTime)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
             timerFillImage.fillAmount = 1f - (elapsed / countdownTime);
             yield return null;
         }
@@ -114,7 +114,7 @@ public class ContinueAdUI : MonoBehaviour
 
         while (elapsed < fadeDuration)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
             canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsed / fadeDuration);
             yield return null;
         }

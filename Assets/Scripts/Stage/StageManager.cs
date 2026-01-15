@@ -375,8 +375,34 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         InstantiateResultPanel(true); // 勝利 (isVictory: true) でリザルトを表示
     }
 
+    private bool hasUsedContinue = false;
+
     public void GameOver()
     {
+        if (gameEnd) return;
+
+        // 初回のゲームオーバー時のみコンティニュー広告を表示
+        if (!hasUsedContinue && AdController.Instance != null)
+        {
+            hasUsedContinue = true;
+            // 広告UI表示中は時間を止める
+            Time.timeScale = 0f;
+            AdController.Instance.ShowContinueAdUI(
+                onReward: () =>
+                {
+                    Time.timeScale = 1f;
+                    PlayerController.Instance.Revive();
+                    Debug.Log("広告視聴報酬: プレイヤーを復活させました。");
+                },
+                onCancel: () =>
+                {
+                    Time.timeScale = 1f;
+                    HandleGameOver();
+                }
+            );
+            return;
+        }
+
         HandleGameOver();
     }
 
