@@ -13,6 +13,9 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
     private string _rewardedId;
     private string _bannerId;
 
+    private bool _isBannerLoaded;
+    private bool _showBannerRequested;
+
     private System.Action _onRewardedComplete;
     private System.Action _onRewardedFailed;
     private System.Action _onInterstitialComplete;
@@ -60,7 +63,27 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
 
     public void LoadInterstitial() => Advertisement.Load(_interstitialId, this);
     public void LoadRewarded() => Advertisement.Load(_rewardedId, this);
-    public void LoadBanner() => Advertisement.Banner.Load(_bannerId);
+    public void LoadBanner()
+    {
+        BannerLoadOptions options = new BannerLoadOptions
+        {
+            loadCallback = () =>
+            {
+                Debug.Log("Banner loaded successfully.");
+                _isBannerLoaded = true;
+                if (_showBannerRequested)
+                {
+                    ShowBanner();
+                }
+            },
+            errorCallback = (message) =>
+            {
+                Debug.LogWarning($"Banner load failed: {message}");
+                _isBannerLoaded = false;
+            }
+        };
+        Advertisement.Banner.Load(_bannerId, options);
+    }
 
     // --- 広告の表示 ---
 
@@ -95,6 +118,15 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
 
     public void ShowBanner()
     {
+        _showBannerRequested = true;
+
+        if (!_isBannerLoaded)
+        {
+            Debug.Log("Banner not loaded yet. It will be shown once loaded.");
+            LoadBanner(); // まだロードされていなければロードを試みる
+            return;
+        }
+
         Advertisement.Banner.SetPosition(BannerPosition.BOTTOM_CENTER);
         BannerOptions options = new BannerOptions
         {
@@ -106,6 +138,7 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
 
     public void HideBanner()
     {
+        _showBannerRequested = false;
         Advertisement.Banner.Hide();
     }
 
@@ -231,5 +264,10 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
     public void Test4()
     {
         ShowNetworkErrorUI("test");
+    }
+
+    public void Test5()
+    {
+        ShowBanner();
     }
 }

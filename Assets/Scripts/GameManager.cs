@@ -34,6 +34,15 @@ public class GameManager : MonoBehaviour, IStageStartListener
         }
     }
 
+    private void Start()
+    {
+        // ゲーム開始時にバナー広告を表示
+        if (AdManager.Instance != null)
+        {
+            AdManager.Instance.ShowBanner(); // UIの配置を変えないといけないのだるい。
+        }
+    }
+
     // --- IStageStartListener の実装 ---
 
     /// <summary>
