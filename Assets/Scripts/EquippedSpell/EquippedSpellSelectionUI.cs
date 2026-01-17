@@ -273,6 +273,7 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
                 iconUI.SetIcon(true);       // 通常アイコン
                 iconUI.SetDrag(true);     // 操作可能
                 iconUI.SetAvailableCount(-1);
+                iconUI.SetNewBadgeActive(false); // 装備中のものはNewバッジを表示しない
                 component = iconUI;
             }
             else
@@ -363,6 +364,10 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
                 // アンロック済み
                 iconUI.SetIcon(true);       // 通常アイコン
                 iconUI.SetShowDescription(true); // 詳細表示可能
+
+                // 新規取得バッジの表示設定
+                bool isNew = SpellHoldInfoManager.Instance != null && SpellHoldInfoManager.Instance.IsSpellNewlyUnlocked(status.Type);
+                iconUI.SetNewBadgeActive(isNew);
 
                 if (status.TotalCount > 0)
                 {
@@ -583,6 +588,17 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
         {
             Debug.LogError($"[UI] Drag Begin: {draggedSpell.spellName} not found in hold list.");
             return;
+        }
+
+        // 新規取得フラグをクリア
+        if (SpellDatabase.Instance != null && SpellHoldInfoManager.Instance != null)
+        {
+            SpellType type = SpellDatabase.Instance.GetSpellType(draggedSpell);
+            if (type != SpellType.None)
+            {
+                SpellHoldInfoManager.Instance.ClearNewlyUnlockedStatus(type);
+                _holdListSpellUIs[index].SetNewBadgeActive(false);
+            }
         }
 
         // 2. ドラッグ中のUIとして保持し、リストから参照を外す
