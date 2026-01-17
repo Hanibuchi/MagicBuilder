@@ -211,6 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   index: 0
   iconImage: {fileID: 3367586624114482873}
+  newBadge: {fileID: 7681620822407809572}
   dragStartClip: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
   dragStartClipVolume: 1
   frame: {fileID: 1007055403965533676}

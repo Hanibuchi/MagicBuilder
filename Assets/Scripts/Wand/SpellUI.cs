@@ -16,11 +16,13 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
     // UIパーツ
     public Image iconImage;
+    [SerializeField] private GameObject newBadge;
 
     public void Initialize(ISpellContainer parentWandUI)
     {
         activeColor = frame.color;
         this.spellContainerUI = parentWandUI;
+        SetNewBadgeActive(false);
     }
 
     public void SetData(SpellBase data)
@@ -41,6 +43,17 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     {
         this.index = newIndex;
         this.gameObject.name = $"SpellUI_{index}";
+    }
+
+    /// <summary>
+    /// 新規取得バッジの表示・非表示を切り替える
+    /// </summary>
+    public void SetNewBadgeActive(bool active)
+    {
+        if (newBadge != null)
+        {
+            newBadge.SetActive(active);
+        }
     }
 
     // --- ドラッグ処理 ---
