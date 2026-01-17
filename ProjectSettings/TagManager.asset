@@ -65,5 +65,8 @@ TagManager:
   - name: AImStartObject
     uniqueID: 2588249511
     locked: 0
+  - name: SpecialEffect
+    uniqueID: 1598000337
+    locked: 0
   m_RenderingLayers:
   - Default
