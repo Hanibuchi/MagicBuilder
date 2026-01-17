@@ -17,6 +17,7 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
     [SerializeField] private RectTransform inventoryFrame;
 
     private List<SpellUI> spellUIs = new List<SpellUI>();
+    private HashSet<int> newSpellIndices = new HashSet<int>(); // 新しく取得した呪文のインデックスを保持
     SpellUI draggingSpellUI;
 
 
@@ -136,6 +137,8 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
             spellUI.SetIndex(index);
             // SpellInventory自身をコンテナとして渡す
             spellUI.Initialize(this);
+            // 新規取得バッジの状態を設定
+            spellUI.SetNewBadgeActive(newSpellIndices.Contains(index));
             spellUIs.Add(spellUI);
 
             spellUI.gameObject.name = $"Inv_SpellUI_{index}_{spell.spellName}";
@@ -148,6 +151,14 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
     {
         draggingSpellUI = spellUIs[index];
         spellUIs[index] = null;
+
+        // ドラッグされたら新規取得フラグを削除
+        if (newSpellIndices.Contains(index))
+        {
+            newSpellIndices.Remove(index);
+            if (draggingSpellUI != null)
+                draggingSpellUI.SetNewBadgeActive(false);
+        }
 
         RebuildUIWhileDragging();
     }
@@ -369,6 +380,7 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
 
         // 1. データリストに追加
         availableSpells.Add(spellToAdd);
+        newSpellIndices.Add(availableSpells.Count - 1); // 新規取得フラグをセット
 
         // 呪文の保持情報を更新（未開放なら開放する）
         SpellType type = SpellDatabase.Instance.GetSpellType(spellToAdd);
