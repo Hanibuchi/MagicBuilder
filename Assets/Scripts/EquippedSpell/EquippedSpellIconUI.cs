@@ -28,6 +28,9 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
     [Tooltip("レイキャストターゲットとして機能するImage (非アクティブ時に制御)")]
     [SerializeField] private Image raycastTargetImage;
 
+    [Tooltip("新規取得を表すバッジのGameObject")]
+    [SerializeField] private GameObject newBadge;
+
 
     [Header("非アクティブ設定")]
     [Tooltip("ロック時のフレームの色")]
@@ -148,6 +151,18 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
 
             // 保持リストの場合は所持数を表示
             countText.text = count >= 2 || count == 0 ? count.ToString() : "";
+        }
+    }
+
+    /// <summary>
+    /// 新規取得バッジの表示・非表示を切り替えます。
+    /// </summary>
+    /// <param name="active">表示するかどうか</param>
+    public void SetNewBadgeActive(bool active)
+    {
+        if (newBadge != null)
+        {
+            newBadge.SetActive(active);
         }
     }
 
