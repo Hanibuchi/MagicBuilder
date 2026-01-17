@@ -703,6 +703,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 609503950}
   m_CullTransparentMesh: 1
+--- !u!114 &636155642 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 179408103072522459, guid: 604c1c26469ad3047a1533afde673226, type: 3}
+  m_PrefabInstance: {fileID: 385014373}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b5f436ca4e67d244b8ba71118ebfacd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &653852051
 GameObject:
   m_ObjectHideFlags: 0
@@ -5442,9 +5453,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1547114319}
-        m_TargetAssemblyTypeName: AdManager, Assembly-CSharp
-        m_MethodName: Test
+      - m_Target: {fileID: 636155642}
+        m_TargetAssemblyTypeName: EquippedSpellController, Assembly-CSharp
+        m_MethodName: Test_ApplyAndSaveManualStatuses
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
