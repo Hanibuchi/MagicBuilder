@@ -163,6 +163,15 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         RebuildUIWhileDragging();
     }
 
+    public void NotifyPointerClick(int index)
+    {
+        if (newSpellIndices.Contains(index))
+        {
+            newSpellIndices.Remove(index);
+            // 本来は再構築しなくても、UI側で直接消しているのでここではリストの更新のみ
+        }
+    }
+
     /// <summary>
     /// SpellUIがドラッグ＆ドロップによってコンテナから削除されたことを通知。
     /// インベントリの場合、呪文はデータリストからは削除せず、UIのみを再構築する。

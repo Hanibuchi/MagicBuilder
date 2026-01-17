@@ -141,6 +141,10 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         // ドラッグ操作ではないことを確認（今回の目的には不要かもしれませんが、念のため）
         if (eventData.dragging) return;
 
+        // 新規取得フラグをクリア
+        spellContainerUI?.NotifyPointerClick(index);
+        SetNewBadgeActive(false);
+
         // シングルトン経由で詳細パネルの表示を開始
         if (SpellDescriptionUI.Instance != null)
         {
@@ -163,6 +167,12 @@ public interface ISpellContainer
     /// </summary>
     /// <param name="index"></param>
     void NotifyDragBegin(int index) { }
+
+    /// <summary>
+    /// クリックされたことを通知。
+    /// </summary>
+    /// <param name="index"></param>
+    void NotifyPointerClick(int index) { }
 
     /// <summary>
     /// SpellUIがドラッグ＆ドロップによってコンテナから削除されたことを通知します。

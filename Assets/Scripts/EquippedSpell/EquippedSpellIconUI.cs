@@ -277,6 +277,17 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
         // SpellBaseデータがない、またはドラッグ操作の場合は何もしない
         if (_spellData == null || eventData.dragging || !showDescription) return;
 
+        // 新規取得フラグをクリア
+        if (SpellDatabase.Instance != null && SpellHoldInfoManager.Instance != null)
+        {
+            SpellType type = SpellDatabase.Instance.GetSpellType(_spellData);
+            if (type != SpellType.None)
+            {
+                SpellHoldInfoManager.Instance.ClearNewlyUnlockedStatus(type);
+                SetNewBadgeActive(false);
+            }
+        }
+
         // シングルトン経由で詳細パネルの表示を開始
         if (SpellPurchaseUI.Instance != null)
         {
