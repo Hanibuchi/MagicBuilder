@@ -47,11 +47,14 @@ public class SpellHoldInfoManager : MonoBehaviour
 
     private const string PREF_KEY_COUNT_PREFIX = "SpellCount_";
     private const string PREF_KEY_UNLOCKED_PREFIX = "SpellUnlocked_";
+    private const string PREF_KEY_NEWLY_UNLOCKED_PREFIX = "SpellNewlyUnlocked_";
 
     // 呪文の保持数: Key=SpellType, Value=保持数
     private Dictionary<SpellType, int> _spellCounts = new Dictionary<SpellType, int>();
     // 呪文の開放情報: Key=SpellType, Value=開放済みか
     private Dictionary<SpellType, bool> _spellUnlockedStatus = new Dictionary<SpellType, bool>();
+    // 呪文が新規取得（未確認）か: Key=SpellType, Value=新規か
+    private Dictionary<SpellType, bool> _spellNewlyUnlockedStatus = new Dictionary<SpellType, bool>();
 
     // 外部通知用（登録できるのは1つのみ）
     private ISpellHoldInfoObserver _observer;
@@ -91,6 +94,11 @@ public class SpellHoldInfoManager : MonoBehaviour
             // PlayerPrefs.GetIntで0=false, 1=trueとして読み込む
             bool unlocked = PlayerPrefs.GetInt(unlockedKey, 0) == 1;
             _spellUnlockedStatus[type] = unlocked;
+
+            // 新規開放情報の読み込み (デフォルトは false)
+            string newlyUnlockedKey = PREF_KEY_NEWLY_UNLOCKED_PREFIX + type.ToString();
+            bool newlyUnlocked = PlayerPrefs.GetInt(newlyUnlockedKey, 0) == 1;
+            _spellNewlyUnlockedStatus[type] = newlyUnlocked;
         }
 
         // 初期状態で保持数が1以上の呪文は「開放済み」と見なす
@@ -121,6 +129,12 @@ public class SpellHoldInfoManager : MonoBehaviour
             PlayerPrefs.SetInt(unlockedKey, pair.Value ? 1 : 0);
         }
 
+        foreach (var pair in _spellNewlyUnlockedStatus)
+        {
+            string newlyUnlockedKey = PREF_KEY_NEWLY_UNLOCKED_PREFIX + pair.Key.ToString();
+            PlayerPrefs.SetInt(newlyUnlockedKey, pair.Value ? 1 : 0);
+        }
+
         PlayerPrefs.Save(); // 変更をディスクに書き込み
     }
 
@@ -146,6 +160,7 @@ public class SpellHoldInfoManager : MonoBehaviour
         }
 
         _spellUnlockedStatus[type] = true;
+        _spellNewlyUnlockedStatus[type] = true; // 新規開放フラグを立てる
 
         // 通知
         _observer?.OnSpellUnlocked(type);
@@ -233,6 +248,30 @@ public class SpellHoldInfoManager : MonoBehaviour
             return unlocked;
         }
         return false; // データがない場合は未開放
+    }
+
+    /// <summary>
+    /// 特定の呪文が新規開放（未確認）状態かを取得します。
+    /// </summary>
+    public bool IsSpellNewlyUnlocked(SpellType type)
+    {
+        if (_spellNewlyUnlockedStatus.TryGetValue(type, out bool newlyUnlocked))
+        {
+            return newlyUnlocked;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 特定の呪文の新規開放フラグを下ろします（確認済みとする）。
+    /// </summary>
+    public void ClearNewlyUnlockedStatus(SpellType type)
+    {
+        if (_spellNewlyUnlockedStatus.ContainsKey(type) && _spellNewlyUnlockedStatus[type])
+        {
+            _spellNewlyUnlockedStatus[type] = false;
+            SaveAllData();
+        }
     }
 
 
