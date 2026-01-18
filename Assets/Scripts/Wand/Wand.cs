@@ -29,9 +29,26 @@ public class Wand
     [Tooltip("この杖に追加できる呪文の最大数。")]
     public int maxSpellCount = 12; // デフォルト値として12を設定
 
+    [Header("デフォルト呪文")]
+    [Tooltip("この杖に固定でセットされている、外すことのできない呪文。")]
+    [SerializeReference] public List<SpellBase> fixedSpells = new List<SpellBase>();
+
     [Header("呪文スロット")]
     [Tooltip("この杖にセットされている呪文の配列。")]
     [SerializeReference] public List<SpellBase> spells = new List<SpellBase>();
+
+    /// <summary>
+    /// 固定呪文と通常の呪文を合わせた、この杖のすべての呪文リストを返します。
+    /// </summary>
+    public List<SpellBase> AllSpells
+    {
+        get
+        {
+            List<SpellBase> all = new List<SpellBase>(fixedSpells);
+            all.AddRange(spells);
+            return all;
+        }
+    }
 
     // 呪文リストの変更を監視するリスナーのリスト
     private ISpellListChangeListener listener;
@@ -77,7 +94,7 @@ public class Wand
     public float GetTotalCooldown()
     {
         float totalCooldown = 0f;
-        foreach (var spell in spells)
+        foreach (var spell in AllSpells)
         {
             if (spell != null)
             {

@@ -15,9 +15,13 @@ public class WandUI : MonoBehaviour, ISpellContainer
     // 呪文UIとスペーシングUIを格納するリスト（交互に並ぶ）
     private List<GameObject> uiElements = new List<GameObject>();
 
+    private List<SpellBase> fixedSpellBasesCashe = new List<SpellBase>();
+    private List<SpellBase> spellBasesCashe = new List<SpellBase>();
+
     void Awake()
     {
         // 初期状態では空の杖を表現するために、スペーシングUIを一つ配置する
+        // ※固定呪文がある場合、RebuildUIが呼ばれるまではこの1つだけが表示される。
         CreateSpacingUI(0);
     }
 
@@ -37,8 +41,23 @@ public class WandUI : MonoBehaviour, ISpellContainer
             spellUI.Initialize(this); // このWandUI自身への参照を渡す
         }
 
-        // リストに挿入 (UIの並び順は (Spacing, Spell, Spacing, Spell, Spacing, ...) となる)
-        uiElements.Insert(index * 2 + 1, spellUI.gameObject);
+        // リストに挿入 (UIの並び順は Fixed..., Spacing, Spell, Spacing, Spell, Spacing, ...) となる
+        int fixedCount = fixedSpellBasesCashe.Count;
+        uiElements.Insert(fixedCount + index * 2 + 1, spellUI.gameObject);
+    }
+
+    private void CreateFixedSpellUI(SpellBase spell)
+    {
+        SpellUI spellUI = spell.CreateUI();
+        if (spellUI != null)
+        {
+            spellUI.transform.SetParent(spellFrame);
+            spellUI.Initialize(this);
+            spellUI.SetActive(false); // 固定呪文は移動・削除不可
+        }
+
+        // 固定呪文はリストの先頭付近（他の固定呪文の後）に追加
+        uiElements.Add(spellUI.gameObject);
     }
 
     private void CreateSpacingUI(int index)
@@ -52,7 +71,8 @@ public class WandUI : MonoBehaviour, ISpellContainer
         }
 
         // リストに挿入 (SpacingUIはSpellUIの前後に配置される)
-        int insertionIndex = index * 2;
+        int fixedCount = fixedSpellBasesCashe.Count;
+        int insertionIndex = fixedCount + index * 2;
 
         uiElements.Insert(insertionIndex, spacingObj);
     }
@@ -101,10 +121,10 @@ public class WandUI : MonoBehaviour, ISpellContainer
         }
     }
 
-    SpellBase[] spellBasesCashe;
     // UI要素をクリアし、現在の呪文の並びに基づいて再生成する
-    public void RebuildUI(SpellBase[] newSequence)
+    public void RebuildUI(List<SpellBase> fixedSequence, List<SpellBase> newSequence)
     {
+        fixedSpellBasesCashe = fixedSequence;
         spellBasesCashe = newSequence;
         // 全てのUI要素をクリア
         foreach (var element in uiElements)
@@ -113,22 +133,23 @@ public class WandUI : MonoBehaviour, ISpellContainer
         }
         uiElements.Clear();
 
-        // スペーシングの数 = 呪文の数 + 1
-        // 例：呪文が3つあれば、SpacingUIは4つ
-        // 実際の実装では、IWandEditorから最新の呪文リストを取得し、それに基づいて
-        // CreateSpacingUIとCreateSpellUIを交互に呼び出す
+        // 1. 固定呪文を生成
+        foreach (var spell in fixedSequence)
+        {
+            CreateFixedSpellUI(spell);
+        }
 
-        // 例：現在の呪文リストがwandEditor.GetCurrentSpells()で取得できる場合
-        for (int i = 0; i < newSequence.Length; i++)
+        // 2. 通常の呪文とスペーシングを交互に生成
+        for (int i = 0; i < newSequence.Count; i++)
         {
             CreateSpacingUI(i);
             CreateSpellUI(i, newSequence[i]);
         }
-        CreateSpacingUI(newSequence.Length);
+        CreateSpacingUI(newSequence.Count);
     }
     public void RebuildUI()
     {
-        RebuildUI(spellBasesCashe);
+        RebuildUI(fixedSpellBasesCashe, spellBasesCashe);
     }
 
     /// <summary>

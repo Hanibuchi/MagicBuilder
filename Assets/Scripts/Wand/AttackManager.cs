@@ -55,7 +55,7 @@ public class AttackManager : MonoBehaviour
 
         Wand wandToUse = playerWands[wandIndex];
 
-        if (wandToUse == null || wandToUse.spells.Count == 0)
+        if (wandToUse == null || wandToUse.AllSpells.Count == 0)
         {
             Debug.LogWarning($"杖 (Index: {wandIndex}) がnullか、呪文がセットされていません。");
             return;
@@ -67,7 +67,7 @@ public class AttackManager : MonoBehaviour
         // GetAbsoluteIndicesFromSpellGroupArray を使用して、呪文の連鎖全体で次に発動すべき呪文を特定
         // 最初の呪文は「1つ目の呪文」として処理するため、relativeGroupOffsets は [1] を渡す
         int[] targetIndices = SpellBase.GetAbsoluteIndicesFromSpellGroupArray(
-            wandToUse.spells,
+            wandToUse.AllSpells,
             -1,
             arr // 最初の呪文グループ（すなわち最初の呪文）の次のインデックスを取得
         );
@@ -77,11 +77,11 @@ public class AttackManager : MonoBehaviour
         // 取得した全ての開始インデックスの呪文に対して DisplayAimingLine を呼び出す
         foreach (int targetIndex in targetIndices)
         {
-            if (targetIndex >= 0 && targetIndex < wandToUse.spells.Count)
+            if (targetIndex >= 0 && targetIndex < wandToUse.AllSpells.Count)
             {
-                SpellBase spell = wandToUse.spells[targetIndex];
+                SpellBase spell = wandToUse.AllSpells[targetIndex];
                 spell?.DisplayAimingLine(
-                    wandToUse.spells,
+                    wandToUse.AllSpells,
                     targetIndex,
                     rotationZ,
                     strength,
@@ -110,13 +110,13 @@ public class AttackManager : MonoBehaviour
         }
 
         Wand wandToUse = playerWands[wandIndex];
-        if (wandToUse == null || wandToUse.spells.Count == 0)
+        if (wandToUse == null || wandToUse.AllSpells.Count == 0)
         {
             Debug.LogError("wandToUse is null or no spell");
             return;
         }
 
-        List<SpellBase> processedSpells = ProcessWandSpellsBeforeFire(wandToUse.spells);
+        List<SpellBase> processedSpells = ProcessWandSpellsBeforeFire(wandToUse.AllSpells);
 
         int[] targetIndices = SpellBase.GetAbsoluteIndicesFromSpellGroupArray(
             processedSpells,
