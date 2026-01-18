@@ -13,6 +13,7 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     public int index;
     public ISpellContainer spellContainerUI;
     private SpellBase spellData;
+    private bool isActive = true;
 
     // UIパーツ
     public Image iconImage;
@@ -62,6 +63,13 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     [SerializeField] float dragStartClipVolume = 1.0f;
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (!isActive)
+        {
+            // EventSystemに対して、このオブジェクトはドラッグ不可能であることを伝える
+            eventData.pointerDrag = null;
+            return;
+        }
+
         if (SoundManager.Instance != null && dragStartClip != null)
             SoundManager.Instance.PlaySE(dragStartClip, dragStartClipVolume);
 
@@ -79,11 +87,13 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!isActive) return;
         transform.position = eventData.position;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!isActive) return;
         // このメソッドはDragが成功した場合はなぜか呼ばれない。ただ、失敗した場合は呼ばれる必要がある。
         Debug.Log("OnEndDrag called");
         WandUIManager.Instance?.NotifySpellDragEndedToAll();
@@ -115,17 +125,22 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     Color activeColor;
     public void SetActive(bool active)
     {
+        this.isActive = active;
         if (active)
         {
             frame.color = activeColor;
             iconImage.material = null;
-            raycastTargetImage.raycastTarget = true;
         }
         else
         {
             frame.color = disableColor;
             iconImage.material = disableMaterial;
-            raycastTargetImage.raycastTarget = false;
+        }
+
+        // ドラッグは制限するが、クリック（詳細表示）はできるようにRaycastTargetは常にtrueにする
+        if (raycastTargetImage != null)
+        {
+            raycastTargetImage.raycastTarget = true;
         }
     }
 
@@ -138,8 +153,9 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         // SpellBaseデータがない場合は何もしない
         if (spellData == null) return;
 
-        // ドラッグ操作ではないことを確認（今回の目的には不要かもしれませんが、念のため）
-        if (eventData.dragging) return;
+        // 通常はドラッグ操作中はクリック判定を無視するが、
+        // isActiveがfalseの時はドラッグ機能を無効化しているため、移動があってもクリックとして受け付ける
+        if (eventData.dragging && isActive) return;
 
         // 新規取得フラグをクリア
         spellContainerUI?.NotifyPointerClick(index);
