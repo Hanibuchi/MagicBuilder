@@ -107,7 +107,7 @@ public class WandUnlockManager : MonoBehaviour
         if (_wandDataAsset == null) return new Wand[0];
 
         return _wandDataAsset.wands
-            .Where(w => IsWandUnlocked(w.type) && !IsPresentationPerformed(w.type))
+            .Where(w => w.type != WandType.Default && IsWandUnlocked(w.type) && !IsPresentationPerformed(w.type))
             .Select(w => w.wand)
             .ToArray();
     }
