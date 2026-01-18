@@ -76,6 +76,15 @@ public class Wand
     }
 
     /// <summary>
+    /// 杖の状態をリセットします（セットされている通常の呪文をすべてクリアします）。
+    /// </summary>
+    public void Reset()
+    {
+        spells.Clear();
+        NotifyListChanged();
+    }
+
+    /// <summary>
     /// 呪文リストの変更をすべてのリスナーに通知します。
     /// </summary>
     private void NotifyListChanged()

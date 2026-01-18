@@ -211,6 +211,7 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         {
             foreach (var wand in unlockedWands)
             {
+                wand.Reset();
                 WandsController.Instance.GenerateNewWand(wand);
             }
             // 最初の杖に切り替え
