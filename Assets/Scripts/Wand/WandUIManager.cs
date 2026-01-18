@@ -47,6 +47,12 @@ public class WandUIManager : MonoBehaviour
             return;
         }
 
+        // 閲覧済みに設定
+        if (index < wandVisitedStatus.Count)
+        {
+            wandVisitedStatus[index] = true;
+        }
+
         // 全てのWandUIを走査し、アクティブ/非アクティブを設定
         for (int i = 0; i < activeWandUIs.Count; i++)
         {
@@ -97,6 +103,7 @@ public class WandUIManager : MonoBehaviour
         if (!activeWandUIs.Contains(wandUI))
         {
             activeWandUIs.Add(wandUI);
+            wandVisitedStatus.Add(false); // ★ 追加: 初期状態は未読
             Debug.Log($"WandUI登録完了。現在 {activeWandUIs.Count} 個のUIがアクティブです。");
         }
     }
@@ -106,7 +113,15 @@ public class WandUIManager : MonoBehaviour
     /// </summary>
     void UnregisterWandUI(WandUI wandUI)
     {
-        activeWandUIs.Remove(wandUI);
+        int index = activeWandUIs.IndexOf(wandUI);
+        if (index != -1)
+        {
+            activeWandUIs.RemoveAt(index);
+            if (index < wandVisitedStatus.Count)
+            {
+                wandVisitedStatus.RemoveAt(index);
+            }
+        }
     }
 
 
@@ -170,8 +185,13 @@ public class WandUIManager : MonoBehaviour
     [Header("杖切り替えUI")] // ★ 追加
     [SerializeField] private Button switchNextButton; // ★ 追加: 次の杖へ
     [SerializeField] private Button switchPrevButton; // ★ 追加: 前の杖へ
+    [SerializeField] private GameObject nextNewIndicator; // ★ 追加: 次の杖に未読あり
+    [SerializeField] private GameObject prevNewIndicator; // ★ 追加: 前の杖に未読あり
+
     // ★ 杖切り替えリスナー
     private WandSwitchListener wandSwitchListener; // ★ 追加: WandsControllerが実装
+    private List<bool> wandVisitedStatus = new List<bool>(); // ★ 追加: 閲覧済みフラグを保持するリスト
+
     void Start() // ★ 追加: ボタンリスナーの設定とAttackManagerのイベント登録
     {
         // ボタンにクリックリスナーを登録
@@ -214,7 +234,30 @@ public class WandUIManager : MonoBehaviour
         bool canSwitchPrev = newIndex > 0;
         switchPrevButton?.gameObject.SetActive(canSwitchPrev);
 
-        Debug.Log($"杖切り替えUIを更新: 現在のIndex={newIndex}, Next={canSwitchNext}, Prev={canSwitchPrev}");
+        // ★ Newオブジェクト（未表示の杖があるか）の制御
+        bool hasNewNext = false;
+        for (int i = newIndex + 1; i < totalWands; i++)
+        {
+            if (i < wandVisitedStatus.Count && !wandVisitedStatus[i])
+            {
+                hasNewNext = true;
+                break;
+            }
+        }
+        nextNewIndicator?.SetActive(hasNewNext);
+
+        bool hasNewPrev = false;
+        for (int i = 0; i < newIndex; i++)
+        {
+            if (i < wandVisitedStatus.Count && !wandVisitedStatus[i])
+            {
+                hasNewPrev = true;
+                break;
+            }
+        }
+        prevNewIndicator?.SetActive(hasNewPrev);
+
+        Debug.Log($"杖切り替えUIを更新: 現在のIndex={newIndex}, Next={canSwitchNext}, Prev={canSwitchPrev}, HasNewNext={hasNewNext}, HasNewPrev={hasNewPrev}");
     }
 
     public void Show()
