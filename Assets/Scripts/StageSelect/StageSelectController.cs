@@ -19,6 +19,12 @@ public class StageSelectController : MonoBehaviour, IStageStartListener
     [Tooltip("島とステージの紐づけ情報を持つScriptableObject。")]
     [SerializeField]
     private IslandStageMappingConfig islandStageMapConfig; // IslandStageMappingConfigへの参照
+
+    [Header("杖の開放演出")]
+    [Tooltip("杖の開放演出を制御するコンポーネントの参照。")]
+    [SerializeField] private WandAcquisitionEffect wandAcquisitionEffect;
+    [Tooltip("演出終了後、自動選択が行われるまでの待ち時間。")]
+    [SerializeField] private float autoSelectDelay = 0.5f;
     // -------------------------
 
     private void Start()
@@ -48,7 +54,57 @@ public class StageSelectController : MonoBehaviour, IStageStartListener
         starter.SetStageStartListener(GameManager.Instance);
         Debug.Log("StageSelectController: GameManagerをStageStarterに登録しました。");
 
-        // ステージ選択UIの自動選択処理
+        // 杖の開放演出のチェックを開始（演出終了後に自動選択を呼び出す）
+        CheckWandReleaseEffects();
+    }
+
+    /// <summary>
+    /// 未再生の杖開放演出があるか確認し、あれば順次再生します。
+    /// 全て終了後、または演出がない場合にステージの自動選択を行います。
+    /// </summary>
+    private void CheckWandReleaseEffects()
+    {
+        Wand[] pendingWands = WandUnlockManager.Instance.GetPendingPresentationWands();
+
+        if (pendingWands != null && pendingWands.Length > 0 && wandAcquisitionEffect != null)
+        {
+            ShowNextWandEffect(pendingWands, 0);
+        }
+        else
+        {
+            AutomaticallySelectIsland();
+        }
+    }
+
+    /// <summary>
+    /// 杖の開放演出を表示します（最初の1つのみ）。
+    /// 次回この画面に来た際に残りの演出を表示するため、表示した杖のみを完了として記録します。
+    /// </summary>
+    private void ShowNextWandEffect(Wand[] wands, int index)
+    {
+        // 最初の1つ目の演出を表示
+        Wand currentWand = wands[index];
+        wandAcquisitionEffect.gameObject.SetActive(true);
+        wandAcquisitionEffect.Setup(
+            currentWand.wandSprite,
+            currentWand.presentationSprite,
+            currentWand.wandName,
+            currentWand.description,
+            () =>
+            {
+                // 演出した杖のみを完了として記録
+                WandUnlockManager.Instance.MarkPresentationPerformed(currentWand.type);
+
+                // 自動選択へ
+                StartCoroutine(DelayedAutoSelect());
+            }
+        );
+        wandAcquisitionEffect.StartEffect();
+    }
+
+    private System.Collections.IEnumerator DelayedAutoSelect()
+    {
+        yield return new WaitForSeconds(autoSelectDelay);
         AutomaticallySelectIsland();
 
         if (CurrencyUI.Instance != null)
@@ -100,5 +156,10 @@ public class StageSelectController : MonoBehaviour, IStageStartListener
             CurrencyUI.Instance.Hide();
         }
         SoundManager.Instance.StopBGMWithFade(0.5f);
+    }
+
+    public void Test()
+    {
+        WandUnlockManager.Instance.UnlockWand(WandType.Fire);
     }
 }
