@@ -15,26 +15,32 @@ MonoBehaviour:
   islandStageMap:
   - islandID: forest
     islandName: "\u6A39\u6D77"
+    wandToUnlock: 4
     stages:
     - 1-1
     - 1-2
   - islandID: desert
     islandName: "\u5E72\u304B\u3089\u3073\u305F\u90FD"
+    wandToUnlock: 1
     stages:
     - 2-1
   - islandID: volcanic
     islandName: "\u6D3B\u706B\u5C71"
+    wandToUnlock: 3
     stages:
     - 3-1
   - islandID: ice
     islandName: "\u6975\u5BD2\u306E\u5730"
+    wandToUnlock: 2
     stages:
     - 4-1
   - islandID: sky
     islandName: "\u5929\u7A7A\u306E\u5BAE\u6BBF"
+    wandToUnlock: 5
     stages:
     - 5-1
   - islandID: magic
     islandName: "\u9B54\u65CF\u306E\u7A7A\u5CF6"
+    wandToUnlock: 6
     stages:
     - 6-1

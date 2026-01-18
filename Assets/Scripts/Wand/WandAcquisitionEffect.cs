@@ -72,6 +72,13 @@ public class WandAcquisitionEffect : MonoBehaviour
     /// <param name="callback">ボタンが押された際のコールバック</param>
     public void Setup(Sprite sprite, Sprite particleSprite, string name, string description, UnityAction callback)
     {
+        if (CameraManager.Instance != null && rootObject != null)
+        {
+            Vector2 camPos = CameraManager.Instance.GetWorldPosition();
+            // xとy座標をCameraManagerのに一致させる（2Dプロジェクトのため、リクエストのzはyの意図と推測）
+            rootObject.transform.position = new Vector3(camPos.x, camPos.y, rootObject.transform.position.z);
+        }
+
         if (wandImage != null && sprite != null)
         {
             wandImage.sprite = sprite;
