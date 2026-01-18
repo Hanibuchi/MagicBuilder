@@ -27,6 +27,9 @@ public class StageSelectController : MonoBehaviour, IStageStartListener
     [SerializeField] private float autoSelectDelay = 0.5f;
     // -------------------------
 
+    private const string CAMERA_POS_X_KEY = "StageSelect_CameraPosX";
+    private const string CAMERA_POS_Y_KEY = "StageSelect_CameraPosY";
+
     private void Start()
     {
         // StageStarterインスタンスを取得
@@ -39,6 +42,9 @@ public class StageSelectController : MonoBehaviour, IStageStartListener
         }
 
         starter.SetStageStartListener(this);
+
+        // カメラ位置の復元
+        RestoreCameraPosition();
 
         // 必須コンポーネントのチェック（追加）
         if (stageSelectUI == null || islandStageMapConfig == null)
@@ -151,11 +157,45 @@ public class StageSelectController : MonoBehaviour, IStageStartListener
 
     public void OnStageStart(StageConfig config)
     {
+        SaveCameraPosition();
+
         if (CurrencyUI.Instance != null)
         {
             CurrencyUI.Instance.Hide();
         }
         SoundManager.Instance.StopBGMWithFade(0.5f);
+    }
+
+    /// <summary>
+    /// 現在のカメラ位置を保存します。
+    /// </summary>
+    private void SaveCameraPosition()
+    {
+        if (CameraManager.Instance != null)
+        {
+            Vector2 pos = CameraManager.Instance.GetWorldPosition();
+            PlayerPrefs.SetFloat(CAMERA_POS_X_KEY, pos.x);
+            PlayerPrefs.SetFloat(CAMERA_POS_Y_KEY, pos.y);
+            PlayerPrefs.Save();
+            Debug.Log($"StageSelectController: カメラ位置を保存しました ({pos.x}, {pos.y})");
+        }
+    }
+
+    /// <summary>
+    /// 保存されたカメラ位置を復元します。
+    /// </summary>
+    private void RestoreCameraPosition()
+    {
+        if (PlayerPrefs.HasKey(CAMERA_POS_X_KEY) && PlayerPrefs.HasKey(CAMERA_POS_Y_KEY))
+        {
+            float x = PlayerPrefs.GetFloat(CAMERA_POS_X_KEY);
+            float y = PlayerPrefs.GetFloat(CAMERA_POS_Y_KEY);
+            if (CameraManager.Instance != null)
+            {
+                CameraManager.Instance.SetCameraPosition(new Vector2(x, y));
+                Debug.Log($"StageSelectController: カメラ位置を復元しました ({x}, {y})");
+            }
+        }
     }
 
     public void Test()
