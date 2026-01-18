@@ -205,6 +205,18 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
     /// </summary>
     private void StartGameImmediately()
     {
+        // 解放されている杖を取得して追加
+        var unlockedWands = WandUnlockManager.Instance.GetUnlockedWands();
+        if (unlockedWands != null && unlockedWands.Length > 0)
+        {
+            foreach (var wand in unlockedWands)
+            {
+                WandsController.Instance.GenerateNewWand(wand);
+            }
+            // 最初の杖に切り替え
+            WandsController.Instance.SwitchWand(0);
+        }
+
         WandUIManager.Instance.Show();
         SpellInventory.Instance.Show();
         // 直接 StartPhase を呼ばず、呪文投入演出のコルーチンを開始する
