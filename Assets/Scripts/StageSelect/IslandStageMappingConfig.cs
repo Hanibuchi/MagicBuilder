@@ -16,6 +16,9 @@ public class IslandStageMappingConfig : ScriptableObject
         public string islandID;
         public string islandName;
 
+        [Tooltip("この島をクリアしたときに解放される杖の種類。")]
+        public WandType wandToUnlock;
+
         [Tooltip("この島に属するステージのリスト。")]
         public string[] stages;
     }
@@ -70,5 +73,33 @@ public class IslandStageMappingConfig : ScriptableObject
             }
         }
         return null;
+    }
+
+    /// <summary>
+    /// 指定されたステージがその島の最後のステージかどうかを判定し、
+    /// 最後のステージであればその島に関連付けられた解放対象の杖の種類を返します。
+    /// </summary>
+    /// <param name="stageName">判定対象のステージ名。</param>
+    /// <param name="wandType">解放対象の杖の種類（最後のステージでない場合はNoneなどは返せないので、bool戻り値とoutパラメータで対応）。</param>
+    /// <returns>最後のステージであればtrue。</returns>
+    public bool IsLastStageOfIsland(string stageName, out WandType wandType)
+    {
+        wandType = WandType.Default;
+        if (islandStageMap == null) return false;
+
+        foreach (var islandData in islandStageMap)
+        {
+            if (islandData != null && islandData.stages != null && islandData.stages.Length > 0)
+            {
+                // 最後のステージ名を取得
+                string lastStageInIsland = islandData.stages[^1];
+                if (lastStageInIsland == stageName)
+                {
+                    wandType = islandData.wandToUnlock;
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

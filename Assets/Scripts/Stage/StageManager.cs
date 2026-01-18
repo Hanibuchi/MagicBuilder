@@ -297,6 +297,10 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
     [Tooltip("全ステージのリスト設定を持つScriptableObject。")]
     // StageListConfigのインスタンスをインスペクタから設定できるようにする
     public StageListConfig stageListConfig;
+
+    [Tooltip("島とステージの紐づけ情報を持つScriptableObject。")]
+    public IslandStageMappingConfig islandStageMapConfig;
+
     /// <summary>
     /// ステージクリア時の処理を実行します。
     /// </summary>
@@ -307,6 +311,16 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         Debug.Log("🎉 ステージクリア！");
         OnGameEnd();
         StartCoroutine(DelayAndPauseGameOnGameClear());
+
+        // 島の最後のステージをクリアしたかチェック
+        if (islandStageMapConfig != null)
+        {
+            if (islandStageMapConfig.IsLastStageOfIsland(stageConfig.stageName, out WandType wandType))
+            {
+                Debug.Log($"島の最後のステージクリア：杖 {wandType} をアンロックします。");
+                WandUnlockManager.Instance.UnlockWand(wandType);
+            }
+        }
 
         if (stageListConfig == null)
         {

@@ -1030,6 +1030,7 @@ MonoBehaviour:
   postDropWaitTime: 1
   bGM: {fileID: 8300000, guid: a22f9bc6792cd124d8e50f8495aeb072, type: 3}
   stageListConfig: {fileID: 11400000, guid: a913743c035d39741b49b95e008dd19b, type: 2}
+  islandStageMapConfig: {fileID: 11400000, guid: 308115efb2fda7b428f76ea1ca1fdd31, type: 2}
   clearDelaySeconds: 2
   firstClearReward: 100
   repeatClearReward: 10
