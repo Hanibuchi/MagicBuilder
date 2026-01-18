@@ -15,26 +15,64 @@ MonoBehaviour:
   wands:
   - type: 0
     wand:
+      wandName: "\u4F7F\u3044\u53E4\u3055\u308C\u305F\u6756"
+      description: "\u4F55\u306E\u5909\u54F2\u3082\u306A\u3044\u3069\u3053\u306B\u3067\u3082\u3042\u308B\u6756\u3002\u7279\u306B\u52B9\u679C\u306F\u306A\u3044\u3002"
       type: 0
-      maxSpellCount: 0
+      presentationSprite: {fileID: 2765907212958160120, guid: 00680ef11faee9b4c95610e8fbc6a97a, type: 3}
+      wandSprite: {fileID: -115740529236340053, guid: 2e69467cfff73bc4cb18f1a109d26ca0, type: 3}
+      maxSpellCount: 12
       spells: []
   - type: 1
     wand:
+      wandName: "\u96E8\u3054\u3044\u306E\u6756"
+      description: "\u304B\u3064\u3066\u306E\u90FD\u3067\u96E8\u3054\u3044\u306E\u5100\u5F0F\u306B\u4F7F\u308F\u308C\u3066\u3044\u305F\u796D\u5177\u3002"
       type: 1
+      presentationSprite: {fileID: 2765907212958160120, guid: 00680ef11faee9b4c95610e8fbc6a97a, type: 3}
+      wandSprite: {fileID: -5265215603963773043, guid: c4314b1012e639747bfb82bc1ebbcdd5, type: 3}
       maxSpellCount: 12
       spells: []
   - type: 2
     wand:
+      wandName: "\u6C37\u306E\u6756"
+      description: "\u89E3\u3051\u306A\u3044\u6C37\u306E\u7D50\u6676\u3092\u524A\u308A\u3060\u3057\u3066\u4F5C\u3089\u308C\u305F\u6756\u3002"
       type: 2
+      presentationSprite: {fileID: -2710494934234146192, guid: 00680ef11faee9b4c95610e8fbc6a97a, type: 3}
+      wandSprite: {fileID: 3282382071364735620, guid: c4314b1012e639747bfb82bc1ebbcdd5, type: 3}
       maxSpellCount: 12
       spells: []
   - type: 3
     wand:
+      wandName: "\u707C\u71B1\u306E\u6756"
+      description: "\u305A\u3063\u3068\u6D88\u3048\u306A\u3044\u706B\u304C\u3068\u3082\u308B\u6756\u3002"
       type: 3
+      presentationSprite: {fileID: -2323450122718096178, guid: 00680ef11faee9b4c95610e8fbc6a97a, type: 3}
+      wandSprite: {fileID: 6492906738683769071, guid: c4314b1012e639747bfb82bc1ebbcdd5, type: 3}
       maxSpellCount: 12
       spells: []
   - type: 4
     wand:
+      wandName: "\u6A39\u6D77\u306E\u6756"
+      description: "\u6A39\u6D77\u306E\u9B54\u529B\u3092\u5438\u3063\u305F\u6756\u3002"
       type: 4
+      presentationSprite: {fileID: -4587206180212381754, guid: 00680ef11faee9b4c95610e8fbc6a97a, type: 3}
+      wandSprite: {fileID: 6096887357460432995, guid: c4314b1012e639747bfb82bc1ebbcdd5, type: 3}
+      maxSpellCount: 12
+      spells: []
+  - type: 5
+    wand:
+      wandName: "\u795E\u8056\u306A\u6756"
+      description: "\u5929\u5553\u3092\u594F\u3067\u308B\u6307\u63EE\u68D2\u3002"
+      type: 5
+      presentationSprite: {fileID: -4587206180212381754, guid: 00680ef11faee9b4c95610e8fbc6a97a, type: 3}
+      wandSprite: {fileID: 1012713627532921925, guid: 2e69467cfff73bc4cb18f1a109d26ca0, type: 3}
+      maxSpellCount: 12
+      spells: []
+  - type: 6
+    wand:
+      wandName: "\u546A\u3044\u306E\u6756"
+      description: "\u8AB0\u304B\u306E\u546A\u3044\u304C\u8FBC\u3081\u3089\u308C\u305F\u6756\u3002"
+      type: 6
+      presentationSprite: {fileID: -5837143296029263757, guid: 00680ef11faee9b4c95610e8fbc6a97a, type: 3}
+      wandSprite: {fileID: 7978161678107738536, guid: 2e69467cfff73bc4cb18f1a109d26ca0, type: 3}
       maxSpellCount: 12
       spells: []

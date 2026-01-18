@@ -10,8 +10,21 @@ using System;
 public class Wand
 {
     [Header("杖の特性")]
+    [Tooltip("この杖の名称")]
+    public string wandName;
+
+    [Tooltip("この杖の説明文")]
+    [TextArea]
+    public string description;
+
     [Tooltip("この杖の種類")]
     public WandType type = WandType.Default;
+
+    [Tooltip("演出時に使用するスプライト")]
+    public Sprite presentationSprite;
+
+    [Tooltip("杖の見た目として使用するスプライト")]
+    public Sprite wandSprite;
 
     [Tooltip("この杖に追加できる呪文の最大数。")]
     public int maxSpellCount = 12; // デフォルト値として12を設定
@@ -126,4 +139,6 @@ public enum WandType
     Ice,
     Fire,
     Wood,
+    Sky,
+    Magic,
 }
