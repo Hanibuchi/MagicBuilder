@@ -128,8 +128,8 @@ public class Wand
         }
 
         // 2. 新規の呪文を追加する場合
-        // 現在の呪文数と最大許容数を比較
-        int currentCount = spells.Count;
+        // 現在の合計呪文数（固定呪文を含む）と最大許容数を比較
+        int currentCount = spells.Count + fixedSpells.Count;
 
         if (currentCount < maxSpellCount)
         {
