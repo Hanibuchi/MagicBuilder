@@ -274,6 +274,38 @@ public class SpellHoldInfoManager : MonoBehaviour
         }
     }
 
+    // --- デバッグ用メソッド ---
+
+    /// <summary>
+    /// すべての登録済み呪文を開放し、それぞれ1つずつ所持した状態にします（デバッグ用）。
+    /// </summary>
+    public void Test_UnlockAndGrantAllSpells()
+    {
+        if (SpellDatabase.Instance == null)
+        {
+            Debug.LogError("SpellDatabase.Instance が null のため、すべての呪文を開放できませんでした。");
+            return;
+        }
+
+        var allTypes = SpellDatabase.Instance.GetAllRegisteredSpellTypes();
+        foreach (SpellType type in allTypes)
+        {
+            if (type == SpellType.None) continue;
+
+            // 保持数が 0 の場合のみ 1 に増やす（＝1つ取得する）
+            if (GetSpellCount(type) == 0)
+            {
+                IncreaseSpellCount(type);
+            }
+            
+            // 念のため開放状態も確認して強制的に開放する
+            if (!IsSpellUnlocked(type))
+            {
+                UnlockSpell(type);
+            }
+        }
+        Debug.Log("<color=cyan>[SpellHoldInfoManager Test]</color> すべての登録済み呪文を開放し、1つずつ所持させました。");
+    }
 
     // SpellHoldInfoManager.cs 内に追記
 

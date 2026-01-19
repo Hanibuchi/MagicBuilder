@@ -355,6 +355,25 @@ public class EquippedSpellManager : MonoBehaviour
         _observer?.OnMaxCapacityChanged(_maxCapacity);
     }
 
+    /// <summary>
+    /// 持ち込み呪文の最大容量を最大（Configの設定数）に設定します（デバッグ用）。
+    /// </summary>
+    public void Test_SetMaxCapacity()
+    {
+        if (_config == null || _config.capacityUpgradeCosts == null)
+        {
+            Debug.LogError("EquippedSpellCapacityConfig がロードされていないため、容量を設定できません。");
+            return;
+        }
+
+        int targetCapacity = _config.capacityUpgradeCosts.Length;
+        if (_maxCapacity < targetCapacity)
+        {
+            IncreaseCapacity(targetCapacity - _maxCapacity);
+        }
+        Debug.Log($"<color=cyan>[EquippedSpellManager Test]</color> 持ち込み容量を {targetCapacity} に拡張しました。");
+    }
+
     // [SerializeField] int test_index;
     // [SerializeField] SpellBase test_spellBase;
     // public void Test_Remove()

@@ -101,8 +101,4 @@ public class WandsController : MonoBehaviour, WandSwitchListener
         }
     }
 
-    public void Test_UnlockAllWands()
-    {
-        WandUnlockManager.Instance.UnlockAllWands();
-    }
 }
