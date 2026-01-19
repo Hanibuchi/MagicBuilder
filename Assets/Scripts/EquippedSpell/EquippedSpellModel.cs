@@ -103,10 +103,25 @@ public class EquippedSpellModel : MonoBehaviour, ISpellHoldInfoObserver, IEquipp
 
     /// <summary>
     /// 現在の全所持呪文ステータスの読み取り専用リストを取得します。
+    /// SpellDatabase で設定された順番（allSpells）に従ったリストを返します。
     /// </summary>
     public IReadOnlyList<SpellHoldStatus> GetAllSpellStatuses()
     {
-        return _allSpellStatuses.Values.ToList().AsReadOnly();
+        if (SpellDatabase.Instance == null) return new List<SpellHoldStatus>().AsReadOnly();
+
+        // Databaseの登録順（allSpellsの並び順）に従ってリストを構築する
+        var allTypes = SpellDatabase.Instance.GetAllRegisteredSpellTypes().Where(t => t != SpellType.None);
+        var orderedStatuses = new List<SpellHoldStatus>();
+
+        foreach (var type in allTypes)
+        {
+            if (_allSpellStatuses.TryGetValue(type, out var status))
+            {
+                orderedStatuses.Add(status);
+            }
+        }
+
+        return orderedStatuses.AsReadOnly();
     }
 
     /// <summary>

@@ -327,12 +327,9 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
 
         UpdateSpellsPerPage();
 
-        // フィルタリングとソート
+        // フィルタリング（ソートは Model 側で行われているため不要）
         var sortedStatuses = _allSpellStatuses
             .Where(s => s.Type != SpellType.None) // Noneタイプを除外
-            .OrderByDescending(s => s.IsUnlocked)
-            .ThenByDescending(s => s.TotalCount)
-            .ThenBy(s => s.Type.ToString())
             .ToList();
 
         // ページ数と表示範囲の計算
