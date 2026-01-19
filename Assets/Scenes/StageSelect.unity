@@ -372,8 +372,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u5CF6\u306E\u540D\u524D"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 73089ea78f08b0a4bb8ddd12402cd703, type: 2}
-  m_sharedMaterial: {fileID: 1827484319605294730, guid: 73089ea78f08b0a4bb8ddd12402cd703, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 15f6a6dc16484154ebf91431bde0ce1f, type: 2}
+  m_sharedMaterial: {fileID: 6538420554803201675, guid: 15f6a6dc16484154ebf91431bde0ce1f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -577,8 +577,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Button
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 15f6a6dc16484154ebf91431bde0ce1f, type: 2}
+  m_sharedMaterial: {fileID: 6538420554803201675, guid: 15f6a6dc16484154ebf91431bde0ce1f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9293,6 +9293,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1109972623}
     m_Modifications:
+    - target: {fileID: 692885388466093007, guid: ddd7385153ac00241a346b2dac4871d9, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5201766252842080595, guid: ddd7385153ac00241a346b2dac4871d9, type: 3}
       propertyPath: m_Name
       value: StageButton (1)
@@ -9375,6 +9379,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8734972541734572232, guid: ddd7385153ac00241a346b2dac4871d9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8789525114320144912, guid: ddd7385153ac00241a346b2dac4871d9, type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -11238,38 +11246,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1990671667137167062, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1990671667137167062, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1990671667137167062, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2638004996136024203, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2638004996136024203, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3345334180864959240, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3345334180864959240, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3345334180864959240, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 80
-      objectReference: {fileID: 0}
     - target: {fileID: 4239378513297414253, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
       propertyPath: m_Name
       value: SettingsCanvas
@@ -11352,26 +11328,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4829104322451378853, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6706234363715936535, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6706234363715936535, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7927411831301064385, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7927411831301064385, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7927411831301064385, guid: 068459c8065f8cf429736c633b9e2de4, type: 3}
-      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -11499,6 +11455,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1109972623}
     m_Modifications:
+    - target: {fileID: 692885388466093007, guid: ddd7385153ac00241a346b2dac4871d9, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5201766252842080595, guid: ddd7385153ac00241a346b2dac4871d9, type: 3}
       propertyPath: m_Name
       value: StageButton (2)
@@ -11581,6 +11541,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8734972541734572232, guid: ddd7385153ac00241a346b2dac4871d9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8789525114320144912, guid: ddd7385153ac00241a346b2dac4871d9, type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -13124,6 +13088,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1109972623}
     m_Modifications:
+    - target: {fileID: 692885388466093007, guid: ddd7385153ac00241a346b2dac4871d9, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5201766252842080595, guid: ddd7385153ac00241a346b2dac4871d9, type: 3}
       propertyPath: m_Name
       value: StageButton
@@ -13206,6 +13174,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8734972541734572232, guid: ddd7385153ac00241a346b2dac4871d9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8789525114320144912, guid: ddd7385153ac00241a346b2dac4871d9, type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -13298,6 +13270,50 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2319818223722356425, guid: 3087cb46b2b4ab047bad04a7ba846b46, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319818223722356425, guid: 3087cb46b2b4ab047bad04a7ba846b46, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319818223722356425, guid: 3087cb46b2b4ab047bad04a7ba846b46, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319818223722356425, guid: 3087cb46b2b4ab047bad04a7ba846b46, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319818223722356425, guid: 3087cb46b2b4ab047bad04a7ba846b46, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2511799375553407682, guid: 3087cb46b2b4ab047bad04a7ba846b46, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3808526086789902163, guid: 3087cb46b2b4ab047bad04a7ba846b46, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3808526086789902163, guid: 3087cb46b2b4ab047bad04a7ba846b46, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3808526086789902163, guid: 3087cb46b2b4ab047bad04a7ba846b46, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3808526086789902163, guid: 3087cb46b2b4ab047bad04a7ba846b46, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3808526086789902163, guid: 3087cb46b2b4ab047bad04a7ba846b46, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6441816997998351642, guid: 3087cb46b2b4ab047bad04a7ba846b46, type: 3}
       propertyPath: m_Name
       value: CurrencyCanvas
@@ -13415,6 +13431,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: AdditionalEquipCountCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4170332932720152277, guid: b8a207671ad971d4596a0236f7c16c95, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 15f6a6dc16484154ebf91431bde0ce1f, type: 2}
+    - target: {fileID: 4170332932720152277, guid: b8a207671ad971d4596a0236f7c16c95, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 6538420554803201675, guid: 15f6a6dc16484154ebf91431bde0ce1f, type: 2}
+    - target: {fileID: 4170332932720152277, guid: b8a207671ad971d4596a0236f7c16c95, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5569671971991634685, guid: b8a207671ad971d4596a0236f7c16c95, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -13441,6 +13469,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6898192622597130063, guid: b8a207671ad971d4596a0236f7c16c95, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7544227123389555896, guid: b8a207671ad971d4596a0236f7c16c95, type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7604044637970360801, guid: b8a207671ad971d4596a0236f7c16c95, type: 3}
@@ -13525,6 +13557,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7903963996918986811, guid: b8a207671ad971d4596a0236f7c16c95, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8278906330979874042, guid: b8a207671ad971d4596a0236f7c16c95, type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8787025574009666710, guid: b8a207671ad971d4596a0236f7c16c95, type: 3}
@@ -13749,6 +13785,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: StageInfoDisplayUI
       objectReference: {fileID: 0}
+    - target: {fileID: 3179541783070933252, guid: 6e8a2af9108b0c142b2fdec0e7023e66, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340366151615463549, guid: 6e8a2af9108b0c142b2fdec0e7023e66, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7847740751021489898, guid: 6e8a2af9108b0c142b2fdec0e7023e66, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -13890,6 +13934,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 238126396431203971, guid: 47708fb1c6368c341aa85e9655a70ba3, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 778140350215465985, guid: 47708fb1c6368c341aa85e9655a70ba3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -14018,6 +14066,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1772651634967744323, guid: 47708fb1c6368c341aa85e9655a70ba3, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1832366053387493158, guid: 47708fb1c6368c341aa85e9655a70ba3, type: 3}
       propertyPath: m_Name
       value: SpellBuyCanvas
@@ -14044,6 +14096,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3036628732903483492, guid: 47708fb1c6368c341aa85e9655a70ba3, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7817937785427662557, guid: 47708fb1c6368c341aa85e9655a70ba3, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 15f6a6dc16484154ebf91431bde0ce1f, type: 2}
+    - target: {fileID: 7817937785427662557, guid: 47708fb1c6368c341aa85e9655a70ba3, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 6538420554803201675, guid: 15f6a6dc16484154ebf91431bde0ce1f, type: 2}
+    - target: {fileID: 7817937785427662557, guid: 47708fb1c6368c341aa85e9655a70ba3, type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8390330489299636294, guid: 47708fb1c6368c341aa85e9655a70ba3, type: 3}

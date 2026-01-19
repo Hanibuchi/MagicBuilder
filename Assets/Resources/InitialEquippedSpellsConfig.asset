@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dc1e95569b665642959706c9523d92c, type: 3}
   m_Name: InitialEquippedSpellsConfig
   m_EditorClassIdentifier: 
-  initialSpells: []
+  initialSpells:
+  - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}

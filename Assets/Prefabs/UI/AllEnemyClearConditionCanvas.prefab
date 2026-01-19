@@ -260,8 +260,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u6575\u3092\u5168\u3066\u5012\u305D\u3046\uFF01"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 73089ea78f08b0a4bb8ddd12402cd703, type: 2}
-  m_sharedMaterial: {fileID: 1827484319605294730, guid: 73089ea78f08b0a4bb8ddd12402cd703, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 15f6a6dc16484154ebf91431bde0ce1f, type: 2}
+  m_sharedMaterial: {fileID: 6538420554803201675, guid: 15f6a6dc16484154ebf91431bde0ce1f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
