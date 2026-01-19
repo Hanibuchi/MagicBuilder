@@ -63,6 +63,11 @@ public class CameraManager : MonoBehaviour
 
     public void SetOrthographicSize()
     {
+        // 仮想カメラが未設定なら自動取得を試みる
+        if (virtualCamera == null)
+        {
+            virtualCamera = FindFirstObjectByType<CinemachineCamera>();
+        }
         // カメラのOrthographic Size（画面の高さの半分のワールド座標での大きさ）をデフォルトとして保存
         if (virtualCamera != null)
         {
