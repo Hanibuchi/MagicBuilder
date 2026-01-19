@@ -111,4 +111,23 @@ public class WandUnlockManager : MonoBehaviour
             .Select(w => w.wand)
             .ToArray();
     }
+
+    /// <summary>
+    /// 【デバッグ用】全ての杖を開放します。
+    /// </summary>
+    public void UnlockAllWands()
+    {
+        if (_wandDataAsset == null)
+        {
+            _wandDataAsset = Resources.Load<WandDataAsset>("WandDataAsset");
+        }
+
+        if (_wandDataAsset == null) return;
+
+        foreach (var entry in _wandDataAsset.wands)
+        {
+            UnlockWand(entry.type);
+        }
+        Debug.Log("全ての杖を開放しました（デバッグ）");
+    }
 }

@@ -199,9 +199,9 @@ public class WandUI : MonoBehaviour, ISpellContainer
     [SerializeField] Image wandImage;
 
     /// <summary>
-    /// 指定されたWandTypeに基づいて杖の見た目を変更します。
+    /// 杖の見た目を変更します。
     /// </summary>
-    /// <param name="wandSprite">設定する杖のタイプ</param>
+    /// <param name="wandSprite">設定するスプライト</param>
     public void ChangeAppearance(Sprite wandSprite)
     {
         wandImage.sprite = wandSprite;
