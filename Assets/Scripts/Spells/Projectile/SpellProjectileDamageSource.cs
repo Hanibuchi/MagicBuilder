@@ -46,6 +46,9 @@ public class SpellProjectileDamageSource : DamageSourceBase
 
         if (playLaunchSound)
             PlayLaunchSound();
+        
+        if (enableImpulse)
+            GenerateImpulse();
     }
 
     /// <summary>

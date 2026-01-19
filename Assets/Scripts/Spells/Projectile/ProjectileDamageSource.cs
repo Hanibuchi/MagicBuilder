@@ -31,7 +31,11 @@ public class ProjectileDamageSource : DamageSourceBase
         // 指定した時間経過後に自身を破棄
         if (autoDestroy)
             Destroy(gameObject, destroyTime);
+
         PlayLaunchSound();
+        
+        if (enableImpulse)
+            GenerateImpulse();
     }
 
     [SerializeField] AudioClip launchSound;

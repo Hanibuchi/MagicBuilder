@@ -117,6 +117,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageSourceType: 1
   maxPierceCount: 1
+  enableImpulse: 1
+  impulseForce: 0.5
   autoDestroy: 1
   destroyTime: 10
   damageData:
@@ -125,7 +127,7 @@ MonoBehaviour:
     waterDamage: 0
     temperatureDamage: 10
     knockback: 0
-  launchSound: {fileID: 8300000, guid: dce0fc50c98b24282867ddc791aa869d, type: 3}
+  launchSound: {fileID: 8300000, guid: 5ff823f546b52574a931e1d9b44290a6, type: 3}
   launchSoundVolume: 1
 --- !u!58 &6649835676375905100
 CircleCollider2D:

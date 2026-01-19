@@ -17,6 +17,10 @@ public class DamageSourceBase : MonoBehaviour, IDamageSource
     [SerializeField]
     private int maxPierceCount = 1;
 
+    [Header("演出設定")]
+    [SerializeField] protected bool enableImpulse = false;
+    [SerializeField] protected float impulseForce = 0.5f; // 振動の強さ
+
     // --- 内部状態 ---
 
     // 実行時に使用する現在の貫通回数
@@ -26,6 +30,17 @@ public class DamageSourceBase : MonoBehaviour, IDamageSource
     {
         // 貫通回数を初期化
         currentPierceCount = maxPierceCount;
+    }
+
+    /// <summary>
+    /// カメラ振動を発生させます。
+    /// </summary>
+    public void GenerateImpulse()
+    {
+        if (CameraManager.Instance != null)
+        {
+            CameraManager.Instance.RequestImpulse(impulseForce);
+        }
     }
 
     /// <summary>

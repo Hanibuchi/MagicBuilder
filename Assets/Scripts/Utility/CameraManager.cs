@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 
 /// <summary>
 /// メインカメラを制御するシングルトンクラス。
@@ -11,6 +12,7 @@ public class CameraManager : MonoBehaviour
     public static CameraManager Instance { get; private set; }
 
     [SerializeField] private CinemachineCamera virtualCamera; // 仮想カメラへの参照
+    [SerializeField] private CinemachineImpulseSource impulseSource; // 集中管理用インパルスソース
 
     private float _defaultOrthographicSize; // 起動時のデフォルトOrthographic Size
     public float DefaultOrthographicSize => _defaultOrthographicSize;
@@ -37,7 +39,26 @@ public class CameraManager : MonoBehaviour
             virtualCamera = FindFirstObjectByType<CinemachineCamera>();
         }
 
+        // インパルスソースが未設定なら自動取得を試みる
+        if (impulseSource == null)
+        {
+            impulseSource = GetComponent<CinemachineImpulseSource>();
+        }
+
         SetOrthographicSize();
+    }
+
+    /// <summary>
+    /// 指定した座標でカメラ振動を発生させます。
+    /// </summary>
+    /// <param name="position">振動の発生位置</param>
+    /// <param name="force">振動の強さ</param>
+    public void RequestImpulse(float force = 1.0f)
+    {
+        if (impulseSource != null)
+        {
+            impulseSource.GenerateImpulse(force);
+        }
     }
 
     public void SetOrthographicSize()
@@ -66,7 +87,7 @@ public class CameraManager : MonoBehaviour
         if (virtualCamera == null) return;
 
         currentRelativeSize = relativeSize;
-        
+
         // LensSettingsは構造体なので、取得してから書き戻す
         var lens = virtualCamera.Lens;
         lens.OrthographicSize = _defaultOrthographicSize * relativeSize;
