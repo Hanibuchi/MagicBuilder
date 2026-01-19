@@ -12,7 +12,8 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 {
     private int index;
     private WandUI wandUI;
-    private Animator animator;
+    [SerializeField] Animator animator;
+    private bool isAlwaysHighlighted; // 常にハイライトするかどうかのフラグ
 
     // Animatorのトリガー名
     private const string HighlightTrigger = "Highlight";
@@ -27,6 +28,10 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
         extendedTriggerUI.Initialize(this);
         SetExtendedTriggerActive(false);
     }
+    private void Start()
+    {
+        SetAlwaysHighlight(isAlwaysHighlighted);
+    }
 
     public void Initialize(WandUI parentWandUI)
     {
@@ -38,6 +43,20 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     {
         this.index = newIndex;
         this.gameObject.name = $"SpacingUI_{index}";
+    }
+
+    /// <summary>
+    /// 常にハイライト状態にするかどうかを設定する
+    /// </summary>
+    public void SetAlwaysHighlight(bool always)
+    {
+        Debug.Log($"SetAlwaysHighlight called with value: {always} for {gameObject.name}");
+        this.isAlwaysHighlighted = always;
+        if (always && animator != null)
+        {
+            animator.ResetTrigger(NormalTrigger);
+            animator.SetTrigger(HighlightTrigger);
+        }
     }
 
     // --- ドロップ処理 ---
@@ -116,6 +135,8 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (isAlwaysHighlighted) return; // 常にハイライトなら何もしない
+
         if (animator != null)
         {
             StopHighlight();
@@ -127,6 +148,8 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     /// </summary>
     public void StopHighlight()
     {
+        if (isAlwaysHighlighted) return; // 常にハイライトなら何もしない
+
         if (animator != null)
         {
             animator.SetTrigger(NormalTrigger);

@@ -60,6 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5abdf4c84ea3344bd911e211dfd560, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 1252407050445683559}
   extendedTriggerUI: {fileID: 3077664445379522187}
   image: {fileID: 7161372032381714530}
   spellDropSound: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}

@@ -18,13 +18,6 @@ public class WandUI : MonoBehaviour, ISpellContainer
     private List<SpellBase> fixedSpellBasesCashe = new List<SpellBase>();
     private List<SpellBase> spellBasesCashe = new List<SpellBase>();
 
-    void Awake()
-    {
-        // 初期状態では空の杖を表現するために、スペーシングUIを一つ配置する
-        // ※固定呪文がある場合、RebuildUIが呼ばれるまではこの1つだけが表示される。
-        CreateSpacingUI(0);
-    }
-
     public void SetWandEditor(IWandEditor wandEditor)
     {
         this.wandEditor = wandEditor;
@@ -60,7 +53,7 @@ public class WandUI : MonoBehaviour, ISpellContainer
         uiElements.Add(spellUI.gameObject);
     }
 
-    private void CreateSpacingUI(int index)
+    private void CreateSpacingUI(int index, bool isAlwaysHighlight = false)
     {
         GameObject spacingObj = Instantiate(spacingUIPrefab, spellFrame);
         SpacingUI spacingUI = spacingObj.GetComponent<SpacingUI>();
@@ -68,6 +61,7 @@ public class WandUI : MonoBehaviour, ISpellContainer
         {
             spacingUI.SetIndex(index);
             spacingUI.Initialize(this); // このWandUI自身への参照を渡す
+            spacingUI.SetAlwaysHighlight(isAlwaysHighlight);
         }
 
         // リストに挿入 (SpacingUIはSpellUIの前後に配置される)
@@ -142,10 +136,11 @@ public class WandUI : MonoBehaviour, ISpellContainer
         // 2. 通常の呪文とスペーシングを交互に生成
         for (int i = 0; i < newSequence.Count; i++)
         {
-            CreateSpacingUI(i);
+            CreateSpacingUI(i, false);
             CreateSpellUI(i, newSequence[i]);
         }
-        CreateSpacingUI(newSequence.Count);
+        // 呪文が一つもない場合のみ、唯一のSpacingUIを常にハイライトにする
+        CreateSpacingUI(newSequence.Count, newSequence.Count == 0);
     }
     public void RebuildUI()
     {
