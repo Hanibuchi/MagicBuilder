@@ -68,6 +68,10 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
     public void SetData(SpellBase data)
     {
         _spellData = data;
+        if (data != null)
+        {
+            SetColor(SpellCommonData.Instance.GetCategoryColor(data.category));
+        }
     }
 
     /// <summary>
@@ -93,6 +97,20 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
     {
         iconImage.sprite = active ? _spellData?.icon : lockSprite;
     }
+
+    /// <summary>
+    /// ベースの色を設定します。
+    /// </summary>
+    /// <param name="color">設定する色</param>
+    public void SetColor(Color color)
+    {
+        _activeColor = color;
+        if (frameActive && frameImage != null)
+        {
+            frameImage.color = color;
+        }
+    }
+
     public void SetShowDescription(bool active)
     {
         showDescription = active;

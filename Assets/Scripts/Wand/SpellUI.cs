@@ -29,9 +29,14 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     public void SetData(SpellBase data)
     {
         this.spellData = data;
-        if (iconImage != null && data.icon != null)
+        if (iconImage != null && data != null && data.icon != null)
         {
             iconImage.sprite = data.icon;
+        }
+
+        if (data != null)
+        {
+            SetColor(SpellCommonData.Instance.GetCategoryColor(data.category));
         }
     }
 
@@ -113,6 +118,19 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         WandUIManager.Instance?.NotifySpellDragEndedToAll();
         spellContainerUI.NotifySpellRemoved(index);
         dropSuccess = true;
+    }
+
+    /// <summary>
+    /// ベースの色を設定します。
+    /// </summary>
+    /// <param name="color">設定する色</param>
+    public void SetColor(Color color)
+    {
+        activeColor = color;
+        if (isActive && frame != null)
+        {
+            frame.color = color;
+        }
     }
 
     /// <summary>

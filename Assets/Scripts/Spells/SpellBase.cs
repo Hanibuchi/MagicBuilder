@@ -10,6 +10,9 @@ using NUnit.Framework.Internal;
 public abstract class SpellBase : ScriptableObject
 {
     [Header("基本設定")]
+    [Tooltip("呪文のカテゴリ（UIの色などに影響します）")]
+    public SpellCategory category = SpellCategory.Attack;
+
     [Tooltip("呪文が発動した際に追加されるクールタイム（秒）")]
     public float cooldown = 0.5f;
 
@@ -302,7 +305,7 @@ public abstract class SpellBase : ScriptableObject
     {
         // プレハブから生成
         SpellUI uiInstance = Instantiate(SpellCommonData.Instance.spellUIPrefab).GetComponent<SpellUI>();
-        // アイコンを設定
+        // アイコンと色を設定
         uiInstance.SetData(this);
 
         return uiInstance;
@@ -329,7 +332,7 @@ public abstract class SpellBase : ScriptableObject
             return null;
         }
 
-        // 呪文データを設定
+        // 呪文データと色を設定
         uiInstance.SetData(this);
 
         return uiInstance;
@@ -350,6 +353,7 @@ public abstract class SpellBase : ScriptableObject
         GameObject dropUIInstance = Instantiate(SpellCommonData.Instance.dropUIPrefab);
         if (dropUIInstance.TryGetComponent<SpellDropUI>(out var spellDropUI))
         {
+            // データと色を設定
             spellDropUI.SetData(this);
         }
         return dropUIInstance;

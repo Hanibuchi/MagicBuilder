@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconImage: {fileID: 3082923573838113421}
+  frameImage: {fileID: 1544005211278684011}
 --- !u!1 &2523671434441733388
 GameObject:
   m_ObjectHideFlags: 0

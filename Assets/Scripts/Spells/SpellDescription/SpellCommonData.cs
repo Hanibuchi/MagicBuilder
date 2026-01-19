@@ -64,6 +64,30 @@ public class SpellCommonData : ScriptableObject
     [Tooltip("ノックバックに使用するアイコン")]
     public Sprite knockbackIcon;
 
+    [Header("カテゴリ別色設定")]
+    [Tooltip("攻撃呪文の色")]
+    public Color attackColor = Color.red;
+    [Tooltip("修飾呪文の色")]
+    public Color modifierColor = Color.blue;
+    [Tooltip("分岐呪文の色")]
+    public Color branchColor = Color.green;
+    [Tooltip("その他の色の色")]
+    public Color otherColor = Color.white;
+
+    /// <summary>
+    /// カテゴリに対応した色を取得します。
+    /// </summary>
+    public Color GetCategoryColor(SpellCategory category)
+    {
+        return category switch
+        {
+            SpellCategory.Attack => attackColor,
+            SpellCategory.Modifier => modifierColor,
+            SpellCategory.Branch => branchColor,
+            _ => otherColor,
+        };
+    }
+
     [Tooltip("呪文UIプレハブ")] // ランクや種類別でUIを変えるってなったときは、これを複数作ってSpellBaseの子クラスのCreateUIから参照する。
     public GameObject spellUIPrefab;
 
