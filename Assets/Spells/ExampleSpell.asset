@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eead4a52643cdf42bb45d6397bce3c4, type: 3}
   m_Name: ExampleSpell
   m_EditorClassIdentifier: 
+  category: 0
   cooldown: 0.5
   spellName: Example Spell
+  purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: 7337813241420513281, guid: e0075a2a7b8dfd14a9a81b916f713f9c, type: 3}
-  uiPrefab: {fileID: 5499559984272135055, guid: a8aa928887aa65d429d07a9b1f220163, type: 3}
-  dropUIPrefab: {fileID: 1104287654635820185, guid: af09b9e47e48e2b4593b9a8e28d2e8f0, type: 3}
   spellDropSound: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
   spellDropSoundVolume: 1
   spellDescription: "\u4E00\u822C\u653B\u6483\u9B54\u6CD5\u3002"
@@ -31,4 +31,5 @@ MonoBehaviour:
     waterDamage: 0
     temperatureDamage: 0
     knockback: 20
+  damageType: 0
   isClickTrigger: 0

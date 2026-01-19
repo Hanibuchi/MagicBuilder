@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d13a608852f04d24a9576d0baf8fd96a, type: 3}
   m_Name: ContractionSpell
   m_EditorClassIdentifier: 
+  category: 1
   cooldown: 0.5
   spellName: "\u53CE\u7E2E\u546A\u6587"
+  purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: -9149916588600668081, guid: 671bf8acd14b9f544b66b1539931b698, type: 3}
-  uiPrefab: {fileID: 5499559984272135055, guid: a8aa928887aa65d429d07a9b1f220163, type: 3}
-  dropUIPrefab: {fileID: 1104287654635820185, guid: af09b9e47e48e2b4593b9a8e28d2e8f0, type: 3}
   spellDropSound: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
   spellDropSoundVolume: 1
   spellDescription: "\u546A\u6587\u3092\u53CE\u7E2E\u3055\u305B\u308B\u3002"

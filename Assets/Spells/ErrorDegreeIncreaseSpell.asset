@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b60a1adb6b8966d40b47b8481ee5883a, type: 3}
   m_Name: ErrorDegreeIncreaseSpell
   m_EditorClassIdentifier: 
+  category: 1
   cooldown: 0.5
   spellName: "\u8AA4\u5DEE\u5897\u52A0"
+  purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: 3422573988808639745, guid: 926b2e59fa449e74a92407a129deff1d, type: 3}
-  uiPrefab: {fileID: 5499559984272135055, guid: a8aa928887aa65d429d07a9b1f220163, type: 3}
-  dropUIPrefab: {fileID: 1104287654635820185, guid: af09b9e47e48e2b4593b9a8e28d2e8f0, type: 3}
   spellDropSound: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
   spellDropSoundVolume: 1
   spellDescription: "\u8AA4\u5DEE\u3092\u5897\u52A0\u3055\u305B\u308B\u3002"

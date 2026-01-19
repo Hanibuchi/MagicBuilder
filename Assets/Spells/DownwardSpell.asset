@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 921bc0da7200fe44591a0de09fb44ae4, type: 3}
   m_Name: DownwardSpell
   m_EditorClassIdentifier: 
+  category: 1
   cooldown: 0.5
   spellName: "\u4E0B\u65B9\u546A\u6587"
+  purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: -5786198434420982544, guid: 04eafb0e59abe904581062d982c3cc1e, type: 3}
-  uiPrefab: {fileID: 5499559984272135055, guid: a8aa928887aa65d429d07a9b1f220163, type: 3}
-  dropUIPrefab: {fileID: 1104287654635820185, guid: af09b9e47e48e2b4593b9a8e28d2e8f0, type: 3}
   spellDropSound: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
   spellDropSoundVolume: 1
   spellDescription: "\u546A\u6587\u3092\u4E0B\u306B\u98DB\u3070\u3059\u3002"
