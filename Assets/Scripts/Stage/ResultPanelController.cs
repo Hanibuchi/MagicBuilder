@@ -39,6 +39,7 @@ public class ResultPanelController : MonoBehaviour
     [SerializeField] private Button retryButton;
     [SerializeField] private Button nextStageButton;
     [SerializeField] private Button spellChangeButton;
+    [SerializeField] private GameObject spellBadge;
 
     // --- 外部から設定するデータ（例：StageManagerから取得を想定） ---
 
@@ -98,6 +99,7 @@ public class ResultPanelController : MonoBehaviour
     {
         Debug.Log("ResultPanelController: 勝利表示");
         SetResultData(data);
+        UpdateSpellBadge();
 
         // UIアクティブ制御
         if (victoryObject != null) victoryObject.SetActive(true);
@@ -121,6 +123,7 @@ public class ResultPanelController : MonoBehaviour
     {
         Debug.Log("ResultPanelController: 敗北表示");
         SetResultData(data);
+        UpdateSpellBadge();
 
         // UIアクティブ制御
         if (victoryObject != null) victoryObject.SetActive(false);
@@ -134,6 +137,18 @@ public class ResultPanelController : MonoBehaviour
             scoreAnimator.SetBool("ShowScore", true);
             scoreAnimator.SetBool("ShowClearTime", false); // 敗北時: スコア、メッセージを表示 (クリアタイムは非表示)
             scoreAnimator.SetBool("ShowMessage", true);
+        }
+    }
+
+    /// <summary>
+    /// 新規取得呪文がある場合、バッジを表示します。
+    /// </summary>
+    public void UpdateSpellBadge()
+    {
+        if (spellBadge != null)
+        {
+            bool hasNew = SpellHoldInfoManager.Instance.HasAnyNewlyUnlockedSpells();
+            spellBadge.SetActive(hasNew);
         }
     }
 

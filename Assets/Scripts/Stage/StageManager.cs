@@ -561,7 +561,7 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
             if (clicked) return;
             clicked = true;
             Debug.Log("呪文変更へ");
-            EquippedSpellController.Instance?.OpenSpellSelectionUI(() => { clicked = false; });
+            EquippedSpellController.Instance?.OpenSpellSelectionUI(() => { clicked = false; controller.UpdateSpellBadge(); });
         };
 
         controller.SetupActions(onStageSelect, onRetry, onNextStage, onSpellChange);

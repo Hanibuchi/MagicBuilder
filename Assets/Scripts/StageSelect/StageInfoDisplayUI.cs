@@ -15,6 +15,7 @@ public class StageInfoDisplayUI : MonoBehaviour
     [Header("UI要素 - ボタン")]
     [SerializeField] private Button startButton;           // ステージ開始ボタン
     [SerializeField] private Button openSpellSelectButton; // 持ち込み呪文選択ボタン
+    [SerializeField] private GameObject spellBadge;        // 新規呪文通知バッジ
     [SerializeField] private Button closeButton;           // 閉じるボタン
 
     [Header("アニメーター設定")]
@@ -62,10 +63,25 @@ public class StageInfoDisplayUI : MonoBehaviour
         if (!close) return;
         close = false;
         gameObject.SetActive(true);
+
+        UpdateSpellBadge();
+
         if (rootAnimator != null)
         {
             rootAnimator.SetTrigger("Open");
             rootAnimator.ResetTrigger("Close");
+        }
+    }
+
+    /// <summary>
+    /// 新規取得呪文がある場合、バッジを表示します。
+    /// </summary>
+    private void UpdateSpellBadge()
+    {
+        if (spellBadge != null)
+        {
+            bool hasNew = SpellHoldInfoManager.Instance.HasAnyNewlyUnlockedSpells();
+            spellBadge.SetActive(hasNew);
         }
     }
 
@@ -155,7 +171,7 @@ public class StageInfoDisplayUI : MonoBehaviour
         // 既存の EquippedSpellController を呼び出してUIを開く
         if (EquippedSpellController.Instance != null)
         {
-            EquippedSpellController.Instance.OpenSpellSelectionUI(() => spellSelectClicked = false);
+            EquippedSpellController.Instance.OpenSpellSelectionUI(() => { spellSelectClicked = false; UpdateSpellBadge(); });
         }
         else
         {

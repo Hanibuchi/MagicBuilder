@@ -263,6 +263,14 @@ public class SpellHoldInfoManager : MonoBehaviour
     }
 
     /// <summary>
+    /// 未確認（新規開放）の呪文が1つ以上あるかを取得します。
+    /// </summary>
+    public bool HasAnyNewlyUnlockedSpells()
+    {
+        return _spellNewlyUnlockedStatus.Values.Any(v => v);
+    }
+
+    /// <summary>
     /// 特定の呪文の新規開放フラグを下ろします（確認済みとする）。
     /// </summary>
     public void ClearNewlyUnlockedStatus(SpellType type)
