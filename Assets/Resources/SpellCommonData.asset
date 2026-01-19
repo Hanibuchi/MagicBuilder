@@ -22,10 +22,10 @@ MonoBehaviour:
   waterDamageIcon: {fileID: -2970737076664800877, guid: e325ced96e9ec804d8af77dcb30f42ae, type: 3}
   woodDamageIcon: {fileID: 4860122933818633569, guid: e325ced96e9ec804d8af77dcb30f42ae, type: 3}
   knockbackIcon: {fileID: 7461208997203385897, guid: 002832e2e52787d45a48afea7e27baf1, type: 3}
-  attackColor: {r: 1, g: 0.55905515, b: 0.3, a: 1}
-  modifierColor: {r: 0.2980392, g: 0.3097387, b: 1, a: 1}
-  branchColor: {r: 0.2980392, g: 1, b: 0.30579668, a: 1}
-  otherColor: {r: 1, g: 0.95590544, b: 0.3, a: 1}
+  attackColor: {r: 0.8, g: 0.50048, b: 0.32, a: 1}
+  modifierColor: {r: 0.32156864, g: 0.3705305, b: 0.8, a: 1}
+  branchColor: {r: 0.32, g: 0.8, b: 0.32383993, a: 1}
+  otherColor: {r: 0.8, g: 0.7697902, b: 0.32, a: 1}
   spellUIPrefab: {fileID: 5499559984272135055, guid: a8aa928887aa65d429d07a9b1f220163, type: 3}
   dropUIPrefab: {fileID: 1104287654635820185, guid: af09b9e47e48e2b4593b9a8e28d2e8f0, type: 3}
   equippedSpellIconUIPrefab: {fileID: 4605705667940410137, guid: b0e9178e9a980024f9b844179ff255a5, type: 3}
