@@ -32,9 +32,28 @@ public class StageSelectController : MonoBehaviour, IStageStartListener
 
     private void Start()
     {
-        // StageStarterインスタンスを取得
-        StageStarter starter = StageStarter.Instance;
+        // カメラ位置の復元
+        RestoreCameraPosition();
 
+        // 必須コンポーネントのチェック
+        if (stageSelectUI == null || islandStageMapConfig == null)
+        {
+            Debug.LogError("StageSelectController: StageSelectUI または IslandStageMappingConfig が設定されていません。");
+        }
+
+        // Listenerの登録等、初期セットアップ
+        InitializeStageStarter();
+
+        // 杖の開放演出のチェックを開始
+        CheckWandReleaseEffects();
+    }
+
+    /// <summary>
+    /// StageStarterへのリスナー登録を行います。
+    /// </summary>
+    private void InitializeStageStarter()
+    {
+        StageStarter starter = StageStarter.Instance;
         if (starter == null)
         {
             Debug.LogError("StageStarterがシーンに見つかりません。ステージ開始システムが機能しません。");
@@ -43,30 +62,20 @@ public class StageSelectController : MonoBehaviour, IStageStartListener
 
         starter.SetStageStartListener(this);
 
-        // カメラ位置の復元
-        RestoreCameraPosition();
-
-        // 必須コンポーネントのチェック（追加）
-        if (stageSelectUI == null || islandStageMapConfig == null)
+        if (GameManager.Instance != null)
         {
-            Debug.LogError("StageSelectController: StageSelectUI または IslandStageMappingConfig が設定されていません。");
+            starter.SetStageStartListener(GameManager.Instance);
+            Debug.Log("StageSelectController: GameManagerをStageStarterに登録しました。");
         }
-        // GameManagerをStageStarterのリスナーとして登録
-        if (GameManager.Instance == null)
+        else
         {
             Debug.LogError("GameManagerインスタンスが見つかりません。登録できませんでした。");
         }
-
-        starter.SetStageStartListener(GameManager.Instance);
-        Debug.Log("StageSelectController: GameManagerをStageStarterに登録しました。");
-
-        // 杖の開放演出のチェックを開始（演出終了後に自動選択を呼び出す）
-        CheckWandReleaseEffects();
     }
 
     /// <summary>
     /// 未再生の杖開放演出があるか確認し、あれば順次再生します。
-    /// 全て終了後、または演出がない場合にステージの自動選択を行います。
+    /// 全て終了後、または演出がない場合に、島の自動選択やUI表示などの初期化処理を行います。
     /// </summary>
     private void CheckWandReleaseEffects()
     {
@@ -78,7 +87,8 @@ public class StageSelectController : MonoBehaviour, IStageStartListener
         }
         else
         {
-            AutomaticallySelectIsland();
+            // 演出がない場合は即座に初期化
+            InitializeStageSelectView();
         }
     }
 
@@ -101,16 +111,27 @@ public class StageSelectController : MonoBehaviour, IStageStartListener
                 // 演出した杖のみを完了として記録
                 WandUnlockManager.Instance.MarkPresentationPerformed(currentWand.type);
 
-                // 自動選択へ
-                StartCoroutine(DelayedAutoSelect());
+                // 演出終了後に初期化処理へ
+                StartCoroutine(DelayedInitializeStageSelectView());
             }
         );
         wandAcquisitionEffect.StartEffect();
     }
 
-    private System.Collections.IEnumerator DelayedAutoSelect()
+    /// <summary>
+    /// 演出終了後、少し待ってから初期化処理を行います。
+    /// </summary>
+    private System.Collections.IEnumerator DelayedInitializeStageSelectView()
     {
         yield return new WaitForSeconds(autoSelectDelay);
+        InitializeStageSelectView();
+    }
+
+    /// <summary>
+    /// ステージ選択画面の表示状態を初期化します（島の自動選択、通貨表示、BGM再生）。
+    /// </summary>
+    private void InitializeStageSelectView()
+    {
         AutomaticallySelectIsland();
 
         if (CurrencyUI.Instance != null)
