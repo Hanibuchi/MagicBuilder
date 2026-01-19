@@ -1,13 +1,16 @@
 using UnityEngine;
+using Unity.Cinemachine;
 
 /// <summary>
 /// メインカメラを制御するシングルトンクラス。
-/// 画面のズームと位置調整を行います。
+/// Cinemachineの仮想カメラを通じて画面のズームと位置調整を行います。
 /// </summary>
 public class CameraManager : MonoBehaviour
 {
     // シングルトンインスタンス
     public static CameraManager Instance { get; private set; }
+
+    [SerializeField] private CinemachineCamera virtualCamera; // 仮想カメラへの参照
 
     private float _defaultOrthographicSize; // 起動時のデフォルトOrthographic Size
     public float DefaultOrthographicSize => _defaultOrthographicSize;
@@ -27,19 +30,26 @@ public class CameraManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        // 仮想カメラが未設定なら自動取得を試みる
+        if (virtualCamera == null)
+        {
+            virtualCamera = FindFirstObjectByType<CinemachineCamera>();
+        }
+
         SetOrthographicSize();
     }
 
     public void SetOrthographicSize()
     {
         // カメラのOrthographic Size（画面の高さの半分のワールド座標での大きさ）をデフォルトとして保存
-        if (Camera.main != null && Camera.main.orthographic)
+        if (virtualCamera != null)
         {
-            _defaultOrthographicSize = Camera.main.orthographicSize;
+            _defaultOrthographicSize = virtualCamera.Lens.OrthographicSize;
         }
         else
         {
-            Debug.LogError("CameraController: メインカメラが設定されていないか、Orthographic設定になっていません。");
+            Debug.LogError("CameraManager: CinemachineCamera が設定されていないか、見つかりません。");
         }
     }
 
@@ -53,12 +63,14 @@ public class CameraManager : MonoBehaviour
     /// <param name="relativeSize">標準サイズを1としたときの相対的な画面の大きさ（相似比）。</param>
     public void SetRelativeCameraSize(float relativeSize)
     {
-        if (Camera.main == null || !Camera.main.orthographic) return;
+        if (virtualCamera == null) return;
 
         currentRelativeSize = relativeSize;
-        // relativeSizeが大きいほど、画面が大きく（より広く）映る = Orthographic Sizeが大きくなる
-        // Orthographic Size = デフォルトサイズ * relativeSize
-        Camera.main.orthographicSize = _defaultOrthographicSize * relativeSize;
+        
+        // LensSettingsは構造体なので、取得してから書き戻す
+        var lens = virtualCamera.Lens;
+        lens.OrthographicSize = _defaultOrthographicSize * relativeSize;
+        virtualCamera.Lens = lens;
     }
 
     public float GetSize()
@@ -74,32 +86,22 @@ public class CameraManager : MonoBehaviour
     /// <param name="worldPosition">カメラの中心としたいワールド座標。</param>
     public void SetCameraPosition(Vector2 worldPosition)
     {
-        if (Camera.main == null) return;
+        if (virtualCamera == null) return;
 
         currentWorldPos = worldPosition;
 
-        // カメラのZ座標は変更せず、XとY座標を更新
+        // 仮想カメラのZ座標は変更せず、XとY座標を更新
         Vector3 newPosition = new Vector3(
             worldPosition.x,
             worldPosition.y,
-            Camera.main.transform.position.z // 現在のZを維持
+            virtualCamera.transform.position.z // 現在のZを維持
         );
 
-        Camera.main.transform.position = newPosition;
+        virtualCamera.transform.position = newPosition;
     }
 
     public Vector2 GetWorldPosition()
     {
         return currentWorldPos;
     }
-
-    // public float test_size = 2;
-    // public void Test()
-    // {
-    //     SetRelativeCameraSize(test_size);
-    // }
-    // public void Test2()
-    // {
-    //     SetCameraPosition(transform.position);
-    // }
 }

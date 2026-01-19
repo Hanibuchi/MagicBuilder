@@ -21,11 +21,9 @@ MonoBehaviour:
       presentationSprite: {fileID: 2765907212958160120, guid: 00680ef11faee9b4c95610e8fbc6a97a, type: 3}
       wandSprite: {fileID: -115740529236340053, guid: 2e69467cfff73bc4cb18f1a109d26ca0, type: 3}
       maxSpellCount: 12
-      fixedSpells:
-      - {fileID: 11400000, guid: 6c9d9dfe2f68e9144b91bb04a7bd8513, type: 2}
+      fixedSpells: []
       spells:
       - {fileID: 11400000, guid: 0e90aacf1978eb94aa4bf7f8d59eff8f, type: 2}
-      - {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
       - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
   - type: 1
     wand:
@@ -72,7 +70,7 @@ MonoBehaviour:
       wandName: "\u795E\u8056\u306A\u6756"
       description: "\u5929\u5553\u3092\u594F\u3067\u308B\u6307\u63EE\u68D2\u3002"
       type: 5
-      presentationSprite: {fileID: -4587206180212381754, guid: 00680ef11faee9b4c95610e8fbc6a97a, type: 3}
+      presentationSprite: {fileID: -8154204538140147661, guid: 00680ef11faee9b4c95610e8fbc6a97a, type: 3}
       wandSprite: {fileID: 1012713627532921925, guid: 2e69467cfff73bc4cb18f1a109d26ca0, type: 3}
       maxSpellCount: 12
       fixedSpells: []
