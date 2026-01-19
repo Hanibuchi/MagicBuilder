@@ -274,6 +274,7 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
                 iconUI.SetDrag(true);     // 操作可能
                 iconUI.SetAvailableCount(-1);
                 iconUI.SetNewBadgeActive(false); // 装備中のものはNewバッジを表示しない
+                iconUI.SetPurchasableBadgeActive(false); // 装備中のものは購入可能バッジを表示しない
                 component = iconUI;
             }
             else
@@ -368,6 +369,10 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
                 // 新規取得バッジの表示設定
                 bool isNew = SpellHoldInfoManager.Instance != null && SpellHoldInfoManager.Instance.IsSpellNewlyUnlocked(status.Type);
                 iconUI.SetNewBadgeActive(isNew);
+
+                // 購入可能バッジの表示設定
+                bool isPurchasable = CheckIfPurchasable(spellAsset, status.TotalCount);
+                iconUI.SetPurchasableBadgeActive(isPurchasable);
 
                 if (status.TotalCount > 0)
                 {
@@ -512,6 +517,21 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
         pageStatusText.text = totalCount > 0 ? $"{_currentPage}/{_totalPages}" : "0/0";
         prevPageButton.interactable = _currentPage > 1;
         nextPageButton.interactable = _currentPage < _totalPages;
+    }
+
+    /// <summary>
+    /// 指定された呪文が現在購入可能かどうかを判定します。
+    /// </summary>
+    private bool CheckIfPurchasable(SpellBase spell, int ownedCount)
+    {
+        if (spell == null || spell.purchaseCosts == null || spell.purchaseCosts.Length == 0) return false;
+        if (CurrencyManager.Instance == null) return false;
+
+        // 次の購入に必要なコストを取得
+        int index = Mathf.Clamp(ownedCount, 0, spell.purchaseCosts.Length - 1);
+        int cost = spell.purchaseCosts[index];
+
+        return CurrencyManager.Instance.CurrentCurrency >= cost;
     }
 
 

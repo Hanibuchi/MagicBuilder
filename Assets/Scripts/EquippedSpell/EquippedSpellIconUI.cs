@@ -31,6 +31,8 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
     [Tooltip("新規取得を表すバッジのGameObject")]
     [SerializeField] private GameObject newBadge;
 
+    [Tooltip("購入可能を表すバッジのGameObject")]
+    [SerializeField] private GameObject purchasableBadge;
 
     [Header("非アクティブ設定")]
     [Tooltip("ロック時のフレームの色")]
@@ -181,6 +183,18 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
         if (newBadge != null)
         {
             newBadge.SetActive(active);
+        }
+    }
+
+    /// <summary>
+    /// 購入可能バッジの表示・非表示を切り替えます。
+    /// </summary>
+    /// <param name="active">表示するかどうか</param>
+    public void SetPurchasableBadgeActive(bool active)
+    {
+        if (purchasableBadge != null)
+        {
+            purchasableBadge.SetActive(active);
         }
     }
 
