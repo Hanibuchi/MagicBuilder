@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
+using Unity.Cinemachine;
 
 /// <summary>
 /// 杖を取得した際の演出を制御するクラス
@@ -25,6 +26,10 @@ public class WandAcquisitionEffect : MonoBehaviour
     private Animator animator;
     [SerializeField, Tooltip("削除対象となるルートオブジェクト（未指定なら自身）")]
     private GameObject rootObject;
+    [SerializeField, Tooltip("カメラ振動を制御するインパルスソース")]
+    private CinemachineImpulseSource impulseSource;
+    [SerializeField, Tooltip("集結演出時の最大カメラ振動強度")]
+    private float gatheringImpulseForce = 0.5f;
 
     [Header("Audio Settings")]
     [SerializeField, Tooltip("最初に鳴らす何かあると気付かせるSE")]
@@ -175,6 +180,13 @@ public class WandAcquisitionEffect : MonoBehaviour
             float currentVolume = Mathf.Lerp(gatheringSEVolume * 0.5f, gatheringSEVolume, elapsed / gatheringDuration);
             PlayClip(gatheringSE, currentVolume);
 
+            if (impulseSource != null)
+            {
+                // カメラ振動強度を 0 から gatheringImpulseForce まで線形補間
+                float currentImpulseForce = Mathf.Lerp(0f, gatheringImpulseForce, elapsed / gatheringDuration);
+                impulseSource.GenerateImpulseWithForce(currentImpulseForce);
+            }
+
             yield return new WaitForSeconds(gatheringInterval);
             elapsed += gatheringInterval;
         }
@@ -197,6 +209,7 @@ public class WandAcquisitionEffect : MonoBehaviour
     public void PlayCompletedSE()
     {
         PlayClip(completedSE, completedSEVolume);
+        impulseSource.GenerateImpulseWithForce(1);
     }
 
     /// <summary>
