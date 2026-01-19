@@ -42,6 +42,8 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
         }
     }
 
+    [Tooltip("死亡時に無効化するColliderがアタッチされているオブジェクト（攻撃判定を消すために使用）")]
+    [SerializeField] GameObject hitBoxObject;
     [SerializeField] Transform damageTextSpawnPoint;
     /// <summary>
     /// ダメージを受け取ったことを通知し、アニメーション表示処理を委譲します。
@@ -86,8 +88,6 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
     /// </summary>
     public virtual void NotifyDie()
     {
-        // if (gameObject.TryGetComponent<Collider2D>(out Collider2D collider))
-        // collider.enabled = false;
         NotifyDieSilent();
         if (playHitSoundOnDead)
             PlayHitSound();
@@ -98,6 +98,15 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
     {
         if (animator == null || !animator.enabled) return;
         animator.SetTrigger(DIE_TRIGGER);
+
+        if (hitBoxObject != null)
+        {
+            Collider2D[] colliders = hitBoxObject.GetComponents<Collider2D>();
+            foreach (var col in colliders)
+            {
+                col.enabled = false;
+            }
+        }
     }
 
     /// <summary>
