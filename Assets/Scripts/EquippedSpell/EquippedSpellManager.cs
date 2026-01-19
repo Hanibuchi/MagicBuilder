@@ -56,6 +56,7 @@ public class EquippedSpellManager : MonoBehaviour
     private int _maxCapacity = DEFAULT_CAPACITY;
 
     private EquippedSpellCapacityConfig _config;
+    private InitialEquippedSpellsConfig _initialConfig;
 
     // 変更通知用オブザーバー（1つのみ登録可能）
     private IEquippedSpellsObserver _observer;
@@ -72,6 +73,12 @@ public class EquippedSpellManager : MonoBehaviour
         {
             Debug.LogError("EquippedSpellCapacityConfig が Resources/EquippedSpellCapacityConfig に見つかりません。デフォルト設定を使用します。");
             // 必要に応じてデフォルト値を生成するか、エラーとして扱う
+        }
+
+        _initialConfig = Resources.Load<InitialEquippedSpellsConfig>("InitialEquippedSpellsConfig");
+        if (_initialConfig == null)
+        {
+            Debug.Log("InitialEquippedSpellsConfig が Resources/InitialEquippedSpellsConfig に見つかりません。初期装備なしで開始します。");
         }
     }
 
@@ -106,6 +113,7 @@ public class EquippedSpellManager : MonoBehaviour
         if (!PlayerPrefs.HasKey(PLAYERPREFS_KEY_SPELLS))
         {
             Debug.Log("持ち込み呪文の保存データが見つかりませんでした。初期状態で開始します。");
+            ApplyInitialSpells();
             return;
         }
 
@@ -114,6 +122,7 @@ public class EquippedSpellManager : MonoBehaviour
         if (string.IsNullOrEmpty(dataToLoad))
         {
             // データが空の場合は null で初期化（既に new で初期化済み）
+            ApplyInitialSpells(); // 空の場合も初期装備を試みる
             return;
         }
 
@@ -154,6 +163,35 @@ public class EquippedSpellManager : MonoBehaviour
                 Debug.LogError($"無効なSpellType文字列が保存されていました: {spellTypeString}");
             }
         }
+    }
+
+    /// <summary>
+    /// 初期装備を適用し、所持情報も更新します。
+    /// </summary>
+    private void ApplyInitialSpells()
+    {
+        if (_initialConfig == null || _initialConfig.initialSpells == null) return;
+
+        for (int i = 0; i < _initialConfig.initialSpells.Count; i++)
+        {
+            if (i >= _maxCapacity) break;
+
+            var spell = _initialConfig.initialSpells[i];
+            if (spell != null)
+            {
+                _equippedSpells[i] = spell;
+
+                // 初期装備を所持・開放済みに設定（SpellHoldInfoManagerが初期化された後に実行される必要あり）
+                SpellType type = SpellDatabase.Instance.GetSpellType(spell);
+                if (SpellHoldInfoManager.Instance.GetSpellCount(type) <= 0)
+                {
+                    SpellHoldInfoManager.Instance.IncreaseSpellCount(type);
+                }
+            }
+        }
+
+        // 初期状態を保存
+        SaveEquippedSpells();
     }
 
     /// <summary>
