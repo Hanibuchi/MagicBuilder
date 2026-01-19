@@ -442,6 +442,8 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
         if (gameEnd) return;
         gameEnd = true;
         OnGameEnd();
+        SoundManager.Instance.StopBGMWithFade(0.5f);
+        PlayerController.Instance.PlayDieSound();
         Debug.Log("💀 ゲームオーバー！");
         // ゲームオーバー演出（コルーチン）
         StartCoroutine(DelayAndPauseGameOnGameOver());
