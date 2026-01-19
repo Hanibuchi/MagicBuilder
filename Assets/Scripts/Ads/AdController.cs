@@ -158,11 +158,13 @@ public class AdController : MonoBehaviour
     /// カウントは PlayerPrefs に保存されます。
     /// 広告非表示を購入済みの場合は何も行いません。
     /// </summary>
-    public void ShowStageEndAd()
+    /// <param name="onComplete">広告終了時（または非表示時）のコールバック</param>
+    public void ShowStageEndAd(Action onComplete = null)
     {
         if (IAPManager.Instance.IsAdsRemoved)
         {
             Debug.Log("[AdController] 広告非表示が有効なため、広告表示をスキップします。");
+            onComplete?.Invoke();
             return;
         }
 
@@ -174,10 +176,11 @@ public class AdController : MonoBehaviour
         if (count < 4)
         {
             Debug.Log($"[AdController] 通算 {count} 回目のゲーム終了のため、広告表示をスキップします。(4回目から表示)");
+            onComplete?.Invoke();
             return;
         }
 
         Debug.Log("[AdController] インタースティシャル広告の表示をリクエストします。");
-        AdManager.Instance.ShowInterstitial();
+        AdManager.Instance.ShowInterstitial(onComplete);
     }
 }

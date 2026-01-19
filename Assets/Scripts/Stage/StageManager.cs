@@ -524,8 +524,14 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
             clicked = true;
             Debug.Log("ステージセレクトへ");
             Time.timeScale = 1f;
-            AdController.Instance?.ShowStageEndAd();
-            GameManager.Instance.LoadStageSelectScene();
+            if (AdController.Instance != null)
+            {
+                AdController.Instance.ShowStageEndAd(() => GameManager.Instance.LoadStageSelectScene());
+            }
+            else
+            {
+                GameManager.Instance.LoadStageSelectScene();
+            }
         };
         Action onRetry = () =>
         {
@@ -541,8 +547,14 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
             clicked = true;
             Debug.Log("次のステージへ");
             Time.timeScale = 1f; /* 次のステージへ遷移 */
-            AdController.Instance?.ShowStageEndAd();
-            GameManager.Instance.LoadStageSelectScene();
+            if (AdController.Instance != null)
+            {
+                AdController.Instance.ShowStageEndAd(() => GameManager.Instance.LoadStageSelectScene());
+            }
+            else
+            {
+                GameManager.Instance.LoadStageSelectScene();
+            }
         };
         Action onSpellChange = () =>
         {
