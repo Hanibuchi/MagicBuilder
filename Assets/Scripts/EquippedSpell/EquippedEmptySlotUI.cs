@@ -7,11 +7,20 @@ using UnityEngine.EventSystems;
 /// 持ち込み呪文スロットが空の場合に表示されるUIコンポーネント。
 /// 呪文UIがドロップされたときに、装備リストへの登録処理を開始する役割を持つ。
 /// </summary>
-public class EquippedEmptySlotUI : MonoBehaviour, IDropHandler
+public class EquippedEmptySlotUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    // --- インスペクター設定項目 ---
+
+    [SerializeField] private Animator animator;
+
+
     // --- 内部データ ---
 
     private int _slotIndex = -1; // この空スロットが表す持ち込みスロットの番号
+    
+    // Animatorのトリガー名
+    private const string HighlightTrigger = "Highlight";
+    private const string NormalTrigger = "Normal";
     
     // 外部通知用（登録できるのは1つのみ）
     private IEquippedEmptySlotObserver _observer;
@@ -40,10 +49,40 @@ public class EquippedEmptySlotUI : MonoBehaviour, IDropHandler
     }
 
 
+    // --- ホバー処理 (IPointerEnterHandler, IPointerExitHandler) ---
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // ドラッグされているオブジェクトが EquippedSpellIconUI の場合のみハイライト
+        if (eventData.pointerDrag != null && eventData.pointerDrag.TryGetComponent(out EquippedSpellIconUI _))
+        {
+            if (animator != null)
+            {
+                animator.SetTrigger(HighlightTrigger);
+            }
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        // 離れたら通常状態に戻す
+        if (animator != null)
+        {
+            animator.SetTrigger(NormalTrigger);
+        }
+    }
+
+
     // --- ドロップ処理 (IDropHandler) ---
 
     public void OnDrop(PointerEventData eventData)
     {
+        // ドロップ時にアニメーションをリセット
+        if (animator != null)
+        {
+            animator.SetTrigger(NormalTrigger);
+        }
+
         // 1. ドラッグされているオブジェクトから EquippedSpellIconUI を取得する
         if (eventData.pointerDrag == null)
         {
