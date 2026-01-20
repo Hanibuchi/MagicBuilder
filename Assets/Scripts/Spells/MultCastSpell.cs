@@ -14,6 +14,47 @@ public class MultCastSpell : SpellBase
     [Tooltip("発射間隔のランダム性の係数。0のとき間隔0")]
     public float delayMultiplier = 0.05f;
 
+    // キャッシュ用
+    [System.NonSerialized] private List<SpellBase> _lastWandSpells;
+    [System.NonSerialized] private int _lastCurrentSpellIndex = -1;
+    [System.NonSerialized] private int[] _cachedTargetIndices;
+
+    private int[] GetTargetIndices(List<SpellBase> wandSpells, int currentSpellIndex)
+    {
+        // すでに同じ状況での計算結果があればそれを返す
+        if (_lastCurrentSpellIndex == currentSpellIndex && _cachedTargetIndices != null && AreSpellsEqual(_lastWandSpells, wandSpells))
+        {
+            return _cachedTargetIndices;
+        }
+
+        // キャッシュを更新
+        _lastWandSpells = wandSpells != null ? new List<SpellBase>(wandSpells) : null;
+        _lastCurrentSpellIndex = currentSpellIndex;
+        _cachedTargetIndices = GetAbsoluteIndicesFromSpellGroupArray(
+            wandSpells,
+            currentSpellIndex,
+            relativeSpellGroupOffsets
+        );
+
+        return _cachedTargetIndices;
+    }
+
+    /// <summary>
+    /// 2つの呪文リストが論理的に同一（中身の並びが同じ）か判定します。
+    /// </summary>
+    private bool AreSpellsEqual(List<SpellBase> a, List<SpellBase> b)
+    {
+        if (ReferenceEquals(a, b)) return true;
+        if (a == null || b == null) return false;
+        if (a.Count != b.Count) return false;
+
+        for (int i = 0; i < a.Count; i++)
+        {
+            if (a[i] != b[i]) return false;
+        }
+        return true;
+    }
+
     // ----------------------------------------------------------------------------------
     // 抽象メソッドの実装
     // ----------------------------------------------------------------------------------
@@ -30,11 +71,7 @@ public class MultCastSpell : SpellBase
         bool clearLine = false)
     {
         // relativeSpellGroupOffsetsに基づいて呼び出す次の呪文の絶対インデックスを取得
-        int[] targetIndices = GetAbsoluteIndicesFromSpellGroupArray(
-            wandSpells,
-            currentSpellIndex,
-            relativeSpellGroupOffsets
-        );
+        int[] targetIndices = GetTargetIndices(wandSpells, currentSpellIndex);
 
         // 絶対インデックスを現在の呪文からの相対オフセットに変換し、連鎖処理を呼び出す
         int[] relativeOffsets = targetIndices
@@ -67,11 +104,7 @@ public class MultCastSpell : SpellBase
         float strength,
         SpellContext context)
     {
-        int[] targetIndices = GetAbsoluteIndicesFromSpellGroupArray(
-            wandSpells,
-            currentSpellIndex,
-            relativeSpellGroupOffsets
-        );
+        int[] targetIndices = GetTargetIndices(wandSpells, currentSpellIndex);
 
         // 💡 変更点: 各ターゲット呪文の発射を独立したコルーチンとして実行者に依頼
         foreach (int targetIndex in targetIndices)
@@ -139,7 +172,7 @@ public class MultCastSpell : SpellBase
 
 
     /// <summary>
-    /// この呪文から直接的・間接的に呼び出される次の呪文の相対オフセットの配列を返します。
+    /// この呪文から直接的に呼び出される次の呪文の相対オフセットの配列を返します。
     /// これは、DisplayAimingLineForNextSpellsやFireSpellForNextSpellsが、
     /// 「どの呪文のまとまりの**最初**の呪文」を呼び出すかを決定するために使用されます。
     /// </summary>
@@ -147,11 +180,7 @@ public class MultCastSpell : SpellBase
         int currentSpellIndex)
     {
         // GetAbsoluteIndicesFromSpellGroupArrayで絶対インデックスを取得
-        int[] targetIndices = GetAbsoluteIndicesFromSpellGroupArray(
-            wandSpells,
-            currentSpellIndex,
-            relativeSpellGroupOffsets
-        );
+        int[] targetIndices = GetTargetIndices(wandSpells, currentSpellIndex);
 
         // 絶対インデックスを現在の呪文からの相対オフセットに変換して返す
         return targetIndices
