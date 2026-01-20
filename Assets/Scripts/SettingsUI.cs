@@ -48,7 +48,7 @@ public class SettingsUI : MonoBehaviour
 
         // ボタンのクリックイベントにメソッドを登録
         openButton.onClick.AddListener(OnOpenButtonClicked);
-        closeButton.onClick.AddListener(OnCloseButtonClicked);
+        closeButton.onClick.AddListener(Close);
 
         // 初期状態では設定パネルを非表示にしておく
         settingsPanel.SetActive(false);
@@ -149,9 +149,9 @@ public class SettingsUI : MonoBehaviour
     }
 
     /// <summary>
-    /// 設定パネルを閉じるボタンが押されたときに呼び出されます。
+    /// 設定パネルを閉じるボタンが押されたとき、または外部から閉じるときに呼び出されます。
     /// </summary>
-    private void OnCloseButtonClicked()
+    public void Close()
     {
         if (!isPanelOpen) return;
 

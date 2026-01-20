@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 366305054803786208}
   - component: {fileID: 6706056585655284100}
   - component: {fileID: 1808633513774688547}
+  - component: {fileID: 4063625194362054108}
   m_Layer: 5
   m_Name: StageInfoDisplayUI
   m_TagString: Untagged
@@ -202,6 +203,33 @@ MonoBehaviour:
   frameAnimator: {fileID: 8395374544800800362}
   closeSound: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
   stageStartSound: {fileID: 8300000, guid: 2667a0a008b044e218b63df62e2be749, type: 3}
+--- !u!114 &4063625194362054108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056255913683365750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4f32567bbe8edc4bac262ccf110d26d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1808633513774688547}
+        m_TargetAssemblyTypeName: StageInfoDisplayUI, Assembly-CSharp
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2908391520495067036
 GameObject:
   m_ObjectHideFlags: 0

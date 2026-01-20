@@ -644,6 +644,7 @@ GameObject:
   - component: {fileID: 1164579285220516679}
   - component: {fileID: 9154469468963005207}
   - component: {fileID: 2275845977434810293}
+  - component: {fileID: 8668070884230742824}
   m_Layer: 5
   m_Name: CreditCanvas
   m_TagString: Untagged
@@ -824,6 +825,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8668070884230742824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6980604074333977192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4f32567bbe8edc4bac262ccf110d26d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9154469468963005207}
+        m_TargetAssemblyTypeName: CreditUIController, Assembly-CSharp
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7024434859935643904
 GameObject:
   m_ObjectHideFlags: 0

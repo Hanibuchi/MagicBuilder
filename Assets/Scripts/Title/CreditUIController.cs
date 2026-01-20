@@ -59,8 +59,8 @@ public class CreditUIController : MonoBehaviour
         // 2. 閉じるボタンにリスナーを設定
         if (closeButton != null)
         {
-            // ボタンがクリックされたらCloseUIを呼び出す
-            closeButton.onClick.AddListener(CloseUI);
+            // ボタンがクリックされたらCloseを呼び出す
+            closeButton.onClick.AddListener(Close);
         }
         else
         {
@@ -75,7 +75,7 @@ public class CreditUIController : MonoBehaviour
     /// <summary>
     /// UIを閉じるプロセスを開始します。
     /// </summary>
-    public void CloseUI()
+    public void Close()
     {
         // ボタンが一度も押されていないことを確認
         if (isClosing) return;

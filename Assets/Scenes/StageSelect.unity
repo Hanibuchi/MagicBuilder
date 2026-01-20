@@ -13413,6 +13413,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1312890541}
     m_Modifications:
+    - target: {fileID: 1272974734665643518, guid: b8a207671ad971d4596a0236f7c16c95, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1272974734665643518, guid: b8a207671ad971d4596a0236f7c16c95, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1272974734665643518, guid: b8a207671ad971d4596a0236f7c16c95, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1272974734665643518, guid: b8a207671ad971d4596a0236f7c16c95, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2628327905184439406, guid: b8a207671ad971d4596a0236f7c16c95, type: 3}
       propertyPath: m_Name
       value: AdditionalEquipCountCanvas
