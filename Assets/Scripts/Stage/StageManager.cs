@@ -195,8 +195,8 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
     }
 
     [Header("開始時演出設定")]
-    [Tooltip("持ち込み呪文がインベントリに入る間隔（秒）")]
-    [SerializeField] private float spellDropInterval = 0.5f;
+    [Tooltip("持ち込み呪文の全投入にかける合計時間（秒）")]
+    [SerializeField] private float totalSpellDropDuration = 1.2f;
     [Tooltip("最後の呪文が投入されてから敵の生成を開始するまでの予備待機時間")]
     [SerializeField] private float postDropWaitTime = 1.0f;
     [SerializeField] AudioClip bGM;
@@ -229,16 +229,29 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
     /// </summary>
     private IEnumerator EquipSpellsSequenceRoutine()
     {
-        yield return new WaitForSeconds(spellDropInterval);
         // 1. 持ち込み呪文のリストを取得
         var equippedSpells = EquippedSpellManager.Instance.GetEquippedSpells();
+        // 有効な呪文の数をカウント（nullを除外）
+        int activeSpellCount = 0;
+        if (equippedSpells != null)
+        {
+            foreach (var spell in equippedSpells)
+            {
+                if (spell != null) activeSpellCount++;
+            }
+        }
+
+        // 投入間隔を計算。呪文数が多いほど間隔を短くし、合計時間を一定に近づける。
+        float interval = (activeSpellCount > 0) ? totalSpellDropDuration / activeSpellCount : 0.5f;
+
+        yield return new WaitForSeconds(interval);
 
         // プレイヤーのTransformを取得
         Transform playerTransform = PlayerController.Instance.transform;
 
-        if (equippedSpells != null && equippedSpells.Count > 0)
+        if (activeSpellCount > 0)
         {
-            Debug.Log($"{equippedSpells.Count} 個の持ち込み呪文を投入します。");
+            Debug.Log($"{activeSpellCount} 個の持ち込み呪文を投入します。間隔: {interval:F2}秒");
 
             foreach (var spell in equippedSpells)
             {
@@ -250,7 +263,7 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
                 SpellDropManager.Instance.DropSpell(playerTransform.position, spell);
 
                 // 設定された間隔だけ待機
-                yield return new WaitForSeconds(spellDropInterval);
+                yield return new WaitForSeconds(interval);
             }
 
             // 全ての呪文を飛ばし終えた後、アニメーションが落ち着くまで少し待つ
