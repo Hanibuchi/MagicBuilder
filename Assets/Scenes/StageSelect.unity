@@ -5462,9 +5462,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1573669466}
-        m_TargetAssemblyTypeName: DebugTools, Assembly-CSharp
-        m_MethodName: UnlockAndGrantAllSpells
+      - m_Target: {fileID: 168719716}
+        m_TargetAssemblyTypeName: WandAcquisitionEffect, Assembly-CSharp
+        m_MethodName: Test
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
