@@ -20,6 +20,8 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
     // 発射開始地点のスクリーン座標を格納するフィールド
     private bool isAiming = false;
+    private float currentAngle;
+    private float currentPower;
 
     private void Awake()
     {
@@ -53,6 +55,11 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
                 rectTransform.position = screenPoint;
             }
         }
+
+        if (isAiming && aimController != null)
+        {
+            aimController.UpdateAimLine(currentAngle, currentPower);
+        }
     }
 
     /// <summary>
@@ -76,6 +83,10 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         }
 
         isAiming = true;
+        
+        // 開始時の角度と強さを初期化
+        Vector2 dragDelta = eventData.position - (Vector2)Camera.main.WorldToScreenPoint(startPointTransform.position);
+        CalculateAimParameters(dragDelta, out currentAngle, out currentPower);
     }
 
     /// <summary>
@@ -89,11 +100,8 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         // 現在のドラッグ位置から、発射開始地点のスクリーン座標を引く
         Vector2 dragDelta = eventData.position - (Vector2)Camera.main.WorldToScreenPoint(startPointTransform.position);
 
-        // 2. 角度と強さを計算
-        CalculateAimParameters(dragDelta, out float angle, out float power);
-
-        // 3. IAimControllerのメソッドを呼び出し、補助線を表示
-        aimController.UpdateAimLine(angle, power);
+        // 2. 角度と強さを更新（UpdateメソッドでUpdateAimLineが呼ばれる）
+        CalculateAimParameters(dragDelta, out currentAngle, out currentPower);
     }
 
     /// <summary>

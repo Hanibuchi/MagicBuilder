@@ -11,6 +11,8 @@ public class ExampleSpell : SpellBase
     public float trajectoryPrefabInterval = 0.1f;
     [Tooltip("⚡ 軌道予測を行う最大の時間（秒）。この時間を超える軌道は計算しません。")]
     public float maxPredictionTime = 2.0f;
+    [Tooltip("軌道プレハブの移動速度倍率。1.0で実際の弾速（物理的な時間の進み）と一致します。")]
+    public float trajectoryMoveSpeed = 0.5f;
 
     public override void DisplayAimingLine(
         List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ,
@@ -37,6 +39,7 @@ public class ExampleSpell : SpellBase
         float angleRad = rotationZ * Mathf.Deg2Rad;
         Vector2 initialVelocity = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)) * strength * strengthMultiplier;
         float gravityMagnitude = Physics2D.gravity.magnitude;
+
         // 2. 一定時間ごとに軌道上の点を計算し、trajectoryPrefabを生成
         foreach (var obj in trajectoryPrefabs)
         {
@@ -44,9 +47,12 @@ public class ExampleSpell : SpellBase
                 PoolManager.Instance.ReturnToPool(PoolType.Trajectory, obj);
         }
         trajectoryPrefabs.Clear();
-        for (float t = 0; t < maxPredictionTime; t += trajectoryPrefabInterval)
+
+        float timeOffset = (Time.time * trajectoryMoveSpeed) % trajectoryPrefabInterval;
+
+        for (float t = timeOffset; t < maxPredictionTime; t += trajectoryPrefabInterval)
         {
-            if (t == 0)
+            if (t < 0.01f)
                 continue;
             Vector2 position = CalculateTrajectoryPoint(casterPosition, initialVelocity, gravityMagnitude, t);
             // ここでプールから軌道表示用オブジェクトを取得
