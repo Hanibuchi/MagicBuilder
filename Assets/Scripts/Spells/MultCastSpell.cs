@@ -24,27 +24,32 @@ public class MultCastSpell : SpellBase
 
     // キャッシュ用
     [System.NonSerialized] private List<SpellBase> _lastWandSpells;
-    [System.NonSerialized] private int _lastCurrentSpellIndex = -1;
-    [System.NonSerialized] private int[] _cachedTargetIndices;
+    [System.NonSerialized] private Dictionary<int, int[]> _cachedIndicesMap = new Dictionary<int, int[]>();
 
     private int[] GetTargetIndices(List<SpellBase> wandSpells, int currentSpellIndex)
     {
-        // すでに同じ状況での計算結果があればそれを返す
-        if (_lastCurrentSpellIndex == currentSpellIndex && _cachedTargetIndices != null && AreSpellsEqual(_lastWandSpells, wandSpells))
+        // 呪文リストが変更された場合はキャッシュをクリア
+        if (!AreSpellsEqual(_lastWandSpells, wandSpells))
         {
-            return _cachedTargetIndices;
+            _lastWandSpells = wandSpells != null ? new List<SpellBase>(wandSpells) : null;
+            _cachedIndicesMap.Clear();
         }
 
-        // キャッシュを更新
-        _lastWandSpells = wandSpells != null ? new List<SpellBase>(wandSpells) : null;
-        _lastCurrentSpellIndex = currentSpellIndex;
-        _cachedTargetIndices = GetAbsoluteIndicesFromSpellGroupArray(
+        // 呪文の位置（インデックス）をキーにしてキャッシュを確認
+        if (_cachedIndicesMap.TryGetValue(currentSpellIndex, out int[] cached))
+        {
+            return cached;
+        }
+
+        // キャッシュがない場合は計算して保存
+        int[] result = GetAbsoluteIndicesFromSpellGroupArray(
             wandSpells,
             currentSpellIndex,
             relativeSpellGroupOffsets
         );
+        _cachedIndicesMap[currentSpellIndex] = result;
 
-        return _cachedTargetIndices;
+        return result;
     }
 
     /// <summary>
