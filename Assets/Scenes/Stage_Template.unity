@@ -1089,7 +1089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageConfig: {fileID: 11400000, guid: 56b29318c33a3bb40b142b4947ce50d3, type: 2}
-  clearCondition: 0
+  clearCondition: 2
   stagePrefabs:
   - {fileID: 3860825592120938575, guid: bcc1f67afad4f5346988e29a2d33ad21, type: 3}
   - {fileID: 6306026796900488691, guid: 10a201b20e740d34eb8bff9441b6a070, type: 3}
@@ -1328,9 +1328,9 @@ RectTransform:
   - {fileID: 1979975205}
   m_Father: {fileID: 1648084408}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 881, y: -250}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0, y: 96}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1252944695
@@ -1806,9 +1806,9 @@ RectTransform:
   - {fileID: 34317372}
   m_Father: {fileID: 1648084408}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 889, y: -303}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0, y: 47}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1703956168
@@ -1939,9 +1939,9 @@ RectTransform:
   - {fileID: 367059864}
   m_Father: {fileID: 1648084408}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 889, y: -352}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1715439952
