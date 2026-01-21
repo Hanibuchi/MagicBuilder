@@ -96,4 +96,8 @@ public class SpellCommonData : ScriptableObject
 
     [Tooltip("EquippedSpellIconUIコンポーネントがアタッチされたUIプレハブ")]
     public GameObject equippedSpellIconUIPrefab;
+
+    [Header("エフェクトプレハブ")]
+    [Tooltip("呪文発射時に表示する魔法陣のプレハブ")]
+    public GameObject magicCirclePrefab;
 }

@@ -29,3 +29,4 @@ MonoBehaviour:
   spellUIPrefab: {fileID: 5499559984272135055, guid: a8aa928887aa65d429d07a9b1f220163, type: 3}
   dropUIPrefab: {fileID: 1104287654635820185, guid: af09b9e47e48e2b4593b9a8e28d2e8f0, type: 3}
   equippedSpellIconUIPrefab: {fileID: 4605705667940410137, guid: b0e9178e9a980024f9b844179ff255a5, type: 3}
+  magicCirclePrefab: {fileID: 971840952152581679, guid: 247d42e75ebf3244eba88c4d93b2035d, type: 3}

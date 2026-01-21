@@ -23,7 +23,8 @@ MonoBehaviour:
   relativeSpellGroupOffsets: 010000000200000003000000
   delayMultiplier: 0.05
   positionOffsets:
+  - {x: 0, y: 0}
   - {x: 0.5, y: 0.5}
   - {x: 0.5, y: -0.5}
-  - {x: -0.4, y: 0.86}
-  additionalErrorDegree: 2
+  magicCircleDelay: 0.5
+  additionalErrorDegree: 1

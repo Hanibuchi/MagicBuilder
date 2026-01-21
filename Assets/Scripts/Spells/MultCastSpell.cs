@@ -18,6 +18,10 @@ public class MultCastSpell : SpellBase
     [Tooltip("各ターゲットグループへの相対的な位置オフセット。")]
     public Vector2[] positionOffsets = { Vector2.zero };
 
+    [Header("魔法陣演出設定")]
+    [Tooltip("魔法陣を表示してから発射するまでの待ち時間")]
+    public float magicCircleDelay = 0.5f;
+
     // キャッシュ用
     [System.NonSerialized] private List<SpellBase> _lastWandSpells;
     [System.NonSerialized] private int _lastCurrentSpellIndex = -1;
@@ -178,6 +182,24 @@ public class MultCastSpell : SpellBase
         // 待機（この時間が発射開始時点からの遅延時間となる）
         yield return new WaitForSeconds(delayTime);
 
+        MagicCircle magicCircle = null;
+        GameObject prefab = SpellCommonData.Instance?.magicCirclePrefab;
+
+        // 💡 魔法陣の表示演出を追加
+        if (prefab != null)
+        {
+            GameObject circleGo = Instantiate(prefab, newContext.CasterPosition, Quaternion.Euler(0, 0, rotationZ));
+            magicCircle = circleGo.GetComponent<MagicCircle>();
+
+            if (magicCircle != null)
+            {
+                // 要件: 完全に表示されるまでの時間(magicCircleDelay), サイズ1
+                magicCircle.Show(magicCircleDelay);
+                // 魔法陣が出てから少し待ってから発射
+                yield return new WaitForSeconds(magicCircleDelay);
+            }
+        }
+
         // 待機後、呪文を発射
         spellToFire?.FireSpell(
             wandSpells,
@@ -186,6 +208,12 @@ public class MultCastSpell : SpellBase
             strength,
             newContext
         );
+
+        // 消滅演出の開始 (表示と同じ時間をかけて消える)
+        if (magicCircle != null)
+        {
+            magicCircle.Hide(magicCircleDelay);
+        }
 
         // Debug.Log($"Spell at index {targetIndex} fired after {delayTime:F3} seconds.");
     }
