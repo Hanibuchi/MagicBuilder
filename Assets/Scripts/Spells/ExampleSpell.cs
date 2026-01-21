@@ -5,7 +5,7 @@ using System;
 [CreateAssetMenu(fileName = "ExampleSpell", menuName = "Wand System/Example Spell")]
 public class ExampleSpell : SpellBase
 {
-    List<GameObject> trajectoryPrefabs = new();
+    private Dictionary<int, List<GameObject>> trajectoryPrefabsByIndex = new();
     [Header("補助線設定")]
     [Tooltip("軌道プレハブの生成間隔（秒）。小さいほど密になります。")]
     public float trajectoryPrefabInterval = 0.1f;
@@ -17,6 +17,12 @@ public class ExampleSpell : SpellBase
         float strength, Vector2 casterPosition, Action<GameObject> aimingModifier,
         bool clearLine = false)
     {
+        if (!trajectoryPrefabsByIndex.TryGetValue(currentSpellIndex, out var trajectoryPrefabs))
+        {
+            trajectoryPrefabs = new List<GameObject>();
+            trajectoryPrefabsByIndex[currentSpellIndex] = trajectoryPrefabs;
+        }
+
         if (clearLine)
         {
             foreach (var obj in trajectoryPrefabs)

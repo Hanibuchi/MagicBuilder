@@ -12,8 +12,12 @@ public class BarrierSpell : SpellBase
     public GameObject[] barrierPrefabs;
 
     // 軌道表示用のバッファ
-    private GameObject currentBarrierInstance = null;
-    private int lastPrefabIndex = -1; // 前回使用したPrefabのインデックス
+    private class BarrierInstanceInfo
+    {
+        public GameObject instance;
+        public int lastPrefabIndex = -1;
+    }
+    private Dictionary<int, BarrierInstanceInfo> barrierInstancesByIndex = new();
 
     /// <summary>
     /// Strengthに応じてバリアのプレハブを選択し、軌道（Aiming Line）として表示します。
@@ -23,13 +27,19 @@ public class BarrierSpell : SpellBase
         float strength, Vector2 casterPosition, Action<GameObject> aimingModifier,
         bool clearLine = false)
     {
+        if (!barrierInstancesByIndex.TryGetValue(currentSpellIndex, out var info))
+        {
+            info = new BarrierInstanceInfo();
+            barrierInstancesByIndex[currentSpellIndex] = info;
+        }
+
         // 1. 補助線のクリア処理
         if (clearLine)
         {
-            if (currentBarrierInstance != null)
+            if (info.instance != null)
             {
                 // PoolManagerを使用していないため、非アクティブ化で対応
-                currentBarrierInstance.SetActive(false);
+                info.instance.SetActive(false);
             }
             return;
         }
@@ -47,40 +57,40 @@ public class BarrierSpell : SpellBase
         {
             Debug.LogError($"呪文 [{spellName}] のインデックス [{targetIndex}] にPrefabが設定されていません。");
             // Prefabがない場合は表示をクリア
-            if (currentBarrierInstance != null)
+            if (info.instance != null)
             {
-                currentBarrierInstance.SetActive(false);
+                info.instance.SetActive(false);
             }
             return;
         }
 
         // 3. インスタンスの再利用または新規取得
-        if (targetIndex != lastPrefabIndex || currentBarrierInstance == null)
+        if (targetIndex != info.lastPrefabIndex || info.instance == null)
         {
             // 前回のインスタンスを破棄 (PoolManagerを使っていないため)
-            if (currentBarrierInstance != null)
+            if (info.instance != null)
             {
-                Destroy(currentBarrierInstance);
+                Destroy(info.instance);
             }
 
             // 新しいバリアを生成
-            currentBarrierInstance = Instantiate(targetPrefab);
-            currentBarrierInstance.SetActive(true); // 新規作成時はアクティブ化
-            lastPrefabIndex = targetIndex;
+            info.instance = Instantiate(targetPrefab);
+            info.instance.SetActive(true); // 新規作成時はアクティブ化
+            info.lastPrefabIndex = targetIndex;
         }
-        else if (!currentBarrierInstance.activeSelf)
+        else if (!info.instance.activeSelf)
         {
             // インスタンスを使い回す場合でも非アクティブならアクティブに戻す
-            currentBarrierInstance.SetActive(true);
+            info.instance.SetActive(true);
         }
 
-        currentBarrierInstance.transform.rotation = Quaternion.Euler(0, 0, rotationZ); // rotationZをそのまま設定
-        currentBarrierInstance.transform.position = casterPosition;
+        info.instance.transform.rotation = Quaternion.Euler(0, 0, rotationZ); // rotationZをそのまま設定
+        info.instance.transform.position = casterPosition;
         // スケールを一旦プレハブのデフォルトに戻す（修飾子の累積適用を防ぐため）
-        currentBarrierInstance.transform.localScale = targetPrefab.transform.localScale;
+        info.instance.transform.localScale = targetPrefab.transform.localScale;
 
         // 修飾子の実行（例：ExpansionSpellによる拡大など）
-        aimingModifier?.Invoke(currentBarrierInstance);
+        aimingModifier?.Invoke(info.instance);
     }
 
     /// <summary>
