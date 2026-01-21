@@ -338,7 +338,7 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
     /// <summary>
     /// ステージクリア時の処理を実行します。
     /// </summary>
-    private void HandleStageClear()
+    public void HandleStageClear()
     {
         if (gameEnd) return;
         gameEnd = true;

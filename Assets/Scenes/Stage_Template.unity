@@ -1379,7 +1379,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 827964234}
         m_TargetAssemblyTypeName: StageManager, Assembly-CSharp
-        m_MethodName: NotifyBossDefeatedForClear
+        m_MethodName: HandleStageClear
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
