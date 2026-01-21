@@ -22,6 +22,6 @@ public class DummySpell : SpellBase
     }
 
     // 抽象メソッドのダミー実装
-    public override void DisplayAimingLine(List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ, float strength, Vector2 casterPosition, bool clearLine = false) { }
+    public override void DisplayAimingLine(List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ, float strength, Vector2 casterPosition, Action<GameObject> aimingModifier, bool clearLine = false) { }
     public override void FireSpell(List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ, float strength, SpellContext context) { }
 }

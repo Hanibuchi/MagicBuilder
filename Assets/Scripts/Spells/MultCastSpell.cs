@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
+using System;
 using Unity.VisualScripting;
 
 [CreateAssetMenu(fileName = "MultCastSpell", menuName = "Wand System/MultCast Spell")]
@@ -68,6 +69,7 @@ public class MultCastSpell : SpellBase
         float rotationZ,
         float strength,
         Vector2 casterPosition,
+        Action<GameObject> aimingModifier,
         bool clearLine = false)
     {
         // relativeSpellGroupOffsetsに基づいて呼び出す次の呪文の絶対インデックスを取得
@@ -87,6 +89,7 @@ public class MultCastSpell : SpellBase
             rotationZ,
             strength,
             casterPosition,
+            aimingModifier,
             clearLine
         );
     }

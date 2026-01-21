@@ -24,6 +24,28 @@ public class ExpansionSpell : SpellBase
     }
 
     /// <summary>
+    /// 補助線（軌道予測）を表示します。
+    /// ここでは、発射体のスケールを変更する修飾子を DisplayAimingLine に追加します。
+    /// </summary>
+    public override void DisplayAimingLine(
+        List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ,
+        float strength, Vector2 casterPosition, Action<GameObject> aimingModifier,
+        bool clearLine = false)
+    {
+        // 新しい修飾子を作成（既存の修飾子がある場合はそれも実行する）
+        aimingModifier += (projectile) =>
+        {
+            projectile.transform.localScale *= scaleMultiplier;
+        };
+
+        // 2. 次の呪文に対して、新しい修飾子で DisplayAimingLine を呼び出す
+        DisplayAimingLineForNextSpells(
+            GetNextSpellOffsets(wandSpells, currentSpellIndex),
+            wandSpells, currentSpellIndex, rotationZ, strength, casterPosition, aimingModifier, clearLine
+        );
+    }
+
+    /// <summary>
     /// 呪文の主要な効果を実行します。
     /// ここでは、発射体のスケールを変更する修飾子を SpellContext に追加します。
     /// </summary>

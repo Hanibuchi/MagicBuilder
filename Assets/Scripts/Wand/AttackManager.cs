@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 /// <summary>
 /// 攻撃の発射と杖のリスト管理を行うシングルトンクラス。
@@ -86,6 +87,7 @@ public class AttackManager : MonoBehaviour
                     rotationZ,
                     strength,
                     casterPositionTransform.position,
+                    null,
                     clearLine // clearLineは最初の呼び出しでのみ意味を持つが、ここでは全ての開始点で実行させる
                 );
             }

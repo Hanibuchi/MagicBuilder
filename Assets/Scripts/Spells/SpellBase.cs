@@ -39,13 +39,14 @@ public abstract class SpellBase : ScriptableObject
         float rotationZ,
         float strength,
         Vector2 casterPosition,
+        Action<GameObject> aimingModifier,
         bool clearLine = false
     )
     {
         // GetNextSpellOffsetsで得られた次の呪文に対して、同じ引数でDisplayAimingLineを呼び出す
         DisplayAimingLineForNextSpells(
             GetNextSpellOffsets(wandSpells, currentSpellIndex),
-            wandSpells, currentSpellIndex, rotationZ, strength, casterPosition, clearLine
+            wandSpells, currentSpellIndex, rotationZ, strength, casterPosition, aimingModifier, clearLine
         );
     }
 
@@ -58,6 +59,7 @@ public abstract class SpellBase : ScriptableObject
     /// <param name="rotationZ">発射角度</param>
     /// <param name="strength">発射の強さ</param>
     /// <param name="casterPosition">発射元となる位置</param>
+    /// <param name="aimingModifier">補助線の描画時に適用する修飾子</param>
     /// <param name="clearLine">ラインをクリアするかどうか</param>
     protected void DisplayAimingLineForNextSpells(
         int[] nextSpelloffsets,
@@ -66,6 +68,7 @@ public abstract class SpellBase : ScriptableObject
         float rotationZ,
         float strength,
         Vector2 casterPosition,
+        Action<GameObject> aimingModifier,
         bool clearLine = false
     )
     {
@@ -86,6 +89,7 @@ public abstract class SpellBase : ScriptableObject
                     rotationZ,
                     strength,
                     casterPosition,
+                    aimingModifier,
                     clearLine         // 最初の呼び出しでのみクリアを実行
                 );
             }

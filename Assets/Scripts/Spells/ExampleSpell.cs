@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 [CreateAssetMenu(fileName = "ExampleSpell", menuName = "Wand System/Example Spell")]
 public class ExampleSpell : SpellBase
@@ -13,7 +14,8 @@ public class ExampleSpell : SpellBase
 
     public override void DisplayAimingLine(
         List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ,
-        float strength, Vector2 casterPosition, bool clearLine = false)
+        float strength, Vector2 casterPosition, Action<GameObject> aimingModifier,
+        bool clearLine = false)
     {
         if (clearLine)
         {
@@ -45,6 +47,9 @@ public class ExampleSpell : SpellBase
             GameObject trajectoryObj = PoolManager.Instance.GetFromPool(PoolType.Trajectory);
             trajectoryPrefabs.Add(trajectoryObj);
             trajectoryObj.transform.position = position;
+
+            // 修飾子の実行（例：ExpansionSpellによる拡大など）
+            aimingModifier?.Invoke(trajectoryObj);
         }
     }
     [Header("投射物設定")]

@@ -20,7 +20,8 @@ public class BarrierSpell : SpellBase
     /// </summary>
     public override void DisplayAimingLine(
         List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ,
-        float strength, Vector2 casterPosition, bool clearLine = false)
+        float strength, Vector2 casterPosition, Action<GameObject> aimingModifier,
+        bool clearLine = false)
     {
         // 1. 補助線のクリア処理
         if (clearLine)
@@ -75,6 +76,11 @@ public class BarrierSpell : SpellBase
 
         currentBarrierInstance.transform.rotation = Quaternion.Euler(0, 0, rotationZ); // rotationZをそのまま設定
         currentBarrierInstance.transform.position = casterPosition;
+        // スケールを一旦プレハブのデフォルトに戻す（修飾子の累積適用を防ぐため）
+        currentBarrierInstance.transform.localScale = targetPrefab.transform.localScale;
+
+        // 修飾子の実行（例：ExpansionSpellによる拡大など）
+        aimingModifier?.Invoke(currentBarrierInstance);
     }
 
     /// <summary>

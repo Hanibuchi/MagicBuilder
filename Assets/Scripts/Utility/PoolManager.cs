@@ -63,6 +63,10 @@ public class PoolManager : MonoBehaviour
             return null;
         }
 
+        // 設定からプレハブを取得
+        PoolItem item = System.Array.Find(poolSettings, p => p.Type == type);
+        if (item == null || item.Prefab == null) return null;
+
         GameObject obj;
         Queue<GameObject> pool = poolDictionary[type];
 
@@ -73,12 +77,11 @@ public class PoolManager : MonoBehaviour
         }
         else
         {
-            // 設定からプレハブを取得 (簡易的な方法。本来は辞書で管理すると良い)
-            GameObject prefab = System.Array.Find(poolSettings, p => p.Type == type)?.Prefab;
-            if (prefab == null) return null;
-
-            obj = CreateNewObject(prefab);
+            obj = CreateNewObject(item.Prefab);
         }
+
+        // スケールをプレハブのデフォルトに戻す
+        obj.transform.localScale = item.Prefab.transform.localScale;
 
         obj.SetActive(true);
         activeObjectsDictionary[type].Add(obj); // アクティブリストに追加
