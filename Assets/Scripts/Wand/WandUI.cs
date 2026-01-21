@@ -139,6 +139,16 @@ public class WandUI : MonoBehaviour, ISpellContainer
             CreateSpacingUI(i, false);
             CreateSpellUI(i, newSequence[i]);
         }
+
+        // 最後のSpacingUIの前に空間を作るための空オブジェクトを挿入
+        GameObject spacer = new GameObject("Spacer", typeof(RectTransform));
+        spacer.transform.SetParent(spellFrame, false);
+        if (spacer.TryGetComponent<RectTransform>(out var spacerRect))
+        {
+            spacerRect.sizeDelta = new Vector2(0, spacerRect.sizeDelta.y);
+        }
+        uiElements.Add(spacer);
+
         CreateSpacingUI(newSequence.Count, CanDropSpell(false));
     }
     public void RebuildUI()
