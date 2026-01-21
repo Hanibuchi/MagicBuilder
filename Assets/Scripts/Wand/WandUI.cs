@@ -149,7 +149,7 @@ public class WandUI : MonoBehaviour, ISpellContainer
         }
         uiElements.Add(spacer);
 
-        CreateSpacingUI(newSequence.Count, CanDropSpell(false));
+        CreateSpacingUI(newSequence.Count, false);
     }
     public void RebuildUI()
     {
@@ -186,7 +186,25 @@ public class WandUI : MonoBehaviour, ISpellContainer
         // 全てのSpacingUIの拡張トリガーをアクティブ化
         foreach (var element in uiElements)
         {
-            element.GetComponent<SpacingUI>()?.SetExtendedTriggerActive(true);
+            SpacingUI spacing = element.GetComponent<SpacingUI>();
+            if (spacing != null)
+            {
+                spacing.SetExtendedTriggerActive(true);
+            }
+        }
+
+        // 最後のSpacingUIをハイライト（空きがある場合のみ）
+        if (CanDropSpell(false))
+        {
+            for (int i = uiElements.Count - 1; i >= 0; i--)
+            {
+                SpacingUI lastSpacing = uiElements[i].GetComponent<SpacingUI>();
+                if (lastSpacing != null)
+                {
+                    lastSpacing.SetAlwaysHighlight(true);
+                    break;
+                }
+            }
         }
     }
 
@@ -195,10 +213,15 @@ public class WandUI : MonoBehaviour, ISpellContainer
     /// </summary>
     public void NotifySpellDragEnded()
     {
-        // 全てのSpacingUIの拡張トリガーを非アクティブ化
+        // 全てのSpacingUIの拡張トリガーを非アクティブ化し、ハイライトを強制解除
         foreach (var element in uiElements)
         {
-            element.GetComponent<SpacingUI>()?.SetExtendedTriggerActive(false);
+            SpacingUI spacing = element.GetComponent<SpacingUI>();
+            if (spacing != null)
+            {
+                spacing.SetExtendedTriggerActive(false);
+                spacing.SetAlwaysHighlight(false);
+            }
         }
     }
 
