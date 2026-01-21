@@ -22,4 +22,7 @@ MonoBehaviour:
   spellDescription: "\u546A\u6587\u30922\u3064\u307E\u3068\u3081\u3066\u5531\u3048\u308B\u3002\u5531\u3048\u3089\u308C\u305F\u546A\u6587\u306B\u52B9\u679C\u304C\u8907\u88FD\u3055\u308C\u308B\u3002"
   relativeSpellGroupOffsets: 0100000002000000
   delayMultiplier: 0.05
+  positionOffsets:
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: -0.5}
   additionalErrorDegree: 2

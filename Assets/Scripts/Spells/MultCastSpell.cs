@@ -15,6 +15,9 @@ public class MultCastSpell : SpellBase
     [Tooltip("発射間隔のランダム性の係数。0のとき間隔0")]
     public float delayMultiplier = 0.05f;
 
+    [Tooltip("各ターゲットグループへの相対的な位置オフセット。")]
+    public Vector2[] positionOffsets = { Vector2.zero };
+
     // キャッシュ用
     [System.NonSerialized] private List<SpellBase> _lastWandSpells;
     [System.NonSerialized] private int _lastCurrentSpellIndex = -1;
@@ -72,26 +75,34 @@ public class MultCastSpell : SpellBase
         Action<GameObject> aimingModifier,
         bool clearLine = false)
     {
+        Debug.Log($"spells: {string.Join(", ", wandSpells.Select(s => s?.name ?? "null"))}");
         // relativeSpellGroupOffsetsに基づいて呼び出す次の呪文の絶対インデックスを取得
         int[] targetIndices = GetTargetIndices(wandSpells, currentSpellIndex);
+        Debug.Log($"targetIndices: {string.Join(", ", targetIndices)}");
 
-        // 絶対インデックスを現在の呪文からの相対オフセットに変換し、連鎖処理を呼び出す
-        int[] relativeOffsets = targetIndices
-            .Select(index => index - currentSpellIndex)
-            .ToArray();
+        for (int i = 0; i < targetIndices.Length; i++)
+        {
+            int targetIndex = targetIndices[i];
+            if (targetIndex >= 0 && targetIndex < wandSpells.Count)
+            {
+                Vector2 offset = (positionOffsets != null && i < positionOffsets.Length)
+                    ? positionOffsets[i]
+                    : Vector2.zero;
 
-        // DisplayAimingLineForNextSpellsを利用して、連鎖先のDisplayAimingLineを呼び出す
-        // relativeOffsetsの配列は、連鎖の始点となる呪文の配列と解釈されます。
-        DisplayAimingLineForNextSpells(
-            relativeOffsets,
-            wandSpells,
-            currentSpellIndex,
-            rotationZ,
-            strength,
-            casterPosition,
-            aimingModifier,
-            clearLine
-        );
+                SpellBase spellToDisplay = wandSpells[targetIndex];
+
+                // 対象の呪文のDisplayAimingLineを呼び出し
+                spellToDisplay?.DisplayAimingLine(
+                    wandSpells,
+                    targetIndex,
+                    rotationZ,
+                    strength,
+                    casterPosition + offset,
+                    aimingModifier,
+                    clearLine
+                );
+            }
+        }
     }
 
     [SerializeField] float additionalErrorDegree = 2;
@@ -110,15 +121,21 @@ public class MultCastSpell : SpellBase
         int[] targetIndices = GetTargetIndices(wandSpells, currentSpellIndex);
 
         // 💡 変更点: 各ターゲット呪文の発射を独立したコルーチンとして実行者に依頼
-        foreach (int targetIndex in targetIndices)
+        for (int i = 0; i < targetIndices.Length; i++)
         {
+            int targetIndex = targetIndices[i];
             if (targetIndex >= 0 && targetIndex < wandSpells.Count)
             {
+                Vector2 offset = (positionOffsets != null && i < positionOffsets.Length)
+                    ? positionOffsets[i]
+                    : Vector2.zero;
+
                 SpellBase spellToFire = wandSpells[targetIndex];
 
                 context.errorDegree += additionalErrorDegree;
                 // Contextの複製（Executorも引き継ぐ）
                 SpellContext newContext = context.Clone();
+                newContext.CasterPosition += offset;
 
                 // 独立した遅延発射コルーチンを開始
                 if (SpellScheduler.Instance != null)
