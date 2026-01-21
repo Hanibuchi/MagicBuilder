@@ -158,6 +158,14 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
     /// </summary>
     private void InstantiateClearConditionUI()
     {
+        // デバッグ用：UIを表示せずに即座に開始する場合
+        if (clearCondition == StageClearCondition.Debug_None)
+        {
+            Debug.Log("クリア条件が Debug_None のため、UIを表示せずにゲームを開始します。");
+            StartGameImmediately();
+            return;
+        }
+
         GameObject targetPrefab = null;
 
         // 現在のクリア条件に対応するプレハブをリストから探す
@@ -590,6 +598,8 @@ public enum StageClearCondition
     // 敵の数が0になったとき
     AllEnemiesDefeated,
     // 特定のボスを倒したとき
-    SpecificBossDefeated
+    SpecificBossDefeated,
+    // デバッグ用: UIを表示せず即座に開始
+    Debug_None
     // 必要であれば他の条件（例: 時間切れ、パズルクリアなど）を追加可能
 }
