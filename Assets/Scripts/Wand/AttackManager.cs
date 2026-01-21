@@ -62,13 +62,15 @@ public class AttackManager : MonoBehaviour
             return;
         }
 
+        List<SpellBase> processedSpells = ProcessWandSpellsBeforeFire(wandToUse.AllSpells);
+
         int[] arr = new int[displayAimingLineSpellCount];
         for (int i = 0; i < displayAimingLineSpellCount; i++)
             arr[i] = i + 1;
         // GetAbsoluteIndicesFromSpellGroupArray を使用して、呪文の連鎖全体で次に発動すべき呪文を特定
         // 最初の呪文は「1つ目の呪文」として処理するため、relativeGroupOffsets は [1] を渡す
         int[] targetIndices = SpellBase.GetAbsoluteIndicesFromSpellGroupArray(
-            wandToUse.AllSpells,
+            processedSpells,
             -1,
             arr // 最初の呪文グループ（すなわち最初の呪文）の次のインデックスを取得
         );
@@ -78,11 +80,11 @@ public class AttackManager : MonoBehaviour
         // 取得した全ての開始インデックスの呪文に対して DisplayAimingLine を呼び出す
         foreach (int targetIndex in targetIndices)
         {
-            if (targetIndex >= 0 && targetIndex < wandToUse.AllSpells.Count)
+            if (targetIndex >= 0 && targetIndex < processedSpells.Count)
             {
-                SpellBase spell = wandToUse.AllSpells[targetIndex];
+                SpellBase spell = processedSpells[targetIndex];
                 spell?.DisplayAimingLine(
-                    wandToUse.AllSpells,
+                    processedSpells,
                     targetIndex,
                     rotationZ,
                     strength,
