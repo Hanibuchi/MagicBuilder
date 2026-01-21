@@ -59,6 +59,7 @@ public class WandUIManager : MonoBehaviour
             bool isActive = (i == index);
             activeWandUIs[i].gameObject.SetActive(isActive); // 親のGameObjectを制御
         }
+        activeWandUIs[index].RebuildUI();
 
         UpdateWandSwitchButtons(index);
         Debug.Log($"WandUIをインデックス {index} のものに切り替えました。");

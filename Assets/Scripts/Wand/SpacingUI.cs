@@ -15,9 +15,8 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     [SerializeField] Animator animator;
     private bool isAlwaysHighlighted; // 常にハイライトするかどうかのフラグ
 
-    // Animatorのトリガー名
-    private const string HighlightTrigger = "Highlight";
-    private const string NormalTrigger = "Normal";
+    // Animatorのパラメータ名
+    private const string IsHighlightedBool = "IsHighlighted";
 
     [SerializeField] ExtendedSpacingTriggerUI extendedTriggerUI;
     [SerializeField] Image image;
@@ -52,10 +51,9 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     {
         Debug.Log($"SetAlwaysHighlight called with value: {always} for {gameObject.name}");
         this.isAlwaysHighlighted = always;
-        if (always && animator != null)
+        if (animator != null)
         {
-            animator.ResetTrigger(NormalTrigger);
-            animator.SetTrigger(HighlightTrigger);
+            animator.SetBool(IsHighlightedBool, always);
         }
     }
 
@@ -125,8 +123,7 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
                 {
                     if (animator != null)
                     {
-                        animator.ResetTrigger(NormalTrigger);
-                        animator.SetTrigger(HighlightTrigger);
+                        animator.SetBool(IsHighlightedBool, true);
                     }
                 }
             }
@@ -152,8 +149,7 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 
         if (animator != null)
         {
-            animator.SetTrigger(NormalTrigger);
-            animator.ResetTrigger(HighlightTrigger);
+            animator.SetBool(IsHighlightedBool, false);
         }
     }
 
