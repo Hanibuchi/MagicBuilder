@@ -139,8 +139,7 @@ public class WandUI : MonoBehaviour, ISpellContainer
             CreateSpacingUI(i, false);
             CreateSpellUI(i, newSequence[i]);
         }
-        // 呪文が一つもない場合のみ、唯一のSpacingUIを常にハイライトにする
-        CreateSpacingUI(newSequence.Count, newSequence.Count == 0);
+        CreateSpacingUI(newSequence.Count, CanDropSpell(false));
     }
     public void RebuildUI()
     {
