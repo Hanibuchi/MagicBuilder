@@ -366,7 +366,7 @@ public class EquippedSpellManager : MonoBehaviour
             return;
         }
 
-        int targetCapacity = _config.capacityUpgradeCosts.Length;
+        int targetCapacity = 99;
         if (_maxCapacity < targetCapacity)
         {
             IncreaseCapacity(targetCapacity - _maxCapacity);

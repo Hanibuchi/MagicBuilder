@@ -285,7 +285,7 @@ public class SpellHoldInfoManager : MonoBehaviour
     // --- デバッグ用メソッド ---
 
     /// <summary>
-    /// すべての登録済み呪文を開放し、それぞれ1つずつ所持した状態にします（デバッグ用）。
+    /// すべての登録済み呪文を開放し、それぞれ10個ずつ所持した状態にします（デバッグ用）。
     /// </summary>
     public void Test_UnlockAndGrantAllSpells()
     {
@@ -300,8 +300,9 @@ public class SpellHoldInfoManager : MonoBehaviour
         {
             if (type == SpellType.None) continue;
 
-            // 保持数が 0 の場合のみ 1 に増やす（＝1つ取得する）
-            if (GetSpellCount(type) == 0)
+            // 保持数が 10 未満の場合、10 になるまで増やす
+            int currentCount = GetSpellCount(type);
+            for (int i = currentCount; i < 10; i++)
             {
                 IncreaseSpellCount(type);
             }
@@ -312,7 +313,7 @@ public class SpellHoldInfoManager : MonoBehaviour
                 UnlockSpell(type);
             }
         }
-        Debug.Log("<color=cyan>[SpellHoldInfoManager Test]</color> すべての登録済み呪文を開放し、1つずつ所持させました。");
+        Debug.Log("<color=cyan>[SpellHoldInfoManager Test]</color> すべての登録済み呪文を開放し、10個ずつ所持させました。");
     }
 
     // SpellHoldInfoManager.cs 内に追記
