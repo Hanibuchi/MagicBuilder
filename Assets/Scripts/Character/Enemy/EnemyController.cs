@@ -351,23 +351,20 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
 
         // 死亡処理を呼び出す
         // 既に死んでいる場合は、NotifyDie() 内で処理がスキップされることを期待します
-        forceDie = true;
-        NotifyDie();
+        NotifyDie(true);
     }
-    bool forceDie = false;
 
     bool isDead = false; // ボス敵が複数回死亡通知される可能性があるため、フラグで制御
-    public override void NotifyDie()
+    public override void NotifyDie(bool silent = false)
     {
         if (isDead) return;
         isDead = true;
         enemyMovement?.ApplyStun();
         if (characterHealth != null)
             ScoreManager.Instance?.AddScore(characterHealth.maxHealth);
-        if (!forceDie)
-            base.NotifyDie();
-        else
-            NotifyDieSilent();
+        
+        base.NotifyDie(silent);
+
         GetComponent<SpellDropper>()?.DropSpells();
         GetComponent<BossClearNotifier>()?.NotifyDefeated();
         EnemyCounter.Instance?.RemoveEnemy();

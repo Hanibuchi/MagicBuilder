@@ -86,13 +86,16 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
     /// <summary>
     /// 死亡を通知し、死亡アニメーションのトリガーを設定します。
     /// </summary>
-    public virtual void NotifyDie()
+    public virtual void NotifyDie(bool silent = false)
     {
         NotifyDieSilent();
-        if (playHitSoundOnDead)
-            PlayHitSound();
+        if (!silent)
+        {
+            if (playHitSoundOnDead)
+                PlayHitSound();
 
-        PlayDieSound();
+            PlayDieSound();
+        }
     }
     public void NotifyDieSilent()
     {

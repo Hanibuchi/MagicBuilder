@@ -328,11 +328,21 @@ public class CharacterHealth : MonoBehaviour
     /// </summary>
     private void Die()
     {
+        Kill(false);
+    }
+
+    /// <summary>
+    /// キャラクターを即死させます。
+    /// </summary>
+    /// <param name="silent">無音（エフェクトなし）で死亡させるかどうか</param>
+    public void Kill(bool silent = false)
+    {
         if (isDead) return; // 既に死亡済みなら重複処理を避ける
         isDead = true;
+        currentHealth = 0;
         Debug.Log($"{gameObject.name}は倒れた。");
         // 死亡時のアニメーションやゲームオーバー処理などを記述
-        dieNotifier?.NotifyDie();
+        dieNotifier?.NotifyDie(silent);
     }
 
     /// <summary>
@@ -441,7 +451,7 @@ public interface IDamageNotifier
 
 public interface IDieNotifier
 {
-    void NotifyDie();
+    void NotifyDie(bool silent = false);
 }
 
 
