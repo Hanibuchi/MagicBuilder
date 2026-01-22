@@ -4,7 +4,7 @@ using UnityEngine;
 /// ステージクリアの条件となるボス敵を生成するための設定。
 /// 生成時にBossClearNotifierコンポーネントを自動的にアタッチします。
 /// </summary>
-[CreateAssetMenu(fileName = "NewBossEnemySpawnerConfig", menuName = "GameConfig/Enemy Spawner Config/Boss Enemy")]
+[System.Serializable]
 public class BossEnemySpawnerConfig : EnemySpawnerConfig
 {
     /// <summary>

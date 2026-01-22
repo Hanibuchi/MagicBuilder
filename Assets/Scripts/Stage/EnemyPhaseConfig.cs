@@ -2,10 +2,10 @@
 using UnityEngine;
 
 /// <summary>
-/// 敵の出現フェーズと次のフェーズへの移行条件を定義するScriptableObject。
+/// 敵の出現フェーズと次のフェーズへの移行条件を定義するセリアライズ可能なクラス。
 /// </summary>
-[CreateAssetMenu(fileName = "NewEnemyPhase", menuName = "GameConfig/Enemy Phase Config/Default")]
-public class EnemyPhaseConfig : ScriptableObject
+[System.Serializable]
+public class EnemyPhaseConfig
 {
     [Header("フェーズの条件")]
     [Tooltip("このフェーズを開始するための条件タイプ。現在はTimeElapsedのみを想定。")]
@@ -16,7 +16,8 @@ public class EnemyPhaseConfig : ScriptableObject
 
     [Header("このフェーズで実行する処理")]
     [Tooltip("このフェーズで生成する敵の設定")]
-    public EnemySpawnerConfig spawnerConfig;
+    [SerializeReference]
+    public EnemySpawnerConfig spawnerConfig = new EnemySpawnerConfig();
 
     [Tooltip("このフェーズの処理後に実行する次のフェーズ")]
     public EnemyPhaseConfig[] nextPhases;

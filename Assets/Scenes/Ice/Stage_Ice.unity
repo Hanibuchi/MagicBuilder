@@ -405,7 +405,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cf6534e3d23e50438ee2d96faadbb41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageConfig: {fileID: 11400000, guid: 56b29318c33a3bb40b142b4947ce50d3, type: 2}
+  stageConfig: {fileID: 11400000, guid: 9364e08abc5421e4ea3789adc05912e5, type: 2}
   clearCondition: 2
   stagePrefabs:
   - {fileID: 3860825592120938575, guid: bcc1f67afad4f5346988e29a2d33ad21, type: 3}

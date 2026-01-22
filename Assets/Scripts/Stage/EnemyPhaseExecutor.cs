@@ -64,8 +64,6 @@ public class EnemyPhaseExecutor : MonoBehaviour
             if (currentPhase == null)
                 continue;
 
-            Debug.Log($"--- New Phase: {currentPhase.name} ---");
-
             // 1. 条件が満たされるまで待機
             yield return StartCoroutine(WaitForCondition(currentPhase));
 

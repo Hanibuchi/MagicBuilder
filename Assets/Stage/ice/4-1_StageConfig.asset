@@ -17,5 +17,14 @@ MonoBehaviour:
   SceneName: Stage_Template
   clearCondition: 1
   enemyPhases:
-  - {fileID: 11400000, guid: 234bfa7c4d6c18c408c4f18b467babf6, type: 2}
+  - conditionType: 1
+    conditionValue: 1
+    spawnerConfig:
+      enemyPrefab: {fileID: 786613390370218890, guid: 0eb7581ed8eda5f43b8ab276b1449224, type: 3}
+    nextPhases: []
+  - conditionType: 1
+    conditionValue: 1
+    spawnerConfig:
+      enemyPrefab: {fileID: 0}
+    nextPhases: []
   stageType: 0

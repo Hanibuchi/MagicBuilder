@@ -4,7 +4,7 @@ using UnityEngine;
 /// ドロップする呪文の設定をカスタマイズできるEnemySpawnerConfigの子クラス。
 /// 生成時に敵のSpellDropperの設定を上書きします。
 /// </summary>
-[CreateAssetMenu(fileName = "NewCustomDropSpawnerConfig", menuName = "GameConfig/Enemy Spawner Config/Custom Drop")]
+[System.Serializable]
 public class CustomDropEnemySpawnerConfig : EnemySpawnerConfig
 {
     [Header("カスタムドロップ設定")]

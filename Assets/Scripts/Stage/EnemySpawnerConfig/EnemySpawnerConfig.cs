@@ -1,11 +1,11 @@
 using UnityEngine;
 
 /// <summary>
-/// 敵の生成設定を保持するScriptableObjectの基底クラス。
+/// 敵の生成設定を保持するセリアライズ可能なクラス。
 /// 実行時に敵のGameObjectを生成するメソッドを提供します。
 /// </summary>
-[CreateAssetMenu(fileName = "NewEnemySpawnerConfig", menuName = "GameConfig/Enemy Spawner Config/Default")]
-public class EnemySpawnerConfig : ScriptableObject
+[System.Serializable]
+public class EnemySpawnerConfig
 {
     [Header("敵の設定")]
     [Tooltip("生成する敵のプレハブ")]
@@ -20,13 +20,13 @@ public class EnemySpawnerConfig : ScriptableObject
     {
         if (enemyPrefab == null)
         {
-            Debug.LogError($"EnemySpawnerConfig: enemyPrefabが設定されていません。Config名: {name}");
+            Debug.LogError($"EnemySpawnerConfig: enemyPrefabが設定されていません。");
             return null;
         }
 
         // 単純にプレハブをInstantiateして返す
-        GameObject enemyObject = Instantiate(enemyPrefab, position, Quaternion.identity);
-        
+        GameObject enemyObject = Object.Instantiate(enemyPrefab, position, Quaternion.identity);
+
         Debug.Log($"EnemySpawnerConfig: 敵 '{enemyPrefab.name}' を座標 {position} に生成しました。");
         return enemyObject;
     }
