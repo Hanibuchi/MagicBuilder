@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.U2D.Animation;
 using UnityEngine.UI;
 
@@ -204,94 +205,75 @@ public class WandUI : MonoBehaviour, ISpellContainer
         }
     }
 
+    /// <summary>
+    /// シミュレーション用の呪文情報保持クラス
+    /// </summary>
+    private class TmpSpell
+    {
+        public SpellBase Data;
+        public SpellUI UI;
+    }
+
     private void HighlightNextSpells(SpacingUI enteredSpacing, SpellUI draggedSpellUI)
     {
         if (enteredSpacing == null || draggedSpellUI == null) return;
         SpellBase draggedSpell = draggedSpellUI.GetSpellData();
         if (draggedSpell == null) return;
 
+        // 1. 現在の全ての呪文を TmpSpell のリスト（mockList）に変換
+        List<TmpSpell> mockList = new List<TmpSpell>();
         int fixedCount = fixedSpellBasesCashe.Count;
 
-        // 1. 全体のSpellBaseリストを構築
-        List<SpellBase> fullList = new List<SpellBase>();
-        fullList.AddRange(fixedSpellBasesCashe);
-        fullList.AddRange(spellBasesCashe);
+        // 固定呪文
+        for (int i = 0; i < fixedSpellBasesCashe.Count; i++)
+        {
+            mockList.Add(new TmpSpell { Data = fixedSpellBasesCashe[i], UI = uiElements[i].GetComponent<SpellUI>() });
+        }
 
-        // 2. ドラッグ中の呪文がこの杖のものか確認
+        // 通常呪文（SpacingUIと交互に並んでいるため index*2+1 でアクセス）
+        for (int i = 0; i < spellBasesCashe.Count; i++)
+        {
+            int uiIndex = fixedCount + i * 2 + 1;
+            if (uiIndex < uiElements.Count)
+            {
+                mockList.Add(new TmpSpell { Data = spellBasesCashe[i], UI = uiElements[uiIndex].GetComponent<SpellUI>() });
+            }
+        }
+
+        // 2. シミュレーション: 移動元がこの杖自身なら、一旦元の位置から削除
         bool isMovingFromSelf = (draggedSpellUI.spellContainerUI as WandUI == this);
-        int oldAbsIndex = isMovingFromSelf ? (fixedCount + draggedSpellUI.index) : -1;
-
-        // 挿入位置（変数スペルリスト内での位置）
-        int insertVarIndex = enteredSpacing.Index;
-        int absInsertIndex = fixedCount + insertVarIndex;
-
-        // シミュレーション用のリスト作成
-        List<SpellBase> mockList = new List<SpellBase>(fullList);
-        int finalAbsInsertIndex = absInsertIndex;
+        int finalAbsInsertIndex = fixedCount + enteredSpacing.Index;
 
         if (isMovingFromSelf)
         {
+            int oldAbsIndex = fixedCount + draggedSpellUI.index;
             if (oldAbsIndex >= 0 && oldAbsIndex < mockList.Count)
             {
                 mockList.RemoveAt(oldAbsIndex);
-                if (oldAbsIndex < absInsertIndex)
+                // 削除によって挿入予定の絶対インデックスがずれる場合の補正
+                if (oldAbsIndex < finalAbsInsertIndex)
                 {
-                    finalAbsInsertIndex = absInsertIndex - 1;
+                    finalAbsInsertIndex--;
                 }
             }
         }
-        mockList.Insert(finalAbsInsertIndex, draggedSpell);
 
-        // 3. 次に呼ばれる呪文のオフセットを取得
-        int[] offsets = draggedSpell.GetNextSpellOffsets(mockList, finalAbsInsertIndex);
-        if (offsets == null || offsets.Length == 0) return;
+        // 3. 予定位置にドラッグ中の呪文を挿入
+        mockList.Insert(finalAbsInsertIndex, new TmpSpell { Data = draggedSpell, UI = draggedSpellUI });
 
-        // 4. ハイライト対象のUIを特定してハイライト
+        // 4. GetNextSpellOffsets を使用して次に呼び出される呪文の相対インデックスを取得
+        List<SpellBase> simulatedSequence = mockList.Select(x => x.Data).ToList();
+        int[] offsets = draggedSpell.GetNextSpellOffsets(simulatedSequence, finalAbsInsertIndex);
+
+        if (offsets == null) return;
+
+        // 5. 取得したオフセットに基づき、対応する SpellUI をハイライト
         foreach (int offset in offsets)
         {
-            int mockIndex = finalAbsInsertIndex + offset;
-            if (mockIndex < 0 || mockIndex >= mockList.Count) continue;
-
-            if (mockIndex == finalAbsInsertIndex)
+            int targetIndex = finalAbsInsertIndex + offset;
+            if (targetIndex >= 0 && targetIndex < mockList.Count)
             {
-                // ドラッグ中の呪文自身
-                draggedSpellUI.SetHighlight(true);
-                continue;
-            }
-
-            // mockIndexから現在の絶対インデックスに逆写像
-            int tempIndex = mockIndex;
-            // Undo Insert
-            if (tempIndex > finalAbsInsertIndex) tempIndex--;
-            // (tempIndex == finalAbsInsertIndex は既に自身として除外済み)
-
-            // Undo Remove
-            int origAbsIndex = tempIndex;
-            if (isMovingFromSelf && origAbsIndex >= oldAbsIndex)
-            {
-                origAbsIndex++;
-            }
-
-            // UI要素の特定
-            if (origAbsIndex < fixedCount)
-            {
-                // 固定呪文
-                if (origAbsIndex >= 0 && origAbsIndex < uiElements.Count)
-                {
-                    var sUI = uiElements[origAbsIndex].GetComponent<SpellUI>();
-                    if (sUI != null) sUI.SetHighlight(true);
-                }
-            }
-            else
-            {
-                // 通常呪文
-                int varIndex = origAbsIndex - fixedCount;
-                int uiIndex = fixedCount + varIndex * 2 + 1;
-                if (uiIndex >= 0 && uiIndex < uiElements.Count)
-                {
-                    var sUI = uiElements[uiIndex].GetComponent<SpellUI>();
-                    if (sUI != null) sUI.SetHighlight(true);
-                }
+                mockList[targetIndex]?.UI?.SetHighlight(true);
             }
         }
     }
