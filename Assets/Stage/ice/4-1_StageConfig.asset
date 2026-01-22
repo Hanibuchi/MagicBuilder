@@ -14,17 +14,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageName: 4-1
   subStageName: "\u6700\u521D\u306E\u30B9\u30C6\u30FC\u30B8"
-  SceneName: Stage_Template
+  SceneName: Stage_Ice
   clearCondition: 1
   enemyPhases:
   - conditionType: 1
     conditionValue: 1
     spawnerConfig:
-      enemyPrefab: {fileID: 786613390370218890, guid: 0eb7581ed8eda5f43b8ab276b1449224, type: 3}
+      rid: 399596028448735334
     nextPhases: []
   - conditionType: 1
     conditionValue: 1
     spawnerConfig:
-      enemyPrefab: {fileID: 0}
+      rid: 399596028448735318
     nextPhases: []
   stageType: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 399596028448735318
+      type: {class: EnemySpawnerConfig, ns: , asm: Assembly-CSharp}
+      data:
+        enemyPrefab: {fileID: 3138375678483179165, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
+    - rid: 399596028448735334
+      type: {class: CustomDropEnemySpawnerConfig, ns: , asm: Assembly-CSharp}
+      data:
+        enemyPrefab: {fileID: 786613390370218890, guid: 0eb7581ed8eda5f43b8ab276b1449224, type: 3}
+        customDroppableSpells:
+        - spellData: {fileID: 0}
+          dropChance: 0
