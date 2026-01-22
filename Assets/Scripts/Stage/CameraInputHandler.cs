@@ -19,6 +19,7 @@ public class CameraInputHandler : MonoBehaviour, IDragHandler, IBeginDragHandler
 
     [SerializeField] float minRelativeSize = 1f; // 最小ズーム (最大拡大)
     [SerializeField] float maxRelativeSize = 5.0f; // 最大ズーム (最小拡大)
+    [SerializeField] float scrollSensitivity = 0.5f; // ★追加：マウススクロールの感度
 
     // カメラ移動用
     private bool isDragging = false;
@@ -79,6 +80,15 @@ public class CameraInputHandler : MonoBehaviour, IDragHandler, IBeginDragHandler
     {
         // CameraManagerのインスタンスがない場合は処理を中断
         if (CameraManager.Instance == null || mainCamera == null) return;
+
+        // ★追加: マウススクロールによるズーム (デバッグ用)
+        float scroll = Input.mouseScrollDelta.y;
+        if (Mathf.Abs(scroll) > 0.01f)
+        {
+            float currentSize = CameraManager.Instance.GetSize();
+            float newSize = currentSize - scroll * scrollSensitivity;
+            TrySetRelativeCameraSize(newSize);
+        }
 
         if (isDragging)
         {
