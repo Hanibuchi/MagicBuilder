@@ -259,21 +259,52 @@ public class WandUI : MonoBehaviour, ISpellContainer
         }
 
         // 3. 予定位置にドラッグ中の呪文を挿入
-        mockList.Insert(finalAbsInsertIndex, new TmpSpell { Data = draggedSpell, UI = draggedSpellUI });
+        TmpSpell draggedTmp = new TmpSpell { Data = draggedSpell, UI = draggedSpellUI };
+        mockList.Insert(finalAbsInsertIndex, draggedTmp);
 
-        // 4. GetNextSpellOffsets を使用して次に呼び出される呪文の相対インデックスを取得
+        // 4. PreProcessに対応させる
         List<SpellBase> simulatedSequence = mockList.Select(x => x.Data).ToList();
-        int[] offsets = draggedSpell.GetNextSpellOffsets(simulatedSequence, finalAbsInsertIndex);
+        List<SpellBase> processedSequence = AttackManager.Instance != null
+            ? AttackManager.Instance.ProcessWandSpellsBeforeFire(simulatedSequence)
+            : simulatedSequence;
+
+        // 5. 加工後のリストを TmpSpell のリストに再変換（対応するUIを紐付け直す）
+        List<TmpSpell> remainingSource = new List<TmpSpell>(mockList);
+        List<TmpSpell> processedMockList = new List<TmpSpell>();
+
+        for (int i = processedSequence.Count - 1; i >= 0; i--)
+        {
+            var sData = processedSequence[i];
+            TmpSpell match = null;
+            if (remainingSource.Count >= 1 && remainingSource[^1]?.Data == sData)
+                match = remainingSource[^1];
+            if (match != null)
+            {
+                processedMockList.Insert(0, match);
+                remainingSource.RemoveAt(remainingSource.Count - 1); // 1対1の対応を維持するため、一度使ったソースは除外
+            }
+            else
+            {
+                processedMockList.Insert(0, new TmpSpell { Data = sData, UI = null });
+            }
+        }
+
+        // 6. 加工後のリスト内でドラッグ中の呪文がどこに移動したかを探す
+        int processedIndex = processedMockList.IndexOf(draggedTmp);
+        if (processedIndex == -1) return;
+
+        // 7. GetNextSpellOffsets を使用して次に呼び出される呪文の相対インデックスを取得
+        int[] offsets = draggedSpell.GetNextSpellOffsets(processedSequence, processedIndex);
 
         if (offsets == null) return;
 
-        // 5. 取得したオフセットに基づき、対応する SpellUI をハイライト
+        // 8. 取得したオフセットに基づき、対応する SpellUI をハイライト
         foreach (int offset in offsets)
         {
-            int targetIndex = finalAbsInsertIndex + offset;
-            if (targetIndex >= 0 && targetIndex < mockList.Count)
+            int targetIndex = processedIndex + offset;
+            if (targetIndex >= 0 && targetIndex < processedMockList.Count)
             {
-                mockList[targetIndex]?.UI?.SetHighlight(true);
+                processedMockList[targetIndex].UI?.SetHighlight(true);
             }
         }
     }

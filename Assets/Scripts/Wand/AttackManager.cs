@@ -156,8 +156,8 @@ public class AttackManager : MonoBehaviour
     /// <summary>
     /// 杖の発射前に、呪文リストのプリプロセス（例: Modifiersによる呪文リストの操作）を実行します。
     /// </summary>
-    /// <param name="wandToUse">処理対象の杖</param>
-    private List<SpellBase> ProcessWandSpellsBeforeFire(List<SpellBase> spells)
+    /// <param name="spells">処理対象の呪文の配列</param>
+    public List<SpellBase> ProcessWandSpellsBeforeFire(List<SpellBase> spells)
     {
         // 杖の呪文リストをクローンし、プリプロセスで変更があっても元のリストに影響を与えないようにする
         List<SpellBase> processedSpells = new List<SpellBase>(spells);
