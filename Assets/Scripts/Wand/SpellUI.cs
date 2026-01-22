@@ -18,6 +18,9 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     // UIパーツ
     public Image iconImage;
     [SerializeField] private GameObject newBadge;
+    [SerializeField] private Animator animator;
+
+    private static readonly int IsHighlightedHash = Animator.StringToHash("IsHighlighted");
 
     public void Initialize(ISpellContainer parentWandUI)
     {
@@ -37,6 +40,19 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         if (data != null)
         {
             SetColor(SpellCommonData.Instance.GetCategoryColor(data.category));
+        }
+    }
+
+    /// <summary>
+    /// ハイライト表示を切り替えます。
+    /// Animatorの"IsHighlighted"パラメータ(bool)を操作します。
+    /// </summary>
+    /// <param name="highlight">ハイライトするかどうか</param>
+    public void SetHighlight(bool highlight)
+    {
+        if (animator != null)
+        {
+            animator.SetBool(IsHighlightedHash, highlight);
         }
     }
 
