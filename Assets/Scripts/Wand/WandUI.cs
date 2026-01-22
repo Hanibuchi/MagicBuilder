@@ -158,20 +158,140 @@ public class WandUI : MonoBehaviour, ISpellContainer
 
     /// <summary>
     /// SpacingUIがPointerEnterイベントを受け取ったことを通知する。
-    /// この通知を受け取ったWandUIは、他のSpacingUIのハイライトを解除する。
+    /// この通知を受け取ったWandUIは、他のSpacingUIのハイライトを解除し、
+    /// 挿入時に連鎖する呪文をハイライトする。
     /// </summary>
     /// <param name="enteredSpacing">Enterイベントが発生したSpacingUI。</param>
-    /// <returns>呪文の追加が可能であればtrue。</returns>
-    public void NotifySpellEntered(SpacingUI enteredSpacing)
+    /// <param name="draggedSpellUI">ドラッグ中のSpellUI。</param>
+    public void NotifySpellEntered(SpacingUI enteredSpacing, SpellUI draggedSpellUI)
     {
-        // ハイライトの排他制御
-        // ※ 追加可能でない場合でも、他のSpacingUIのハイライトは解除する必要があります。
+        // 1. SpacingUIのハイライト排他制御
         foreach (var element in uiElements)
         {
             SpacingUI spacing = element.GetComponent<SpacingUI>();
             if (spacing != null && spacing != enteredSpacing)
             {
                 spacing.StopHighlight();
+            }
+        }
+
+        // 2. SpellUIのハイライトをリセット
+        ResetAllSpellHighlights();
+
+        // 3. 次に呼ばれる呪文の予測とハイライト
+        HighlightNextSpells(enteredSpacing, draggedSpellUI);
+    }
+
+    /// <summary>
+    /// SpacingUIからPointerExitイベントを受け取ったことを通知する。
+    /// </summary>
+    public void NotifySpellExited()
+    {
+        ResetAllSpellHighlights();
+    }
+
+    /// <summary>
+    /// 全てのSpellUIのハイライトを解除する。
+    /// </summary>
+    private void ResetAllSpellHighlights()
+    {
+        foreach (var element in uiElements)
+        {
+            if (element != null && element.TryGetComponent<SpellUI>(out var spellUI))
+            {
+                spellUI.SetHighlight(false);
+            }
+        }
+    }
+
+    private void HighlightNextSpells(SpacingUI enteredSpacing, SpellUI draggedSpellUI)
+    {
+        if (enteredSpacing == null || draggedSpellUI == null) return;
+        SpellBase draggedSpell = draggedSpellUI.GetSpellData();
+        if (draggedSpell == null) return;
+
+        int fixedCount = fixedSpellBasesCashe.Count;
+
+        // 1. 全体のSpellBaseリストを構築
+        List<SpellBase> fullList = new List<SpellBase>();
+        fullList.AddRange(fixedSpellBasesCashe);
+        fullList.AddRange(spellBasesCashe);
+
+        // 2. ドラッグ中の呪文がこの杖のものか確認
+        bool isMovingFromSelf = (draggedSpellUI.spellContainerUI as WandUI == this);
+        int oldAbsIndex = isMovingFromSelf ? (fixedCount + draggedSpellUI.index) : -1;
+
+        // 挿入位置（変数スペルリスト内での位置）
+        int insertVarIndex = enteredSpacing.Index;
+        int absInsertIndex = fixedCount + insertVarIndex;
+
+        // シミュレーション用のリスト作成
+        List<SpellBase> mockList = new List<SpellBase>(fullList);
+        int finalAbsInsertIndex = absInsertIndex;
+
+        if (isMovingFromSelf)
+        {
+            if (oldAbsIndex >= 0 && oldAbsIndex < mockList.Count)
+            {
+                mockList.RemoveAt(oldAbsIndex);
+                if (oldAbsIndex < absInsertIndex)
+                {
+                    finalAbsInsertIndex = absInsertIndex - 1;
+                }
+            }
+        }
+        mockList.Insert(finalAbsInsertIndex, draggedSpell);
+
+        // 3. 次に呼ばれる呪文のオフセットを取得
+        int[] offsets = draggedSpell.GetNextSpellOffsets(mockList, finalAbsInsertIndex);
+        if (offsets == null || offsets.Length == 0) return;
+
+        // 4. ハイライト対象のUIを特定してハイライト
+        foreach (int offset in offsets)
+        {
+            int mockIndex = finalAbsInsertIndex + offset;
+            if (mockIndex < 0 || mockIndex >= mockList.Count) continue;
+
+            if (mockIndex == finalAbsInsertIndex)
+            {
+                // ドラッグ中の呪文自身
+                draggedSpellUI.SetHighlight(true);
+                continue;
+            }
+
+            // mockIndexから現在の絶対インデックスに逆写像
+            int tempIndex = mockIndex;
+            // Undo Insert
+            if (tempIndex > finalAbsInsertIndex) tempIndex--;
+            // (tempIndex == finalAbsInsertIndex は既に自身として除外済み)
+
+            // Undo Remove
+            int origAbsIndex = tempIndex;
+            if (isMovingFromSelf && origAbsIndex >= oldAbsIndex)
+            {
+                origAbsIndex++;
+            }
+
+            // UI要素の特定
+            if (origAbsIndex < fixedCount)
+            {
+                // 固定呪文
+                if (origAbsIndex >= 0 && origAbsIndex < uiElements.Count)
+                {
+                    var sUI = uiElements[origAbsIndex].GetComponent<SpellUI>();
+                    if (sUI != null) sUI.SetHighlight(true);
+                }
+            }
+            else
+            {
+                // 通常呪文
+                int varIndex = origAbsIndex - fixedCount;
+                int uiIndex = fixedCount + varIndex * 2 + 1;
+                if (uiIndex >= 0 && uiIndex < uiElements.Count)
+                {
+                    var sUI = uiElements[uiIndex].GetComponent<SpellUI>();
+                    if (sUI != null) sUI.SetHighlight(true);
+                }
             }
         }
     }
@@ -223,6 +343,7 @@ public class WandUI : MonoBehaviour, ISpellContainer
                 spacing.SetAlwaysHighlight(false);
             }
         }
+        ResetAllSpellHighlights(); // 追加
     }
 
 

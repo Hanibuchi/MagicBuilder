@@ -11,6 +11,7 @@ using UnityEngine.UI;
 public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     private int index;
+    public int Index => index; // 追加
     private WandUI wandUI;
     [SerializeField] Animator animator;
     private bool isAlwaysHighlighted; // 常にハイライトするかどうかのフラグ
@@ -113,7 +114,7 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 
             if (droppedSpellUI != null)
             {
-                wandUI.NotifySpellEntered(this);
+                wandUI.NotifySpellEntered(this, droppedSpellUI); // 引数を追加
 
                 bool isMovingFromSelf = (droppedSpellUI.spellContainerUI is WandUI spellWandUI && wandUI == spellWandUI);
                 // WandUIに通知し、追加可能かどうか（canAdd）を受け取る
@@ -137,6 +138,15 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
         if (animator != null)
         {
             StopHighlight();
+        }
+
+        // ドラッグ中のオブジェクトがある場合はWandUIに通知して呪文ハイライトを消す
+        if (eventData.pointerDrag != null)
+        {
+            if (eventData.pointerDrag.GetComponent<SpellUI>() != null)
+            {
+                wandUI.NotifySpellExited();
+            }
         }
     }
 
