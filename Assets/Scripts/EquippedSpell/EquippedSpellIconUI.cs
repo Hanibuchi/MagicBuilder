@@ -73,6 +73,11 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
         if (data != null)
         {
             SetColor(SpellCommonData.Instance.GetCategoryColor(data.category));
+            if (iconImage != null)
+            {
+                iconImage.color = data.iconColor;
+                iconImage.material = data.iconMaterial;
+            }
         }
     }
 
@@ -97,7 +102,18 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
 
     public void SetIcon(bool active)
     {
+        if (iconImage == null) return;
         iconImage.sprite = active ? _spellData?.icon : lockSprite;
+        if (active && _spellData != null)
+        {
+            iconImage.color = _spellData.iconColor;
+            iconImage.material = _spellData.iconMaterial;
+        }
+        else
+        {
+            iconImage.color = Color.white;
+            iconImage.material = null;
+        }
     }
 
     /// <summary>
@@ -127,7 +143,11 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
             if (frameActive) return;
             frameActive = true;
             frameImage.color = _activeColor;
-            iconImage.material = null;
+            if (iconImage != null && _spellData != null)
+            {
+                iconImage.color = _spellData.iconColor;
+                iconImage.material = _spellData.iconMaterial;
+            }
         }
         else
         {
@@ -135,7 +155,11 @@ public class EquippedSpellIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHan
             frameActive = false;
             _activeColor = frameImage.color;
             frameImage.color = lockColor;
-            iconImage.material = disableMaterial;
+            if (iconImage != null)
+            {
+                iconImage.color = Color.white;
+                iconImage.material = disableMaterial;
+            }
         }
     }
 

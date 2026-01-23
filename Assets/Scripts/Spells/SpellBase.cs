@@ -301,6 +301,8 @@ public abstract class SpellBase : ScriptableObject
 
     [Header("UI")]
     public Sprite icon;
+    public Color iconColor = Color.white;
+    public Material iconMaterial;
 
     /// <summary>
     /// このSpellBaseに対応するSpellUIインスタンスを生成する。

@@ -16,9 +16,11 @@ public class SpellDropUI : MonoBehaviour
 
     public void SetData(SpellBase data)
     {
-        if (iconImage != null && data != null && data.icon != null)
+        if (iconImage != null && data != null)
         {
-            iconImage.sprite = data.icon;
+            if (data.icon != null) iconImage.sprite = data.icon;
+            iconImage.color = data.iconColor;
+            iconImage.material = data.iconMaterial;
         }
         else if (data != null)
         {

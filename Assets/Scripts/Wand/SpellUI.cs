@@ -32,9 +32,11 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     public void SetData(SpellBase data)
     {
         this.spellData = data;
-        if (iconImage != null && data != null && data.icon != null)
+        if (iconImage != null && data != null)
         {
-            iconImage.sprite = data.icon;
+            if (data.icon != null) iconImage.sprite = data.icon;
+            iconImage.color = data.iconColor;
+            iconImage.material = data.iconMaterial;
         }
 
         if (data != null)
@@ -163,12 +165,20 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         if (active)
         {
             frame.color = activeColor;
-            iconImage.material = null;
+            if (iconImage != null && spellData != null)
+            {
+                iconImage.color = spellData.iconColor;
+                iconImage.material = spellData.iconMaterial;
+            }
         }
         else
         {
             frame.color = disableColor;
-            iconImage.material = disableMaterial;
+            if (iconImage != null)
+            {
+                iconImage.color = Color.white;
+                iconImage.material = disableMaterial;
+            }
         }
 
         // ドラッグは制限するが、クリック（詳細表示）はできるようにRaycastTargetは常にtrueにする
