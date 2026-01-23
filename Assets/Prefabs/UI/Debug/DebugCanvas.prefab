@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8181677161855136787}
   - component: {fileID: 7554969950607902815}
   - component: {fileID: 5359247409590867947}
+  - component: {fileID: 6810722524543802257}
   m_Layer: 5
   m_Name: DebugCanvas
   m_TagString: Untagged
@@ -104,6 +105,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6810722524543802257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486417692828794435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea40b1b42558d3b43bdb0e94491826b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2116725230588615586
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,9 +376,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: EquippedSpellModel, Assembly-CSharp
-        m_MethodName: Test_RemoveSpellFromSlot
+      - m_Target: {fileID: 6810722524543802257}
+        m_TargetAssemblyTypeName: DebugTools, Assembly-CSharp
+        m_MethodName: UnlockAndGrantAllSpells
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
