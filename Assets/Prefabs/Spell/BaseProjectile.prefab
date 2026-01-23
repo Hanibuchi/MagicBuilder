@@ -14,9 +14,8 @@ GameObject:
   - component: {fileID: 8527945778064652579}
   - component: {fileID: 414260835269359439}
   - component: {fileID: 8600365097350075244}
-  - component: {fileID: 5956907676402865218}
   m_Layer: 11
-  m_Name: simple_magic_attack
+  m_Name: BaseProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,8 +120,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.4550339, y: 0}
-  m_Radius: 0.2910322
+  m_Offset: {x: 0.40719318, y: 0}
+  m_Radius: 0.27592462
 --- !u!114 &414260835269359439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,106 +148,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageSourceType: 0
   maxPierceCount: 1
+  enableImpulse: 0
+  impulseForce: 0.5
   animator: {fileID: 4652757309359089412}
+  playLaunchSound: 1
   launchSound: {fileID: 8300000, guid: 06ada5590eba8d6489b36c6f3c54ff78, type: 3}
+  launchSoundVolume: 1
   destroySound: {fileID: 0}
---- !u!82 &5956907676402865218
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 396131387130879284}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  destroySoundVolume: 1
 --- !u!1 &4536938712615723385
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,7 +167,7 @@ GameObject:
   - component: {fileID: 3252799626688289902}
   - component: {fileID: 5706498535635540185}
   m_Layer: 11
-  m_Name: simple_magic_attack2_0
+  m_Name: sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -325,8 +232,8 @@ SpriteRenderer:
   m_SortingLayerID: -2112428387
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7337813241420513281, guid: e0075a2a7b8dfd14a9a81b916f713f9c, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: -528296542710574568, guid: 228cf124045c42547ad12aa38c08b6ef, type: 3}
+  m_Color: {r: 0.9019608, g: 0.78169936, b: 0.18039215, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

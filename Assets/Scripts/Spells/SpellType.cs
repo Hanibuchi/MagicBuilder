@@ -20,4 +20,5 @@ public enum SpellType
     Contraction,
     Inferno,
     ExampleSpellClickTrigger,
+    IceShot,
 }
