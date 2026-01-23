@@ -30,3 +30,5 @@ MonoBehaviour:
   dropUIPrefab: {fileID: 1104287654635820185, guid: af09b9e47e48e2b4593b9a8e28d2e8f0, type: 3}
   equippedSpellIconUIPrefab: {fileID: 4605705667940410137, guid: b0e9178e9a980024f9b844179ff255a5, type: 3}
   magicCirclePrefab: {fileID: 971840952152581679, guid: 247d42e75ebf3244eba88c4d93b2035d, type: 3}
+  spellDropSound: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
+  spellDropSoundVolume: 1

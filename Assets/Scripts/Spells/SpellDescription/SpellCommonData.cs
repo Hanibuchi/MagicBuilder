@@ -100,4 +100,10 @@ public class SpellCommonData : ScriptableObject
     [Header("エフェクトプレハブ")]
     [Tooltip("呪文発射時に表示する魔法陣のプレハブ")]
     public GameObject magicCirclePrefab;
+
+    [Header("SE")]
+    [Tooltip("呪文がドロップした際の音")]
+    public AudioClip spellDropSound;
+    [Tooltip("呪文がドロップした際の音量")]
+    public float spellDropSoundVolume = 1.0f;
 }
