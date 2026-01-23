@@ -21,4 +21,5 @@ public enum SpellType
     Inferno,
     ExampleSpellClickTrigger,
     IceShot,
+    FireShot,
 }

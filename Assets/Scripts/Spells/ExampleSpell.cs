@@ -71,7 +71,7 @@ public class ExampleSpell : SpellBase
 
     [Header("誤差設定")]
     [Tooltip("発射角に追加する誤差の標準偏差（度）。平均0の正規分布に従います。")]
-    [SerializeField] float errorDegree = 1f; // 例として1度を設定
+    [SerializeField] float errorDegree = 2f; // 例として2度を設定
     [SerializeField] Damage damage; // 例として1度を設定
     [Header("説明設定")]
     [SerializeField] DamageSourceType damageType;

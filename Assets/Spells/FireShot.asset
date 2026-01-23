@@ -10,29 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5eead4a52643cdf42bb45d6397bce3c4, type: 3}
-  m_Name: IceShot
+  m_Name: FireShot
   m_EditorClassIdentifier: 
   category: 0
   cooldown: 0.5
-  spellName: "\u30A2\u30A4\u30B9\u30B7\u30E7\u30C3\u30C8"
+  spellName: "\u30D5\u30A1\u30A4\u30A2\u30B7\u30E7\u30C3\u30C8"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: -528296542710574568, guid: 228cf124045c42547ad12aa38c08b6ef, type: 3}
-  iconColor: {r: 0.4509804, g: 0.9019608, b: 0.9019608, a: 1}
-  iconMaterial: {fileID: 2100000, guid: a95bd6c6b1281834dbb2fb4018b8695e, type: 2}
+  iconColor: {r: 0.9019608, g: 0.18039216, b: 0.1882353, a: 1}
+  iconMaterial: {fileID: 2100000, guid: 714bcc6779c0e2a45a218ef7fb5e19bb, type: 2}
   spellDropSound: {fileID: 0}
   spellDropSoundVolume: 1
-  spellDescription: "\u6C37\u306E\u5F3E\u3092\u767A\u5C04\u3059\u308B\u3002"
+  spellDescription: "\u708E\u306E\u5F3E\u3092\u767A\u5C04\u3059\u308B\u3002"
   trajectoryPrefabInterval: 0.1
   maxPredictionTime: 2
   trajectoryMoveSpeed: 0.5
-  projectilePrefab: {fileID: 8635935382217397692, guid: 4f4c71b8d500a944988052fca46ac523, type: 3}
+  projectilePrefab: {fileID: 2314924996833699740, guid: c1ca8e4ced525bb42a4a938a36fab847, type: 3}
   strengthMultiplier: 20
   errorDegree: 2
   damage:
     baseDamage: 0
     woodDamage: 0
     waterDamage: 0
-    temperatureDamage: -5
+    temperatureDamage: 5
     knockback: 0
   damageType: 0
   isClickTrigger: 0
