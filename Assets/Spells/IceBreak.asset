@@ -32,5 +32,5 @@ MonoBehaviour:
     waterDamage: 0
     temperatureDamage: -10
     knockback: 0
-  damageType: 2
+  damageType: 1
   isClickTrigger: 0
