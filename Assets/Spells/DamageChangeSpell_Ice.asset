@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6052c0ea546e30f4d9098b669b246c06, type: 3}
   m_Name: DamageChangeSpell_Ice
   m_EditorClassIdentifier: 
-  category: 0
+  category: 1
   cooldown: 0.5
-  spellName: "\u672A\u5B9A\u7FA9\u306E\u546A\u6587"
+  spellName: "\u6C37\u30C0\u30E1\u30FC\u30B8\u8FFD\u52A0"
   purchaseCosts: 64000000c80000009001000020030000
-  icon: {fileID: 0}
+  icon: {fileID: -7113419174583132538, guid: e325ced96e9ec804d8af77dcb30f42ae, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
-  spellDescription: 
+  spellDescription: "\u6C37\u30C0\u30E1\u30FC\u30B8\u3092\u8FFD\u52A0\u3059\u308B\u3002\u708E\u30BF\u30A4\u30D7\u306E\u6575\u306B\u52B9\u679C\u629C\u7FA4\uFF01"
   additionalDamage:
     baseDamage: 0
     woodDamage: 0
     waterDamage: 0
-    temperatureDamage: 0
+    temperatureDamage: -5
     knockback: 0

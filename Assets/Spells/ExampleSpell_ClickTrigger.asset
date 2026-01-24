@@ -16,9 +16,9 @@ MonoBehaviour:
   cooldown: 0.5
   spellName: ExampleSpell_ClickTrigger
   purchaseCosts: 64000000c80000009001000020030000
-  icon: {fileID: 2880664357010954948, guid: 190bbb254493f2a49aa432e337539383, type: 3}
-  spellDropSound: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
-  spellDropSoundVolume: 1
+  icon: {fileID: 7397637496291533961, guid: 09a15bd317a3b16419c350cdedf76a25, type: 3}
+  iconColor: {r: 1, g: 1, b: 1, a: 1}
+  iconMaterial: {fileID: 0}
   spellDescription: "\u30AF\u30EA\u30C3\u30AF\u3059\u308B\u3068\u53F3\u306E\u546A\u6587\u304C\u9045\u308C\u3066\u767A\u5C04\u3055\u308C\u308B\u4E00\u822C\u653B\u6483\u9B54\u6CD5\u3002"
   trajectoryPrefabInterval: 0.1
   maxPredictionTime: 2
