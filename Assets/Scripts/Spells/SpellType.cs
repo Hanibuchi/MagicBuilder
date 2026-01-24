@@ -23,4 +23,11 @@ public enum SpellType
     IceShot,
     FireShot,
     IceBreak,
+    IceDamage,
+    FireDamage,
+    WoodDamage,
+    WaterDamage,
+    AdditionalDamage,
+    AdditionalKnockback,
+    HealingDamage,
 }

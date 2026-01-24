@@ -55,7 +55,7 @@ public class SpellCommonData : ScriptableObject
 
     [Tooltip("炎ダメージに使用するアイコン")]
     public Sprite fireDamageIcon;
-    [Tooltip("氷ダメージに使用するアイコン")]
+    [Tooltip("火ダメージに使用するアイコン")]
     public Sprite iceDamageIcon;
     [Tooltip("水ダメージに使用するアイコン")]
     public Sprite waterDamageIcon;

@@ -152,7 +152,7 @@ public class ExampleSpell : SpellBase
             detailItems.Add(new SpellDescriptionItem
             {
                 icon = SpellCommonData.Instance.fireDamageIcon,
-                descriptionText = "炎ダメージ : " + damage.FireDamage.ToString(),
+                descriptionText = "火ダメージ : " + damage.FireDamage.ToString(),
             });
         if (damage.IceDamage > 0)
             detailItems.Add(new SpellDescriptionItem
