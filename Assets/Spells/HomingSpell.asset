@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab6cb4b07c5ad547bb6fcbbb118f577, type: 3}
+  m_Name: HomingSpell
+  m_EditorClassIdentifier: 
+  category: 1
+  cooldown: 0.5
+  spellName: "\u8FFD\u5C3E\u546A\u6587"
+  purchaseCosts: 64000000c80000009001000020030000
+  icon: {fileID: 0}
+  iconColor: {r: 1, g: 1, b: 1, a: 1}
+  iconMaterial: {fileID: 0}
+  spellDescription: "\u6575\u3092\u8FFD\u5C3E\u3059\u308B\u3088\u3046\u306B\u306A\u308B\u3002"
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  searchRange: 10
+  springConstant: 8.44
+  damping: 2.17

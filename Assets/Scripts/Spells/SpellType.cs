@@ -31,4 +31,5 @@ public enum SpellType
     AdditionalKnockback,
     HealingDamage,
     Skip,
+    Homing,
 }

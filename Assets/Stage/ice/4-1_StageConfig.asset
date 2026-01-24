@@ -18,27 +18,45 @@ MonoBehaviour:
   clearCondition: 2
   enemyPhases:
   - conditionType: 1
-    conditionValue: 1
+    conditionValue: 0
     spawnerConfig:
-      rid: 399596028448735334
+      rid: 399596066723856384
     nextPhases: []
   - conditionType: 1
-    conditionValue: 1
+    conditionValue: 10
     spawnerConfig:
-      rid: 399596028448735318
+      rid: 399596066723856384
+    nextPhases: []
+  - conditionType: 1
+    conditionValue: 0.5
+    spawnerConfig:
+      rid: 399596066723856384
+    nextPhases: []
+  - conditionType: 1
+    conditionValue: 0.5
+    spawnerConfig:
+      rid: 399596066723856384
+    nextPhases: []
+  - conditionType: 1
+    conditionValue: 0.5
+    spawnerConfig:
+      rid: 399596066723856384
+    nextPhases: []
+  - conditionType: 1
+    conditionValue: 0.5
+    spawnerConfig:
+      rid: 399596066723856384
+    nextPhases: []
+  - conditionType: 1
+    conditionValue: 0.5
+    spawnerConfig:
+      rid: 399596066723856384
     nextPhases: []
   stageType: 0
   references:
     version: 2
     RefIds:
-    - rid: 399596028448735318
+    - rid: 399596066723856384
       type: {class: EnemySpawnerConfig, ns: , asm: Assembly-CSharp}
       data:
-        enemyPrefab: {fileID: 3138375678483179165, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
-    - rid: 399596028448735334
-      type: {class: CustomDropEnemySpawnerConfig, ns: , asm: Assembly-CSharp}
-      data:
-        enemyPrefab: {fileID: 786613390370218890, guid: 0eb7581ed8eda5f43b8ab276b1449224, type: 3}
-        customDroppableSpells:
-        - spellData: {fileID: 11400000, guid: 5c8a7351f36c0ac4999d4762af8f1ab6, type: 2}
-          dropChance: 1
+        enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
