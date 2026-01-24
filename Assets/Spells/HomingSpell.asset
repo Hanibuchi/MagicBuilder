@@ -16,7 +16,7 @@ MonoBehaviour:
   cooldown: 0.5
   spellName: "\u8FFD\u5C3E\u546A\u6587"
   purchaseCosts: 64000000c80000009001000020030000
-  icon: {fileID: 0}
+  icon: {fileID: 9136574636451808338, guid: 2b5bbe55cfdcfe640b6a0552e9d128a2, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
   spellDescription: "\u6575\u3092\u8FFD\u5C3E\u3059\u308B\u3088\u3046\u306B\u306A\u308B\u3002"
@@ -24,5 +24,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   searchRange: 10
-  springConstant: 8.44
-  damping: 2.17
+  springConstant: 1

@@ -17,37 +17,37 @@ MonoBehaviour:
   SceneName: Stage_Ice
   clearCondition: 2
   enemyPhases:
-  - conditionType: 1
+  - conditionType: 0
     conditionValue: 0
     spawnerConfig:
       rid: 399596066723856384
     nextPhases: []
-  - conditionType: 1
+  - conditionType: 0
     conditionValue: 10
     spawnerConfig:
       rid: 399596066723856384
     nextPhases: []
-  - conditionType: 1
+  - conditionType: 0
     conditionValue: 0.5
     spawnerConfig:
       rid: 399596066723856384
     nextPhases: []
-  - conditionType: 1
+  - conditionType: 0
+    conditionValue: 0.5
+    spawnerConfig:
+      rid: 399596075697307747
+    nextPhases: []
+  - conditionType: 0
     conditionValue: 0.5
     spawnerConfig:
       rid: 399596066723856384
     nextPhases: []
-  - conditionType: 1
+  - conditionType: 0
     conditionValue: 0.5
     spawnerConfig:
       rid: 399596066723856384
     nextPhases: []
-  - conditionType: 1
-    conditionValue: 0.5
-    spawnerConfig:
-      rid: 399596066723856384
-    nextPhases: []
-  - conditionType: 1
+  - conditionType: 0
     conditionValue: 0.5
     spawnerConfig:
       rid: 399596066723856384
@@ -59,4 +59,8 @@ MonoBehaviour:
     - rid: 399596066723856384
       type: {class: EnemySpawnerConfig, ns: , asm: Assembly-CSharp}
       data:
-        enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+        enemyPrefab: {fileID: 3738908839911435214, guid: 541b412a452207d45909e95a7ee45512, type: 3}
+    - rid: 399596075697307747
+      type: {class: EnemySpawnerConfig, ns: , asm: Assembly-CSharp}
+      data:
+        enemyPrefab: {fileID: 0}
