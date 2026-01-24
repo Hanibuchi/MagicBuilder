@@ -151,6 +151,8 @@ MonoBehaviour:
   enableImpulse: 0
   impulseForce: 0.5
   animator: {fileID: 4652757309359089412}
+  spawnOnCollisionPrefab: {fileID: 0}
+  autoDestroy: 1
   playLaunchSound: 1
   launchSound: {fileID: 8300000, guid: 06ada5590eba8d6489b36c6f3c54ff78, type: 3}
   launchSoundVolume: 1
@@ -232,12 +234,12 @@ SpriteRenderer:
   m_SortingLayerID: -2112428387
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: -528296542710574568, guid: 228cf124045c42547ad12aa38c08b6ef, type: 3}
-  m_Color: {r: 0.9019608, g: 0.78169936, b: 0.18039215, a: 1}
+  m_Sprite: {fileID: -3209795618878514358, guid: 228cf124045c42547ad12aa38c08b6ef, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 7.61, y: 3.04}
+  m_Size: {x: 7.01, y: 3.05}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
