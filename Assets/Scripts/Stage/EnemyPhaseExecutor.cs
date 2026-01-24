@@ -61,8 +61,6 @@ public class EnemyPhaseExecutor : MonoBehaviour
         while (phaseStack.Count > 0)
         {
             EnemyPhaseConfig currentPhase = phaseStack.Pop();
-            if (currentPhase == null)
-                continue;
 
             // 1. 条件が満たされるまで待機
             yield return StartCoroutine(WaitForCondition(currentPhase));
@@ -99,10 +97,6 @@ public class EnemyPhaseExecutor : MonoBehaviour
                 Debug.Log($"条件: {phase.conditionValue} 秒待機...");
                 yield return new WaitForSeconds(phase.conditionValue);
                 break;
-
-            case EnemyPhaseConfig.PhaseConditionType.None:
-                // 即時実行
-                yield break;
 
             // 今後の拡張性のためのプレースホルダー
             // case EnemyPhaseConfig.PhaseConditionType.AllEnemiesDefeated:
