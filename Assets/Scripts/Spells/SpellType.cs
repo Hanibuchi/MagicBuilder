@@ -22,4 +22,5 @@ public enum SpellType
     ExampleSpellClickTrigger,
     IceShot,
     FireShot,
+    IceBreak,
 }

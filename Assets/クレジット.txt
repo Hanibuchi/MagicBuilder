@@ -26,6 +26,10 @@ https://assetstore.unity.com/packages/audio/sound-fx/free-casual-game-sfx-pack-5
 Dustyroom
 Standard Unity Asset Store EULA
 
+- Demo Ancient Magic Pack FREE
+https://assetstore.unity.com/packages/audio/sound-fx/weapons/demo-ancient-magic-pack-free-175093#content
+Standard Unity Asset Store
+
 イラスト
 - 2D Platformer Tileset
 https://assetstore.unity.com/packages/2d/environments/2d-platformer-tileset-173155

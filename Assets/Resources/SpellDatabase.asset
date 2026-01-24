@@ -49,3 +49,5 @@ MonoBehaviour:
     spellAsset: {fileID: 11400000, guid: 5c8a7351f36c0ac4999d4762af8f1ab6, type: 2}
   - type: 18
     spellAsset: {fileID: 11400000, guid: ca748ee532558a04db48184ac5b52399, type: 2}
+  - type: 19
+    spellAsset: {fileID: 11400000, guid: 2c072333fd6e8cf4aabb4f5b74d5e7e7, type: 2}

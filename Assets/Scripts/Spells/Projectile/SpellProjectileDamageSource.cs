@@ -21,6 +21,9 @@ public class SpellProjectileDamageSource : DamageSourceBase
     [Tooltip("衝突時に生成するプレハブ。nullなら生成しない")]
     [SerializeField] GameObject spawnOnCollisionPrefab;
 
+    [Header("自動破壊設定")]
+    [SerializeField] bool autoDestroy = true;
+
     float cachedStrength;
     SpellContext cachedContext;
 
@@ -59,7 +62,7 @@ public class SpellProjectileDamageSource : DamageSourceBase
 
         if (playLaunchSound)
             PlayLaunchSound();
-        
+
         if (enableImpulse)
             GenerateImpulse();
     }
@@ -104,10 +107,16 @@ public class SpellProjectileDamageSource : DamageSourceBase
         var components = GetComponents<ISpellProjectileDestroyListener>();
         foreach (var component in components)
             component?.Destroy();
+
+        if (autoDestroy)
+        {
+            DestroyImd();
+            PlayDestroySound();
+        }
     }
 
     /// <summary>
-    /// 即座にオブジェクトを破壊する。アニメーションから呼び出す想定。
+    /// 即座にオブジェクトを破壊する。アニメーションから呼び出すこともできる。
     /// </summary>
     public void DestroyImd()
     {
@@ -128,7 +137,7 @@ public class SpellProjectileDamageSource : DamageSourceBase
             SoundManager.Instance.PlaySE(launchSound, launchSoundVolume);
     }
     /// <summary>
-    /// 再生するヒット音を設定し、再生します。Animationから呼び出されることを想定。
+    /// 再生するヒット音を設定し、再生します。Animationから呼び出されることもできる。
     /// </summary>
     public void PlayDestroySound()
     {
