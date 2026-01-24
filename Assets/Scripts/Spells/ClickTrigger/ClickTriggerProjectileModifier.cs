@@ -9,14 +9,16 @@ public class ClickTriggerProjectileModifier : MonoBehaviour
     public int nextSpellIndex;
     public SpellContext context;
     public float delayTime;
+    public float magicCircleDelay;
 
-    public void Init(SpellBase nextSpell, List<SpellBase> wandSpells, int nextSpellIndex, SpellContext context, float delayTime)
+    public void Init(SpellBase nextSpell, List<SpellBase> wandSpells, int nextSpellIndex, SpellContext context, float delayTime, float magicCircleDelay)
     {
         this.nextSpell = nextSpell;
         this.wandSpells = wandSpells;
         this.nextSpellIndex = nextSpellIndex;
         this.context = context;
         this.delayTime = delayTime;
+        this.magicCircleDelay = magicCircleDelay;
     }
     private void Start()
     {
@@ -34,18 +36,48 @@ public class ClickTriggerProjectileModifier : MonoBehaviour
     {
         if (nextSpell != null)
         {
-            StartCoroutine(FireWithDelay());
+            // SpellSchedulerを使用して、このオブジェクトが破棄されてもコルーチンが継続するようにする
+            SpellScheduler.Instance.StartSpellCoroutine(FireWithDelay());
         }
     }
 
     private IEnumerator FireWithDelay()
     {
-        delayTime = Mathf.Abs(nextSpell.GetGaussianRandom(delayTime));
-        Debug.Log("delaytime: " + delayTime);
-        yield return new WaitForSeconds(delayTime);
+        // yieldの前に必要な情報（トランスフォームなど）を取得しておく
+        // yield以降に gameObject や transform にアクセスすると、インスタンス破棄時に「MissingReferenceException」が発生するため
+        float calculatedDelay = Mathf.Abs(nextSpell.GetGaussianRandom(delayTime));
+        Vector3 spawnPosition = transform.position;
+        float rotationZ = transform.rotation.eulerAngles.z;
 
-        float rotationZ = gameObject.transform.rotation.eulerAngles.z;
-        context.CasterPosition = gameObject.transform.position;
+        yield return new WaitForSeconds(calculatedDelay);
+
+        // 💡 魔法陣の表示演出を追加
+        MagicCircle magicCircle = null;
+        GameObject prefab = SpellCommonData.Instance?.magicCirclePrefab;
+        context.CasterPosition = spawnPosition;
+
+        if (prefab != null)
+        {
+            // Instantiateは UnityEngine.Object の静的メソッドなので、このオブジェクトが破棄されていても動作する
+            GameObject circleGo = Instantiate(prefab, spawnPosition, Quaternion.Euler(0, 0, rotationZ));
+            magicCircle = circleGo.GetComponent<MagicCircle>();
+
+            if (magicCircle != null)
+            {
+                // 要件: 完全に表示されるまでの時間(magicCircleDelay), サイズ1, 指定した色
+                Color? circleColor = SpellCommonData.Instance?.triggerMagicCircleColor;
+                magicCircle.Show(magicCircleDelay, color: circleColor);
+                // 魔法陣が出てから少し待ってから発射
+                yield return new WaitForSeconds(magicCircleDelay);
+            }
+        }
+
         nextSpell.FireSpell(wandSpells, nextSpellIndex, rotationZ, 1, context);
+
+        // 消滅演出の開始 (表示と同じ時間をかけて消える)
+        if (magicCircle != null)
+        {
+            magicCircle.Hide(magicCircleDelay);
+        }
     }
 }

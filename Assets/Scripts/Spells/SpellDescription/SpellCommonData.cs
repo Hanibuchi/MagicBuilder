@@ -101,6 +101,9 @@ public class SpellCommonData : ScriptableObject
     [Tooltip("呪文発射時に表示する魔法陣のプレハブ")]
     public GameObject magicCirclePrefab;
 
+    [Tooltip("ClickTrigger呪文発射時に表示する魔法陣の色")]
+    public Color triggerMagicCircleColor = Color.cyan;
+
     [Header("SE")]
     [Tooltip("呪文がドロップした際の音")]
     public AudioClip spellDropSound;

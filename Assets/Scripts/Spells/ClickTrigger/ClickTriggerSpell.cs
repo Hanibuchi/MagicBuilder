@@ -5,8 +5,8 @@ using System.Linq; // SpellBase.GetGaussianRandom を使うために追加
 
 public class ClickTriggerSpell : MonoBehaviour
 {
-    // 標準偏差の計算に使用する定数
-    // 例として 0.05f を設定。context.errorDegree * 0.05f が標準偏差（秒）になる。
+    // 遅延時間の計算に使用する定数
+    // 例として 0.01f を設定。context.errorDegree * 0.01f が標準偏差（秒）になる。
     const float DELAY_MULTIPLIER = 0.01f;
 
     /// <summary>
@@ -15,10 +15,12 @@ public class ClickTriggerSpell : MonoBehaviour
     /// <param name="wandSpells">杖にセットされている全ての呪文リスト。</param>
     /// <param name="currentSpellIndex">現在発射された呪文のインデックス。</param>
     /// <param name="context">ClickTriggerに影響を与えるかもしれないコンテキスト情報。</param>
+    /// <param name="magicCircleDelay">魔法陣を表示してから発射されるまでの待ち時間。</param>
     /// <returns>投射物GameObjectを受け取り、次の呪文のClickTriggerProjectileModifierを追加するアクション。</returns>
     public static Action<GameObject> CreateClickTriggerAction(
         List<SpellBase> wandSpells,
-        int currentSpellIndex, SpellContext context)
+        int currentSpellIndex, SpellContext context,
+        float magicCircleDelay = 0.5f)
     {
         return (GameObject obj) =>
         {
@@ -47,12 +49,11 @@ public class ClickTriggerSpell : MonoBehaviour
             if (nextSpell != null)
             {
                 // ----------------------------------------------------
-                // ⚡ 遅延時間の計算ロジックを追加 ⚡
+                // ⚡ 遅延時間の基準（標準偏差）の計算ロジックを追加 ⚡
                 // ----------------------------------------------------
                 float delayTime = context.errorDegree * DELAY_MULTIPLIER;
-                // SpellBase のヘルパーメソッドを利用して正規分布に従うランダムな遅延時間を生成
 
-                // 遅延時間は負にならないように0でクランプ（Clamp）する
+                // 負にならないように絶対値を取る
                 delayTime = Mathf.Abs(delayTime);
                 // ----------------------------------------------------
 
@@ -61,7 +62,8 @@ public class ClickTriggerSpell : MonoBehaviour
                     wandSpells,
                     nextSpellIndex,
                     new(),
-                    delayTime // 算出した遅延時間を渡す (Initのシグネチャ変更が必要)
+                    delayTime,
+                    magicCircleDelay
                 );
             }
         };
