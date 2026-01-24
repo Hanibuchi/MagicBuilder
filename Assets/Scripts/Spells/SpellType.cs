@@ -30,4 +30,5 @@ public enum SpellType
     AdditionalDamage,
     AdditionalKnockback,
     HealingDamage,
+    Skip,
 }
