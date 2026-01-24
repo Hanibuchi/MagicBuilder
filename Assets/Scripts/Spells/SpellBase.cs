@@ -161,11 +161,6 @@ public abstract class SpellBase : ScriptableObject
         }
     }
 
-    public void ModifyProjectile(SpellContext context, GameObject projectile)
-    {
-        context.ProjectileModifier?.Invoke(projectile);
-    }
-
     public virtual int[] GetNextSpellOffsets(List<SpellBase> wandSpells,
         int currentSpellIndex)
     {

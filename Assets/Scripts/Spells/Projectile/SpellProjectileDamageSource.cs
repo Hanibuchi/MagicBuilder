@@ -17,15 +17,28 @@ public class SpellProjectileDamageSource : DamageSourceBase
 
     [SerializeField] Animator animator;
 
-    // --- IDamageSourceの実装 ---
+    [Header("衝突時生成")]
+    [Tooltip("衝突時に生成するプレハブ。nullなら生成しない")]
+    [SerializeField] GameObject spawnOnCollisionPrefab;
+
+    float cachedStrength;
+    SpellContext cachedContext;
+
+    // --- IDamageSourceの実実装 ---
     public void Initialize(float strength, SpellContext spellContext)
     {
+        this.cachedStrength = strength;
+        this.cachedContext = spellContext;
+
+        // 呪文による放射物の修正（軌道変更やサイズ変更など）を適用
+        spellContext?.ProjectileModifier?.Invoke(gameObject);
+
         var components = GetComponents<ISpellProjectileInitListener>();
         foreach (var component in components)
             component?.Initialize(strength, spellContext);
 
         Launch();
-        damageData = spellContext.damage;
+        damageData = spellContext?.damage ?? new Damage();
     }
 
     protected override void Awake()
@@ -62,7 +75,27 @@ public class SpellProjectileDamageSource : DamageSourceBase
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Destroy();
+        SpawnCollisionPrefab(collision);
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            Destroy();
+        }
+    }
+
+    private void SpawnCollisionPrefab(Collision2D collision)
+    {
+        if (spawnOnCollisionPrefab == null) return;
+
+        // 衝突点にプレハブを生成
+        Vector2 spawnPos = collision.contacts.Length > 0 ? collision.contacts[0].point : (Vector2)transform.position;
+        GameObject spawned = Instantiate(spawnOnCollisionPrefab, spawnPos, Quaternion.identity);
+
+        // 生成されたオブジェクトを初期化
+        if (spawned.TryGetComponent<SpellProjectileDamageSource>(out var ds))
+        {
+            ds.Initialize(cachedStrength, cachedContext);
+        }
     }
 
     public override void Destroy()

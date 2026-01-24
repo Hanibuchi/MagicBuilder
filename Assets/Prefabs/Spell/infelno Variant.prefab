@@ -108,6 +108,10 @@ PrefabInstance:
       propertyPath: playLaunchSound
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8600365097350075244, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
+      propertyPath: spawnOnCollisionPrefab
+      value: 
+      objectReference: {fileID: 1405153890113068789, guid: 3db3f4acc26d0654099ecd96c99228db, type: 3}
     m_RemovedComponents:
     - {fileID: 3784312975397243327, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
     m_RemovedGameObjects: []
@@ -115,19 +119,30 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 396131387130879284, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5497752640111382158}
-    - targetCorrespondingSourceObject: {fileID: 396131387130879284, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5261024636873396703}
-    - targetCorrespondingSourceObject: {fileID: 396131387130879284, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 6385625881979512774}
+    - targetCorrespondingSourceObject: {fileID: 396131387130879284, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5497752640111382158}
   m_SourcePrefab: {fileID: 100100000, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
 --- !u!1 &7513211797546581187 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 396131387130879284, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
   m_PrefabInstance: {fileID: 7870916897654972919}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6385625881979512774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7513211797546581187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9705ea86cbd61e458d06b9f5b93de68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activationDelay: 1
+  startEffectSpawner: {fileID: 5497752640111382158}
 --- !u!114 &5497752640111382158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,34 +160,3 @@ MonoBehaviour:
   localSpawnOffset: {x: 1, y: 0, z: 0}
   matchRotation: 1
   matchScale: 1
---- !u!114 &5261024636873396703
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7513211797546581187}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fec10543216a1ec4b9e2f813b0d2b786, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnOnDestroy: 1
-  startEffectPrefab: {fileID: 1405153890113068789, guid: 3db3f4acc26d0654099ecd96c99228db, type: 3}
-  localSpawnOffset: {x: 1.2, y: 0, z: 0}
-  matchRotation: 1
-  matchProjectileModifier: 1
---- !u!114 &6385625881979512774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7513211797546581187}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9705ea86cbd61e458d06b9f5b93de68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activationDelay: 1
-  startEffectSpawner: {fileID: 5497752640111382158}

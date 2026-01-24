@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1607209653722423982}
+  - component: {fileID: 7592676584758101139}
   m_Layer: 0
   m_Name: explosion
   m_TagString: Untagged
@@ -32,6 +33,29 @@ Transform:
   - {fileID: 9073912854876581867}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7592676584758101139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1405153890113068789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 725e96cb8d8268e48a74493b7e8c8ff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageSourceType: 0
+  maxPierceCount: 1
+  enableImpulse: 1
+  impulseForce: 0.5
+  animator: {fileID: 0}
+  spawnOnCollisionPrefab: {fileID: 0}
+  playLaunchSound: 1
+  launchSound: {fileID: 8300000, guid: 5ff823f546b52574a931e1d9b44290a6, type: 3}
+  launchSoundVolume: 1
+  destroySound: {fileID: 0}
+  destroySoundVolume: 1
 --- !u!1 &4235489901773868859
 GameObject:
   m_ObjectHideFlags: 0
@@ -43,7 +67,6 @@ GameObject:
   - component: {fileID: 9073912854876581867}
   - component: {fileID: 8421591152271858879}
   - component: {fileID: 565532780678619574}
-  - component: {fileID: 5138635696145760779}
   - component: {fileID: 6649835676375905100}
   m_Layer: 11
   m_Name: explosion_anim
@@ -103,32 +126,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj: {fileID: 1405153890113068789}
---- !u!114 &5138635696145760779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4235489901773868859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68c9ebe4cd0e07345b1d3271c5747b5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageSourceType: 1
-  maxPierceCount: 1
-  enableImpulse: 1
-  impulseForce: 0.5
-  autoDestroy: 1
-  destroyTime: 10
-  damageData:
-    baseDamage: 0
-    woodDamage: 0
-    waterDamage: 0
-    temperatureDamage: 10
-    knockback: 0
-  launchSound: {fileID: 8300000, guid: 5ff823f546b52574a931e1d9b44290a6, type: 3}
-  launchSoundVolume: 1
 --- !u!58 &6649835676375905100
 CircleCollider2D:
   m_ObjectHideFlags: 0

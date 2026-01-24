@@ -137,6 +137,12 @@ public class BarrierSpell : SpellBase
 
         Debug.Log($"[{spellName}]を発射！バリアの種類インデックス:{targetIndex}、角度:{rotationZ}°、強さ:{strength}");
     }
+
+    
+    public void ModifyProjectile(SpellContext context, GameObject projectile)
+    {
+        context.ProjectileModifier?.Invoke(projectile);
+    }
     [SerializeField] float barrierHP = 50;
 
     public override List<SpellDescriptionItem> GetDescriptionDetails()

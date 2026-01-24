@@ -97,7 +97,6 @@ public class ExampleSpell : SpellBase
         );
 
         context.damage += damage;
-        projectileGO.GetComponent<SpellProjectileDamageSource>().Initialize(strength, context);
 
         // 2. Rigidbody2Dを取得し、初速を計算して設定
         Rigidbody2D rb = projectileGO.GetComponent<Rigidbody2D>();
@@ -124,7 +123,7 @@ public class ExampleSpell : SpellBase
             context.ProjectileModifier += ClickTriggerSpell.CreateClickTriggerAction(wandSpells, currentSpellIndex, context);
         }
 
-        ModifyProjectile(context, projectileGO);
+        projectileGO.GetComponent<SpellProjectileDamageSource>().Initialize(strength, context);// initialize()でcontext.ProjectileModifierがInvokeされるため、最後に実行。
 
         Debug.Log($"[{spellName}]を発射！角度:{finalRotationZ}°、強さ:{strength}");
     }
