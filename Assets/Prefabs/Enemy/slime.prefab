@@ -761,6 +761,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   launchPoint: {fileID: 379072239273853010}
   attackPrefab: {fileID: 461336670524401298, guid: d08d85676f491d342afddad4897663e5, type: 3}
+  attackDamage:
+    baseDamage: 10
+    woodDamage: 0
+    waterDamage: 0
+    temperatureDamage: 0
+    knockback: 0
+  destroyTime: 0.1
 --- !u!50 &6875321328670521665
 Rigidbody2D:
   serializedVersion: 5

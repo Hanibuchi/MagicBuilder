@@ -72,6 +72,10 @@ PrefabInstance:
       propertyPath: damageSourceType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6643108821517507489, guid: 323fdf8714f967446bdba15d4ab2de4e, type: 3}
+      propertyPath: damageData.baseDamage
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

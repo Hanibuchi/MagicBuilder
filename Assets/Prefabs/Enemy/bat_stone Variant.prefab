@@ -192,9 +192,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9185647672397801089, guid: a85e5e272b9727a4db18153d0132e4f4, type: 3}
+      propertyPath: destroyTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185647672397801089, guid: a85e5e272b9727a4db18153d0132e4f4, type: 3}
       propertyPath: attackPrefab
       value: 
       objectReference: {fileID: 1824379002411095990, guid: a6f21cc515c26dd4bbfde5a9e8560929, type: 3}
+    - target: {fileID: 9185647672397801089, guid: a85e5e272b9727a4db18153d0132e4f4, type: 3}
+      propertyPath: attackDamage.baseDamage
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 9211272829621127833, guid: a85e5e272b9727a4db18153d0132e4f4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.09

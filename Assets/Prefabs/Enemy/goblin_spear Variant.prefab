@@ -29,6 +29,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 22100000, guid: eccc14e57016c1c4ab3242eceba8ff80, type: 2}
     - target: {fileID: 6138402559077134335, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
+      propertyPath: destroyTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6138402559077134335, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
       propertyPath: attackPrefab
       value: 
       objectReference: {fileID: 8444714878226010074, guid: cd13fb568cccd5f4ab11a9a59ee12418, type: 3}

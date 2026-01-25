@@ -14,6 +14,13 @@ public class AttackLauncher : MonoBehaviour
     [Tooltip("発射する攻撃のプレハブ (GameObject)")]
     [SerializeField] private GameObject attackPrefab;
 
+    [Header("攻撃詳細設定")]
+    [Tooltip("攻撃のダメージ情報")]
+    [SerializeField] private Damage attackDamage;
+
+    [Tooltip("攻撃オブジェクトが消滅するまでの時間 (秒)")]
+    [SerializeField] private float destroyTime = 1.0f;
+
     // --- 公開メソッド ---
 
     /// <summary>
@@ -44,6 +51,13 @@ public class AttackLauncher : MonoBehaviour
         // 角度をZ軸の回転としてQuaternionに変換
         Quaternion rotation = Quaternion.Euler(0f, 0f, angle);
         GameObject attackInstance = Instantiate(attackPrefab, launchPosition, rotation);
+
+        // --- 追加: ProjectileDamageSourceへの値のセット ---
+        if (attackInstance.TryGetComponent<ProjectileDamageSource>(out var damageSource))
+        {
+            damageSource.SetDamage(attackDamage);
+            damageSource.SetDestroyTime(destroyTime);
+        }
 
         // 5. 発射した攻撃をこのオブジェクトの子にする (オプション: シーンの整理のため)
         attackInstance.transform.SetParent(transform);
