@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerWands: []
+  isPlayer: 1
   displayAimingLineSpellCount: 5
   currentWandIndex: 0
 --- !u!114 &1079224181612551991

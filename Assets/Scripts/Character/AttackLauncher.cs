@@ -9,17 +9,17 @@ public class AttackLauncher : MonoBehaviour
 
     [Header("設定")]
     [Tooltip("攻撃を発射するワールド座標のTransform")]
-    [SerializeField] private Transform launchPoint;
+    [SerializeField] protected Transform launchPoint;
 
     [Tooltip("発射する攻撃のプレハブ (GameObject)")]
-    [SerializeField] private GameObject attackPrefab;
+    [SerializeField] protected GameObject attackPrefab;
 
     [Header("攻撃詳細設定")]
     [Tooltip("攻撃のダメージ情報")]
-    [SerializeField] private Damage attackDamage;
+    [SerializeField] protected Damage attackDamage;
 
     [Tooltip("攻撃オブジェクトが消滅するまでの時間 (秒)")]
-    [SerializeField] private float destroyTime = 1.0f;
+    [SerializeField] protected float destroyTime = 1.0f;
 
     // --- 公開メソッド ---
 
@@ -27,8 +27,7 @@ public class AttackLauncher : MonoBehaviour
     /// 指定されたワールド座標に向かって攻撃を発射する。
     /// </summary>
     /// <param name="targetPosition">狙う地点のワールド座標 (Vector2)</param>
-    /// <param name="spellCooldown">使用した呪文のクールタイムの合計時間</param>
-    public void LaunchAttack(Vector2 targetPosition)
+    public virtual void LaunchAttack(Vector2 targetPosition)
     {
 
         if (launchPoint == null || attackPrefab == null)
