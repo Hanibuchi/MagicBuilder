@@ -32,6 +32,6 @@ MonoBehaviour:
     woodDamage: 0
     waterDamage: 0
     temperatureDamage: 0
-    knockback: 0
+    knockback: 100
   damageType: 0
   isClickTrigger: 0

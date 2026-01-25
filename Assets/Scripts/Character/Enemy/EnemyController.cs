@@ -47,9 +47,6 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
     private Coroutine _kickbackStunCoroutine;
 
 
-    protected const string STOP_PARAM = "is_stop";
-
-
     // --- Unity イベント関数 ---
 
     protected override void Awake()
@@ -130,6 +127,17 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
 
         // 攻撃モデルのクールタイム・実行時間を更新
         _attackModel.Update(Time.deltaTime);
+
+        // --- アニメーションパラメータの更新 ---
+        if (animator != null && animator.enabled)
+        {
+            bool isStunned = _kickbackStunCoroutine != null || (enemyMovement != null && enemyMovement.IsStunned);
+            bool isMoving = enemyMovement != null && enemyMovement.IsMoving && !isStunned && !isDead;
+
+            animator.SetBool(PARAM_IS_STUNNED, isStunned);
+            animator.SetBool(PARAM_IS_RUNNING, isMoving);
+            animator.SetBool(PARAM_IS_IDLE, !isMoving && !isStunned && !isDead);
+        }
     }
 
     // --- ITriggerHandler の実装 ---
@@ -151,11 +159,10 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         _currentTriggerID = triggerID;
 
         // 攻撃モデルに攻撃の発射を試行させる
-        // LayerSensorのIDはEnemyAttackModelのAttackData IDと一致している必要があります
+        // LayerSensorのIDはEnemyAttackModel of AttackData IDと一致している必要があります
         _attackModel.RequestAttack(triggerID);
 
         enemyMovement?.StopMovement();
-        animator.SetBool(STOP_PARAM, true);
     }
 
     /// <summary>
@@ -170,8 +177,6 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         _isTargetSensed = false;
 
         enemyMovement?.ResumeMovement();
-
-        animator.SetBool(STOP_PARAM, false);
     }
 
     // --- IEnemyAttackExecutor の実装 ---

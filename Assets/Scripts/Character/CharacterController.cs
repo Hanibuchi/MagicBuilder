@@ -7,16 +7,18 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
 {
     [SerializeField] protected Animator animator;
     protected HPBarController hpBarController;
-    // --- アニメーションのトリガー名 ---
-    protected const string HIT_TRIGGER = "damage";          // ダメージを受けた時のアニメーション
-    protected const string DIE_TRIGGER = "die";          // 死亡時のアニメーション
-    protected const string FIRE_TRIGGER = "attack";
-    protected const string FIRE_STUN_TRIGGER = "fireStun";
-    protected const string FIRE_STUN_END_TRIGGER = "fireStunEnd";
-    protected const string FREEZE_STUN_TRIGGER = "freezeStun";
-    protected const string FREEZE_STUN_END_TRIGGER = "freezeStunEnd";
-    protected const string ICE_SLOW_TRIGGER = "iceSlow";
-    protected const string ICE_SLOW_END_TRIGGER = "iceSlowEnd";
+    // --- アニメーションのパラメータ名 ---
+    protected const string PARAM_IS_IDLE = "idle";
+    protected const string PARAM_IS_RUNNING = "run";
+    protected const string PARAM_IS_STUNNED = "stun";
+    protected const string PARAM_IS_DEAD = "die";
+
+    protected const string PARAM_IS_FIRE_STUNNED = "FireStun";
+    protected const string PARAM_IS_FROZEN = "FreezeStun";
+    protected const string PARAM_IS_SLOWED = "IceSlow";
+
+    protected const string PARAM_DAMAGE_TRIGGER = "damage";
+    protected const string PARAM_ATTACK_TRIGGER = "attack"; // 汎用、または ID を直接使用
 
     private StatusEffectModel _statusModel;
 
@@ -62,7 +64,7 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
         if (!characterHealth.IsDead) // ヒット音は出したくないが、ダメージ表示はしたい
         {
             // 例: 基本/全てのダメージで共通の"Hit"アニメーションを再生
-            animator.SetTrigger(HIT_TRIGGER);
+            animator.SetTrigger(PARAM_DAMAGE_TRIGGER);
             PlayHitSound();
         }
     }
@@ -100,7 +102,7 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
     public void NotifyDieSilent()
     {
         if (animator == null || !animator.enabled) return;
-        animator.SetTrigger(DIE_TRIGGER);
+        animator.SetBool(PARAM_IS_DEAD, true);
 
         if (hitBoxObject != null)
         {
@@ -135,35 +137,35 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
     public virtual void OnFireStunStart()
     {
         PlayFireStunSound();
-        animator.SetTrigger(FIRE_STUN_TRIGGER);
+        animator.SetBool(PARAM_IS_FIRE_STUNNED, true);
         Debug.Log("FireStun started");
     }
 
     public virtual void OnFireStunEnd()
     {
-        animator.SetTrigger(FIRE_STUN_END_TRIGGER);
+        animator.SetBool(PARAM_IS_FIRE_STUNNED, false);
         Debug.Log("FireStun ended");
     }
 
     public virtual void OnFreezeStunStart()
     {
         PlayFreezeStunSound();
-        animator.SetTrigger(FREEZE_STUN_TRIGGER);
+        animator.SetBool(PARAM_IS_FROZEN, true);
     }
 
     public virtual void OnFreezeStunEnd()
     {
-        animator.SetTrigger(FREEZE_STUN_END_TRIGGER);
+        animator.SetBool(PARAM_IS_FROZEN, false);
     }
 
     public virtual void OnIceSlowStart()
     {
-        animator.SetTrigger(ICE_SLOW_TRIGGER);
+        animator.SetBool(PARAM_IS_SLOWED, true);
     }
 
     public virtual void OnIceSlowEnd()
     {
-        animator.SetTrigger(ICE_SLOW_END_TRIGGER);
+        animator.SetBool(PARAM_IS_SLOWED, false);
     }
 
 

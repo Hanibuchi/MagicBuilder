@@ -15,8 +15,11 @@ public class EnemyMovementBase : MonoBehaviour
     protected Rigidbody2D rb;
     protected bool isMoving = true; // 現在移動中かどうかのフラグ
 
+    public bool IsMoving => isMoving;
+
     // --- 状態異常管理用フィールド ---
     protected int isStunned = 0; // 気絶（FireStun, FreezeStun）中かどうか
+    public bool IsStunned => isStunned > 0;
     protected bool isSlowed = false;  // 減速（IceSlow）中かどうか
 
     // --- Unity ライフサイクルメソッド ---

@@ -48,7 +48,7 @@ public class PlayerController : MyCharacterController
         float normalizedValue = Mathf.InverseLerp(0f, 90f, clampedAngle);
         // 3. Animatorのfloatパラメーターに設定
         animator.SetFloat(FIRE_DEGREE_PARAM, normalizedValue);
-        animator.SetTrigger(FIRE_TRIGGER);
+        animator.SetTrigger(PARAM_ATTACK_TRIGGER);
     }
 
     /// <param name="angle">狙いの角度 (度)</param>

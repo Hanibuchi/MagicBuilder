@@ -16,51 +16,8 @@ MonoBehaviour:
   subStageName: "\u6700\u521D\u306E\u30B9\u30C6\u30FC\u30B8"
   SceneName: Stage_Ice
   clearCondition: 2
-  enemyPhases:
-  - conditionType: 0
-    conditionValue: 0
-    spawnerConfig:
-      rid: 399596066723856384
-    nextPhases: []
-  - conditionType: 0
-    conditionValue: 10
-    spawnerConfig:
-      rid: 399596066723856384
-    nextPhases: []
-  - conditionType: 0
-    conditionValue: 0.5
-    spawnerConfig:
-      rid: 399596066723856384
-    nextPhases: []
-  - conditionType: 0
-    conditionValue: 0.5
-    spawnerConfig:
-      rid: 399596075697307747
-    nextPhases: []
-  - conditionType: 0
-    conditionValue: 0.5
-    spawnerConfig:
-      rid: 399596066723856384
-    nextPhases: []
-  - conditionType: 0
-    conditionValue: 0.5
-    spawnerConfig:
-      rid: 399596066723856384
-    nextPhases: []
-  - conditionType: 0
-    conditionValue: 0.5
-    spawnerConfig:
-      rid: 399596066723856384
-    nextPhases: []
+  enemyPhases: []
   stageType: 0
   references:
     version: 2
-    RefIds:
-    - rid: 399596066723856384
-      type: {class: EnemySpawnerConfig, ns: , asm: Assembly-CSharp}
-      data:
-        enemyPrefab: {fileID: 3738908839911435214, guid: 541b412a452207d45909e95a7ee45512, type: 3}
-    - rid: 399596075697307747
-      type: {class: EnemySpawnerConfig, ns: , asm: Assembly-CSharp}
-      data:
-        enemyPrefab: {fileID: 0}
+    RefIds: []
