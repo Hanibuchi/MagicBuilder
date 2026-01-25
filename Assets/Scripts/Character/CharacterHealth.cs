@@ -45,10 +45,11 @@ public class CharacterHealth : MonoBehaviour
         healthNotifier = GetComponent<IHealthNotifier>();
     }
 
-    private static int ALLAY_LAYER_INDEX = 9;
-    private static int ENEMY_LAYER_INDEX = 10;
-    private static int ALLAY_ATTACK_LAYER_INDEX = 11;
-    private static int ENEMY_ATTACK_LAYER_INDEX = 12;
+    public static int ALLAY_LAYER_INDEX = 9;
+    public static int ENEMY_LAYER_INDEX = 10;
+    public static int ALLAY_ATTACK_LAYER_INDEX = 11;
+    public static int ENEMY_ATTACK_LAYER_INDEX = 12;
+    public static int BOTH_ATTACK_LAYER_INDEX = 19;
 
     // 衝突時にダメージ源からダメージを受け取る。（単発/範囲）
     public void OnCollisionEnter2D(Collision2D collision)

@@ -52,7 +52,10 @@ public class HomingSpell : SpellBase
             {
                 homing = projectile.AddComponent<HomingMover>();
             }
-            homing.Initialize(targetLayer, searchRange, springConstant);
+            // context のレイヤー設定に基づいたターゲットレイヤーを優先し、
+            // 未設定（デフォルト）の場合はインスペクタの targetLayer を使用する
+            LayerMask mask = context.GetTargetLayerMask();
+            homing.Initialize(mask, searchRange, springConstant);
         };
 
         FireSpellForNextSpells(

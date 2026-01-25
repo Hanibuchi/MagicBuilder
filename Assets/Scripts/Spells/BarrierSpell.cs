@@ -125,6 +125,9 @@ public class BarrierSpell : SpellBase
             rotation
         );
 
+        // SpellContext の Layer 情報に基づいてバリアのレイヤーを設定
+        barrierGO.layer = context.GetUnityLayer(false);
+
         float totalDuration = context.duration + duration;
         context.duration = totalDuration;
         if (barrierGO.TryGetComponent(out CharacterHealth health))

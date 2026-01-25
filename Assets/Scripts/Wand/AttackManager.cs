@@ -138,7 +138,8 @@ public class AttackManager : MonoBehaviour
             {
                 SpellContext context = new()
                 {
-                    CasterPosition = casterPositionTransform.position
+                    CasterPosition = casterPositionTransform.position,
+                    layer = SpellLayer.Attack_Ally // プレイヤーの杖なのでデフォルトは敵を攻撃
                 };
                 SpellBase spell = processedSpells[targetIndex];
                 spell?.FireSpell(
