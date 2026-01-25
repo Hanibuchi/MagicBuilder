@@ -125,25 +125,38 @@ public class BarrierSpell : SpellBase
             rotation
         );
 
+        float totalDuration = context.duration + duration;
+        context.duration = totalDuration;
         if (barrierGO.TryGetComponent(out CharacterHealth health))
         {
             health.maxHealth = barrierHP;
+            if (!context.IsPermanent())
+            {
+                // バリアの場合は持続時間終了時に Kill(true) を呼び出す
+                health.Invoke(nameof(health.KillSilently), context.duration);
+            }
         }
-
-        // 4. 速度は追加しない（静止バリアのため）
 
         // 5. 投射物修正ロジックの実行
         ModifyProjectile(context, barrierGO);
 
+        // CharacterHealth がない場合のみ従来の Destroy を使用（寿命管理）
+        if (health == null && !context.IsPermanent())
+        {
+            Destroy(barrierGO, context.duration);
+        }
+
         Debug.Log($"[{spellName}]を発射！バリアの種類インデックス:{targetIndex}、角度:{rotationZ}°、強さ:{strength}");
     }
 
-    
+
     public void ModifyProjectile(SpellContext context, GameObject projectile)
     {
         context.ProjectileModifier?.Invoke(projectile);
     }
     [SerializeField] float barrierHP = 50;
+    [Tooltip("呪文の持続時間（秒）。-1の場合は無限。")]
+    [SerializeField] float duration = 10f;
 
     public override List<SpellDescriptionItem> GetDescriptionDetails()
     {
@@ -153,6 +166,12 @@ public class BarrierSpell : SpellBase
             icon = SpellCommonData.Instance.HPIcon,
             descriptionText = "耐久値 : " + barrierHP.ToString(),
         });
+        if (duration > 0)
+            detailItems.Add(new SpellDescriptionItem
+            {
+                icon = null,
+                descriptionText = "持続時間 : " + duration.ToString("F1") + " 秒",
+            });
         return detailItems;
     }
 }

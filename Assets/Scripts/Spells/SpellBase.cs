@@ -394,37 +394,3 @@ public abstract class SpellBase : ScriptableObject
         return detailItems;
     }
 }
-
-/// <summary>
-/// 呪文の発射・実行時に、環境や発射元の情報などを伝達するためのクラス。
-/// </summary>
-public class SpellContext
-{
-    public Vector2 CasterPosition;
-    public Action<GameObject> ProjectileModifier;
-    public float errorDegree = 0;
-    public Damage damage;
-
-    public SpellContext()
-    {
-
-    }
-
-    /// <summary>
-    /// このコンテキストの値をコピーした新しいインスタンスを返す。
-    /// </summary>
-    /// <returns>値が同じ新しい SpellContext インスタンス。</returns>
-    public SpellContext Clone()
-    {
-        return new SpellContext
-        {
-            // 値型 (Vector2, float) は値そのものがコピーされる
-            CasterPosition = this.CasterPosition,
-            errorDegree = this.errorDegree,
-
-            // 参照型 (Action) は参照がコピーされるが、Actionは不変(イミュータブル)なので問題なし
-            ProjectileModifier = this.ProjectileModifier,
-            damage = this.damage
-        };
-    }
-}

@@ -42,6 +42,11 @@ public class SpellProjectileDamageSource : DamageSourceBase
 
         Launch();
         damageData = spellContext?.damage ?? new Damage();
+
+        if (spellContext != null && !spellContext.IsPermanent())
+        {
+            Invoke(nameof(Destroy), spellContext.duration);
+        }
     }
 
     protected override void Awake()

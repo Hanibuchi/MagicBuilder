@@ -354,6 +354,15 @@ public class CharacterHealth : MonoBehaviour
     }
 
     /// <summary>
+    /// 引数なしで Kill(true) を呼び出すためのヘルパーメソッド。
+    /// Invoke などで使用します。
+    /// </summary>
+    public void KillSilently()
+    {
+        Kill(true);
+    }
+
+    /// <summary>
     /// キャラクターを復活させ、体力を最大まで回復します。
     /// </summary>
     public void Revive()

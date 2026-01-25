@@ -24,7 +24,8 @@ MonoBehaviour:
   maxPredictionTime: 2
   trajectoryMoveSpeed: 0.5
   projectilePrefab: {fileID: 2314924996833699740, guid: c1ca8e4ced525bb42a4a938a36fab847, type: 3}
-  strengthMultiplier: 20
+  strengthMultiplier: 15
+  duration: 2
   errorDegree: 2
   damage:
     baseDamage: 0

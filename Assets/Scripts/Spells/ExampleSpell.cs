@@ -68,6 +68,8 @@ public class ExampleSpell : SpellBase
     [Tooltip("発射する魔法弾のプレハブ。Rigidbody2Dが必要です。")]
     public GameObject projectilePrefab;
     [SerializeField] float strengthMultiplier = 20f;
+    [Tooltip("呪文の持続時間（秒）。0以下の場合は無限。")]
+    [SerializeField] float duration = 5f;
 
     [Header("誤差設定")]
     [Tooltip("発射角に追加する誤差の標準偏差（度）。平均0の正規分布に従います。")]
@@ -97,6 +99,7 @@ public class ExampleSpell : SpellBase
         );
 
         context.damage += damage;
+        context.duration += duration;
 
         // 2. Rigidbody2Dを取得し、初速を計算して設定
         Rigidbody2D rb = projectileGO.GetComponent<Rigidbody2D>();
@@ -183,6 +186,12 @@ public class ExampleSpell : SpellBase
             {
                 icon = SpellCommonData.Instance.errorDegreeIcon,
                 descriptionText = "誤差 : " + errorDegree.ToString() + "度",
+            });
+        if (duration > 0)
+            detailItems.Add(new SpellDescriptionItem
+            {
+                icon = null,
+                descriptionText = "持続時間 : " + duration.ToString("F1") + " 秒",
             });
         switch (damageType)
         {

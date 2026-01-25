@@ -24,13 +24,14 @@ MonoBehaviour:
   maxPredictionTime: 2
   trajectoryMoveSpeed: 0.5
   projectilePrefab: {fileID: 396131387130879284, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
-  strengthMultiplier: 20
+  strengthMultiplier: 15
+  duration: 2
   errorDegree: 2
   damage:
     baseDamage: 5
     woodDamage: 0
     waterDamage: 0
     temperatureDamage: 0
-    knockback: 20
+    knockback: 0
   damageType: 0
   isClickTrigger: 0
