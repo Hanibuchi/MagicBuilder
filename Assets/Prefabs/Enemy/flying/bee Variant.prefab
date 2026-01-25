@@ -106,7 +106,7 @@ PrefabInstance:
     - target: {fileID: 8907530283304774618, guid: a85e5e272b9727a4db18153d0132e4f4, type: 3}
       propertyPath: enemyMovement
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2215804239896678097}
     m_RemovedComponents:
     - {fileID: 8032733596606806843, guid: a85e5e272b9727a4db18153d0132e4f4, type: 3}
     m_RemovedGameObjects: []

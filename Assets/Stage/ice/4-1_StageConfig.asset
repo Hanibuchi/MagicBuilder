@@ -20,46 +20,57 @@ MonoBehaviour:
   - conditionType: 0
     conditionValue: 0
     spawnerConfig:
-      rid: -2
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
     nextPhases: []
   - conditionType: 0
     conditionValue: 10
     spawnerConfig:
-      rid: -2
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
     nextPhases: []
   - conditionType: 0
     conditionValue: 1
     spawnerConfig:
-      rid: -2
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
     nextPhases: []
   - conditionType: 0
     conditionValue: 1
     spawnerConfig:
-      rid: -2
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
     nextPhases: []
   - conditionType: 0
     conditionValue: 1
     spawnerConfig:
-      rid: -2
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
     nextPhases: []
   - conditionType: 0
     conditionValue: 1
     spawnerConfig:
-      rid: -2
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
     nextPhases: []
   - conditionType: 0
     conditionValue: 1
     spawnerConfig:
-      rid: -2
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
     nextPhases: []
   - conditionType: 0
     conditionValue: 1
     spawnerConfig:
-      rid: -2
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
     nextPhases: []
   stageType: 0
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
