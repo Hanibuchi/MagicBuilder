@@ -32,6 +32,14 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
     [SerializeField]
     private AttackLauncher attackLauncher3;
 
+    [Header("表示設定")]
+    [Tooltip("キャラクターのメインSpriteRenderer")]
+    [SerializeField]
+    private SpriteRenderer mainSpriteRenderer;
+    [Tooltip("状態異常表示用のSpriteRenderer")]
+    [SerializeField]
+    private SpriteRenderer statusEffectSpriteRenderer;
+
     // --- 内部メンバー ---
 
     private EnemyAttackModel _attackModel;
@@ -45,6 +53,9 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
     private Rigidbody2D _rb2d;
 
     private Coroutine _kickbackStunCoroutine;
+
+    // ★ 追加: 状態異常の発生数をカウントするフィールド
+    private int _activeStatusEffectCount = 0;
 
 
     // --- Unity イベント関数 ---
@@ -137,6 +148,23 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
             animator.SetBool(PARAM_IS_STUNNED, isStunned);
             animator.SetBool(PARAM_IS_RUNNING, isMoving);
             animator.SetBool(PARAM_IS_IDLE, !isMoving && !isStunned && !isDead);
+        }
+
+        // 状態異常中の時のみ、メインのスプライトと同期させる
+        if (_activeStatusEffectCount > 0 && statusEffectSpriteRenderer != null && mainSpriteRenderer != null)
+        {
+            statusEffectSpriteRenderer.sprite = mainSpriteRenderer.sprite;
+        }
+    }
+
+    /// <summary>
+    /// 状態異常表示用のSpriteRendererの表示・非表示を切り替えます。
+    /// </summary>
+    private void UpdateStatusEffectRenderer()
+    {
+        if (statusEffectSpriteRenderer != null)
+        {
+            statusEffectSpriteRenderer.enabled = _activeStatusEffectCount > 0 && !isDead;
         }
     }
 
@@ -252,6 +280,8 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         _attackModel.StopAttack();
         // 動きも停止
         enemyMovement?.ApplyStun();
+
+        _activeStatusEffectCount++;
     }
 
     public override void OnFireStunEnd()
@@ -261,6 +291,8 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         _attackModel.ResumeAttack();
         // 動きも再開
         enemyMovement?.RemoveStun();
+
+        _activeStatusEffectCount--;
     }
 
     public override void OnFreezeStunStart()
@@ -270,6 +302,8 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         _attackModel.StopAttack();
         // 動きも停止
         enemyMovement?.ApplyStun();
+
+        _activeStatusEffectCount++;
     }
 
     public override void OnFreezeStunEnd()
@@ -279,6 +313,8 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         _attackModel.ResumeAttack();
         // 動きも再開。減速（Slow）状態もリセットされる。
         enemyMovement?.RemoveStun();
+
+        _activeStatusEffectCount--;
     }
 
     public override void OnIceSlowStart()
@@ -288,6 +324,8 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         enemyMovement?.ApplyIceSlow();
         // ★ 追加: 攻撃頻度を半分にするため、クールタイムを2.0倍に設定
         _attackModel.SetCooldownMultiplier(2.0f);
+
+        _activeStatusEffectCount++;
     }
 
     public override void OnIceSlowEnd()
@@ -297,6 +335,8 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         enemyMovement?.RemoveSlow();
         // ★ 追加: クールタイムの倍率をリセット (1.0倍)
         _attackModel.ResetCooldownMultiplier();
+
+        _activeStatusEffectCount--;
     }
 
 
@@ -364,10 +404,12 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
     {
         if (isDead) return;
         isDead = true;
+        UpdateStatusEffectRenderer();
+
         enemyMovement?.ApplyStun();
         if (characterHealth != null)
             ScoreManager.Instance?.AddScore(characterHealth.maxHealth);
-        
+
         base.NotifyDie(silent);
 
         GetComponent<SpellDropper>()?.DropSpells();
