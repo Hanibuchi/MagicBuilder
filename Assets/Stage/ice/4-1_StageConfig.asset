@@ -16,87 +16,8 @@ MonoBehaviour:
   subStageName: "\u6700\u521D\u306E\u30B9\u30C6\u30FC\u30B8"
   SceneName: Stage_Ice
   clearCondition: 2
-  enemyPhases:
-  - conditionType: 0
-    conditionValue: 1
-    spawnerConfig:
-      rid: 399596075697307757
-    nextPhases: []
-  - conditionType: 0
-    conditionValue: 1
-    spawnerConfig:
-      rid: 399596075697307758
-    nextPhases: []
-  - conditionType: 0
-    conditionValue: 1
-    spawnerConfig:
-      rid: 399596075697307759
-    nextPhases: []
-  - conditionType: 0
-    conditionValue: 1
-    spawnerConfig:
-      rid: 399596075697307762
-    nextPhases: []
-  - conditionType: 0
-    conditionValue: 1
-    spawnerConfig:
-      rid: 399596075697307763
-    nextPhases: []
-  - conditionType: 0
-    conditionValue: 1
-    spawnerConfig:
-      rid: 399596075697307764
-    nextPhases: []
-  - conditionType: 0
-    conditionValue: 1
-    spawnerConfig:
-      rid: 399596075697307765
-    nextPhases: []
-  - conditionType: 0
-    conditionValue: 1
-    spawnerConfig:
-      rid: 399596075697307766
-    nextPhases: []
-  - conditionType: 0
-    conditionValue: 1
-    spawnerConfig:
-      rid: -2
-    nextPhases: []
+  enemyPhases: []
   stageType: 0
   references:
     version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 399596075697307757
-      type: {class: EnemySpawnerConfig, ns: , asm: Assembly-CSharp}
-      data:
-        enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
-    - rid: 399596075697307758
-      type: {class: EnemySpawnerConfig, ns: , asm: Assembly-CSharp}
-      data:
-        enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
-    - rid: 399596075697307759
-      type: {class: EnemySpawnerConfig, ns: , asm: Assembly-CSharp}
-      data:
-        enemyPrefab: {fileID: 0}
-    - rid: 399596075697307762
-      type: {class: EnemySpawnerConfig, ns: , asm: Assembly-CSharp}
-      data:
-        enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
-    - rid: 399596075697307763
-      type: {class: EnemySpawnerConfig, ns: , asm: Assembly-CSharp}
-      data:
-        enemyPrefab: {fileID: 0}
-    - rid: 399596075697307764
-      type: {class: EnemySpawnerConfig, ns: , asm: Assembly-CSharp}
-      data:
-        enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
-    - rid: 399596075697307765
-      type: {class: EnemySpawnerConfig, ns: , asm: Assembly-CSharp}
-      data:
-        enemyPrefab: {fileID: 0}
-    - rid: 399596075697307766
-      type: {class: EnemySpawnerConfig, ns: , asm: Assembly-CSharp}
-      data:
-        enemyPrefab: {fileID: 0}
+    RefIds: []
