@@ -16,7 +16,7 @@ public struct EnemyPhaseConfig
 
     [Header("このフェーズで実行する処理")]
     [Tooltip("このフェーズで生成する敵の設定")]
-    [SerializeReference]
+    [SerializeField]
     public EnemySpawnerConfig spawnerConfig;
 
     [Tooltip("このフェーズの処理後に実行する次のフェーズ")]

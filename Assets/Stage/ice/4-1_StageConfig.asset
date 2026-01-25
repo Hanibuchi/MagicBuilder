@@ -16,8 +16,50 @@ MonoBehaviour:
   subStageName: "\u6700\u521D\u306E\u30B9\u30C6\u30FC\u30B8"
   SceneName: Stage_Ice
   clearCondition: 2
-  enemyPhases: []
+  enemyPhases:
+  - conditionType: 0
+    conditionValue: 0
+    spawnerConfig:
+      rid: -2
+    nextPhases: []
+  - conditionType: 0
+    conditionValue: 10
+    spawnerConfig:
+      rid: -2
+    nextPhases: []
+  - conditionType: 0
+    conditionValue: 1
+    spawnerConfig:
+      rid: -2
+    nextPhases: []
+  - conditionType: 0
+    conditionValue: 1
+    spawnerConfig:
+      rid: -2
+    nextPhases: []
+  - conditionType: 0
+    conditionValue: 1
+    spawnerConfig:
+      rid: -2
+    nextPhases: []
+  - conditionType: 0
+    conditionValue: 1
+    spawnerConfig:
+      rid: -2
+    nextPhases: []
+  - conditionType: 0
+    conditionValue: 1
+    spawnerConfig:
+      rid: -2
+    nextPhases: []
+  - conditionType: 0
+    conditionValue: 1
+    spawnerConfig:
+      rid: -2
+    nextPhases: []
   stageType: 0
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
