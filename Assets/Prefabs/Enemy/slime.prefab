@@ -665,7 +665,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 30
+  maxHealth: 15
   characterElement: 0
   maxStopDurationOnFire: 10
   iceStopThreshold: 0.3
