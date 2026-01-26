@@ -202,6 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 4994009791406165591}
+  hitBoxObject: {fileID: 0}
   damageTextSpawnPoint: {fileID: 2150039468542698991}
   playHitSoundOnDead: 0
   hitSound: {fileID: 8300000, guid: 6a97574b999754ab88af555cfbc0d8f4, type: 3}
@@ -252,7 +253,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!1 &5348217663573171723
 GameObject:
   m_ObjectHideFlags: 0
