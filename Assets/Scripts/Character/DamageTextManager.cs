@@ -120,6 +120,10 @@ public class DamageTextManager : MonoBehaviour
         // 最終的な位置を設定
         rectTransform.position = screenPos + offsetVector; // 👈 変更: 新しいオフセットベクトルを適用v
 
+        // ダメージ量に応じたスケーリング (10を基準に1.0、対数的に計算)
+        float scale = Mathf.Log10(Mathf.Max(1f, damageValue) / 10f) + 1f;
+        rectTransform.localScale = Vector3.one * scale;
+
         var animator = textObj.GetComponent<DamageText>();
         animator.Initialize(damageValue, displayDuration);
     }
