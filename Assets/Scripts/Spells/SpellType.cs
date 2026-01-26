@@ -32,4 +32,7 @@ public enum SpellType
     HealingDamage,
     Skip,
     Homing,
+    HealShot,
+    WaterShot,
+    WoodShot,
 }
