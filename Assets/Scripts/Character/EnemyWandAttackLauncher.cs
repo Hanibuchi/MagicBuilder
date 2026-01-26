@@ -63,70 +63,33 @@ public class EnemyWandAttackLauncher : AttackLauncher
     /// </summary>
     private void CalculateShootParameters(Vector2 start, Vector2 target, out float angle, out float strength)
     {
-        float g = Physics2D.gravity.magnitude;
         Vector2 diff = target - start;
         float x = Mathf.Abs(diff.x);
         float y = diff.y;
+        float g = Physics2D.gravity.magnitude;
 
-        // 重力がほぼ無い場合は直接狙う
-        if (g < 0.01f)
+        // 1. 強度(strength)の計算: ターゲットに届く最小速度を考慮
+        // v_min^2 = g * (y + sqrt(x^2 + y^2))
+        float minVSq = g * (y + Mathf.Sqrt(x * x + y * y));
+        float minV = Mathf.Sqrt(Mathf.Max(0, minVSq));
+        float targetV = baseFireStrength * expectedStrengthMultiplier;
+
+        strength = Mathf.Clamp01(Mathf.Max(targetV, minV) / expectedStrengthMultiplier);
+        float v = strength * expectedStrengthMultiplier;
+
+        // 2. 角度(angle)の計算: 物理公式 tan(θ) = (v^2 ± sqrt(v^4 - g(gx^2 + 2yv^2))) / gx
+        if (g < 0.01f || x < 0.01f) // 重力がほぼない、またはほぼ垂直の場合
         {
             angle = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-            strength = baseFireStrength;
             return;
         }
 
-        float vMax = expectedStrengthMultiplier; // 最大強度(1.0)時の速度
-
-        // 最小到達速度 v_min^2 = g * (y + sqrt(x^2 + y^2))
-        float vMinSq = g * (y + Mathf.Sqrt(x * x + y * y));
-        float vMin = Mathf.Sqrt(Mathf.Max(0, vMinSq));
-
-        float v;
-        if (vMin > vMax)
-        {
-            // 最大パワーでも届かない場合は最大で撃つ
-            v = vMax;
-            strength = 1.0f;
-        }
-        else
-        {
-            // baseFireStrengthで届くかチェック。届かないなら必要最小限まで上げる。
-            float targetV = baseFireStrength * expectedStrengthMultiplier;
-            if (targetV < vMin)
-            {
-                v = vMin;
-                strength = v / expectedStrengthMultiplier;
-            }
-            else
-            {
-                v = targetV;
-                strength = baseFireStrength;
-            }
-        }
-
-        // 角度の計算: tan(theta) = (v^2 +/- sqrt(v^4 - g(gx^2 + 2yv^2))) / (gx)
         float v2 = v * v;
-        float v4 = v2 * v2;
-        float root = v4 - g * (g * x * x + 2 * y * v2);
-
-        if (root < 0) root = 0; // 精度誤差対策
-        root = Mathf.Sqrt(root);
-
+        float det = v2 * v2 - g * (g * x * x + 2 * y * v2);
+        float root = Mathf.Sqrt(Mathf.Max(0, det)); // 届かない(det < 0)場合は最大飛距離の角度に収束
         float tanTheta = (v2 + (useLowArc ? -root : root)) / (g * x);
 
-        if (x < 0.001f)
-        {
-            angle = diff.y > 0 ? 90f : -90f;
-        }
-        else
-        {
-            angle = Mathf.Atan(tanTheta) * Mathf.Rad2Deg;
-            // X方向（左右）の調整
-            if (diff.x < 0)
-            {
-                angle = 180f - angle;
-            }
-        }
+        angle = Mathf.Atan(tanTheta) * Mathf.Rad2Deg;
+        if (diff.x < 0) angle = 180f - angle; // ターゲットが左側の場合は角度を反転
     }
 }
