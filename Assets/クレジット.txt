@@ -1,6 +1,9 @@
 *音楽、効果音*
 - 魔王魂
 
+- OtoLogic
+https://otologic.jp/free/se/warning01.html
+
 - Free Sound Effects Pack
 https://assetstore.unity.com/packages/audio/sound-fx/free-sound-effects-pack-155776
 Olivier Girardot

@@ -12,6 +12,10 @@ public class BossAppearanceManager : MonoBehaviour
     [SerializeField] private Animator bossAppearanceAnimator;
     [SerializeField] private string animationTriggerName = "Play";
 
+    [Header("音響設定")]
+    [SerializeField] private AudioClip bossAppearanceSE;
+    [SerializeField, Range(0f, 2f)] private float bossAppearanceSEVolume = 1f;
+
     private void Awake()
     {
         if (Instance == null)
@@ -25,7 +29,7 @@ public class BossAppearanceManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ボス出現演出のアニメーションを再生します。
+    /// ボス出現演出のアニメーションをトリガーします。
     /// </summary>
     public void PlayBossAppearanceAnimation()
     {
@@ -33,6 +37,17 @@ public class BossAppearanceManager : MonoBehaviour
         if (bossAppearanceAnimator != null)
         {
             bossAppearanceAnimator.SetTrigger(animationTriggerName);
+        }
+    }
+
+    /// <summary>
+    /// アニメーションイベントから呼び出すためのSE再生メソッド。
+    /// </summary>
+    public void PlayAppearanceSE()
+    {
+        if (SoundManager.Instance != null && bossAppearanceSE != null)
+        {
+            SoundManager.Instance.PlaySE(bossAppearanceSE, bossAppearanceSEVolume);
         }
     }
 }

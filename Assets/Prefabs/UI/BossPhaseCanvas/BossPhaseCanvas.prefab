@@ -518,6 +518,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossAppearanceAnimator: {fileID: 5545478728353660796}
   animationTriggerName: Play
+  bossAppearanceSE: {fileID: 8300000, guid: b24491cb58b64af43af390c1a057172b, type: 3}
+  bossAppearanceSEVolume: 1.97
 --- !u!1 &8981098245399899063
 GameObject:
   m_ObjectHideFlags: 0
