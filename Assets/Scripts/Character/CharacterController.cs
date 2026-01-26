@@ -50,7 +50,7 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
     /// <summary>
     /// ダメージを受け取ったことを通知し、アニメーション表示処理を委譲します。
     /// </summary>
-    public void NotifyDamage(DamageType damageType, float damageValue)
+    public virtual void NotifyDamage(DamageType damageType, float damageValue)
     {
         if (animator == null || !animator.enabled) return;
 

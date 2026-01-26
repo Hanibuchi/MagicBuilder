@@ -19,7 +19,7 @@ public class DamageSourceBase : MonoBehaviour, IDamageSource
 
     [Header("演出設定")]
     [SerializeField] protected bool enableImpulse = false;
-    [SerializeField] protected float impulseForce = 0.5f; // 振動の強さ
+    [SerializeField] protected float impulseForce = 1f; // 振動の強さ
 
     // --- 内部状態 ---
 

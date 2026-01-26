@@ -48,7 +48,7 @@ MonoBehaviour:
   damageSourceType: 1
   maxPierceCount: 1
   enableImpulse: 1
-  impulseForce: 0.5
+  impulseForce: 1
   animator: {fileID: 8421591152271858879}
   spawnOnCollisionPrefab: {fileID: 0}
   autoDestroy: 1

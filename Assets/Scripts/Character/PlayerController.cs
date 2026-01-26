@@ -11,6 +11,9 @@ public class PlayerController : MyCharacterController
     private const string AIM_DEGREE_PARAM = "aim_degree";
     private const string VICTORY_TRIGGER = "victory";
 
+    [Header("Screen Shake Settings")]
+    [SerializeField] private float damageShakeForce = 0.5f;
+
     [SerializeField] public Transform aimStartPoint;
 
     protected override void Awake()
@@ -79,6 +82,20 @@ public class PlayerController : MyCharacterController
     {
         if (animator == null || !animator.enabled) return;
         animator.SetTrigger(VICTORY_TRIGGER);
+    }
+
+    /// <summary>
+    /// ダメージを受け取ったことを通知し、カメラを揺らします。
+    /// </summary>
+    public override void NotifyDamage(DamageType damageType, float damageValue)
+    {
+        base.NotifyDamage(damageType, damageValue);
+
+        // ダメージを受けた際（回復以外）に画面を揺らす
+        if (damageType != DamageType.Heal && CameraManager.Instance != null)
+        {
+            CameraManager.Instance.RequestImpulse(damageShakeForce);
+        }
     }
 
     public override void NotifyDie(bool silent = false)
