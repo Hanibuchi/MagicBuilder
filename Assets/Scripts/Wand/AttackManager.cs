@@ -125,9 +125,10 @@ public class AttackManager : MonoBehaviour
     /// <param name="layer">呪文のレイヤー</param>
     public void FireWand(Wand wandToUse, Vector2 casterPosition, float rotationZ, float strength, SpellLayer layer)
     {
-        if (wandToUse == null || wandToUse.AllSpells.Count == 0)
+        if (wandToUse.AllSpells.Count == 0) return;
+        if (wandToUse == null)
         {
-            Debug.LogError("wandToUse is null or no spell");
+            Debug.LogError("wandToUse is null");
             return;
         }
 
