@@ -105,4 +105,5 @@ MonoBehaviour:
   icePrefab: {fileID: 8793352842489449902, guid: a7afed619f883ca43b9392dec8611d15, type: 3}
   woodPrefab: {fileID: 7817211578556221874, guid: 20075e99690f30c44b1c6cd13a6f0117, type: 3}
   waterPrefab: {fileID: 2454662495530537007, guid: ae67901838295d24091540e5af300c10, type: 3}
+  healPrefab: {fileID: 2200135439077197827, guid: f39a7d056cf603f439ade5b5dd7e8675, type: 3}
   active: 1

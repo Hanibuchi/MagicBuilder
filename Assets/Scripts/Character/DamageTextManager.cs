@@ -33,6 +33,7 @@ public class DamageTextManager : MonoBehaviour
     [SerializeField] GameObject icePrefab;
     [SerializeField] GameObject woodPrefab;
     [SerializeField] GameObject waterPrefab;
+    [SerializeField] GameObject healPrefab;
 
     private void Awake()
     {
@@ -82,6 +83,9 @@ public class DamageTextManager : MonoBehaviour
                 break;
             case DamageType.Water:
                 textPrefab = waterPrefab;
+                break;
+            case DamageType.Heal:
+                textPrefab = healPrefab;
                 break;
             default:
                 textPrefab = basePrefab;

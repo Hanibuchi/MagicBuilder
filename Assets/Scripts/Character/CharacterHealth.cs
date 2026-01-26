@@ -162,6 +162,18 @@ public class CharacterHealth : MonoBehaviour
         float finalDamage = modifiedDamage.baseDamage + totalElementalDamage;
 
         currentHealth -= finalDamage;
+
+        // 回復処理
+        if (modifiedDamage.healing > 0)
+        {
+            currentHealth += modifiedDamage.healing;
+            if (currentHealth > maxHealth)
+            {
+                currentHealth = maxHealth;
+            }
+            Debug.Log($"{gameObject.name}は{modifiedDamage.healing}回復しました。");
+        }
+
         Debug.Log($"{gameObject.name}は{finalDamage}のダメージを受けました。残り体力: {currentHealth}");
 
         // 4. ノックバック処理の委譲
@@ -204,6 +216,11 @@ public class CharacterHealth : MonoBehaviour
             if (modifiedDamage.waterDamage > 0)
             {
                 damageNotifier.NotifyDamage(DamageType.Water, modifiedDamage.waterDamage);
+            }
+            // 回復
+            if (modifiedDamage.healing > 0)
+            {
+                damageNotifier.NotifyDamage(DamageType.Heal, modifiedDamage.healing);
             }
         }
     }
