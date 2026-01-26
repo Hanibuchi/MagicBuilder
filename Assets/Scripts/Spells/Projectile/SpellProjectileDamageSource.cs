@@ -35,8 +35,11 @@ public class SpellProjectileDamageSource : DamageSourceBase
 
         if (spellContext != null)
         {
+            var layer = spellContext.GetUnityLayer(true);
             // SpellContext の Layer 情報に基づいて自身のレイヤーを設定
-            gameObject.layer = spellContext.GetUnityLayer(true);
+            gameObject.layer = layer;
+            foreach (Transform child in gameObject.transform)
+                child.gameObject.layer = layer;
         }
 
         // 呪文による放射物の修正（軌道変更やサイズ変更など）を適用
