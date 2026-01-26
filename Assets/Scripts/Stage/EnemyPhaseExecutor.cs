@@ -65,6 +65,12 @@ public class EnemyPhaseExecutor : MonoBehaviour
             // 1. 条件が満たされるまで待機
             yield return StartCoroutine(WaitForCondition(currentPhase));
 
+            // ボス出現演出の実行
+            if (currentPhase.isBossPhase)
+            {
+                PerformBossAppearance();
+            }
+
             // 2. 敵の生成を実行
             if (currentPhase.spawnerConfig != null)
             {
@@ -84,6 +90,18 @@ public class EnemyPhaseExecutor : MonoBehaviour
 
         Debug.Log("EnemyPhaseExecutor: すべてのフェーズの実行が完了しました。");
         callback?.Invoke();
+    }
+
+    /// <summary>
+    /// ボス出現演出のアニメーションを再生します。
+    /// </summary>
+    private void PerformBossAppearance()
+    {
+        Debug.Log("EnemyPhaseExecutor: ボス出現演出開始");
+        if (BossAppearanceManager.Instance != null)
+        {
+            BossAppearanceManager.Instance.PlayBossAppearanceAnimation();
+        }
     }
 
     /// <summary>

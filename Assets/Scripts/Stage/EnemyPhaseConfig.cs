@@ -14,6 +14,10 @@ public struct EnemyPhaseConfig
     [Tooltip("条件を満たすために必要な値 (例: TimeElapsedの場合は秒数)")]
     public float conditionValue;
 
+    [Header("ボス出現演出")]
+    [Tooltip("このフェーズでボス出現演出を行うかどうか")]
+    public bool isBossPhase;
+
     [Header("このフェーズで実行する処理")]
     [Tooltip("このフェーズで生成する敵の設定")]
     [SerializeField]
