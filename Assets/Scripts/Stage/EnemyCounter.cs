@@ -5,7 +5,18 @@ public class EnemyCounter : MonoBehaviour
 {
     // ⚔️ シングルトンインスタンス
     private static EnemyCounter _instance;
-    public static EnemyCounter Instance => _instance;
+    public static EnemyCounter Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                GameObject go = new GameObject("EnemyCounter");
+                _instance = go.AddComponent<EnemyCounter>();
+            }
+            return _instance;
+        }
+    }
 
     // 🛡️ 敵の数（内部カウンタ）
     [SerializeField] int _currentEnemyCount = 0;
@@ -21,7 +32,7 @@ public class EnemyCounter : MonoBehaviour
         {
             _instance = this;
         }
-        else if (_instance != this)
+        if (_instance != this)
         {
             Destroy(gameObject); // 既に別のインスタンスが存在する場合は自身を破棄
         }

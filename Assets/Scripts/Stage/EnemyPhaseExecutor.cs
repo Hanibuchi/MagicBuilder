@@ -98,13 +98,14 @@ public class EnemyPhaseExecutor : MonoBehaviour
                 yield return new WaitForSeconds(phase.conditionValue);
                 break;
 
-            // 今後の拡張性のためのプレースホルダー
-            // case EnemyPhaseConfig.PhaseConditionType.AllEnemiesDefeated:
-            //     while (/* 敵が残っている場合 */)
-            //     {
-            //         yield return null;
-            //     }
-            //     break;
+            case EnemyPhaseConfig.PhaseConditionType.AllEnemiesDefeated:
+                yield return null;
+                Debug.Log("条件: すべての敵が倒されるまで待機...");
+                while (EnemyCounter.Instance != null && EnemyCounter.Instance.CurrentEnemyCount > 0)
+                {
+                    yield return null;
+                }
+                break;
 
             default:
                 Debug.LogWarning($"未定義の条件タイプ: {phase.conditionType}");
