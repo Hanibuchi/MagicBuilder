@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 725e96cb8d8268e48a74493b7e8c8ff7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageSourceType: 2
+  damageSourceType: 1
   maxPierceCount: 1
   enableImpulse: 1
   impulseForce: 0.5
