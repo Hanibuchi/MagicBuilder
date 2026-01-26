@@ -31,22 +31,21 @@ public abstract class SpellBase : ScriptableObject
     /// <param name="currentSpellIndex">この呪文が杖の配列の何番目にあるか</param>
     /// <param name="rotationZ">発射角度（Z軸回転）</param>
     /// <param name="strength">発射の強さ。0~1の範囲</param>
-    /// <param name="casterPosition">発射元となる位置</param>
-    /// <param name="gravityMagnitude">重力の大きさ</param>
+    /// <param name="context">発射時の環境情報を持つインスタンス</param>
+    /// <param name="clearLine">ラインをクリアするかどうか</param>
     public virtual void DisplayAimingLine(
         List<SpellBase> wandSpells,
         int currentSpellIndex,
         float rotationZ,
         float strength,
-        Vector2 casterPosition,
-        Action<GameObject> aimingModifier,
+        SpellContext context,
         bool clearLine = false
     )
     {
         // GetNextSpellOffsetsで得られた次の呪文に対して、同じ引数でDisplayAimingLineを呼び出す
         DisplayAimingLineForNextSpells(
             GetNextSpellOffsets(wandSpells, currentSpellIndex),
-            wandSpells, currentSpellIndex, rotationZ, strength, casterPosition, aimingModifier, clearLine
+            wandSpells, currentSpellIndex, rotationZ, strength, context, clearLine
         );
     }
 
@@ -58,8 +57,7 @@ public abstract class SpellBase : ScriptableObject
     /// <param name="currentSpellIndex">この呪文（呼び出し元）が杖の配列の何番目にあるか</param>
     /// <param name="rotationZ">発射角度</param>
     /// <param name="strength">発射の強さ</param>
-    /// <param name="casterPosition">発射元となる位置</param>
-    /// <param name="aimingModifier">補助線の描画時に適用する修飾子</param>
+    /// <param name="context">発射時の環境情報を持つインスタンス</param>
     /// <param name="clearLine">ラインをクリアするかどうか</param>
     protected void DisplayAimingLineForNextSpells(
         int[] nextSpelloffsets,
@@ -67,11 +65,11 @@ public abstract class SpellBase : ScriptableObject
         int currentSpellIndex,
         float rotationZ,
         float strength,
-        Vector2 casterPosition,
-        Action<GameObject> aimingModifier,
+        SpellContext context,
         bool clearLine = false
     )
     {
+        int count = 0;
         foreach (int offset in nextSpelloffsets)
         {
             // 相対オフセットを絶対インデックスに変換
@@ -80,6 +78,9 @@ public abstract class SpellBase : ScriptableObject
             // インデックスが杖リストの範囲内にあるかチェック
             if (targetIndex >= 0 && targetIndex < wandSpells.Count)
             {
+                if (nextSpelloffsets.Length >= 2 && count > 0)
+                    context = context.Clone();
+
                 SpellBase spellToDisplay = wandSpells[targetIndex];
 
                 // 対象の呪文のDisplayAimingLineを呼び出し
@@ -88,10 +89,10 @@ public abstract class SpellBase : ScriptableObject
                     targetIndex,        // 新しい開始インデックス
                     rotationZ,
                     strength,
-                    casterPosition,
-                    aimingModifier,
+                    context,
                     clearLine         // 最初の呼び出しでのみクリアを実行
                 );
+                count++;
             }
         }
     }
@@ -139,6 +140,7 @@ public abstract class SpellBase : ScriptableObject
         SpellContext context
     )
     {
+        int count = 0;
         foreach (int offset in nextSpelloffsets)
         {
             // 相対オフセットを絶対インデックスに変換
@@ -148,6 +150,8 @@ public abstract class SpellBase : ScriptableObject
             if (targetIndex >= 0 && targetIndex < wandSpells.Count)
             {
                 SpellBase spellToDisplay = wandSpells[targetIndex];
+                if (nextSpelloffsets.Length >= 2 && count > 0)
+                    context = context.Clone();
 
                 // 対象の呪文のDisplayAimingLineを呼び出し
                 spellToDisplay?.FireSpell(
@@ -157,6 +161,7 @@ public abstract class SpellBase : ScriptableObject
                     strength,
                     context
                 );
+                count++;
             }
         }
     }

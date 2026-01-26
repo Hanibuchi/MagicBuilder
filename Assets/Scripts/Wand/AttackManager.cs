@@ -80,13 +80,16 @@ public class AttackManager : MonoBehaviour
             if (targetIndex >= 0 && targetIndex < processedSpells.Count)
             {
                 SpellBase spell = processedSpells[targetIndex];
+                SpellContext context = new SpellContext
+                {
+                    CasterPosition = casterPositionTransform.position
+                };
                 spell?.DisplayAimingLine(
                     processedSpells,
                     targetIndex,
                     rotationZ,
                     strength,
-                    casterPositionTransform.position,
-                    null,
+                    context,
                     clearLine // clearLineは最初の呼び出しでのみ意味を持つが、ここでは全ての開始点で実行させる
                 );
             }

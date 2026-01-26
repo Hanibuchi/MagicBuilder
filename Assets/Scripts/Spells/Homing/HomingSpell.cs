@@ -29,12 +29,12 @@ public class HomingSpell : SpellBase
     /// </summary>
     public override void DisplayAimingLine(
         List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ,
-        float strength, Vector2 casterPosition, Action<GameObject> aimingModifier,
+        float strength, SpellContext context,
         bool clearLine = false)
     {
         DisplayAimingLineForNextSpells(
             GetNextSpellOffsets(wandSpells, currentSpellIndex),
-            wandSpells, currentSpellIndex, rotationZ, strength, casterPosition, aimingModifier, clearLine
+            wandSpells, currentSpellIndex, rotationZ, strength, context, clearLine
         );
     }
 

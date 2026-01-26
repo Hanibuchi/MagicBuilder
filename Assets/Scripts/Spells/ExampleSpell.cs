@@ -16,7 +16,7 @@ public class ExampleSpell : SpellBase
 
     public override void DisplayAimingLine(
         List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ,
-        float strength, Vector2 casterPosition, Action<GameObject> aimingModifier,
+        float strength, SpellContext context,
         bool clearLine = false)
     {
         if (!trajectoryPrefabsByIndex.TryGetValue(currentSpellIndex, out var trajectoryPrefabs))
@@ -54,14 +54,14 @@ public class ExampleSpell : SpellBase
         {
             if (t < 0.01f)
                 continue;
-            Vector2 position = CalculateTrajectoryPoint(casterPosition, initialVelocity, gravityMagnitude, t);
+            Vector2 position = CalculateTrajectoryPoint(context.CasterPosition, initialVelocity, gravityMagnitude, t);
             // ここでプールから軌道表示用オブジェクトを取得
             GameObject trajectoryObj = PoolManager.Instance.GetFromPool(PoolType.Trajectory);
             trajectoryPrefabs.Add(trajectoryObj);
             trajectoryObj.transform.position = position;
 
             // 修飾子の実行（例：ExpansionSpellによる拡大など）
-            aimingModifier?.Invoke(trajectoryObj);
+            context.ProjectileModifier?.Invoke(trajectoryObj);
         }
     }
     [Header("投射物設定")]

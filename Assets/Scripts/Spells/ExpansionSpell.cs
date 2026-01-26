@@ -29,19 +29,19 @@ public class ExpansionSpell : SpellBase
     /// </summary>
     public override void DisplayAimingLine(
         List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ,
-        float strength, Vector2 casterPosition, Action<GameObject> aimingModifier,
+        float strength, SpellContext context,
         bool clearLine = false)
     {
-        // 新しい修飾子を作成（既存の修飾子がある場合はそれも実行する）
-        aimingModifier += (projectile) =>
+        context.ProjectileModifier += (projectile) =>
         {
-            projectile.transform.localScale *= scaleMultiplier;
+            if (projectile != null)
+                projectile.transform.localScale *= scaleMultiplier;
         };
 
         // 2. 次の呪文に対して、新しい修飾子で DisplayAimingLine を呼び出す
         DisplayAimingLineForNextSpells(
             GetNextSpellOffsets(wandSpells, currentSpellIndex),
-            wandSpells, currentSpellIndex, rotationZ, strength, casterPosition, aimingModifier, clearLine
+            wandSpells, currentSpellIndex, rotationZ, strength, context, clearLine
         );
     }
 

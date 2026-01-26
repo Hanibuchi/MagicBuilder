@@ -8,10 +8,10 @@ public class Downward : SpellBase
     [SerializeField] bool upward = false;
     public override void DisplayAimingLine(
         List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ,
-        float strength, Vector2 casterPosition, Action<GameObject> aimingModifier,
+        float strength, SpellContext context,
         bool clearLine = false)
     {
-        DisplayAimingLineForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, currentSpellIndex, upward ? 90 : -90, strength, casterPosition, aimingModifier, clearLine);
+        DisplayAimingLineForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, currentSpellIndex, upward ? 90 : -90, strength, context, clearLine);
     }
 
     public override void FireSpell(

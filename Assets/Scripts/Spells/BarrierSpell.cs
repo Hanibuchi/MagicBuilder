@@ -24,7 +24,7 @@ public class BarrierSpell : SpellBase
     /// </summary>
     public override void DisplayAimingLine(
         List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ,
-        float strength, Vector2 casterPosition, Action<GameObject> aimingModifier,
+        float strength, SpellContext context,
         bool clearLine = false)
     {
         if (!barrierInstancesByIndex.TryGetValue(currentSpellIndex, out var info))
@@ -85,12 +85,12 @@ public class BarrierSpell : SpellBase
         }
 
         info.instance.transform.rotation = Quaternion.Euler(0, 0, rotationZ); // rotationZをそのまま設定
-        info.instance.transform.position = casterPosition;
+        info.instance.transform.position = context.CasterPosition;
         // スケールを一旦プレハブのデフォルトに戻す（修飾子の累積適用を防ぐため）
         info.instance.transform.localScale = targetPrefab.transform.localScale;
 
         // 修飾子の実行（例：ExpansionSpellによる拡大など）
-        aimingModifier?.Invoke(info.instance);
+        context.ProjectileModifier?.Invoke(info.instance);
     }
 
     /// <summary>

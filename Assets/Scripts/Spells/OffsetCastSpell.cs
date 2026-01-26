@@ -22,12 +22,11 @@ public class OffsetCastSpell : SpellBase
         int currentSpellIndex,
         float rotationZ,
         float strength,
-        Vector2 casterPosition,
-        System.Action<GameObject> aimingModifier,
+        SpellContext context,
         bool clearLine = false)
     {
         // 指定されたオフセット位置にある呪文の補助線を表示します。
-        DisplayAimingLineForNextSpells(nextSpellOffsets, wandSpells, currentSpellIndex, rotationZ, strength, casterPosition, aimingModifier, clearLine);
+        DisplayAimingLineForNextSpells(nextSpellOffsets, wandSpells, currentSpellIndex, rotationZ, strength, context, clearLine);
     }
 
     public override void FireSpell(

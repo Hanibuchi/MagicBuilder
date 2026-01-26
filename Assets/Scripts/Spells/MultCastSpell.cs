@@ -80,8 +80,7 @@ public class MultCastSpell : SpellBase
         int currentSpellIndex,
         float rotationZ,
         float strength,
-        Vector2 casterPosition,
-        Action<GameObject> aimingModifier,
+        SpellContext context,
         bool clearLine = false)
     {
         Debug.Log($"spells: {string.Join(", ", wandSpells.Select(s => s?.name ?? "null"))}");
@@ -89,6 +88,7 @@ public class MultCastSpell : SpellBase
         int[] targetIndices = GetTargetIndices(wandSpells, currentSpellIndex);
         Debug.Log($"targetIndices: {string.Join(", ", targetIndices)}");
 
+        Vector2 baseCasterPoint = context.CasterPosition;
         for (int i = 0; i < targetIndices.Length; i++)
         {
             int targetIndex = targetIndices[i];
@@ -100,14 +100,18 @@ public class MultCastSpell : SpellBase
 
                 SpellBase spellToDisplay = wandSpells[targetIndex];
 
+                SpellContext newContext = context;
+                if (i > 0)
+                    newContext = context.Clone();
+                newContext.CasterPosition = baseCasterPoint + offset;
+
                 // 対象の呪文のDisplayAimingLineを呼び出し
                 spellToDisplay?.DisplayAimingLine(
                     wandSpells,
                     targetIndex,
                     rotationZ,
                     strength,
-                    casterPosition + offset,
-                    aimingModifier,
+                    newContext,
                     clearLine
                 );
             }
