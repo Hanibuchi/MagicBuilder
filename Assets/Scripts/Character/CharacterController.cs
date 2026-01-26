@@ -61,11 +61,18 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
             spawnPoint = transform.position;
         DamageTextManager.Instance.ShowDamageText(damageValue, damageType, spawnPoint);
 
-        if (!characterHealth.IsDead) // ヒット音は出したくないが、ダメージ表示はしたい
+        if (!characterHealth.IsDead)
         {
-            // 例: 基本/全てのダメージで共通の"Hit"アニメーションを再生
-            animator.SetTrigger(PARAM_DAMAGE_TRIGGER);
-            PlayHitSound();
+            if (damageType == DamageType.Heal)
+            {
+                PlayHealSound();
+            }
+            else
+            {
+                // 例: 基本/全てのダメージで共通の"Hit"アニメーションを再生
+                animator.SetTrigger(PARAM_DAMAGE_TRIGGER);
+                PlayHitSound();
+            }
         }
     }
 
@@ -176,6 +183,15 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
     {
         if (SoundManager.Instance != null && hitSound != null)
             SoundManager.Instance.PlaySE(hitSound, hitSoundVolume);
+    }
+
+    [SerializeField] AudioClip healSound;
+    [SerializeField] float healSoundVolume = 1.0f;
+
+    public void PlayHealSound()
+    {
+        if (SoundManager.Instance != null && healSound != null)
+            SoundManager.Instance.PlaySE(healSound, healSoundVolume);
     }
 
     [SerializeField] AudioClip fireStunSound;

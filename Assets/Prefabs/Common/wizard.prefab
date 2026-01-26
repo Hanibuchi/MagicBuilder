@@ -207,6 +207,8 @@ MonoBehaviour:
   playHitSoundOnDead: 0
   hitSound: {fileID: 8300000, guid: 6a97574b999754ab88af555cfbc0d8f4, type: 3}
   hitSoundVolume: 1
+  healSound: {fileID: 8300000, guid: c48a972d3d024c2408a3331750786a29, type: 3}
+  healSoundVolume: 2
   fireStunSound: {fileID: 8300000, guid: 495833e05ce0b6448b7c37f5bde71245, type: 3}
   fireStunSoundVolume: 1
   freezeStunSound: {fileID: 8300000, guid: 00125e6b5c4bfbd4ba56065c2a2d899f, type: 3}
