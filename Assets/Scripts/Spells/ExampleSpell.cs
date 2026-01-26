@@ -9,8 +9,6 @@ public class ExampleSpell : SpellBase
     [Header("補助線設定")]
     [Tooltip("軌道プレハブの生成間隔（秒）。小さいほど密になります。")]
     public float trajectoryPrefabInterval = 0.1f;
-    [Tooltip("⚡ 軌道予測を行う最大の時間（秒）。この時間を超える軌道は計算しません。")]
-    public float maxPredictionTime = 2.0f;
     [Tooltip("軌道プレハブの移動速度倍率。1.0で実際の弾速（物理的な時間の進み）と一致します。")]
     public float trajectoryMoveSpeed = 0.5f;
 
@@ -50,7 +48,14 @@ public class ExampleSpell : SpellBase
 
         float timeOffset = (Time.time * trajectoryMoveSpeed) % trajectoryPrefabInterval;
 
-        for (float t = timeOffset; t < maxPredictionTime; t += trajectoryPrefabInterval)
+        float predictionLimit = duration + context.duration;
+        if (predictionLimit <= 0f)
+        {
+            // 持続時間が無限の場合は、強さに応じて予測時間を設定（例: 強さ係数 * 0.1秒）
+            predictionLimit = strength * strengthMultiplier * 0.1f;
+        }
+
+        for (float t = timeOffset; t < predictionLimit; t += trajectoryPrefabInterval)
         {
             if (t < 0.01f)
                 continue;
