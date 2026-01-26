@@ -19,7 +19,7 @@ MonoBehaviour:
   enemyPhases:
   - conditionType: 0
     conditionValue: 0
-    isBossPhase: 1
+    isBossPhase: 0
     spawnerConfig:
       enemyPrefab: {fileID: 7333475907507572004, guid: 0874894bc718f7d4ab2c05dd46df722e, type: 3}
       isBoss: 0
@@ -174,7 +174,7 @@ MonoBehaviour:
       customDroppableSpells: []
     nextPhases: []
   - conditionType: 0
-    conditionValue: 4
+    conditionValue: 1
     isBossPhase: 0
     spawnerConfig:
       enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
@@ -182,7 +182,7 @@ MonoBehaviour:
       customDroppableSpells: []
     nextPhases: []
   - conditionType: 0
-    conditionValue: 4
+    conditionValue: 1
     isBossPhase: 0
     spawnerConfig:
       enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
@@ -190,7 +190,7 @@ MonoBehaviour:
       customDroppableSpells: []
     nextPhases: []
   - conditionType: 0
-    conditionValue: 4
+    conditionValue: 1
     isBossPhase: 0
     spawnerConfig:
       enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
@@ -269,36 +269,36 @@ MonoBehaviour:
     conditionValue: 24
     isBossPhase: 0
     spawnerConfig:
-      enemyPrefab: {fileID: 1192917311472927444, guid: 2ed560125fee6194db037037f6953f9e, type: 3}
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+    nextPhases: []
+  - conditionType: 0
+    conditionValue: 24
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+    nextPhases: []
+  - conditionType: 0
+    conditionValue: 1
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+    nextPhases: []
+  - conditionType: 0
+    conditionValue: 1
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
       isBoss: 0
       customDroppableSpells: []
     nextPhases: []
   - conditionType: 0
     conditionValue: 16
-    isBossPhase: 0
-    spawnerConfig:
-      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
-      isBoss: 0
-      customDroppableSpells: []
-    nextPhases: []
-  - conditionType: 0
-    conditionValue: 1
-    isBossPhase: 0
-    spawnerConfig:
-      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
-      isBoss: 0
-      customDroppableSpells: []
-    nextPhases: []
-  - conditionType: 0
-    conditionValue: 1
-    isBossPhase: 0
-    spawnerConfig:
-      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
-      isBoss: 0
-      customDroppableSpells: []
-    nextPhases: []
-  - conditionType: 0
-    conditionValue: 1
     isBossPhase: 0
     spawnerConfig:
       enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
@@ -349,7 +349,7 @@ MonoBehaviour:
     nextPhases: []
   - conditionType: 1
     conditionValue: 16
-    isBossPhase: 0
+    isBossPhase: 1
     spawnerConfig:
       enemyPrefab: {fileID: 7981699022232761973, guid: 97d64d8723cc2414ab250a3d6ff89bb6, type: 3}
       isBoss: 0
