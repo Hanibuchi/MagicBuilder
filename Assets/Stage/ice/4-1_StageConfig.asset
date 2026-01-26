@@ -17,7 +17,7 @@ MonoBehaviour:
   SceneName: Stage_Ice
   clearCondition: 1
   enemyPhases:
-  - conditionType: 1
+  - conditionType: 0
     conditionValue: 0
     spawnerConfig:
       enemyPrefab: {fileID: 7333475907507572004, guid: 0874894bc718f7d4ab2c05dd46df722e, type: 3}

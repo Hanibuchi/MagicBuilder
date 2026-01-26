@@ -27,13 +27,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5465707208270082362}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1, y: 1, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalRotation: {x: 0, y: 0, z: -0.22325005, w: 0.9747612}
+  m_LocalPosition: {x: -1.42, y: 1.45, z: 0}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1883464287183211944}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -25.8}
 --- !u!212 &8561599264451945962
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -168,6 +168,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 102141254624856130, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400537331805947161, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
+      propertyPath: attackLauncher1
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 805867580164438781, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.849474
@@ -234,13 +242,14 @@ PrefabInstance:
       objectReference: {fileID: 22100000, guid: af9aacaba79bd3c40a4504b1dfd879c9, type: 2}
     - target: {fileID: 8751452172411073640, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.89
+      value: -2.09
       objectReference: {fileID: 0}
     - target: {fileID: 9207851854287913248, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
       propertyPath: m_Name
       value: skeleton_shield Variant
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 102141254624856130, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 805867580164438781, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
