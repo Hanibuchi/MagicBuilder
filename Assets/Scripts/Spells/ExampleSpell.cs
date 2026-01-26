@@ -68,6 +68,7 @@ public class ExampleSpell : SpellBase
     [Tooltip("発射する魔法弾のプレハブ。Rigidbody2Dが必要です。")]
     public GameObject projectilePrefab;
     [SerializeField] float strengthMultiplier = 20f;
+    public float StrengthMultiplier => strengthMultiplier;
     [Tooltip("呪文の持続時間（秒）。0以下の場合は無限。")]
     [SerializeField] float duration = 5f;
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// AttackLauncherを継承し、杖(Wand)を使用して攻撃を発射するクラス。
@@ -13,7 +14,7 @@ public class EnemyWandAttackLauncher : AttackLauncher
     [Tooltip("発射の強さの基本値 (0.0f ～ 1.0f)。計算結果がこれを超える場合は調整されます。")]
     [SerializeField] private float baseFireStrength = 1.0f;
 
-    [Tooltip("この杖の呪文が想定している強さの倍率 (ExampleSpellなどのstrengthMultiplierに合わせる)")]
+    [Tooltip("この杖の呪文が想定している強さの倍率 (ExampleSpellなどのstrengthMultiplierに合わせる。自動調整機能付き)")]
     [SerializeField] private float expectedStrengthMultiplier = 20f;
 
     [Tooltip("低い弾道を選択するか、高い弾道を選択するか")]
@@ -37,6 +38,13 @@ public class EnemyWandAttackLauncher : AttackLauncher
         {
             Debug.LogError("AttackManagerのインスタンスが見つかりません！");
             return;
+        }
+
+        // 杖に入っている最初の ExampleSpell を探し、その倍率を自動取得する
+        var exampleSpell = enemyWand.AllSpells.OfType<ExampleSpell>().FirstOrDefault();
+        if (exampleSpell != null)
+        {
+            expectedStrengthMultiplier = exampleSpell.StrengthMultiplier;
         }
 
         // 1. 発射地点の取得
