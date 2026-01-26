@@ -12,14 +12,26 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: ce1d3f14528a97a4c98697eb47990a84, type: 3}
+    - target: {fileID: 1702649860707905822, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3138375678483179165, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
       propertyPath: m_Name
       value: skeleton Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3755443115203111983, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ce1d3f14528a97a4c98697eb47990a84, type: 3}
     - target: {fileID: 3783809344963067914, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 22100000, guid: 35ae5de28566d5a41925aee18601c107, type: 2}
+    - target: {fileID: 4888154942209035374, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
+      propertyPath: maxHealth
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 6613511817745206429, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

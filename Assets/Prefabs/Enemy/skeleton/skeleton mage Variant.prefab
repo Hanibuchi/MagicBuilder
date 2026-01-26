@@ -84,14 +84,26 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4892065272286615203, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5054469936638167504, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 86000f3bea478ce49a254ebfe608f777, type: 3}
     - target: {fileID: 6375971631822120314, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.01
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6753134547590688804, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6943178337974602642, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 86000f3bea478ce49a254ebfe608f777, type: 3}
     - target: {fileID: 6973778915502598071, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
       propertyPath: m_Controller
       value: 
