@@ -5707,6 +5707,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: skeleton mage
       objectReference: {fileID: 0}
+    - target: {fileID: 8904328848481720335, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
+      propertyPath: 'enemyWand.spells.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 2c072333fd6e8cf4aabb4f5b74d5e7e7, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
