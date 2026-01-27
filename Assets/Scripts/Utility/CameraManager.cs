@@ -68,10 +68,12 @@ public class CameraManager : MonoBehaviour
         {
             virtualCamera = FindFirstObjectByType<CinemachineCamera>();
         }
-        // カメラのOrthographic Size（画面の高さの半分のワールド座標での大きさ）をデフォルトとして保存
+        // カメラの初期状態（サイズと位置）を保存
         if (virtualCamera != null)
         {
             _defaultOrthographicSize = virtualCamera.Lens.OrthographicSize;
+            // 現在の仮想カメラの座標を currentWorldPos に同期させる
+            currentWorldPos = new Vector2(virtualCamera.transform.position.x, virtualCamera.transform.position.y);
         }
         else
         {

@@ -300,6 +300,7 @@ public class CameraInputHandler : MonoBehaviour, IDragHandler, IBeginDragHandler
     {
         // 画面移動のための初期値を設定
         isDragging = true;
+        // CameraManagerから現在の正しいカメラ位置を取得
         startCameraWorldPosition = CameraManager.Instance.GetWorldPosition();
 
         if (Input.touchCount > 0)
