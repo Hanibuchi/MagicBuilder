@@ -499,6 +499,7 @@ GameObject:
   - component: {fileID: 1394745703564179622}
   - component: {fileID: 5269055859707311788}
   - component: {fileID: 7809496392863742821}
+  - component: {fileID: 3511983723286084971}
   m_Layer: 10
   m_Name: anim
   m_TagString: Untagged
@@ -608,6 +609,18 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.001780808, y: 0.36683768}
   m_Radius: 0.38781184
+--- !u!210 &3511983723286084971
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8286987012176087518}
+  m_Enabled: 1
+  m_SortingLayerID: 527999779
+  m_SortingLayer: 2
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &8884610926546658600
 GameObject:
   m_ObjectHideFlags: 0
