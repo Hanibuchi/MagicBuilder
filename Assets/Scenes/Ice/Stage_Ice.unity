@@ -376,101 +376,79 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &827964233
-GameObject:
+--- !u!1001 &845297800
+PrefabInstance:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 827964235}
-  - component: {fileID: 827964234}
-  m_Layer: 0
-  m_Name: StageManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &827964234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 827964233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cf6534e3d23e50438ee2d96faadbb41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stageConfig: {fileID: 11400000, guid: 9364e08abc5421e4ea3789adc05912e5, type: 2}
-  clearCondition: 2
-  stagePrefabs:
-  - {fileID: 3860825592120938575, guid: bcc1f67afad4f5346988e29a2d33ad21, type: 3}
-  - {fileID: 6306026796900488691, guid: 10a201b20e740d34eb8bff9441b6a070, type: 3}
-  - {fileID: 7392074133839499513, guid: f42be52611030404190647f40a5834df, type: 3}
-  - {fileID: 3662070909763656479, guid: 1c1c5d9e44b6dd04d92b73a086d622b4, type: 3}
-  - {fileID: 3572532766964508380, guid: bdc78db3262747248aafae8529679d0d, type: 3}
-  - {fileID: 4854060237942860044, guid: ab9cf6c54df801b4ba6d680f4d8ac31c, type: 3}
-  - {fileID: 9015308416365106781, guid: 46570480b52627a4996a6a554e425cba, type: 3}
-  - {fileID: 4004734349162004513, guid: 2c1c63c9eefd7b24a880671b7fce2f89, type: 3}
-  - {fileID: 4566236321816154798, guid: 408ed9a2b6c06dd428bdd6c5c8235ad6, type: 3}
-  - {fileID: 1885488079702365206, guid: d1617606c44ac7544bae927f2b140dd4, type: 3}
-  - {fileID: 6161974499472744229, guid: a9da2ff405ae0a64c9b7f7cbbe73fd7d, type: 3}
-  - {fileID: 9069459541675591178, guid: aad9387d9fc7dd549acab1fec467e307, type: 3}
-  - {fileID: 6161974499472744229, guid: a9da2ff405ae0a64c9b7f7cbbe73fd7d, type: 3}
-  - {fileID: 9069459541675591178, guid: aad9387d9fc7dd549acab1fec467e307, type: 3}
-  - {fileID: 5759084045261191099, guid: dbb1db1cb17ad194e972bd3c152945f3, type: 3}
-  - {fileID: 6125433878100999710, guid: 1903b4e2879efda438988ae4f3254ff4, type: 3}
-  - {fileID: 7947291031725460665, guid: 0cd430676d424ff4cbe277ec01b62048, type: 3}
-  - {fileID: 1225695060226195990, guid: 944293f54400114458112c6f3db8ac78, type: 3}
-  - {fileID: 7253163533302216265, guid: 8a887cff34e10d5479618f9d310b5b57, type: 3}
-  - {fileID: 8074706864468871309, guid: 95e94c8ca27f2094bb8c59fc3967c2e2, type: 3}
-  - {fileID: 7411318191188818962, guid: baacb0141f097d54fa28889cc425ec3c, type: 3}
-  - {fileID: 7885755934619046866, guid: f30f37d42814f2c43bb4ccdd254902d8, type: 3}
-  - {fileID: 2052082803983599290, guid: 604c1c26469ad3047a1533afde673226, type: 3}
-  - {fileID: 1832366053387493158, guid: 47708fb1c6368c341aa85e9655a70ba3, type: 3}
-  - {fileID: 6441816997998351642, guid: 3087cb46b2b4ab047bad04a7ba846b46, type: 3}
-  - {fileID: 2628327905184439406, guid: b8a207671ad971d4596a0236f7c16c95, type: 3}
-  - {fileID: 8265746948549302011, guid: f31d39e5fdeb07742b378c16367ff5e5, type: 3}
-  playerPrefab: {fileID: 5255534377115560913, guid: 864d69398cbad294a89daf01f91bb0a9, type: 3}
-  playerSpawnPoint: {fileID: 1008364732}
-  enemySpawnPoint: {fileID: 1899820376}
-  clearConditionUIMappings:
-  - condition: 0
-    uiPrefab: {fileID: 798243388910477293, guid: abfc63549b009ef458b2270d7f6cf56e, type: 3}
-  - condition: 1
-    uiPrefab: {fileID: 7289494422299341494, guid: f66165da31057784a9b01d08f0e85d66, type: 3}
-  startDelayTime: 1
-  totalSpellDropDuration: 1.2
-  postDropWaitTime: 1
-  bGM: {fileID: 8300000, guid: a22f9bc6792cd124d8e50f8495aeb072, type: 3}
-  stageListConfig: {fileID: 11400000, guid: a913743c035d39741b49b95e008dd19b, type: 2}
-  islandStageMapConfig: {fileID: 11400000, guid: 308115efb2fda7b428f76ea1ca1fdd31, type: 2}
-  clearDelaySeconds: 2
-  firstClearReward: 100
-  repeatClearReward: 10
-  bossDestroySound: {fileID: 8300000, guid: 626aeda33e0134a66a6257c865d0c5c0, type: 3}
-  clearSound: {fileID: 8300000, guid: 2667a0a008b044e218b63df62e2be749, type: 3}
-  gameOverDelaySeconds: 1.5
-  resultPanelPrefab: {fileID: 6345627378744446381, guid: ebe979ea95cfa9941a8abafc4c3f6172, type: 3}
---- !u!4 &827964235
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 827964233}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 393006590749356196, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
+      propertyPath: m_Name
+      value: StageManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950603546146285152, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
+      propertyPath: stageConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 9364e08abc5421e4ea3789adc05912e5, type: 2}
+    - target: {fileID: 2950603546146285152, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
+      propertyPath: clearCondition
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950603546146285152, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
+      propertyPath: enemySpawnPoint
+      value: 
+      objectReference: {fileID: 1899820376}
+    - target: {fileID: 2950603546146285152, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
+      propertyPath: playerSpawnPoint
+      value: 
+      objectReference: {fileID: 1008364732}
+    - target: {fileID: 4653788535072574927, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4653788535072574927, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4653788535072574927, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4653788535072574927, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4653788535072574927, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4653788535072574927, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4653788535072574927, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4653788535072574927, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4653788535072574927, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4653788535072574927, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
 --- !u!1 &874336541
 GameObject:
   m_ObjectHideFlags: 0
@@ -5153,10 +5131,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3087031438381567599, guid: d65346faf7af4534fa15b5a50eb3ec46, type: 3}
-      propertyPath: Lens.OrthographicSize
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 5733197704748922268, guid: d65346faf7af4534fa15b5a50eb3ec46, type: 3}
       propertyPath: m_Name
       value: StageCinemachineCamera
@@ -5650,7 +5624,7 @@ PrefabInstance:
     - target: {fileID: 6017693498709561720, guid: 7e97d6cb8c0c3674ca9d62feb4677dd6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 827964234}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5660,7 +5634,7 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 827964235}
+  - {fileID: 845297800}
   - {fileID: 3941325024701886327}
   - {fileID: 66593226}
   - {fileID: 874336542}
