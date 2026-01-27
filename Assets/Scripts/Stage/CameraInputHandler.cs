@@ -65,6 +65,31 @@ public class CameraInputHandler : MonoBehaviour, IDragHandler, IBeginDragHandler
             Debug.LogWarning("CameraInputHandler: limitPointAまたはlimitPointBが設定されていません。カメラの移動範囲制限は無効になります。");
     }
 
+    /// <summary>
+    /// カメラの移動制限範囲と位置を即座に更新します。
+    /// </summary>
+    public void UpdateCameraBoundsAndPosition(Vector2 newPosition, Transform pointA, Transform pointB)
+    {
+        limitPointA = pointA;
+        limitPointB = pointB;
+
+        if (limitPointA != null && limitPointB != null)
+        {
+            float ax = limitPointA.position.x;
+            float ay = limitPointA.position.y;
+            float bx = limitPointB.position.x;
+            float by = limitPointB.position.y;
+
+            minX = Mathf.Min(ax, bx);
+            maxX = Mathf.Max(ax, bx);
+            minY = Mathf.Min(ay, by);
+            maxY = Mathf.Max(ay, by);
+        }
+
+        isSmoothMoving = false;
+        TrySetCameraPosition(newPosition);
+    }
+
     void Start()
     {
         CameraManager.Instance.SetOrthographicSize();

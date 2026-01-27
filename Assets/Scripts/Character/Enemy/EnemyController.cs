@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
@@ -14,6 +15,9 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
     [Tooltip("攻撃や感知に使うLayerSensorコンポーネントの配列")]
     [SerializeField]
     private LayerSensor[] layerSensors;
+
+    [Header("イベント設定")]
+    public UnityEvent OnDie;
 
     [Header("攻撃モデル設定")]
     [Tooltip("この敵が持つ攻撃のデータ配列")]
@@ -415,6 +419,7 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         GetComponent<SpellDropper>()?.DropSpells();
         GetComponent<BossClearNotifier>()?.NotifyDefeated();
         EnemyCounter.Instance?.RemoveEnemy();
+        OnDie?.Invoke();
     }
 
     private void OnDestroy()

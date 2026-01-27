@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 
-public class StageManager : MonoBehaviour, IZeroEnemyNotifier
+public class StageManager : MonoBehaviour
 {
     // --- インスペクタから設定するフィールド ---
 
@@ -292,7 +292,6 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
     {
         EnemyPhaseExecutor.Instance.SetSpawnPoint(enemySpawnPoint.position);
         EnemyPhaseExecutor.Instance.StartPhase(stageConfig.enemyPhases, () => { spawnComplete = true; });
-        EnemyCounter.Instance.SetZeroNotifier(this);
     }
 
     /// <summary>
@@ -307,14 +306,6 @@ public class StageManager : MonoBehaviour, IZeroEnemyNotifier
     }
 
     bool spawnComplete = false;
-    // IZeroEnemyNotifier インターフェースの実装
-    public void OnEnemyCountZero()
-    {
-        if (clearCondition == StageClearCondition.AllEnemiesDefeated && spawnComplete)
-        {
-            HandleStageClear();
-        }
-    }
 
     void OnGameEnd()
     {

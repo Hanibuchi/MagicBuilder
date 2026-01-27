@@ -10,6 +10,7 @@ public class PlayerController : MyCharacterController
     private const string AIM_TRIGGER = "aim";
     private const string AIM_DEGREE_PARAM = "aim_degree";
     private const string VICTORY_TRIGGER = "victory";
+    private const string TELEPORT_TRIGGER = "teleport";
 
     [Header("Screen Shake Settings")]
     [SerializeField] private float damageShakeForce = 0.5f;
@@ -82,6 +83,12 @@ public class PlayerController : MyCharacterController
     {
         if (animator == null || !animator.enabled) return;
         animator.SetTrigger(VICTORY_TRIGGER);
+    }
+
+    public void PlayTeleportAnimation()
+    {
+        if (animator == null || !animator.enabled) return;
+        animator.SetTrigger(TELEPORT_TRIGGER);
     }
 
     /// <summary>
