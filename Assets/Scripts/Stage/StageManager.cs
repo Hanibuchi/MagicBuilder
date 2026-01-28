@@ -537,6 +537,11 @@ public class StageManager : MonoBehaviour
         else
         {
             controller.DisplayDefeat(data);
+            // パズルステージの場合は敗北時に呪文変更ボタンを非表示にする
+            if (stageConfig != null && stageConfig.stageType == StageType.Puzzle)
+            {
+                controller.HideSpellChangeButton();
+            }
         }
 
         // ボタンアクションの設定（例：シーン遷移処理を実装）

@@ -153,6 +153,17 @@ public class ResultPanelController : MonoBehaviour
     }
 
     /// <summary>
+    /// 呪文変更ボタンを非表示にします。
+    /// </summary>
+    public void HideSpellChangeButton()
+    {
+        if (spellChangeButton != null)
+        {
+            spellChangeButton.gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
     /// 指定された時間待機してから、アクションを実行します。
     /// </summary>
     private IEnumerator DelayExecuteAction(Action action)
