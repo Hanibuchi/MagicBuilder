@@ -15,8 +15,11 @@ public class TeleportManager : MonoBehaviour
     [SerializeField] private float fadeDuration = 0.5f;
     [SerializeField] private float waitTimeAtDark = 0.2f;
     [SerializeField] private float teleportAnimationDelay = 0.5f;
+    [SerializeField] private float preTeleportDelay = 1.0f;
 
     [Header("SE設定")]
+    [SerializeField] private AudioClip waveClearSE;
+    [SerializeField] private float waveClearDelay = 0.5f;
     [SerializeField] private AudioClip teleportStartSE;
     [SerializeField] private AudioClip teleportArrivalSE;
 
@@ -125,6 +128,16 @@ public class TeleportManager : MonoBehaviour
     private IEnumerator TeleportSequence(StageTeleportInfo info)
     {
         isTeleporting = true;
+
+        // 最後の敵を倒してから SE を鳴らすまでの待ち
+        yield return new WaitForSeconds(waveClearDelay);
+
+        if (SoundManager.Instance != null && waveClearSE != null)
+        {
+            SoundManager.Instance.PlaySE(waveClearSE);
+        }
+
+        yield return new WaitForSeconds(preTeleportDelay);
 
         // 1. プレイヤーのテレポート前アニメーション再生
         if (PlayerController.Instance != null)
