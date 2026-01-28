@@ -17,4 +17,8 @@ MonoBehaviour:
   SceneName: Stage_Ice_2
   clearCondition: 0
   enemyPhases: []
+  puzzleSpells:
+  - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
+  - {fileID: 11400000, guid: ca748ee532558a04db48184ac5b52399, type: 2}
+  - {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
   stageType: 1

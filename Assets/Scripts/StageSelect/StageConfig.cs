@@ -21,13 +21,17 @@ public class StageConfig : ScriptableObject
     [Tooltip("このステージで出現する敵のフェーズ設定リスト。")]
     public EnemyPhaseConfig[] enemyPhases;
 
+    [Header("パスルステージ設定")]
+    [Tooltip("パズルステージで使用する固定呪文のリスト。")]
+    public SpellBase[] puzzleSpells;
+
     [Header("ステージの種類")]
     [Tooltip("ステージのプレイスタイルを指定。")]
-    public StageType stageType = StageType.EndlessWave;
+    public StageType stageType = StageType.Rush;
 }
 
 public enum StageType
 {
-    EndlessWave, // 敵が次々と攻めてくるステージ (例: 無限ウェーブ)
+    Rush, // 敵が次々と攻めてくるステージ (例: 無限ウェーブ)
     Puzzle // 与えられた呪文で敵を全滅させるパズル的なステージ
 }

@@ -237,13 +237,23 @@ public class StageManager : MonoBehaviour
     /// </summary>
     private IEnumerator EquipSpellsSequenceRoutine()
     {
-        // 1. 持ち込み呪文のリストを取得
-        var equippedSpells = EquippedSpellManager.Instance.GetEquippedSpells();
+        // 1. 呪文のリストを決定（Puzzleの場合はConfigの固定呪文、それ以外は持ち込み呪文）
+        IEnumerable<SpellBase> spellsToEquip;
+        if (stageConfig != null && stageConfig.stageType == StageType.Puzzle)
+        {
+            spellsToEquip = stageConfig.puzzleSpells;
+            Debug.Log($"パズルステージ: {stageConfig.puzzleSpells?.Length ?? 0} 個の固定呪文を使用します。");
+        }
+        else
+        {
+            spellsToEquip = EquippedSpellManager.Instance.GetEquippedSpells();
+        }
+
         // 有効な呪文の数をカウント（nullを除外）
         int activeSpellCount = 0;
-        if (equippedSpells != null)
+        if (spellsToEquip != null)
         {
-            foreach (var spell in equippedSpells)
+            foreach (var spell in spellsToEquip)
             {
                 if (spell != null) activeSpellCount++;
             }
@@ -259,9 +269,9 @@ public class StageManager : MonoBehaviour
 
         if (activeSpellCount > 0)
         {
-            Debug.Log($"{activeSpellCount} 個の持ち込み呪文を投入します。間隔: {interval:F2}秒");
+            Debug.Log($"{activeSpellCount} 個の呪文を投入します。間隔: {interval:F2}秒");
 
-            foreach (var spell in equippedSpells)
+            foreach (var spell in spellsToEquip)
             {
                 // 空スロット(null)はスキップ
                 if (spell == null) continue;
