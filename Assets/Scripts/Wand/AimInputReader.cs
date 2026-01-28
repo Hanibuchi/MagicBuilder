@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// 画面のドラッグ入力から発射角度と強さを計算し、IAimControllerに伝えるクラス
 /// </summary>
-public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler
 {
     public static AimInputReader Instance { get; private set; }
     [Header("設定")]
@@ -68,6 +68,18 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     public void SetAimController(IAimController controller)
     {
         this.aimController = controller;
+    }
+
+    /// <summary>
+    /// ポインターがクリック（タップ）された時の処理。ドラッグ時は呼ばれません。
+    /// </summary>
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        // eventData.dragging が false の場合のみ（＝ドラッグしなかった場合のみ）実行
+        if (!eventData.dragging && ClickTriggerInputReader.Instance != null)
+        {
+            ClickTriggerInputReader.Instance.OnPointerClick(eventData);
+        }
     }
 
     /// <summary>
