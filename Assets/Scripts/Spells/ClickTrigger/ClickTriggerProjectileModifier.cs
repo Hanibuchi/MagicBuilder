@@ -2,13 +2,15 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 
-public class ClickTriggerProjectileModifier : MonoBehaviour
+public class ClickTriggerProjectileModifier : MonoBehaviour, ISpellProjectileDestroyListener
 {
     public SpellBase nextSpell;
     public List<SpellBase> wandSpells;
     public int nextSpellIndex;
     public SpellContext context;
     public float magicCircleDelay;
+
+    private bool _hasFired = false;
 
     public void Init(SpellBase nextSpell, List<SpellBase> wandSpells, int nextSpellIndex, SpellContext context, float magicCircleDelay)
     {
@@ -32,11 +34,19 @@ public class ClickTriggerProjectileModifier : MonoBehaviour
 
     public void Fire()
     {
+        if (_hasFired) return;
+        _hasFired = true;
+
         if (nextSpell != null)
         {
             // SpellSchedulerを使用して、このオブジェクトが破棄されてもコルーチンが継続するようにする
             SpellScheduler.Instance.StartSpellCoroutine(FireWithDelay());
         }
+    }
+
+    void ISpellProjectileDestroyListener.Destroy()
+    {
+        Fire();
     }
 
     private IEnumerator FireWithDelay()
