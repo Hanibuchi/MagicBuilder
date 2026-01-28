@@ -14,6 +14,7 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     public ISpellContainer spellContainerUI;
     private SpellBase spellData;
     private bool isActive = true;
+    public bool IsUIActive => isActive;
 
     // UIパーツ
     public Image iconImage;

@@ -17,7 +17,7 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
     [SerializeField] private RectTransform inventoryFrame;
 
     private List<SpellUI> spellUIs = new List<SpellUI>();
-    private HashSet<int> newSpellIndices = new HashSet<int>(); // 新しく取得した呪文のインデックスを保持
+    private List<SpellBase> newSpells = new List<SpellBase>(); // 新しく取得した呪文を保持
     SpellUI draggingSpellUI;
 
 
@@ -74,6 +74,8 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         var wand = AttackManager.Instance.GetCurrentWand();
         if (wand != null)
             DeactivateSpellUIs(wand.GetSpells());
+
+        ApplyNewBadges();
     }
 
     public void RebuildUIWhileDragging()
@@ -84,6 +86,8 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         if (draggingSpellUI != null)
             spellList.Add(draggingSpellUI.GetSpellData());
         DeactivateSpellUIs(spellList);
+
+        ApplyNewBadges();
     }
 
     /// <summary>
@@ -137,8 +141,6 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
             spellUI.SetIndex(index);
             // SpellInventory自身をコンテナとして渡す
             spellUI.Initialize(this);
-            // 新規取得バッジの状態を設定
-            spellUI.SetNewBadgeActive(newSpellIndices.Contains(index));
             spellUIs.Add(spellUI);
 
             spellUI.gameObject.name = $"Inv_SpellUI_{index}_{spell.spellName}";
@@ -150,12 +152,13 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
     public void NotifyDragBegin(int index)
     {
         draggingSpellUI = spellUIs[index];
+        SpellBase spell = draggingSpellUI.GetSpellData();
         spellUIs[index] = null;
 
-        // ドラッグされたら新規取得フラグを削除
-        if (newSpellIndices.Contains(index))
+        // ドラッグされたら新規取得フラグを削除 (1つ分)
+        if (newSpells.Contains(spell))
         {
-            newSpellIndices.Remove(index);
+            newSpells.Remove(spell);
             if (draggingSpellUI != null)
                 draggingSpellUI.SetNewBadgeActive(false);
         }
@@ -165,9 +168,10 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
 
     public void NotifyPointerClick(int index)
     {
-        if (newSpellIndices.Contains(index))
+        SpellBase spell = availableSpells[index];
+        if (newSpells.Contains(spell))
         {
-            newSpellIndices.Remove(index);
+            newSpells.Remove(spell);
             // 本来は再構築しなくても、UI側で直接消しているのでここではリストの更新のみ
         }
     }
@@ -367,6 +371,35 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
     }
 
     /// <summary>
+    /// 現在の newSpells リストに基づいて、SpellUI に新規取得バッジを適用します。
+    /// アクティブな UI を優先して前から順番に割り当てます。
+    /// </summary>
+    private void ApplyNewBadges()
+    {
+        // 作業用のリストを作成
+        List<SpellBase> pending = new List<SpellBase>(newSpells);
+
+        foreach (var ui in spellUIs)
+        {
+            if (ui == null) continue;
+
+            // 一旦オフにする
+            ui.SetNewBadgeActive(false);
+
+            // アクティブな UI に対してのみ、該当する呪文があればバッジをオンにする
+            if (ui.IsUIActive)
+            {
+                SpellBase data = ui.GetSpellData();
+                if (pending.Contains(data))
+                {
+                    ui.SetNewBadgeActive(true);
+                    pending.Remove(data);
+                }
+            }
+        }
+    }
+
+    /// <summary>
     /// 新しい呪文をインベントリのデータリストに追加し、UIを再構築します。
     /// このメソッドは、呪文がドロップアニメーションを完了した後、DropManagerから呼び出されます。
     /// </summary>
@@ -389,7 +422,7 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
 
         // 1. データリストに追加
         availableSpells.Add(spellToAdd);
-        newSpellIndices.Add(availableSpells.Count - 1); // 新規取得フラグをセット
+        newSpells.Add(spellToAdd); // 新規取得フラグをセット
 
         // 呪文の保持情報を更新（未開放なら開放する）
         SpellType type = SpellDatabase.Instance.GetSpellType(spellToAdd);
