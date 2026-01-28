@@ -47,4 +47,17 @@ MonoBehaviour:
   screenFader: {fileID: 0}
   fadeDuration: 0.5
   waitTimeAtDark: 0.2
-  stageTeleportInfos: []
+  teleportAnimationDelay: 0.5
+  teleportStartSE: {fileID: 8300000, guid: 78419f98379502c4dbfb2774bc94e7c1, type: 3}
+  teleportArrivalSE: {fileID: 8300000, guid: 304d546b80cae47fb872be812b98b2c8, type: 3}
+  stageTeleportInfos:
+  - stageId: 0
+    targetTransform: {fileID: 0}
+    cameraTargetTransform: {fileID: 0}
+    cameraLimitA: {fileID: 0}
+    cameraLimitB: {fileID: 0}
+  - stageId: 1
+    targetTransform: {fileID: 0}
+    cameraTargetTransform: {fileID: 0}
+    cameraLimitA: {fileID: 0}
+    cameraLimitB: {fileID: 0}

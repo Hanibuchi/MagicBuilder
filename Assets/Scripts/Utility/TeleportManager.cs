@@ -14,16 +14,20 @@ public class TeleportManager : MonoBehaviour
     [SerializeField] private ScreenFader screenFader;
     [SerializeField] private float fadeDuration = 0.5f;
     [SerializeField] private float waitTimeAtDark = 0.2f;
+    [SerializeField] private float teleportAnimationDelay = 0.5f;
+
+    [Header("SE設定")]
+    [SerializeField] private AudioClip teleportStartSE;
+    [SerializeField] private AudioClip teleportArrivalSE;
 
     [System.Serializable]
     public struct StageTeleportInfo
     {
-        public string stageId;      // 場面の識別子
-        public bool isClearTrigger; // これが最後の敵グループ（ステージクリア）かどうか
-        public Transform targetTransform; // プレイヤーの移動先
-        public Transform cameraTargetTransform; // カメラの移動先
-        public Transform cameraLimitA; // カメラの制限範囲A
-        public Transform cameraLimitB; // カメラの制限範囲B
+        public string stageId;          // この場面の敵の識別子（例: "1"）
+        public Transform targetTransform; // この場面クリア後のプレイヤー移動先
+        public Transform cameraTargetTransform; // この場面クリア後のカメラ移動先
+        public Transform cameraLimitA; // この場面クリア後のカメラ制限範囲A
+        public Transform cameraLimitB; // この場面クリア後のカメラ制限範囲B
     }
 
     [Header("場面ごとのテレポート設定")]
@@ -31,6 +35,8 @@ public class TeleportManager : MonoBehaviour
 
     // 各ステージIDに対応する生存している敵の数
     private Dictionary<string, int> enemyCounts = new Dictionary<string, int>();
+    private int currentStageIndex = 0;
+    private bool isTeleporting = false;
 
     private void Awake()
     {
@@ -60,36 +66,32 @@ public class TeleportManager : MonoBehaviour
 
     /// <summary>
     /// 指定された場面の敵が1体倒されたことを通知します。
-    /// カウントが0になった場合、テレポートを開始します。
+    /// リストの進行状況に応じて次のテレポートまたはクリア判定を行います。
     /// </summary>
     public void UnregisterEnemy(string stageId)
     {
-        if (string.IsNullOrEmpty(stageId)) return;
+        if (isTeleporting || string.IsNullOrEmpty(stageId)) return;
 
         if (enemyCounts.ContainsKey(stageId))
         {
             enemyCounts[stageId]--;
-            if (enemyCounts[stageId] <= 0)
+
+            // 現在の進行度（currentStageIndex）に対応する敵グループが全滅したかチェック
+            if (currentStageIndex < stageTeleportInfos.Count &&
+                stageId == stageTeleportInfos[currentStageIndex].stageId &&
+                enemyCounts[stageId] <= 0)
             {
-                TriggerStageTeleport(stageId);
+                AdvanceStage();
             }
         }
     }
 
-    private void TriggerStageTeleport(string stageId)
+    private void AdvanceStage()
     {
-        // リストから該当するIDの移動先を探す
-        var info = stageTeleportInfos.Find(x => x.stageId == stageId);
-
-        if (string.IsNullOrEmpty(info.stageId))
+        // 最後のステージの設定をクリアし終えた場合（＝全ての敵グループを倒した）
+        if (currentStageIndex >= stageTeleportInfos.Count - 1)
         {
-            Debug.LogWarning($"TeleportManager: Stage ID '{stageId}' が設定に見つかりません。");
-            return;
-        }
-
-        // ステージクリア判定
-        if (info.isClearTrigger)
-        {
+            isTeleporting = true;
             if (StageManager.Instance != null)
             {
                 StageManager.Instance.HandleStageClear();
@@ -97,13 +99,18 @@ public class TeleportManager : MonoBehaviour
             return;
         }
 
+        // 進行度を進める
+        currentStageIndex++;
+
+        // 次のエリアがある場合、現在の設定（目的地）を使用してテレポートを実行
+        var info = stageTeleportInfos[currentStageIndex];
         if (info.targetTransform != null)
         {
             TeleportPlayer(info);
         }
         else
         {
-            Debug.LogWarning($"TeleportManager: Stage ID '{stageId}' に対応する Target Transform が設定されていません。");
+            Debug.LogWarning($"TeleportManager: Index {currentStageIndex} ({info.stageId}) のテレポート先が未設定です。");
         }
     }
 
@@ -117,16 +124,30 @@ public class TeleportManager : MonoBehaviour
 
     private IEnumerator TeleportSequence(StageTeleportInfo info)
     {
+        isTeleporting = true;
+
         // 1. プレイヤーのテレポート前アニメーション再生
         if (PlayerController.Instance != null)
         {
             PlayerController.Instance.PlayTeleportAnimation();
         }
 
+        if (SoundManager.Instance != null && teleportStartSE != null)
+        {
+            SoundManager.Instance.PlaySE(teleportStartSE);
+        }
+
+        yield return new WaitForSeconds(teleportAnimationDelay);
+
         // 2. フェードアウト
         if (screenFader != null)
         {
             yield return StartCoroutine(screenFader.FadeOut(fadeDuration));
+        }
+
+        if (SoundManager.Instance != null && teleportArrivalSE != null)
+        {
+            SoundManager.Instance.PlaySE(teleportArrivalSE);
         }
 
         yield return new WaitForSeconds(waitTimeAtDark);
@@ -151,5 +172,7 @@ public class TeleportManager : MonoBehaviour
         {
             yield return StartCoroutine(screenFader.FadeIn(fadeDuration));
         }
+
+        isTeleporting = false;
     }
 }
