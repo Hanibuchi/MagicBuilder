@@ -21,7 +21,6 @@ MonoBehaviour:
   iconMaterial: {fileID: 0}
   spellDescription: "\u4E00\u822C\u653B\u6483\u9B54\u6CD5\u3002"
   trajectoryPrefabInterval: 0.1
-  maxPredictionTime: 2
   trajectoryMoveSpeed: 0.5
   projectilePrefab: {fileID: 396131387130879284, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
   strengthMultiplier: 15
@@ -32,6 +31,7 @@ MonoBehaviour:
     woodDamage: 0
     waterDamage: 0
     temperatureDamage: 0
-    knockback: 100
+    healing: 0
+    knockback: 0
   damageType: 0
   isClickTrigger: 0

@@ -8,16 +8,14 @@ public class ClickTriggerProjectileModifier : MonoBehaviour
     public List<SpellBase> wandSpells;
     public int nextSpellIndex;
     public SpellContext context;
-    public float delayTime;
     public float magicCircleDelay;
 
-    public void Init(SpellBase nextSpell, List<SpellBase> wandSpells, int nextSpellIndex, SpellContext context, float delayTime, float magicCircleDelay)
+    public void Init(SpellBase nextSpell, List<SpellBase> wandSpells, int nextSpellIndex, SpellContext context, float magicCircleDelay)
     {
         this.nextSpell = nextSpell;
         this.wandSpells = wandSpells;
         this.nextSpellIndex = nextSpellIndex;
         this.context = context;
-        this.delayTime = delayTime;
         this.magicCircleDelay = magicCircleDelay;
     }
     private void Start()
@@ -45,11 +43,8 @@ public class ClickTriggerProjectileModifier : MonoBehaviour
     {
         // yieldの前に必要な情報（トランスフォームなど）を取得しておく
         // yield以降に gameObject や transform にアクセスすると、インスタンス破棄時に「MissingReferenceException」が発生するため
-        float calculatedDelay = Mathf.Abs(nextSpell.GetGaussianRandom(delayTime));
         Vector3 spawnPosition = transform.position;
         float rotationZ = transform.rotation.eulerAngles.z;
-
-        yield return new WaitForSeconds(calculatedDelay);
 
         // 💡 魔法陣の表示演出を追加
         MagicCircle magicCircle = null;

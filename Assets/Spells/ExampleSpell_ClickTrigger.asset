@@ -21,17 +21,17 @@ MonoBehaviour:
   iconMaterial: {fileID: 0}
   spellDescription: "\u30AF\u30EA\u30C3\u30AF\u3059\u308B\u3068\u53F3\u306E\u546A\u6587\u304C\u9045\u308C\u3066\u767A\u5C04\u3055\u308C\u308B\u4E00\u822C\u653B\u6483\u9B54\u6CD5\u3002"
   trajectoryPrefabInterval: 0.1
-  maxPredictionTime: 2
   trajectoryMoveSpeed: 0.5
   projectilePrefab: {fileID: 396131387130879284, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
   strengthMultiplier: 15
   duration: 2
-  errorDegree: 2
+  errorDegree: 1
   damage:
     baseDamage: 5
     woodDamage: 0
     waterDamage: 0
     temperatureDamage: 0
+    healing: 0
     knockback: 0
   damageType: 0
   isClickTrigger: 1
