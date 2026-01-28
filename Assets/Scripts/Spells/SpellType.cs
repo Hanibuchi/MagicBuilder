@@ -35,4 +35,6 @@ public enum SpellType
     HealShot,
     WaterShot,
     WoodShot,
+    TurnRight,
+    TurnLeft,
 }
