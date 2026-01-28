@@ -13,7 +13,7 @@ public class EnemyMovementBase : MonoBehaviour
     protected float defaultMoveSpeed;
 
     protected Rigidbody2D rb;
-    protected bool isMoving = true; // 現在移動中かどうかのフラグ
+    protected bool isMoving = false; // 現在移動中かどうかのフラグ
 
     public bool IsMoving => isMoving;
 
@@ -35,6 +35,11 @@ public class EnemyMovementBase : MonoBehaviour
 
         // 速度比率制御のために、Awake時に現在のmoveSpeedをデフォルト値として保持する
         defaultMoveSpeed = moveSpeed;
+    }
+
+    private void Start()
+    {
+        isMoving = true;
     }
 
     protected virtual void FixedUpdate()
