@@ -10,6 +10,12 @@ public class MagicCircle : MonoBehaviour
     [SerializeField, Tooltip("制御対象のSpriteRenderer。インスペクタから設定してください。")]
     private SpriteRenderer spriteRenderer;
 
+    [Header("音響設定")]
+    [SerializeField, Tooltip("表示時に再生するSE")]
+    private AudioClip showSE;
+    [SerializeField, Range(0f, 1f), Tooltip("SEの音量")]
+    private float seVolume = 1f;
+
     // 透明度の目標値 (不透明 100 としたとき 80)
     private const float TargetAlpha = 0.8f;
 
@@ -25,6 +31,12 @@ public class MagicCircle : MonoBehaviour
         {
             Debug.LogError($"[MagicCircle] SpriteRenderer is not assigned on {gameObject.name}");
             return;
+        }
+
+        // SEの再生
+        if (SoundManager.Instance != null && showSE != null)
+        {
+            SoundManager.Instance.PlaySE(showSE, seVolume);
         }
 
         // 初期状態の設定

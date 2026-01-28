@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 3696865852566699540}
+  showSE: {fileID: 8300000, guid: 78419f98379502c4dbfb2774bc94e7c1, type: 3}
+  seVolume: 1
 --- !u!1 &7732418615524261645
 GameObject:
   m_ObjectHideFlags: 0
