@@ -12,8 +12,8 @@ public class MultCastSpell : SpellBase
     [Tooltip("この呪文からの相対的なインデックス（オフセット）の配列。1は次の呪文のまとまり。")]
     public int[] relativeSpellGroupOffsets = { 1 };
 
-    [Tooltip("発射間隔のランダム性の係数。0のとき間隔0")]
-    public float delayMultiplier = 0.05f;
+    [Tooltip("発射間隔の係数。errorDegreeに掛け合わされ、等間隔の発射間隔(秒)になります。")]
+    public float delayMultiplier = 0.2f;
 
     [Tooltip("各ターゲットグループへの相対的な位置オフセット。")]
     public Vector2[] positionOffsets = { Vector2.zero };
@@ -132,8 +132,10 @@ public class MultCastSpell : SpellBase
         SpellContext context)
     {
         int[] targetIndices = GetTargetIndices(wandSpells, currentSpellIndex);
+        context.errorDegree += additionalErrorDegree;
+        float interval = delayMultiplier * context.errorDegree;
 
-        // 💡 変更点: 各ターゲット呪文の発射を独立したコルーチンとして実行者に依頼
+        // 💡 各ターゲット呪文の発射を独立したコルーチンとして等間隔に実行
         for (int i = 0; i < targetIndices.Length; i++)
         {
             int targetIndex = targetIndices[i];
@@ -145,10 +147,11 @@ public class MultCastSpell : SpellBase
 
                 SpellBase spellToFire = wandSpells[targetIndex];
 
-                context.errorDegree += additionalErrorDegree;
                 // Contextの複製（Executorも引き継ぐ）
                 SpellContext newContext = context.Clone();
                 newContext.CasterPosition += offset;
+
+                float delayTime = i * interval;
 
                 // 独立した遅延発射コルーチンを開始
                 if (SpellScheduler.Instance != null)
@@ -160,7 +163,8 @@ public class MultCastSpell : SpellBase
                                 targetIndex,
                                 rotationZ,
                                 strength,
-                                newContext
+                                newContext,
+                                delayTime
                             )
                         );
                 }
@@ -173,7 +177,7 @@ public class MultCastSpell : SpellBase
     }
 
     /// <summary>
-    /// 💡 新しいコルーチン: 単一の呪文をランダムな遅延後に発射するロジック
+    /// 単一の呪文を指定された遅延後に発射するロジック
     /// </summary>
     private IEnumerator FireSingleSpellDelayed(
         SpellBase spellToFire,
@@ -181,13 +185,9 @@ public class MultCastSpell : SpellBase
         int targetIndex,
         float rotationZ,
         float strength,
-        SpellContext newContext)
+        SpellContext newContext,
+        float delayTime)
     {
-        // 💡 時間差の計算
-        // GetGaussianRandomAngle() に変更したと仮定して元のコードを修正
-        float randomDelay = GetGaussianRandom(delayMultiplier * newContext.errorDegree);
-        float delayTime = Mathf.Max(0f, Mathf.Abs(randomDelay));
-
         // 待機（この時間が発射開始時点からの遅延時間となる）
         yield return new WaitForSeconds(delayTime);
 
