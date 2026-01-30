@@ -680,10 +680,10 @@ MonoBehaviour:
   currentHealth: 0
   maxHealth: 15
   characterElement: 0
-  maxStopDurationOnFire: 10
+  maxStopDurationOnFire: 20
   iceStopThreshold: 0.3
-  iceStopDuration: 20
-  maxSlowDurationOnIce: 10
+  iceStopDuration: 10
+  maxSlowDurationOnIce: 20
 --- !u!114 &1594030617571860361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -752,6 +752,9 @@ MonoBehaviour:
   dieSoundVolume: 1
   layerSensors:
   - {fileID: 476603648058067127}
+  OnDie:
+    m_PersistentCalls:
+      m_Calls: []
   attackDatas:
   - Id: attack1
     CoolDownTime: 2
