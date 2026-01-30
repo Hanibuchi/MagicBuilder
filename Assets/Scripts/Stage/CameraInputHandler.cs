@@ -68,7 +68,7 @@ public class CameraInputHandler : MonoBehaviour, IDragHandler, IBeginDragHandler
     /// <summary>
     /// カメラの移動制限範囲と位置を即座に更新します。
     /// </summary>
-    public void UpdateCameraBoundsAndPosition(Vector2 newPosition, Transform pointA, Transform pointB)
+    public void UpdateCameraBoundsAndPosition(Vector2 newPosition, Transform pointA, Transform pointB, float relativeSize)
     {
         limitPointA = pointA;
         limitPointB = pointB;
@@ -84,6 +84,11 @@ public class CameraInputHandler : MonoBehaviour, IDragHandler, IBeginDragHandler
             maxX = Mathf.Max(ax, bx);
             minY = Mathf.Min(ay, by);
             maxY = Mathf.Max(ay, by);
+        }
+
+        if (relativeSize > 0 && CameraManager.Instance != null)
+        {
+            CameraManager.Instance.SetRelativeCameraSize(relativeSize);
         }
 
         isSmoothMoving = false;

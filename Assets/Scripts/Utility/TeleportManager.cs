@@ -29,6 +29,7 @@ public class TeleportManager : MonoBehaviour
         public string stageId;          // この場面の敵の識別子（例: "1"）
         public Transform targetTransform; // この場面クリア後のプレイヤー移動先
         public Transform cameraTargetTransform; // この場面クリア後のカメラ移動先
+        public float cameraRelativeSize; // この場面でのカメラの相対サイズ（1.0が標準）
         public Transform cameraLimitA; // この場面クリア後のカメラ制限範囲A
         public Transform cameraLimitB; // この場面クリア後のカメラ制限範囲B
     }
@@ -176,7 +177,8 @@ public class TeleportManager : MonoBehaviour
             CameraInputHandler.Instance.UpdateCameraBoundsAndPosition(
                 info.cameraTargetTransform.position,
                 info.cameraLimitA,
-                info.cameraLimitB
+                info.cameraLimitB,
+                info.cameraRelativeSize <= 0 ? 1.0f : info.cameraRelativeSize
             );
         }
 
@@ -187,5 +189,60 @@ public class TeleportManager : MonoBehaviour
         }
 
         isTeleporting = false;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (stageTeleportInfos == null) return;
+
+        foreach (var info in stageTeleportInfos)
+        {
+            // プレイヤーの想定位置を緑の球体で表示
+            if (info.targetTransform != null)
+            {
+                Gizmos.color = Color.green;
+                Gizmos.DrawWireSphere(info.targetTransform.position, 0.5f);
+            }
+
+            // カメラの移動可能範囲を水色の枠で表示
+            if (info.cameraLimitA != null && info.cameraLimitB != null)
+            {
+                Gizmos.color = Color.cyan;
+                Vector3 posA = info.cameraLimitA.position;
+                Vector3 posB = info.cameraLimitB.position;
+                Vector3 center = (posA + posB) / 2f;
+                Vector3 size = new Vector3(Mathf.Abs(posA.x - posB.x), Mathf.Abs(posA.y - posB.y), 0);
+                Gizmos.DrawWireCube(center, size);
+            }
+
+            // カメラの初期表示範囲を黄色の枠で表示
+            if (info.cameraTargetTransform != null)
+            {
+                Gizmos.color = Color.yellow;
+                float relSize = info.cameraRelativeSize <= 0 ? 1.0f : info.cameraRelativeSize;
+
+                // カメラ情報の取得（エディタ上でも可能な限り取得）
+                float orthoSize = 5f;
+                float aspect = 1.77f; // 16:9
+
+                Camera cam = Camera.main;
+                if (cam != null)
+                {
+                    orthoSize = cam.orthographicSize;
+                    aspect = cam.aspect;
+                }
+
+                // CameraManagerが動作中ならそちらのデフォルト値を優先
+                if (Application.isPlaying && CameraManager.Instance != null)
+                {
+                    orthoSize = CameraManager.Instance.DefaultOrthographicSize;
+                }
+
+                float h = orthoSize * relSize * 2f;
+                float w = h * aspect;
+                Gizmos.DrawWireCube(info.cameraTargetTransform.position, new Vector3(w, h, 0));
+                Gizmos.DrawSphere(info.cameraTargetTransform.position, 0.3f);
+            }
+        }
     }
 }

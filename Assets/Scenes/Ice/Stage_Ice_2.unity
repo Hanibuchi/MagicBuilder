@@ -317,7 +317,7 @@ Transform:
   m_GameObject: {fileID: 189798554}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -17, y: -8, z: 0}
+  m_LocalPosition: {x: -17.15, y: -9.24, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1652,7 +1652,7 @@ Transform:
   m_GameObject: {fileID: 1989985953}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4, y: 0, z: 0}
+  m_LocalPosition: {x: -1.42, y: -0.86, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11956,6 +11956,10 @@ PrefabInstance:
       propertyPath: stageTeleportInfos.Array.data[2].targetTransform
       value: 
       objectReference: {fileID: 300363254}
+    - target: {fileID: 477924254565741091, guid: 660ff370ec34c3240ab3a7dce9838829, type: 3}
+      propertyPath: stageTeleportInfos.Array.data[2].cameraRelativeSize
+      value: 1.15
+      objectReference: {fileID: 0}
     - target: {fileID: 477924254565741091, guid: 660ff370ec34c3240ab3a7dce9838829, type: 3}
       propertyPath: stageTeleportInfos.Array.data[1].cameraTargetTransform
       value: 
