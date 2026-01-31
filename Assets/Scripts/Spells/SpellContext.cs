@@ -18,6 +18,7 @@ public class SpellContext
     public float errorDegree = 0;
     public Damage damage;
     public SpellLayer layer;
+    public int bounceCount = 0;
     /// <summary>
     /// 呪文の持続時間（秒）。-1の場合は無限。
     /// </summary>
@@ -90,6 +91,7 @@ public class SpellContext
             errorDegree = this.errorDegree,
             duration = this.duration,
             layer = this.layer,
+            bounceCount = this.bounceCount,
 
             // 参照型 (Action) は参照がコピーされるが、Actionは不変(イミュータブル)なので問題なし
             ProjectileModifier = this.ProjectileModifier,

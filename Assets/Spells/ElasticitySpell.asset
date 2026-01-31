@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e306a85cd395614388e3fd10d87d4b6, type: 3}
+  m_Name: ElasticitySpell
+  m_EditorClassIdentifier: 
+  category: 1
+  cooldown: 0.5
+  spellName: "\u5F3E\u6027"
+  purchaseCosts: 64000000c80000009001000020030000
+  icon: {fileID: -426676375507889439, guid: 7d288e0872c286247bc60f9b6f88aeda, type: 3}
+  iconColor: {r: 1, g: 1, b: 1, a: 1}
+  iconMaterial: {fileID: 0}
+  spellDescription: "\u5358\u767A\u30D2\u30C3\u30C8\u653B\u6483\u304C\u30D0\u30A6\u30F3\u30C9\u3059\u308B\u3088\u3046\u306B\u306A\u308B\u3002"
+  additionalBounceCount: 5

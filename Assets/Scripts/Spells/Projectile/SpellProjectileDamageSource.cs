@@ -40,6 +40,11 @@ public class SpellProjectileDamageSource : DamageSourceBase
             gameObject.layer = layer;
             foreach (Transform child in gameObject.transform)
                 child.gameObject.layer = layer;
+
+            if (spellContext.bounceCount > 0)
+            {
+                AddPierceCount(spellContext.bounceCount);
+            }
         }
 
         // 呪文による放射物の修正（軌道変更やサイズ変更など）を適用
