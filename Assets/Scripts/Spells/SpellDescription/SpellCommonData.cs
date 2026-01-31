@@ -72,7 +72,7 @@ public class SpellCommonData : ScriptableObject
     [Tooltip("分岐呪文の色")]
     public Color branchColor = Color.green;
     [Tooltip("その他の色の色")]
-    public Color otherColor = Color.white;
+    public Color otherColor = Color.yellow;
 
     /// <summary>
     /// カテゴリに対応した色を取得します。
