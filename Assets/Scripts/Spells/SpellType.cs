@@ -41,7 +41,7 @@ public enum SpellType
     Gumball,            // ガムボール
     KnockbackIncrease,  // ノックバック増加
     KnockbackReduce,    // ノックバック減少
-    DoubleEdged,        // 諸刃
+    SelfHarm,        // 諸刃
     Remote,             // 遠隔
     Shorten,            // 短縮
     AddTrigger,         // トリガー追加
