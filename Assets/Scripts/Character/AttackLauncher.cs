@@ -61,6 +61,9 @@ public class AttackLauncher : MonoBehaviour
         // 5. 発射した攻撃をこのオブジェクトの子にする (オプション: シーンの整理のため)
         attackInstance.transform.SetParent(transform);
 
+        // rootのスケールを適用して、生成されたオブジェクトを親（root）の大きさに拡大する
+        attackInstance.transform.localScale = Vector3.Scale(attackInstance.transform.localScale, transform.root.localScale);
+
         // 6. X軸負の方向を向く場合の調整
         // Unityの2Dスプライトは通常、X軸正の方向を「前」とする。
         // 発射角度が180度に近い（左向き）場合、Yスケールを反転させて左右反転させる。
