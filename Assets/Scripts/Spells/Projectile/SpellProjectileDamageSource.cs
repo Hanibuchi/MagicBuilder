@@ -101,7 +101,10 @@ public class SpellProjectileDamageSource : DamageSourceBase
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            Destroy();
+            if (GetDamageSourceType() == DamageSourceType.SingleHit)
+                TryConsumePierceCount();
+            else
+                Destroy();
         }
     }
 
