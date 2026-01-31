@@ -11,6 +11,8 @@ public class ExampleSpell : SpellBase
     public float trajectoryPrefabInterval = 0.1f;
     [Tooltip("軌道プレハブの移動速度倍率。1.0で実際の弾速（物理的な時間の進み）と一致します。")]
     public float trajectoryMoveSpeed = 0.5f;
+    [Tooltip("軌道の最大予測時間（秒）。これを越える予測線は描画されません。")]
+    public float maxPredictionTime = 5.0f;
 
     public override void DisplayAimingLine(
         List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ,
@@ -52,8 +54,9 @@ public class ExampleSpell : SpellBase
         if (predictionLimit <= 0f)
         {
             // 持続時間が無限の場合は、強さに応じて予測時間を設定（例: 強さ係数 * 0.1秒）
-            predictionLimit = strength * strengthMultiplier * 0.1f;
+            predictionLimit = maxPredictionTime;
         }
+        predictionLimit = Mathf.Min(predictionLimit, maxPredictionTime);
 
         for (float t = timeOffset; t < predictionLimit; t += trajectoryPrefabInterval)
         {
