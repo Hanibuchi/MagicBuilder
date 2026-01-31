@@ -1,13 +1,12 @@
 using UnityEngine;
 
 /// <summary>
-/// 指定されたエリア（トリガー）の外に出た生物を即死させるためのコンポーネント。
-/// マップ全体を覆うようにコライダーを配置して使用します。
+/// 指定されたエリア（トリガー）に入った生物を即死させるためのコンポーネント。
 /// </summary>
 [RequireComponent(typeof(Collider2D))]
-public class OutOfBoundsKiller : MonoBehaviour
+public class KillZone : MonoBehaviour
 {
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         // 衝突したオブジェクト、またはその親オブジェクトから CharacterHealth コンポーネントを探す
         CharacterHealth health = collision.GetComponent<CharacterHealth>();

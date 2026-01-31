@@ -1167,7 +1167,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2438735873814144524, guid: 6f7e3495cea14d44ba946dc0c8424878, type: 3}
       propertyPath: m_Name
-      value: LivingArea
+      value: KillZone
       objectReference: {fileID: 0}
     - target: {fileID: 4629173525298751670, guid: 6f7e3495cea14d44ba946dc0c8424878, type: 3}
       propertyPath: m_LocalPosition.x
