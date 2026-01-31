@@ -24,8 +24,8 @@ public class SpellProjectileDamageSource : DamageSourceBase
     [Header("自動破壊設定")]
     [SerializeField] bool autoDestroy = true;
 
-    float cachedStrength;
-    SpellContext cachedContext;
+    protected float cachedStrength;
+    protected SpellContext cachedContext;
 
     // --- IDamageSourceの実実装 ---
     public void Initialize(float strength, SpellContext spellContext)
@@ -90,7 +90,7 @@ public class SpellProjectileDamageSource : DamageSourceBase
         return damageData;
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         SpawnCollisionPrefab(collision);
 
