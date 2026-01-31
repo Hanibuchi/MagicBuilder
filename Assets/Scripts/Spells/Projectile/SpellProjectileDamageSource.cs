@@ -125,7 +125,10 @@ public class SpellProjectileDamageSource : DamageSourceBase
 
     public override void Destroy()
     {
-        animator?.SetTrigger(DESTROY_TRIGGER);
+        if (animator != null)
+        {
+            animator.SetTrigger(DESTROY_TRIGGER);
+        }
         var components = GetComponents<ISpellProjectileDestroyListener>();
         foreach (var component in components)
             component?.Destroy();

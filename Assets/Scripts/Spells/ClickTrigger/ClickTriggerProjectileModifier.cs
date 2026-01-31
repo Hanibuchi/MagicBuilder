@@ -42,6 +42,13 @@ public class ClickTriggerProjectileModifier : MonoBehaviour, ISpellProjectileDes
             // SpellSchedulerを使用して、このオブジェクトが破棄されてもコルーチンが継続するようにする
             SpellScheduler.Instance.StartSpellCoroutine(FireWithDelay());
         }
+
+        // 発射時に通知を送る
+        var listeners = GetComponents<IClickTriggerFireListener>();
+        foreach (var listener in listeners)
+        {
+            listener.OnFire();
+        }
     }
 
     void ISpellProjectileDestroyListener.Destroy()
@@ -85,4 +92,12 @@ public class ClickTriggerProjectileModifier : MonoBehaviour, ISpellProjectileDes
             magicCircle.Hide(magicCircleDelay);
         }
     }
+}
+
+/// <summary>
+/// ClickTriggerが発動（Fire）された際の通知を受け取るためのインターフェース。
+/// </summary>
+public interface IClickTriggerFireListener
+{
+    void OnFire();
 }
