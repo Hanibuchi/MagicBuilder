@@ -28,7 +28,7 @@ public class SpellProjectileDamageSource : DamageSourceBase
     protected SpellContext cachedContext;
 
     // --- IDamageSourceの実実装 ---
-    public void Initialize(float strength, SpellContext spellContext)
+    public virtual void Initialize(float strength, SpellContext spellContext)
     {
         this.cachedStrength = strength;
         this.cachedContext = spellContext;
@@ -43,7 +43,7 @@ public class SpellProjectileDamageSource : DamageSourceBase
         }
 
         // 呪文による放射物の修正（軌道変更やサイズ変更など）を適用
-        spellContext?.ProjectileModifier?.Invoke(gameObject);
+        ApplyProjectileModifier(spellContext);
 
         var components = GetComponents<ISpellProjectileInitListener>();
         foreach (var component in components)
@@ -56,6 +56,11 @@ public class SpellProjectileDamageSource : DamageSourceBase
         {
             Invoke(nameof(Destroy), spellContext.duration);
         }
+    }
+
+    protected virtual void ApplyProjectileModifier(SpellContext spellContext)
+    {
+        spellContext?.ProjectileModifier?.Invoke(gameObject);
     }
 
     protected override void Awake()

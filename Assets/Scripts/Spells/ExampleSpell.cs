@@ -66,8 +66,13 @@ public class ExampleSpell : SpellBase
             trajectoryObj.transform.position = position;
 
             // 修飾子の実行（例：ExpansionSpellによる拡大など）
-            context.ProjectileModifier?.Invoke(trajectoryObj);
+            ApplyTrajectoryModifier(trajectoryObj, context);
         }
+    }
+
+    protected virtual void ApplyTrajectoryModifier(GameObject trajectoryObj, SpellContext context)
+    {
+        context.ProjectileModifier?.Invoke(trajectoryObj);
     }
     [Header("投射物設定")]
     [Tooltip("発射する魔法弾のプレハブ。Rigidbody2Dが必要です。")]

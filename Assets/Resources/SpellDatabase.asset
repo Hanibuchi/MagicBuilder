@@ -63,3 +63,5 @@ MonoBehaviour:
     spellAsset: {fileID: 11400000, guid: deeacc45c8a2bbe4cb477b47556c3223, type: 2}
   - type: 33
     spellAsset: {fileID: 11400000, guid: 54912ffe69f8a8b4e82946c29c813639, type: 2}
+  - type: 34
+    spellAsset: {fileID: 11400000, guid: 91a88df000abd0746ab7dd76dc0ccb3e, type: 2}
