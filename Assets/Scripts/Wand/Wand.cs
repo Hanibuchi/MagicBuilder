@@ -103,6 +103,7 @@ public class Wand
     public float GetTotalCooldown()
     {
         float totalCooldown = 0f;
+        // まず全呪文の基本クールタイムを合計する
         foreach (var spell in AllSpells)
         {
             if (spell != null)
@@ -110,7 +111,17 @@ public class Wand
                 totalCooldown += spell.cooldown;
             }
         }
-        return totalCooldown;
+
+        // 次に各呪文の修正（倍率や加減算）を適用する
+        foreach (var spell in AllSpells)
+        {
+            if (spell != null)
+            {
+                totalCooldown = spell.ModifyCooldown(totalCooldown);
+            }
+        }
+
+        return Mathf.Max(0f, totalCooldown);
     }
 
     /// <summary>

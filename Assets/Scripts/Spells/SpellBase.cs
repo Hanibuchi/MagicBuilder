@@ -298,6 +298,16 @@ public abstract class SpellBase : ScriptableObject
         return currentSpellIndex + 1;
     }
 
+    /// <summary>
+    /// クールダウン時間を計算する際に、この呪文による修正を適用します。
+    /// </summary>
+    /// <param name="currentCooldown">修正前のクールダウン合計値</param>
+    /// <returns>修正後のクールダウン合計値</returns>
+    public virtual float ModifyCooldown(float currentCooldown)
+    {
+        return currentCooldown;
+    }
+
 
     [Header("UI")]
     public Sprite icon;
@@ -390,11 +400,12 @@ public abstract class SpellBase : ScriptableObject
         detailItems.Clear();
 
         // クールタイム項目を動的に生成
-        detailItems.Add(new SpellDescriptionItem
-        {
-            icon = SpellCommonData.Instance.coolDownIcon,
-            descriptionText = $"クールタイム : {cooldown:F1} 秒"
-        });
+        if (cooldown != 0)
+            detailItems.Add(new SpellDescriptionItem
+            {
+                icon = SpellCommonData.Instance.coolDownIcon,
+                descriptionText = $"クールタイム : {cooldown:F1} 秒"
+            });
 
         return detailItems;
     }

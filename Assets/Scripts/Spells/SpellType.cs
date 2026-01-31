@@ -69,5 +69,6 @@ public enum SpellType
     Repulsion,          // 斥力
     Delay,              // 遅延
     FireflyTrigger,     // 蛍トリガー
-    BlackHole           // ブラックホール
+    BlackHole,          // ブラックホール
+    ShortenFlat         // 短縮(固定)
 }
