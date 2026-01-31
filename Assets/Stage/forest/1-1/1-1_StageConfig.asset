@@ -15,13 +15,63 @@ MonoBehaviour:
   stageName: 1-1
   subStageName: "\u6700\u521D\u306E\u30B9\u30C6\u30FC\u30B8"
   SceneName: Stage_Template
-  clearCondition: 1
+  clearCondition: 2
   enemyPhases:
-  - {fileID: 11400000, guid: 68b3f94cc475c5d41b77559da6220a6f, type: 2}
-  - {fileID: 11400000, guid: 46a515402faaf2c45b27b6d135a90dee, type: 2}
-  - {fileID: 11400000, guid: 234bfa7c4d6c18c408c4f18b467babf6, type: 2}
-  - {fileID: 11400000, guid: edb681d8b717ddf47a041e07a67666ca, type: 2}
-  - {fileID: 11400000, guid: 3de6588f8b476224d86a22f37a896ace, type: 2}
-  - {fileID: 11400000, guid: b440d69c097bf38428eab6942f1b5faf, type: 2}
-  - {fileID: 11400000, guid: efd8c7e88cb91104a86de1e0d9564364, type: 2}
+  - conditionType: 0
+    conditionValue: 0
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 133917716359229411, guid: a85e5e272b9727a4db18153d0132e4f4, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+    nextPhases: []
+  - conditionType: 0
+    conditionValue: 10
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 3738908839911435214, guid: 541b412a452207d45909e95a7ee45512, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+    nextPhases: []
+  - conditionType: 0
+    conditionValue: 10
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 3138375678483179165, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+    nextPhases: []
+  - conditionType: 0
+    conditionValue: 10
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 7981699022232761973, guid: 97d64d8723cc2414ab250a3d6ff89bb6, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+    nextPhases: []
+  - conditionType: 0
+    conditionValue: 10
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 0}
+      isBoss: 0
+      customDroppableSpells: []
+    nextPhases: []
+  - conditionType: 0
+    conditionValue: 10
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+    nextPhases: []
+  - conditionType: 0
+    conditionValue: 10
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 5046662643123802713, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+    nextPhases: []
+  puzzleSpells: []
   stageType: 0
