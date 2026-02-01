@@ -85,23 +85,23 @@ public class SpellDatabase : ScriptableObject
         {
             if (spellAsset == null) continue;
 
-            // SpellType.None のものは登録対象外とする
-            if (spellAsset.spellType == SpellType.None)
+            // 文字列を SpellType enum にパースする
+            if (!System.Enum.TryParse(spellAsset.spellType, out SpellType type) || type == SpellType.None)
             {
-                // 必要に応じて警告を出す
-                // Debug.LogWarning($"SpellBase '{spellAsset.name}' の SpellType が None のため、データベースに登録されません。");
+                // パース失敗、または None の場合は登録対象外とする
+                Debug.LogWarning($"SpellBase '{spellAsset.name}' の spellType '{spellAsset.spellType}' が無効なため、データベースに登録されません。");
                 continue;
             }
 
-            if (_spellDictionary.ContainsKey(spellAsset.spellType))
+            if (_spellDictionary.ContainsKey(type))
             {
-                Debug.LogError($"SpellDatabase: SpellType.{spellAsset.spellType} が重複しています！ " +
-                               $"既存: {_spellDictionary[spellAsset.spellType].name}, 新規: {spellAsset.name}");
+                Debug.LogError($"SpellDatabase: SpellType.{type} が重複しています！ " +
+                               $"既存: {_spellDictionary[type].name}, 新規: {spellAsset.name}");
                 continue;
             }
 
-            _spellDictionary.Add(spellAsset.spellType, spellAsset);
-            _reverseSpellDictionary.Add(spellAsset, spellAsset.spellType);
+            _spellDictionary.Add(type, spellAsset);
+            _reverseSpellDictionary.Add(spellAsset, type);
         }
 
         // インスペクター表示用に allSpells リストを更新

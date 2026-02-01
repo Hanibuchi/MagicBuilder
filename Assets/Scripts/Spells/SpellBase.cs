@@ -14,7 +14,7 @@ public abstract class SpellBase : ScriptableObject
     public SpellCategory category = SpellCategory.Attack;
 
     [Tooltip("データベース上の呪文の種類")]
-    public SpellType spellType = SpellType.None;
+    public string spellType = "";
 
     [Tooltip("呪文が発動した際に追加されるクールタイム（秒）")]
     public float cooldown = 0.5f;
