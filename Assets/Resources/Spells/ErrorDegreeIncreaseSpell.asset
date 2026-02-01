@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b60a1adb6b8966d40b47b8481ee5883a, type: 3}
+  m_Name: ErrorDegreeIncreaseSpell
+  m_EditorClassIdentifier: 
+  category: 1
+  spellType: 6
+  cooldown: 0.5
+  spellName: "\u8AA4\u5DEE\u5897\u52A0"
+  purchaseCosts: 64000000c80000009001000020030000
+  icon: {fileID: 3422573988808639745, guid: 926b2e59fa449e74a92407a129deff1d, type: 3}
+  spellDropSound: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
+  spellDropSoundVolume: 1
+  spellDescription: "\u8AA4\u5DEE\u3092\u5897\u52A0\u3055\u305B\u308B\u3002"
+  additionalErrorDegree: 30

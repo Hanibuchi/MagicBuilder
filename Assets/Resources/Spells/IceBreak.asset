@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eead4a52643cdf42bb45d6397bce3c4, type: 3}
+  m_Name: IceBreak
+  m_EditorClassIdentifier: 
+  category: 0
+  spellType: 19
+  cooldown: 0.5
+  spellName: "\u30A2\u30A4\u30B9\u30D6\u30EC\u30A4\u30AF"
+  purchaseCosts: 64000000c80000009001000020030000
+  icon: {fileID: -9012197075394581844, guid: 448d4f2a46008764d80d295d713bc3a5, type: 3}
+  iconColor: {r: 1, g: 1, b: 1, a: 1}
+  iconMaterial: {fileID: 0}
+  spellDescription: "\u5DE8\u5927\u306A\u6C37\u306E\u584A\u3092\u653E\u3064\u3002"
+  trajectoryPrefabInterval: 0.1
+  maxPredictionTime: 2
+  trajectoryMoveSpeed: 0.5
+  projectilePrefab: {fileID: 5088680967346809471, guid: d37c584f0d35b4943b45f1c3b4c0ba99, type: 3}
+  strengthMultiplier: 8
+  duration: 2
+  errorDegree: 1
+  damage:
+    baseDamage: 0
+    woodDamage: 0
+    waterDamage: 0
+    temperatureDamage: -10
+    knockback: 0
+  damageType: 1
+  isClickTrigger: 0

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0b3f76d6ca92534f8b9c97aeab0ddec, type: 3}
+  m_Name: Multiplier3Spell
+  m_EditorClassIdentifier: 
+  category: 3
+  spellType: 11
+  cooldown: 0.5
+  spellName: "3\u500D\u546A\u6587"
+  purchaseCosts: 64000000c80000009001000020030000
+  icon: {fileID: -3233909657102107558, guid: 1a831eb2139920044aca6881c07f60e2, type: 3}
+  iconColor: {r: 1, g: 1, b: 1, a: 1}
+  iconMaterial: {fileID: 0}
+  spellDescription: "\u53F3\u306E\u546A\u6587\u30923\u3064\u306B\u30B3\u30D4\u30FC\u3057\u3066\u53F3\u306B\u4E26\u3079\u308B\u3002"
+  multiplierCount: 3

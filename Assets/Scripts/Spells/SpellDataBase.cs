@@ -49,21 +49,18 @@ public class SpellDatabase : ScriptableObject
 
     // --- データと初期化 ---
 
-    [Header("全ての呪文データのリスト")]
-    [Tooltip("InspectorでSpellTypeとSpellBaseアセットを設定します。")]
-    public List<SpellDataEntry> allSpells = new List<SpellDataEntry>();// いつかprivateにする。
+    [Header("全ての呪文データのリスト (自動ロード)")]
+    [Tooltip("実行時にResourcesフォルダ内のSpellBaseアセットから自動構築されます。")]
+    public List<SpellDataEntry> allSpells = new List<SpellDataEntry>();
 
     /// <summary>
     /// データベースに登録されている、有効な全ての呪文のSpellTypeリストを取得します。
     /// </summary>
     public List<SpellType> GetAllRegisteredSpellTypes()
     {
-        // アセットがnullではないエントリのSpellTypeのみを抽出
-        return allSpells
-               .Where(e => e.spellAsset != null)
-               .Select(e => e.type)
-               .Distinct()
-               .ToList();
+        if (_spellDictionary == null) InitializeDictionary();
+        
+        return _spellDictionary.Keys.ToList();
     }
 
     // 高速検索のための辞書。一度初期化すれば再構築は不要。
@@ -72,24 +69,48 @@ public class SpellDatabase : ScriptableObject
     private Dictionary<SpellBase, SpellType> _reverseSpellDictionary;
 
     /// <summary>
-    /// SpellDataEntryリストから辞書を構築します。（ScriptableObjectロード後に実行）
+    /// ResourcesからSpellBaseアセットを自動ロードし、辞書を構築します。
     /// </summary>
     private void InitializeDictionary()
     {
         if (_spellDictionary != null) return; // 既に初期化済みなら何もしない
 
-        try
+        _spellDictionary = new Dictionary<SpellType, SpellBase>();
+        _reverseSpellDictionary = new Dictionary<SpellBase, SpellType>();
+
+        // Resourcesフォルダ以下の全てのSpellBase（およびその継承クラス）アセットをロード
+        SpellBase[] allSpellAssets = Resources.LoadAll<SpellBase>("");
+
+        foreach (var spellAsset in allSpellAssets)
         {
-            // ToDictionaryを使って、allSpellsリストから一発で辞書を作成
-            _spellDictionary = allSpells.ToDictionary(e => e.type, e => e.spellAsset);
-            // SpellBaseからSpellTypeを引く辞書 (新規)
-            _reverseSpellDictionary = allSpells.ToDictionary(e => e.spellAsset, e => e.type);
+            if (spellAsset == null) continue;
+
+            // SpellType.None のものは登録対象外とする
+            if (spellAsset.spellType == SpellType.None)
+            {
+                // 必要に応じて警告を出す
+                // Debug.LogWarning($"SpellBase '{spellAsset.name}' の SpellType が None のため、データベースに登録されません。");
+                continue;
+            }
+
+            if (_spellDictionary.ContainsKey(spellAsset.spellType))
+            {
+                Debug.LogError($"SpellDatabase: SpellType.{spellAsset.spellType} が重複しています！ " +
+                               $"既存: {_spellDictionary[spellAsset.spellType].name}, 新規: {spellAsset.name}");
+                continue;
+            }
+
+            _spellDictionary.Add(spellAsset.spellType, spellAsset);
+            _reverseSpellDictionary.Add(spellAsset, spellAsset.spellType);
         }
-        catch (System.ArgumentException e)
-        {
-            Debug.LogError($"SpellDatabaseの初期化中に重複したSpellTypeが見つかりました: {e.Message}");
-            _spellDictionary = new Dictionary<SpellType, SpellBase>();
-        }
+
+        // インスペクター表示用に allSpells リストを更新
+        allSpells = _spellDictionary
+            .Select(kvp => new SpellDataEntry { type = kvp.Key, spellAsset = kvp.Value })
+            .OrderBy(e => e.type.ToString())
+            .ToList();
+
+        Debug.Log($"SpellDatabase: {_spellDictionary.Count} 個の呪文を Resources からロードしました。");
     }
 
     // --- 外部アクセス用メソッド ---

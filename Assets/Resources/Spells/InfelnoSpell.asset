@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eead4a52643cdf42bb45d6397bce3c4, type: 3}
+  m_Name: InfelnoSpell
+  m_EditorClassIdentifier: 
+  category: 0
+  spellType: 15
+  cooldown: 0.5
+  spellName: "\u9695\u77F3"
+  purchaseCosts: 64000000c80000009001000020030000
+  icon: {fileID: -2589003602869225033, guid: 1edb04ce52df67b4db59048c53f873e9, type: 3}
+  iconColor: {r: 1, g: 1, b: 1, a: 1}
+  iconMaterial: {fileID: 0}
+  spellDescription: "\u9695\u77F3\u3092\u843D\u3068\u3059\u9B54\u6CD5\u3002\u5F37\u3044\u3002"
+  trajectoryPrefabInterval: 0.1
+  maxPredictionTime: 2
+  trajectoryMoveSpeed: 0.5
+  projectilePrefab: {fileID: 7513211797546581187, guid: 411225eab81196144b9c7bd532df6ac4, type: 3}
+  strengthMultiplier: 50
+  duration: 2
+  errorDegree: 1
+  damage:
+    baseDamage: 0
+    woodDamage: 0
+    waterDamage: 0
+    temperatureDamage: 10
+    knockback: 0
+  damageType: 1
+  isClickTrigger: 0
