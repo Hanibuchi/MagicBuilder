@@ -17,7 +17,7 @@ MonoBehaviour:
   cooldown: 0.1
   spellName: "\u900F\u904E\u6027"
   purchaseCosts: 64000000c80000009001000020030000
-  icon: {fileID: 0}
-  spellDropSound: {fileID: 0}
-  spellDropSoundVolume: 1
-  spellDescription: "\u5F3E\u4E38\u304C\u30C8\u30EA\u30AC\u30FC\u3068\u306A\u308A\u3001\u7269\u7406\u7684\u306A\u885D\u7A81\u3092\u56DE\u907F\u3057\u307E\u3059\uFF08\u5730\u5F62\u306F\u901A\u904E\u3067\u304D\u307E\u305B\u3093\u3002\uFF09"
+  icon: {fileID: -7073256707530704630, guid: 5f0f57a87da854540b7eb2b7b2d62c94, type: 3}
+  iconColor: {r: 1, g: 1, b: 1, a: 1}
+  iconMaterial: {fileID: 0}
+  spellDescription: "\u546A\u6587\u304C\u900F\u904E\u6027\u3092\u6301\u3064\u3088\u3046\u306B\u306A\u308B\u3002"
