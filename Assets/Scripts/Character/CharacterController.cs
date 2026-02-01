@@ -113,12 +113,21 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
 
         if (hitBoxObject != null)
         {
-            Collider2D[] colliders = hitBoxObject.GetComponents<Collider2D>();
+            Collider2D[] colliders = GetHitBoxes();
             foreach (var col in colliders)
             {
                 col.enabled = false;
             }
         }
+    }
+
+    /// <summary>
+    /// ヒット判定用のCollider2Dの配列を返します。
+    /// </summary>
+    public Collider2D[] GetHitBoxes()
+    {
+        if (hitBoxObject == null) return new Collider2D[0];
+        return hitBoxObject.GetComponents<Collider2D>();
     }
 
     /// <summary>
