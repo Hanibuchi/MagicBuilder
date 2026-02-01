@@ -78,9 +78,9 @@ public class SpellContext
     }
 
 
-    public SpellContext()
+    public SpellContext(SpellLayer layer)
     {
-
+        this.layer = layer;
     }
 
     /// <summary>
@@ -89,13 +89,12 @@ public class SpellContext
     /// <returns>値が同じ新しい SpellContext インスタンス。</returns>
     public SpellContext Clone()
     {
-        return new SpellContext
+        return new SpellContext(this.layer)
         {
             // 値型 (Vector2, float) は値そのものがコピーされる
             CasterPosition = this.CasterPosition,
             errorDegree = this.errorDegree,
             duration = this.duration,
-            layer = this.layer,
             bounceCount = this.bounceCount,
             callId = this.callId,
 

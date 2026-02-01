@@ -48,7 +48,7 @@ public class ClickTriggerSpell : MonoBehaviour
                     nextSpell,
                     wandSpells,
                     nextSpellIndex,
-                    new(),
+                    new SpellContext(context.layer),
                     magicCircleDelay
                 );
             }

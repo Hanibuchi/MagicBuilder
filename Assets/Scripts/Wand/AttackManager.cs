@@ -80,7 +80,7 @@ public class AttackManager : MonoBehaviour
             if (targetIndex >= 0 && targetIndex < processedSpells.Count)
             {
                 SpellBase spell = processedSpells[targetIndex];
-                SpellContext context = new SpellContext
+                SpellContext context = new SpellContext(SpellLayer.Attack_Ally)
                 {
                     CasterPosition = casterPositionTransform.position
                 };
@@ -151,10 +151,9 @@ public class AttackManager : MonoBehaviour
         {
             if (targetIndex >= 0 && targetIndex < processedSpells.Count)
             {
-                SpellContext context = new()
+                SpellContext context = new(layer)
                 {
-                    CasterPosition = casterPosition,
-                    layer = layer
+                    CasterPosition = casterPosition
                 };
                 SpellBase spell = processedSpells[targetIndex];
                 spell?.FireSpell(
