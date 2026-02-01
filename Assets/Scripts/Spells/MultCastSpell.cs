@@ -135,6 +135,8 @@ public class MultCastSpell : SpellBase
         context.errorDegree += additionalErrorDegree;
         float interval = delayMultiplier * context.errorDegree;
 
+        Vector2 baseCasterPoint = context.CasterPosition;
+
         // 💡 各ターゲット呪文の発射を独立したコルーチンとして等間隔に実行
         for (int i = 0; i < targetIndices.Length; i++)
         {
@@ -147,9 +149,9 @@ public class MultCastSpell : SpellBase
 
                 SpellBase spellToFire = wandSpells[targetIndex];
 
-                // Contextの複製（Executorも引き継ぐ）
-                SpellContext newContext = context.Clone();
-                newContext.CasterPosition += offset;
+                // 最初の発射の時は元のSpellContextを使用し、それ以外はCloneする
+                SpellContext newContext = (i == 0) ? context : context.Clone();
+                newContext.CasterPosition = baseCasterPoint + offset;
 
                 float delayTime = i * interval;
 
