@@ -51,7 +51,9 @@ public class TriggerProjectileModifier : MonoBehaviour, ISpellProjectileTriggerL
         MagicCircle magicCircle = null;
         GameObject prefab = SpellCommonData.Instance?.magicCirclePrefab;
 
-        _context.CasterPosition = spawnPosition;
+        var newContext = _context.Clone();
+
+        newContext.CasterPosition = spawnPosition;
 
         if (prefab != null)
         {
@@ -67,7 +69,7 @@ public class TriggerProjectileModifier : MonoBehaviour, ISpellProjectileTriggerL
             }
         }
 
-        _nextSpell.FireSpell(_wandSpells, _nextSpellIndex, rotationZ, 1, _context);
+        _nextSpell.FireSpell(_wandSpells, _nextSpellIndex, rotationZ, 1, newContext);
 
         if (magicCircle != null)
         {
