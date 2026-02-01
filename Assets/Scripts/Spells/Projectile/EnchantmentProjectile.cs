@@ -16,18 +16,31 @@ public class EnchantmentProjectile : SpellProjectileDamageSource
 
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
+        ApplyEnchantment(collision.gameObject);
+        // 基本クラスの処理（衝突時のプレハブ生成や破壊など）を呼び出す
+        base.OnCollisionEnter2D(collision);
+    }
+
+    protected override void OnTriggerEnter2D(Collider2D other)
+    {
+        ApplyEnchantment(other.gameObject);
+        // 基本クラスの処理（衝突時のプレハブ生成や破壊など）を呼び出す
+        base.OnTriggerEnter2D(other);
+    }
+
+    private void ApplyEnchantment(GameObject hitObject)
+    {
+        if (hitObject == null) return;
+
         // 衝突した相手に対してモディファイアを適用（地面以外の場合）
-        if (collision.gameObject.layer != LayerMask.NameToLayer("Ground"))
+        if (hitObject.layer != LayerMask.NameToLayer("Ground"))
         {
             if (cachedContext != null && cachedContext.ProjectileModifier != null)
             {
-                cachedContext.ProjectileModifier.Invoke(collision.transform.root.gameObject);
+                cachedContext.ProjectileModifier.Invoke(hitObject.transform.root.gameObject);
                 PlayEnchantSound();
             }
         }
-
-        // 基本クラスの処理（衝突時のプレハブ生成や破壊など）を呼び出す
-        base.OnCollisionEnter2D(collision);
     }
 
     private void PlayEnchantSound()
