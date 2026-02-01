@@ -109,23 +109,26 @@ public class SpellProjectileDamageSource : DamageSourceBase
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        SpawnCollisionPrefab(collision);
+        SpawnCollisionPrefab(collision.contacts.Length > 0 ? collision.contacts[0].point : (Vector2)transform.position);
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             if (GetDamageSourceType() == DamageSourceType.SingleHit)
                 TryConsumePierceCount();
-            else
-                Destroy();
         }
     }
 
-    private void SpawnCollisionPrefab(Collision2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.layer != LayerMask.NameToLayer("Ground"))
+            SpawnCollisionPrefab(transform.position);
+    }
+
+    private void SpawnCollisionPrefab(Vector2 spawnPos)
     {
         if (spawnOnCollisionPrefab == null) return;
 
-        // 衝突点にプレハブを生成
-        Vector2 spawnPos = collision.contacts.Length > 0 ? collision.contacts[0].point : (Vector2)transform.position;
+        // 指定された位置にプレハブを生成
         GameObject spawned = Instantiate(spawnOnCollisionPrefab, spawnPos, Quaternion.identity);
 
         // 生成されたオブジェクトを初期化
