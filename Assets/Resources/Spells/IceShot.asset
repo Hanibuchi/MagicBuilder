@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: IceShot
   m_EditorClassIdentifier: 
   category: 0
-  spellType: 17
+  spellType: 3
   cooldown: 0.5
   spellName: "\u30A2\u30A4\u30B9\u30B7\u30E7\u30C3\u30C8"
   purchaseCosts: 64000000c80000009001000020030000

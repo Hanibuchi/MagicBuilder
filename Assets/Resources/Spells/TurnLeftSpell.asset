@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TurnLeftSpell
   m_EditorClassIdentifier: 
   category: 1
-  spellType: 33
+  spellType: 44
   cooldown: 0.5
   spellName: "\u5DE6\u6298\u546A\u6587"
   purchaseCosts: 64000000c80000009001000020030000

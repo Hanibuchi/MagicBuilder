@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ShortenFlatSpell
   m_EditorClassIdentifier: 
   category: 1
-  spellType: 67
+  spellType: 35
   cooldown: 0
   spellName: "\u56FA\u5B9A\u5024\u77ED\u7E2E"
   purchaseCosts: 64000000c80000009001000020030000

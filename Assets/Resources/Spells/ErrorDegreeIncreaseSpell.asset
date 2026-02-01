@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ErrorDegreeIncreaseSpell
   m_EditorClassIdentifier: 
   category: 1
-  spellType: 6
+  spellType: 30
   cooldown: 0.5
   spellName: "\u8AA4\u5DEE\u5897\u52A0"
   purchaseCosts: 64000000c80000009001000020030000

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BarrierSpell
   m_EditorClassIdentifier: 
   category: 0
-  spellType: 2
+  spellType: 23
   cooldown: 2
   spellName: "\u30D0\u30EA\u30A2"
   purchaseCosts: 64000000c80000009001000020030000

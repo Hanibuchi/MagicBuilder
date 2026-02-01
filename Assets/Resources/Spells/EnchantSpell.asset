@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnchantSpell
   m_EditorClassIdentifier: 
   category: 0
-  spellType: 34
+  spellType: 53
   cooldown: 0.5
   spellName: "\u4ED8\u4E0E"
   purchaseCosts: 64000000c80000009001000020030000

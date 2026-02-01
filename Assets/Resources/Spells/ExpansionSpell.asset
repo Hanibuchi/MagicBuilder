@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ExpansionSpell
   m_EditorClassIdentifier: 
   category: 1
-  spellType: 13
+  spellType: 25
   cooldown: 0.5
   spellName: "\u81A8\u5F35\u546A\u6587"
   purchaseCosts: 64000000c80000009001000020030000

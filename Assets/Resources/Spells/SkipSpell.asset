@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SkipSpell
   m_EditorClassIdentifier: 
   category: 2
-  spellType: 27
+  spellType: 69
   cooldown: 0.5
   spellName: "\u30B9\u30AD\u30C3\u30D7\u546A\u6587"
   purchaseCosts: 64000000c80000009001000020030000

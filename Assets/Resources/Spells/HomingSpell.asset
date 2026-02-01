@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HomingSpell
   m_EditorClassIdentifier: 
   category: 1
-  spellType: 28
+  spellType: 40
   cooldown: 0.5
   spellName: "\u8FFD\u5C3E\u546A\u6587"
   purchaseCosts: 64000000c80000009001000020030000

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ElasticitySpell
   m_EditorClassIdentifier: 
   category: 1
-  spellType: 59
+  spellType: 39
   cooldown: 0.5
   spellName: "\u5F3E\u6027"
   purchaseCosts: 64000000c80000009001000020030000

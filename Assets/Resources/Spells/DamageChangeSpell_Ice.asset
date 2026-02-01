@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DamageChangeSpell_Ice
   m_EditorClassIdentifier: 
   category: 1
-  spellType: 20
+  spellType: 19
   cooldown: 0.5
   spellName: "\u6C37\u30C0\u30E1\u30FC\u30B8\u8FFD\u52A0"
   purchaseCosts: 64000000c80000009001000020030000

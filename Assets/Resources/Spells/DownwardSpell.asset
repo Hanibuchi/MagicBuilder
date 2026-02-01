@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DownwardSpell
   m_EditorClassIdentifier: 
   category: 1
-  spellType: 3
+  spellType: 48
   cooldown: 0.5
   spellName: "\u4E0B\u65B9\u546A\u6587"
   purchaseCosts: 64000000c80000009001000020030000

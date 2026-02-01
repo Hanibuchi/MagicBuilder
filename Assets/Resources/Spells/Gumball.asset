@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Gumball
   m_EditorClassIdentifier: 
   category: 0
-  spellType: 35
+  spellType: 14
   cooldown: 0.5
   spellName: "\u30AC\u30E0\u30DC\u30FC\u30EB"
   purchaseCosts: 64000000c80000009001000020030000

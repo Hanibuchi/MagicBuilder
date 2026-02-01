@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RemoteSpell
   m_EditorClassIdentifier: 
   category: 1
-  spellType: 39
+  spellType: 55
   cooldown: 0.5
   spellName: "\u9060\u9694"
   purchaseCosts: 64000000c80000009001000020030000

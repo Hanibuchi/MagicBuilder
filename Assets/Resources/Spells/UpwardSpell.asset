@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UpwardSpell
   m_EditorClassIdentifier: 
   category: 1
-  spellType: 4
+  spellType: 47
   cooldown: 0.5
   spellName: "\u4E0A\u6607\u546A\u6587"
   purchaseCosts: 64000000c80000009001000020030000

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ExampleSpell_ClickTrigger
   m_EditorClassIdentifier: 
   category: 0
-  spellType: 16
+  spellType: 15
   cooldown: 0.5
   spellName: ExampleSpell_ClickTrigger
   purchaseCosts: 64000000c80000009001000020030000

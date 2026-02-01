@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Multiplier5Spell
   m_EditorClassIdentifier: 
   category: 3
-  spellType: 12
+  spellType: 68
   cooldown: 0.5
   spellName: "5\u500D\u546A\u6587"
   purchaseCosts: 64000000c80000009001000020030000

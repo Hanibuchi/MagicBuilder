@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ChainCast3Spell
   m_EditorClassIdentifier: 
   category: 2
-  spellType: 8
+  spellType: 64
   cooldown: 0.5
   spellName: "3\u9023\u8A60\u5531"
   purchaseCosts: 64000000c80000009001000020030000
