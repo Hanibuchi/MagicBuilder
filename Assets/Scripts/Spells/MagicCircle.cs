@@ -8,7 +8,7 @@ public class MagicCircle : MonoBehaviour
 {
     [Header("コンポーネント設定")]
     [SerializeField, Tooltip("制御対象のSpriteRenderer。インスペクタから設定してください。")]
-    private SpriteRenderer spriteRenderer;
+    private SpriteRenderer[] spriteRenderers;
 
     [Header("音響設定")]
     [SerializeField, Tooltip("表示時に再生するSE")]
@@ -27,9 +27,9 @@ public class MagicCircle : MonoBehaviour
     /// <param name="color">色（オプション。指定しない場合はそのままの色）</param>
     public void Show(float duration, float size = 1f, Color? color = null)
     {
-        if (spriteRenderer == null)
+        if (spriteRenderers == null || spriteRenderers.Length == 0)
         {
-            Debug.LogError($"[MagicCircle] SpriteRenderer is not assigned on {gameObject.name}");
+            Debug.LogError($"[MagicCircle] No SpriteRenderers are assigned on {gameObject.name}");
             return;
         }
 
@@ -40,9 +40,13 @@ public class MagicCircle : MonoBehaviour
         }
 
         // 初期状態の設定
-        Color targetColor = color ?? spriteRenderer.color;
-        targetColor.a = 0f;
-        spriteRenderer.color = targetColor;
+        foreach (var sr in spriteRenderers)
+        {
+            if (sr == null) continue;
+            Color targetColor = color ?? sr.color;
+            targetColor.a = 0f;
+            sr.color = targetColor;
+        }
         transform.localScale = Vector3.zero;
 
         StopAllCoroutines();
@@ -55,7 +59,7 @@ public class MagicCircle : MonoBehaviour
     /// <param name="duration">消滅にかかる時間</param>
     public void Hide(float duration)
     {
-        if (spriteRenderer == null) return;
+        if (spriteRenderers == null || spriteRenderers.Length == 0) return;
 
         StopAllCoroutines();
         StartCoroutine(AnimateHide(duration));
@@ -76,7 +80,9 @@ public class MagicCircle : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             float t = elapsed / duration;
-            ApplyState(Mathf.Lerp(0f, targetSize, t), Mathf.Lerp(0f, TargetAlpha, t));
+            // 正弦波（0からPI/2）を使用してイージング
+            float sineT = Mathf.Sin(t * Mathf.PI * 0.5f);
+            ApplyState(Mathf.Lerp(0f, targetSize, sineT), Mathf.Lerp(0f, TargetAlpha, sineT));
             yield return null;
         }
 
@@ -87,7 +93,11 @@ public class MagicCircle : MonoBehaviour
     {
         float elapsed = 0f;
         float startSize = transform.localScale.x;
-        float startAlpha = spriteRenderer.color.a;
+        float startAlpha = 0f;
+        if (spriteRenderers != null && spriteRenderers.Length > 0 && spriteRenderers[0] != null)
+        {
+            startAlpha = spriteRenderers[0].color.a;
+        }
 
         if (duration <= 0)
         {
@@ -99,7 +109,9 @@ public class MagicCircle : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             float t = elapsed / duration;
-            ApplyState(Mathf.Lerp(startSize, 0f, t), Mathf.Lerp(startAlpha, 0f, t));
+            // 正弦波を使用してイージング
+            float sineT = Mathf.Sin(t * Mathf.PI * 0.5f);
+            ApplyState(Mathf.Lerp(startSize, 0f, sineT), Mathf.Lerp(startAlpha, 0f, sineT));
             yield return null;
         }
 
@@ -109,8 +121,12 @@ public class MagicCircle : MonoBehaviour
     private void ApplyState(float size, float alpha)
     {
         transform.localScale = Vector3.one * size;
-        Color c = spriteRenderer.color;
-        c.a = alpha;
-        spriteRenderer.color = c;
+        foreach (var sr in spriteRenderers)
+        {
+            if (sr == null) continue;
+            Color c = sr.color;
+            c.a = alpha;
+            sr.color = c;
+        }
     }
 }

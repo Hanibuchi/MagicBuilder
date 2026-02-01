@@ -37,29 +37,6 @@ public class OrbitalSatellite : MonoBehaviour
         {
             float initSpeed = _rb.linearVelocity.magnitude;
 
-            // // 標準的な半径を求める: r = v^2 / a
-            // if (_radius > 0.001f && initSpeed > 0.001f)
-            // {
-            //     _radius = (initSpeed * initSpeed) / _radius;
-
-            //     // 現在の中心からの方向ベクトルを維持しつつ、距離を計算した _radius に調整
-            //     Vector2 currentOffsetDir = ((Vector2)transform.position - (Vector2)_center.position).normalized;
-
-            //     // 方向が不定（重なっている）場合は、初期設定時の向き（上下）を再現
-            //     if (currentOffsetDir.sqrMagnitude < 0.01f)
-            //     {
-            //         float angle = _center.eulerAngles.z * Mathf.Deg2Rad;
-            //         Vector2 up = new Vector2(-Mathf.Sin(angle), Mathf.Cos(angle));
-            //         currentOffsetDir = up * (_isUpper ? 1f : -1f);
-            //     }
-
-            //     // 自身を計算された公転半径の位置へ移動
-            //     transform.position = (Vector2)_center.position + currentOffsetDir * _radius;
-            // }
-            // else
-            // {
-            //     _radius = Vector2.Distance(transform.position, _center.position);
-            // }
             omega2 = (initSpeed * initSpeed) / (_radius * _radius);
 
             // 主弾の速度を衛星に加算して同期させる

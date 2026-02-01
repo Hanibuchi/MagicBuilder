@@ -101,10 +101,10 @@ public class OrbitCenter : MonoBehaviour
             bool isUpper = p.index % 2 == 0;
             satContext.ProjectileModifier += satObj =>
             {
-                if (satObj != null)
+                if (satObj != null && this != null)
                 {
                     var orbital = satObj.AddComponent<OrbitalSatellite>();
-                    orbital.Init(this.transform, isUpper, _radius);
+                    orbital.Init(transform, isUpper, _radius);
                 }
             };
 
