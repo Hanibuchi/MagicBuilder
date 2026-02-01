@@ -26,3 +26,4 @@ MonoBehaviour:
     m_Bits: 1024
   searchRange: 10
   springConstant: 1
+  characterSpringConstant: 50

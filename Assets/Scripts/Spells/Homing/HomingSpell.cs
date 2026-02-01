@@ -12,6 +12,7 @@ public class HomingSpell : SpellBase
     [SerializeField] private LayerMask targetLayer;
     [SerializeField] private float searchRange = 10f;
     [SerializeField] private float springConstant = 1f; // ばね定数
+    [SerializeField] private float characterSpringConstant = 50f; // プロジェクタイルがキャラクターの場合のばね定数
 
     readonly int[] nextSpellOffsets = { 1 };
 
@@ -48,16 +49,22 @@ public class HomingSpell : SpellBase
         // context.ProjectileModifier にホーミングコンポーネントの付与と初期化を登録
         context.ProjectileModifier += (projectile) =>
         {
-            if (!projectile.TryGetComponent<HomingMover>(out var homing))
-            {
-                homing = projectile.AddComponent<HomingMover>();
-            }
-            // context のレイヤー設定に基づいたターゲットレイヤーを優先し、
-            // 未設定（デフォルト）の場合はインスペクタの targetLayer を使用する
             LayerMask mask = context.GetTargetLayerMask();
-            homing.Initialize(mask, searchRange, springConstant);
-        };
+            // プロジェクタイル自体にCharacterControllerがアタッチされているか（モブ召喚など）で値を切り替える
+            float targetSpringConstant = projectile.GetComponent<MyCharacterController>() != null ? characterSpringConstant : springConstant;
 
+            if (projectile.TryGetComponent<HomingMover>(out var homing))
+            {
+                // すでにHomingMoverがある場合はばね定数を加算する
+                homing.AddSpringConstant(targetSpringConstant);
+            }
+            else
+            {
+                // まだない場合は新しく追加して初期化する
+                homing = projectile.AddComponent<HomingMover>();
+                homing.Initialize(mask, searchRange, targetSpringConstant);
+            }
+        };
         FireSpellForNextSpells(
             GetNextSpellOffsets(wandSpells, currentSpellIndex),
             wandSpells, currentSpellIndex, rotationZ, strength, context

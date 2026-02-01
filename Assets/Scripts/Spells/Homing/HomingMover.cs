@@ -23,6 +23,11 @@ public class HomingMover : MonoBehaviour
         _isInitialized = true;
     }
 
+    public void AddSpringConstant(float value)
+    {
+        _springConstant += value;
+    }
+
     private void FixedUpdate()
     {
         if (!_isInitialized || _rb == null) return;
@@ -60,6 +65,9 @@ public class HomingMover : MonoBehaviour
 
         foreach (var col in colliders)
         {
+            // 自身や自身の子オブジェクトは除外する
+            if (col.transform.IsChildOf(transform)) continue;
+
             float distance = Vector2.Distance(transform.position, col.transform.position);
             if (distance < minDistance)
             {
