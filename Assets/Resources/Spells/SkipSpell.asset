@@ -15,11 +15,10 @@ MonoBehaviour:
   category: 2
   spellType: Skip
   cooldown: 0.5
-  spellName: "\u30B9\u30AD\u30C3\u30D7\u546A\u6587"
+  spellName: "\u30B9\u30AD\u30C3\u30D7"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: -1359687509585698482, guid: 6d568e3ae76b641438fbfc7e563229c4, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
   spellDescription: "1\u3064\u53F3\u306E\u546A\u6587\u3092\u30B9\u30AD\u30C3\u30D7\u3057\u3001\u305D\u306E\u6B21\u306E\u546A\u6587\u3092\u547C\u3073\u51FA\u3059\u3002"
   nextSpellOffsets: 02000000
-

@@ -15,7 +15,7 @@ MonoBehaviour:
   category: 2
   spellType: FiveChainCast
   cooldown: 0.5
-  spellName: "5\u9023\u8A60\u5531"
+  spellName: "\u591A\u91CD\u8A60\u5531 x5"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: 7515992528933243258, guid: 47f3e55d9434f84498d6dad85330ac95, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
@@ -31,4 +31,3 @@ MonoBehaviour:
   - {x: 1, y: 0}
   magicCircleDelay: 0.5
   additionalErrorDegree: 1
-

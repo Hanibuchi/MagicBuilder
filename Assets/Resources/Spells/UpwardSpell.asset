@@ -15,7 +15,7 @@ MonoBehaviour:
   category: 1
   spellType: Upward
   cooldown: 0.5
-  spellName: "\u4E0A\u65B9\u546A\u6587"
+  spellName: "\u4E0A\u65B9"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: -1618704493430669994, guid: 04eafb0e59abe904581062d982c3cc1e, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}

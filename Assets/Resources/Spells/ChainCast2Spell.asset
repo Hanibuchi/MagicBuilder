@@ -15,7 +15,7 @@ MonoBehaviour:
   category: 2
   spellType: TwoChainCast
   cooldown: 0.5
-  spellName: "2\u9023\u8A60\u5531"
+  spellName: "\u591A\u91CD\u8A60\u5531 x2"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: -4528508259275424184, guid: 47f3e55d9434f84498d6dad85330ac95, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
@@ -28,4 +28,3 @@ MonoBehaviour:
   - {x: 0.5, y: 0.5}
   magicCircleDelay: 0.5
   additionalErrorDegree: 1
-
