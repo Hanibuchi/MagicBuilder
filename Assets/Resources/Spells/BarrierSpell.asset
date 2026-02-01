@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BarrierSpell
   m_EditorClassIdentifier: 
   category: 0
-  spellType: 23
+  spellType: Barrier
   cooldown: 2
   spellName: "\u30D0\u30EA\u30A2"
   purchaseCosts: 64000000c80000009001000020030000
@@ -43,3 +43,4 @@ MonoBehaviour:
   - {fileID: 1154555468632637730, guid: f3717e44b85f01d47bab85eb64340030, type: 3}
   barrierHP: 50
   duration: 10
+

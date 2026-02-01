@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: IceBreak
   m_EditorClassIdentifier: 
   category: 0
-  spellType: 7
+  spellType: IceBreak
   cooldown: 0.5
   spellName: "\u30A2\u30A4\u30B9\u30D6\u30EC\u30A4\u30AF"
   purchaseCosts: 64000000c80000009001000020030000
@@ -36,3 +36,4 @@ MonoBehaviour:
     knockback: 0
   damageType: 1
   isClickTrigger: 0
+

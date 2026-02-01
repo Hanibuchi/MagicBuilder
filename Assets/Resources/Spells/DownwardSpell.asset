@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DownwardSpell
   m_EditorClassIdentifier: 
   category: 1
-  spellType: 48
+  spellType: Downward
   cooldown: 0.5
   spellName: "\u4E0B\u65B9\u546A\u6587"
   purchaseCosts: 64000000c80000009001000020030000
@@ -22,3 +22,4 @@ MonoBehaviour:
   iconMaterial: {fileID: 0}
   spellDescription: "\u4E0B\u5411\u304D\u306B\u767A\u5C04\u3059\u308B\u3002"
   direction: 0
+

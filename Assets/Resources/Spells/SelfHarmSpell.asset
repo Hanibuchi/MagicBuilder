@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SelfHarmSpell
   m_EditorClassIdentifier: 
   category: 1
-  spellType: 54
+  spellType: SelfHarm
   cooldown: 0.5
   spellName: "\u81EA\u50B7"
   purchaseCosts: 64000000c80000009001000020030000
@@ -21,3 +21,4 @@ MonoBehaviour:
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
   spellDescription: "\u8A60\u5531\u8005\u3092\u50B7\u3064\u3051\u308B\u3088\u3046\u306B\u306A\u308B\u3002"
+

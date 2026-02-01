@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SkipSpell
   m_EditorClassIdentifier: 
   category: 2
-  spellType: 69
+  spellType: Skip
   cooldown: 0.5
   spellName: "\u30B9\u30AD\u30C3\u30D7\u546A\u6587"
   purchaseCosts: 64000000c80000009001000020030000
@@ -22,3 +22,4 @@ MonoBehaviour:
   iconMaterial: {fileID: 0}
   spellDescription: "1\u3064\u53F3\u306E\u546A\u6587\u3092\u30B9\u30AD\u30C3\u30D7\u3057\u3001\u305D\u306E\u6B21\u306E\u546A\u6587\u3092\u547C\u3073\u51FA\u3059\u3002"
   nextSpellOffsets: 02000000
+

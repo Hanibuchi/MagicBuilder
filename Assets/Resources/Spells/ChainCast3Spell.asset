@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ChainCast3Spell
   m_EditorClassIdentifier: 
   category: 2
-  spellType: 64
+  spellType: ThreeChainCast
   cooldown: 0.5
   spellName: "3\u9023\u8A60\u5531"
   purchaseCosts: 64000000c80000009001000020030000
@@ -29,3 +29,4 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5}
   magicCircleDelay: 0.5
   additionalErrorDegree: 1
+

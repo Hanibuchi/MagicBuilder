@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ChainCast2Spell
   m_EditorClassIdentifier: 
   category: 2
-  spellType: 63
+  spellType: TwoChainCast
   cooldown: 0.5
   spellName: "2\u9023\u8A60\u5531"
   purchaseCosts: 64000000c80000009001000020030000
@@ -28,3 +28,4 @@ MonoBehaviour:
   - {x: 0.5, y: 0.5}
   magicCircleDelay: 0.5
   additionalErrorDegree: 1
+

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ElasticitySpell
   m_EditorClassIdentifier: 
   category: 1
-  spellType: 39
+  spellType: Elasticity
   cooldown: 0.5
   spellName: "\u5F3E\u6027"
   purchaseCosts: 64000000c80000009001000020030000
@@ -22,3 +22,4 @@ MonoBehaviour:
   iconMaterial: {fileID: 0}
   spellDescription: "\u5358\u767A\u30D2\u30C3\u30C8\u653B\u6483\u304C\u30D0\u30A6\u30F3\u30C9\u3059\u308B\u3088\u3046\u306B\u306A\u308B\u3002"
   additionalBounceCount: 5
+

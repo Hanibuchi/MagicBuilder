@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DamageChangeSpell_Knockback
   m_EditorClassIdentifier: 
   category: 1
-  spellType: 33
+  spellType: AdditionalKnockback
   cooldown: 0.5
   spellName: "\u30CE\u30C3\u30AF\u30D0\u30C3\u30AF"
   purchaseCosts: 64000000c80000009001000020030000
@@ -28,3 +28,4 @@ MonoBehaviour:
     temperatureDamage: 0
     healing: 0
     knockback: 100
+

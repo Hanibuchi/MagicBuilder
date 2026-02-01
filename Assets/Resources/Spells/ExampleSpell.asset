@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ExampleSpell
   m_EditorClassIdentifier: 
   category: 0
-  spellType: 1
+  spellType: ExampleSpell
   cooldown: 0.5
   spellName: Example Spell
   purchaseCosts: 64000000c80000009001000020030000
@@ -36,3 +36,4 @@ MonoBehaviour:
     knockback: 0
   damageType: 0
   isClickTrigger: 0
+

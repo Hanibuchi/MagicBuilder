@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: InfelnoSpell
   m_EditorClassIdentifier: 
   category: 0
-  spellType: 8
+  spellType: Inferno
   cooldown: 0.5
   spellName: "\u9695\u77F3"
   purchaseCosts: 64000000c80000009001000020030000
@@ -36,3 +36,4 @@ MonoBehaviour:
     knockback: 0
   damageType: 1
   isClickTrigger: 0
+

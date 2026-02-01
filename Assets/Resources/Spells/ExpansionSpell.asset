@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ExpansionSpell
   m_EditorClassIdentifier: 
   category: 1
-  spellType: 25
+  spellType: Expansion
   cooldown: 0.5
   spellName: "\u81A8\u5F35\u546A\u6587"
   purchaseCosts: 64000000c80000009001000020030000
@@ -22,3 +22,4 @@ MonoBehaviour:
   iconMaterial: {fileID: 0}
   spellDescription: "\u546A\u6587\u3092\u81A8\u5F35\u3055\u305B\u308B\u3002"
   scaleMultiplier: 1.5
+
