@@ -23,24 +23,22 @@ public class BladeSpell : ExampleSpell
         var key = (currentSpellIndex, context.callId);
 
         // 1. お掃除処理
+        if (bladeDisplayObjects.TryGetValue(key, out var oldObj))
+        {
+            if (oldObj != null)
+                PoolManager.Instance.ReturnToPool(PoolType.BladeTrajectory, oldObj);
+            bladeDisplayObjects.Remove(key);
+        }
+
         if (clearLine)
         {
-            if (bladeDisplayObjects.TryGetValue(key, out var obj))
-            {
-                if (obj != null)
-                    PoolManager.Instance.ReturnToPool(PoolType.BladeTrajectory, obj);
-                bladeDisplayObjects.Remove(key);
-            }
             return;
         }
 
-        // 2. オブジェクトの準備（1つだけ生成・再利用）
-        if (!bladeDisplayObjects.TryGetValue(key, out var bladeObj) || bladeObj == null)
-        {
-            bladeObj = PoolManager.Instance.GetFromPool(PoolType.BladeTrajectory);
-            if (bladeObj == null) return;
-            bladeDisplayObjects[key] = bladeObj;
-        }
+        // 2. オブジェクトの準備（表示のたびにプールから新しく取得）
+        GameObject bladeObj = PoolManager.Instance.GetFromPool(PoolType.BladeTrajectory);
+        if (bladeObj == null) return;
+        bladeDisplayObjects[key] = bladeObj;
 
         // 3. 位置の更新
         bladeObj.transform.position = context.CasterPosition;
