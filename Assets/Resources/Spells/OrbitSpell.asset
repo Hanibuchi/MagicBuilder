@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03d99ce351329a7419fcb378d91cb888, type: 3}
+  m_Name: OrbitSpell
+  m_EditorClassIdentifier: 
+  category: 3
+  spellType: Orbit
+  cooldown: 0.2
+  spellName: "\u516C\u8EE2"
+  purchaseCosts: 64000000c80000009001000020030000
+  icon: {fileID: 3957399766666169555, guid: dc10d637d950bd94eaba4f13de5d3bbe, type: 3}
+  iconColor: {r: 1, g: 1, b: 1, a: 1}
+  iconMaterial: {fileID: 0}
+  spellDescription: "\u6700\u521D\u306E\u546A\u6587\u306E\u5468\u308A\u3092\u5F8C\u306E2\u3064\u306E\u546A\u6587\u304C\u516C\u8EE2\u3059\u308B\u3002"
+  magicCircleDelay: 0.5
