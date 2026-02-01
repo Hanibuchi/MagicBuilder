@@ -91,6 +91,7 @@ public class ClickTriggerProjectileModifier : MonoBehaviour, ISpellProjectileDes
         {
             magicCircle.Hide(magicCircleDelay);
         }
+        Destroy(this, magicCircleDelay);
     }
 }
 
