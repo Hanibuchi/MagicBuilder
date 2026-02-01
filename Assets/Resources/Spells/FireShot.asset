@@ -23,6 +23,7 @@ MonoBehaviour:
   spellDescription: "\u708E\u306E\u5149\u5F3E\u3092\u767A\u5C04\u3059\u308B\u3002"
   trajectoryPrefabInterval: 0.1
   trajectoryMoveSpeed: 0.5
+  maxPredictionTime: 5
   projectilePrefab: {fileID: 2314924996833699740, guid: c1ca8e4ced525bb42a4a938a36fab847, type: 3}
   strengthMultiplier: 15
   duration: 2
@@ -36,4 +37,3 @@ MonoBehaviour:
     knockback: 0
   damageType: 0
   isClickTrigger: 0
-

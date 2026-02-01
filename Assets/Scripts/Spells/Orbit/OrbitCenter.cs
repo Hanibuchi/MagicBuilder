@@ -12,16 +12,18 @@ public class OrbitCenter : MonoBehaviour
     private List<int> _satelliteIndices;
     private SpellContext _context;
     private float _magicCircleDelay;
+    private float _radius;
 
     private Rigidbody2D _rb;
 
-    public void Init(List<SpellBase> satelliteSpells, List<SpellBase> wandSpells, List<int> satelliteIndices, SpellContext context, float magicCircleDelay)
+    public void Init(List<SpellBase> satelliteSpells, List<SpellBase> wandSpells, List<int> satelliteIndices, SpellContext context, float magicCircleDelay, float radius)
     {
         _satelliteSpells = satelliteSpells;
         _wandSpells = wandSpells;
         _satelliteIndices = satelliteIndices;
         _context = context;
         _magicCircleDelay = magicCircleDelay;
+        _radius = radius;
 
         _rb = GetComponent<Rigidbody2D>();
 
@@ -57,11 +59,10 @@ public class OrbitCenter : MonoBehaviour
                 spellSpeed = example.StrengthMultiplier;
             }
 
-            float radius = spellSpeed * 0.15f;
             float side = (i % 2 == 0) ? 1f : -1f;
-            Vector2 offset = radius * side * up;
+            Vector2 offset = _radius * side * up;
 
-            satelliteParams.Add((spell, offset, radius, spellSpeed, i));
+            satelliteParams.Add((spell, offset, _radius, spellSpeed, i));
         }
 
         // 1. 全ての魔法陣を同時に表示
@@ -97,12 +98,13 @@ public class OrbitCenter : MonoBehaviour
             satContext.CasterPosition = transform.position + (Vector3)currentOffset;
 
             // 衛星にOrbitalSatelliteコンポーネントを付与するModifierを追加
+            bool isUpper = p.index % 2 == 0;
             satContext.ProjectileModifier += satObj =>
             {
                 if (satObj != null)
                 {
                     var orbital = satObj.AddComponent<OrbitalSatellite>();
-                    orbital.Init(this.transform, p.radius, p.speed);
+                    orbital.Init(this.transform, isUpper, _radius);
                 }
             };
 

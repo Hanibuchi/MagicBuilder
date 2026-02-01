@@ -9,6 +9,9 @@ public class OrbitSpell : SpellBase
     [Tooltip("魔法陣を表示してから発射するまでの待ち時間")]
     public float magicCircleDelay = 0.5f;
 
+    [Tooltip("中心に向かう力の倍率")]
+    public float radius = 2f;
+
     // キャッシュ用
     [System.NonSerialized] private List<SpellBase> _lastWandSpells;
     [System.NonSerialized] private Dictionary<int, int[]> _cachedIndicesMap = new Dictionary<int, int[]>();
@@ -108,7 +111,8 @@ public class OrbitSpell : SpellBase
                             wandSpells,
                             satelliteIndices.ToList(),
                             new(context.layer),
-                            magicCircleDelay
+                            magicCircleDelay,
+                            radius
                         );
                     }
                 };
