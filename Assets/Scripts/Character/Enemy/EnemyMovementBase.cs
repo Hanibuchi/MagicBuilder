@@ -9,6 +9,10 @@ public class EnemyMovementBase : MonoBehaviour
     [SerializeField]
     protected float moveSpeed = 1.0f; // 単位時間あたりの移動速度
 
+    [Tooltip("目標速度への追従強度。高いほど物理的な干渉に強くなります。")]
+    [SerializeField]
+    protected float movementForceGain = 10.0f;
+
     // 通常の移動速度を保持するフィールドを追加
     protected float defaultMoveSpeed;
 
@@ -82,12 +86,16 @@ public class EnemyMovementBase : MonoBehaviour
     /// </summary>
     protected virtual void HandleMovement()
     {
-        // デフォルトの動き: 左に移動
-        // Velocityを直接操作
+        // 直接速度を上書きせず、目標速度に近づくように力を加えることで
+        // 外部からの AddForce（ノックバックや引き寄せなど）と共存させます。
         if (rb != null)
         {
-            // 更新された moveSpeed を使用
-            rb.linearVelocity = new Vector2(-moveSpeed, rb.linearVelocity.y);
+            float targetVelocityX = -moveSpeed;
+            float currentVelocityX = rb.linearVelocity.x;
+
+            // 目標速度との差分を埋めるための力を計算
+            float forceX = (targetVelocityX - currentVelocityX) * rb.mass * movementForceGain;
+            rb.AddForce(new Vector2(forceX, 0));
         }
     }
 
