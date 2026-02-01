@@ -37,9 +37,10 @@ public class SpellProjectileDamageSource : DamageSourceBase
         {
             var layer = spellContext.GetUnityLayer(true);
             // SpellContext の Layer 情報に基づいて自身のレイヤーを設定
-            gameObject.layer = layer;
-            foreach (Transform child in gameObject.transform)
-                child.gameObject.layer = layer;
+            foreach (Transform t in gameObject.GetComponentsInChildren<Transform>(true))
+            {
+                t.gameObject.layer = layer;
+            }
 
             if (spellContext.bounceCount > 0)
             {
