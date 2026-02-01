@@ -138,4 +138,6 @@ public enum PoolType
 {
     // 呪文の軌跡表示用
     Trajectory,
+    // ブレイド呪文の予測表示用
+    BladeTrajectory,
 }
