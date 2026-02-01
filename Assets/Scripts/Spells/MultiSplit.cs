@@ -57,8 +57,11 @@ public class MultiSplit : SpellBase
                 ? positionOffsets[r]
                 : Vector2.zero;
 
+            // 発射角度 (rotationZ) に合わせてオフセットを回転させる
+            Vector2 rotatedOffset = Quaternion.Euler(0, 0, rotationZ) * offset;
+
             SpellContext newContext = (r == 0) ? context : context.Clone();
-            newContext.CasterPosition = baseCasterPoint + offset;
+            newContext.CasterPosition = baseCasterPoint + rotatedOffset;
 
             spellToDisplay.DisplayAimingLine(
                 wandSpells,
@@ -95,9 +98,12 @@ public class MultiSplit : SpellBase
                 ? positionOffsets[r]
                 : Vector2.zero;
 
+            // 発射角度 (rotationZ) に合わせてオフセットを回転させる
+            Vector2 rotatedOffset = Quaternion.Euler(0, 0, rotationZ) * offset;
+
             // 最初の発射の時は元のSpellContextを使用し、それ以外はCloneする
             SpellContext newContext = (r == 0) ? context : context.Clone();
-            newContext.CasterPosition = baseCasterPoint + offset;
+            newContext.CasterPosition = baseCasterPoint + rotatedOffset;
 
             float delayTime = r * interval;
 

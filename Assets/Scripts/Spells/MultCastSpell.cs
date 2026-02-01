@@ -98,12 +98,15 @@ public class MultCastSpell : SpellBase
                     ? positionOffsets[i]
                     : Vector2.zero;
 
+                // 発射角度 (rotationZ) に合わせてオフセットを回転させる
+                Vector2 rotatedOffset = Quaternion.Euler(0, 0, rotationZ) * offset;
+
                 SpellBase spellToDisplay = wandSpells[targetIndex];
 
                 SpellContext newContext = context;
                 if (i > 0)
                     newContext = context.Clone();
-                newContext.CasterPosition = baseCasterPoint + offset;
+                newContext.CasterPosition = baseCasterPoint + rotatedOffset;
 
                 // 対象の呪文のDisplayAimingLineを呼び出し
                 spellToDisplay?.DisplayAimingLine(
@@ -147,11 +150,14 @@ public class MultCastSpell : SpellBase
                     ? positionOffsets[i]
                     : Vector2.zero;
 
+                // 発射角度 (rotationZ) に合わせてオフセットを回転させる
+                Vector2 rotatedOffset = Quaternion.Euler(0, 0, rotationZ) * offset;
+
                 SpellBase spellToFire = wandSpells[targetIndex];
 
                 // 最初の発射の時は元のSpellContextを使用し、それ以外はCloneする
                 SpellContext newContext = (i == 0) ? context : context.Clone();
-                newContext.CasterPosition = baseCasterPoint + offset;
+                newContext.CasterPosition = baseCasterPoint + rotatedOffset;
 
                 float delayTime = i * interval;
 
