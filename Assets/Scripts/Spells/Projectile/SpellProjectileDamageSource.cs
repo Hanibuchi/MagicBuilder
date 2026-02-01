@@ -97,6 +97,13 @@ public class SpellProjectileDamageSource : DamageSourceBase
     /// <returns>設定されたDamage構造体。</returns>
     public override Damage GetDamage()
     {
+        // トリガーイベントの実行
+        var triggerListeners = GetComponents<ISpellProjectileTriggerListener>();
+        foreach (var listener in triggerListeners)
+        {
+            listener?.OnTrigger();
+        }
+
         return damageData;
     }
 
@@ -184,4 +191,9 @@ public interface ISpellProjectileInitListener
 public interface ISpellProjectileDestroyListener
 {
     void Destroy();
+}
+
+public interface ISpellProjectileTriggerListener
+{
+    void OnTrigger();
 }
