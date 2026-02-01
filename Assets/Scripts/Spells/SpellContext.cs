@@ -20,6 +20,11 @@ public class SpellContext
     public SpellLayer layer;
     public int bounceCount = 0;
     /// <summary>
+    /// 同一インデックスの呪文が複数呼び出される場合（多重詠唱など）に、
+    /// それぞれの呼び出しを識別するためのID。
+    /// </summary>
+    public int callId = 0;
+    /// <summary>
     /// 呪文の持続時間（秒）。-1の場合は無限。
     /// </summary>
     public float duration = 0;
@@ -92,6 +97,7 @@ public class SpellContext
             duration = this.duration,
             layer = this.layer,
             bounceCount = this.bounceCount,
+            callId = this.callId,
 
             // 参照型 (Action) は参照がコピーされるが、Actionは不変(イミュータブル)なので問題なし
             ProjectileModifier = this.ProjectileModifier,

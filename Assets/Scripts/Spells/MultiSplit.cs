@@ -62,6 +62,7 @@ public class MultiSplit : SpellBase
 
             SpellContext newContext = (r == 0) ? context : context.Clone();
             newContext.CasterPosition = baseCasterPoint + rotatedOffset;
+            newContext.callId = r; // 繰り返し回数をIDとして設定
 
             spellToDisplay.DisplayAimingLine(
                 wandSpells,
@@ -104,6 +105,7 @@ public class MultiSplit : SpellBase
             // 最初の発射の時は元のSpellContextを使用し、それ以外はCloneする
             SpellContext newContext = (r == 0) ? context : context.Clone();
             newContext.CasterPosition = baseCasterPoint + rotatedOffset;
+            newContext.callId = r;
 
             float delayTime = r * interval;
 

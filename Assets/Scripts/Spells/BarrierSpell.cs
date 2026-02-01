@@ -17,7 +17,7 @@ public class BarrierSpell : SpellBase
         public GameObject instance;
         public int lastPrefabIndex = -1;
     }
-    private Dictionary<int, BarrierInstanceInfo> barrierInstancesByIndex = new();
+    private Dictionary<(int index, int callId), BarrierInstanceInfo> barrierInstancesByCall = new();
 
     /// <summary>
     /// Strengthに応じてバリアのプレハブを選択し、軌道（Aiming Line）として表示します。
@@ -27,10 +27,11 @@ public class BarrierSpell : SpellBase
         float strength, SpellContext context,
         bool clearLine = false)
     {
-        if (!barrierInstancesByIndex.TryGetValue(currentSpellIndex, out var info))
+        var key = (currentSpellIndex, context.callId);
+        if (!barrierInstancesByCall.TryGetValue(key, out var info))
         {
             info = new BarrierInstanceInfo();
-            barrierInstancesByIndex[currentSpellIndex] = info;
+            barrierInstancesByCall[key] = info;
         }
 
         // 1. 補助線のクリア処理
