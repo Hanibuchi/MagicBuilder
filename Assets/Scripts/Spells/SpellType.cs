@@ -70,5 +70,7 @@ public enum SpellType
     Delay,              // 遅延
     FireflyTrigger,     // 蛍トリガー
     BlackHole,          // ブラックホール
-    ShortenFlat         // 短縮(固定)
+    ShortenFlat,        // 短縮(固定)
+    Penetration,        // 透過性
+    Orbit,         // 公転
 }
