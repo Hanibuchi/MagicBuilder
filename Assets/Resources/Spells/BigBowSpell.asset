@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9db08735acf9ab4ebc9bfd4ff872908, type: 3}
+  m_Name: BigBowSpell
+  m_EditorClassIdentifier: 
+  category: 0
+  spellType: GiantArrow
+  cooldown: 0.5
+  spellName: "\u5DE8\u5927\u77E2"
+  purchaseCosts: 64000000c80000009001000020030000
+  icon: {fileID: 343932831540123903, guid: 6e23ff91565431641bbf48ab71e4369f, type: 3}
+  iconColor: {r: 1, g: 1, b: 1, a: 1}
+  iconMaterial: {fileID: 0}
+  spellDescription: "\u5DE8\u5927\u306A\u77E2\u3092\u5C04\u51FA\u3059\u308B\u3002"
+  trajectoryPrefabInterval: 0.1
+  trajectoryMoveSpeed: 0.5
+  maxPredictionTime: 5
+  projectilePrefab: {fileID: 8189634300211145312, guid: bbc6b05aabd1e2442a86f81b99d24bdd, type: 3}
+  strengthMultiplier: 10
+  duration: 1
+  errorDegree: 2
+  damage:
+    baseDamage: 2
+    woodDamage: 0
+    waterDamage: 0
+    temperatureDamage: 0
+    healing: 0
+    knockback: 0
+  damageType: 2
+  isClickTrigger: 0
+  bowPrefab: {fileID: 1271507311385033653, guid: d76b715d01f917f4d9667bb262b65e88, type: 3}
+  bowDelay: 0.8
+  bowDistance: 1
+  bowLingerTime: 0.3
+  bowScale: 1
+  useConstantScale: 1
