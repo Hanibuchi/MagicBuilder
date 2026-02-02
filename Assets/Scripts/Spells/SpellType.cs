@@ -65,10 +65,10 @@ public enum SpellType
     InvertVertical,   // 上下反転
     Upward,         // 上方
     Downward,       // 下方
-    MoveUp,         // 上昇（速度）
-    MoveDown,       // 下降（速度）
-    MoveLeft,       // 左進
-    MoveRight,      // 右進
+    AccelUp,         // 上昇（速度）
+    AccelDown,       // 下降（速度）
+    AccelLeft,       // 左進
+    AccelRight,      // 右進
 
     // --- 【特殊・挙動変化】 ---
     Enchant,        // 付与
