@@ -25,6 +25,14 @@ public class CharacterHealth : MonoBehaviour
     [Tooltip("氷ダメージによる減速の最大時間")]
     public float maxSlowDurationOnIce = 10.0f;
 
+    [Header("ダメージ蓄積設定")]
+    [Tooltip("ダメージを適用するまで蓄積するフレーム数。-1の場合はCharacterCommonDataのデフォルト値を使用します。")]
+    [SerializeField] private int accumulationFrames = -1;
+
+    private Damage _accumulatedDamage;
+    private int _remainingAccumulationFrames = -1;
+    private GameObject _lastAccumulatedOther;
+
     // ノックバック処理を委譲するためのインターフェース（ノックバック処理を行うコンポーネントが実装）
     private IKickbackHandler knockbackHandler;
 
@@ -43,6 +51,23 @@ public class CharacterHealth : MonoBehaviour
         damageNotifier = GetComponent<IDamageNotifier>();
         dieNotifier = GetComponent<IDieNotifier>();
         healthNotifier = GetComponent<IHealthNotifier>();
+
+        // ダメージ蓄積フレームの設定
+        accumulationFrames = CharacterCommonData.Instance.defaultAccumulationFrames;
+        Debug.Log($"Damage accumulation frames set to: {accumulationFrames}");
+    }
+
+    private void Update()
+    {
+        if (_remainingAccumulationFrames > 0)
+        {
+            _remainingAccumulationFrames--;
+            if (_remainingAccumulationFrames == 0)
+            {
+                ApplyDamageImmediate(_accumulatedDamage, _lastAccumulatedOther);
+                _remainingAccumulationFrames = -1;
+            }
+        }
     }
 
     public static int ALLAY_LAYER_INDEX = 9;
@@ -146,11 +171,36 @@ public class CharacterHealth : MonoBehaviour
     }
 
     /// <summary>
-    /// ダメージを計算し、適用するメインメソッド。
+    /// ダメージを受け取り、必要に応じて蓄積または即座に適用します。
+    /// </summary>
+    public void ApplyDamage(Damage damage, GameObject other)
+    {
+        if (currentHealth <= 0) return;
+
+        if (accumulationFrames <= 0)
+        {
+            ApplyDamageImmediate(damage, other);
+            return;
+        }
+
+        if (_remainingAccumulationFrames < 0)
+        {
+            _accumulatedDamage = damage;
+            _remainingAccumulationFrames = accumulationFrames;
+        }
+        else
+        {
+            _accumulatedDamage += damage;
+        }
+        _lastAccumulatedOther = other;
+    }
+
+    /// <summary>
+    /// ダメージを計算し、即座に適用する内部メソッド。
     /// </summary>
     /// <param name="damage">受けた生のダメージデータ</param>
     /// <param name="other">ぶつかってきたオブジェクト</param>
-    public void ApplyDamage(Damage damage, GameObject other)
+    private void ApplyDamageImmediate(Damage damage, GameObject other)
     {
         if (currentHealth <= 0) return; // 既に死んでいる場合は処理しない
         float previousHealth = currentHealth;
