@@ -20,5 +20,5 @@ MonoBehaviour:
   icon: {fileID: 823559628070173429, guid: 8c3049d719af4784b8af3c6f0aff9be6, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
-  spellDescription: "\u53F3\u306E\u546A\u6587\u304C\u30D2\u30C3\u30C8\u3057\u305F\u969B\u3001\u3055\u3089\u306B\u6B21\u306E\u546A\u6587\u3092\u3055\u305B\u308B\u3002"
+  spellDescription: "\u53F3\u306E\u546A\u6587\u304C\u30D2\u30C3\u30C8\u3057\u305F\u969B\u3001\u6B21\u306E\u546A\u6587\u3092\u547C\u3073\u51FA\u3059\u3002"
   magicCircleDelay: 0.5
