@@ -409,10 +409,10 @@ public class StageManager : MonoBehaviour
             SoundManager.Instance.PlaySE(bossDestroySound);
         }
 
-        Time.timeScale = 0.5f;
-        yield return new WaitForSeconds(clearDelaySeconds * 0.5f);
+        TimeStopManager.Instance.RequestTimeStop(this, 0.5f);
+        yield return new WaitForSecondsRealtime(clearDelaySeconds * 0.5f);
         OnStageClearForceDie?.Invoke(); // 全ての敵に死亡通知を送る
-        Time.timeScale = 1f;
+        TimeStopManager.Instance.ReleaseTimeStop(this);
 
         yield return new WaitForSeconds(clearDelaySeconds);
         PlayerController.Instance.Victory();
@@ -435,17 +435,17 @@ public class StageManager : MonoBehaviour
         {
             hasUsedContinue = true;
             // 広告UI表示中は時間を止める
-            Time.timeScale = 0f;
+            TimeStopManager.Instance.RequestTimeStop(this, 0f);
             AdController.Instance.ShowContinueAdUI(
                 onReward: () =>
                 {
-                    Time.timeScale = 1f;
+                    TimeStopManager.Instance.ReleaseTimeStop(this);
                     PlayerController.Instance.Revive();
                     Debug.Log("広告視聴報酬: プレイヤーを復活させました。");
                 },
                 onCancel: () =>
                 {
-                    Time.timeScale = 1f;
+                    TimeStopManager.Instance.ReleaseTimeStop(this);
                     HandleGameOver();
                 }
             );
@@ -474,10 +474,10 @@ public class StageManager : MonoBehaviour
     [SerializeField] private float gameOverDelaySeconds = 1.5f; // 例として3.0秒
     private IEnumerator DelayAndPauseGameOnGameOver()
     {
-        Time.timeScale = 0.5f;
+        TimeStopManager.Instance.RequestTimeStop(this, 0.5f);
         yield return new WaitForSeconds(gameOverDelaySeconds * 0.5f);
 
-        Time.timeScale = 1f;
+        TimeStopManager.Instance.ReleaseTimeStop(this);
         yield return new WaitForSeconds(gameOverDelaySeconds);
 
         // Time.timeScale = 0f;
@@ -552,7 +552,7 @@ public class StageManager : MonoBehaviour
             if (clicked) return;
             clicked = true;
             Debug.Log("ステージセレクトへ");
-            Time.timeScale = 1f;
+            TimeStopManager.Instance.ResetAllRequests();
             if (AdController.Instance != null)
             {
                 AdController.Instance.ShowStageEndAd(() => GameManager.Instance.LoadStageSelectScene());
@@ -567,7 +567,7 @@ public class StageManager : MonoBehaviour
             if (clicked) return;
             clicked = true;
             Debug.Log("リトライ");
-            Time.timeScale = 1f;
+            TimeStopManager.Instance.ResetAllRequests();
             GameManager.Instance.OnStageStart(stageConfig);
         };
         Action onNextStage = () =>
@@ -575,7 +575,7 @@ public class StageManager : MonoBehaviour
             if (clicked) return;
             clicked = true;
             Debug.Log("次のステージへ");
-            Time.timeScale = 1f; /* 次のステージへ遷移 */
+            TimeStopManager.Instance.ResetAllRequests();
             if (AdController.Instance != null)
             {
                 AdController.Instance.ShowStageEndAd(() => GameManager.Instance.LoadStageSelectScene());

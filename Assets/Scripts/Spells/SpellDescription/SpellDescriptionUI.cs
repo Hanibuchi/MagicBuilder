@@ -142,8 +142,7 @@ public class SpellDescriptionUI : MonoBehaviour, IPointerClickHandler
     {
         if (isShow) return;
         isShow = true;
-        timeScale = Time.timeScale;
-        Time.timeScale = 0f; // 時間停止
+        TimeStopManager.Instance.RequestTimeStop(this, 0f);
     }
 
     private void StartHideAnimation()
@@ -153,7 +152,7 @@ public class SpellDescriptionUI : MonoBehaviour, IPointerClickHandler
 
         if (!isShow) return;
         isShow = false;
-        Time.timeScale = timeScale;
+        TimeStopManager.Instance.ReleaseTimeStop(this);
 
         isHiding = true; // 非表示アニメーション開始フラグ
         if (panelAnimator != null)

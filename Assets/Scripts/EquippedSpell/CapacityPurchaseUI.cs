@@ -94,8 +94,7 @@ public class CapacityPurchaseUI : MonoBehaviour, IPointerClickHandler
     {
         if (isShow) return;
         isShow = true;
-        timeScale = Time.timeScale;
-        Time.timeScale = 0f; // 時間停止
+        TimeStopManager.Instance.RequestTimeStop(this, 0f);
     }
 
     private void StartHideAnimation()
@@ -103,7 +102,7 @@ public class CapacityPurchaseUI : MonoBehaviour, IPointerClickHandler
         if (isHiding || !detailPanelRoot.activeSelf) return;
         if (!isShow) return;
         isShow = false;
-        Time.timeScale = timeScale;
+        TimeStopManager.Instance.ReleaseTimeStop(this);
 
         isHiding = true;
         if (panelAnimator != null)

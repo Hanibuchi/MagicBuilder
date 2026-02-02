@@ -66,13 +66,13 @@ public class RetryUI : MonoBehaviour
 
         if (GameManager.Instance != null && GameManager.Instance.CurrentStageConfig != null)
         {
-            Time.timeScale = 1f;
+            TimeStopManager.Instance.ResetAllRequests();
             GameManager.Instance.OnStageStart(GameManager.Instance.CurrentStageConfig);
         }
         else
         {
             Debug.LogError("GameManager or CurrentStageConfig is missing. Re-loading current scene as fallback.");
-            Time.timeScale = 1f;
+            TimeStopManager.Instance.ResetAllRequests();
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
         }
     }

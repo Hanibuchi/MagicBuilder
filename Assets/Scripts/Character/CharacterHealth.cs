@@ -216,7 +216,7 @@ public class CharacterHealth : MonoBehaviour
         // ヒットストップの発動（死亡時のみ）
         if (currentHealth <= 0 && finalDamage > 0 && CharacterCommonData.Instance != null)
         {
-            HitStopManager.Instance.PlayHitStop(
+            TimeStopManager.Instance.PlayHitStop(
                 CharacterCommonData.Instance.hitStopDurationOnDie,
                 CharacterCommonData.Instance.hitStopTimeScaleOnDie
             );

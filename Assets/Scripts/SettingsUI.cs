@@ -144,8 +144,7 @@ public class SettingsUI : MonoBehaviour
         openButton.interactable = false;
         closeButton.interactable = true;
         isPanelOpen = true;
-        timeScale = Time.timeScale;
-        Time.timeScale = 0f;
+        TimeStopManager.Instance.RequestTimeStop(this, 0f);
     }
 
     /// <summary>
@@ -165,7 +164,7 @@ public class SettingsUI : MonoBehaviour
         openButton.interactable = true;
         closeButton.interactable = false;
         isPanelOpen = false;
-        Time.timeScale = timeScale;
+        TimeStopManager.Instance.ReleaseTimeStop(this);
     }
 
     /// <summary>
