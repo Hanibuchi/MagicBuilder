@@ -169,7 +169,7 @@ public class TeleportManager : MonoBehaviour
         // 3. プレイヤーとカメラの移動
         if (PlayerController.Instance != null && info.targetTransform != null)
         {
-            PlayerController.Instance.transform.position = info.targetTransform.position;
+            PlayerController.Instance.TeleportTo(info.targetTransform.position);
         }
 
         if (CameraInputHandler.Instance != null && info.cameraTargetTransform != null)

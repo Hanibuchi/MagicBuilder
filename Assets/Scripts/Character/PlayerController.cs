@@ -92,6 +92,15 @@ public class PlayerController : MyCharacterController
     }
 
     /// <summary>
+    /// プレイヤーを指定されたワールド座標にテレポートさせます。
+    /// </summary>
+    /// <param name="position">移動先のワールド座標</param>
+    public void TeleportTo(Vector2 position)
+    {
+        transform.position = position;
+    }
+
+    /// <summary>
     /// ダメージを受け取ったことを通知し、カメラを揺らします。
     /// </summary>
     public override void NotifyDamage(DamageType damageType, float damageValue)

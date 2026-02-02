@@ -74,10 +74,10 @@ public enum SpellType
     Enchant,        // 付与
     SelfHarm,       // 諸刃（自傷）
     Remote,         // 遠隔
-    Teleport,       // 転位
+    TeleportHoming,       // 転位
     Attraction,     // 引力
     Repulsion,      // 斥力
-    Move,           // 移動
+    Teleport,           // テレポート
 
     // --- 【トリガー・遅延系】 ---
     Delay,          // 遅延
