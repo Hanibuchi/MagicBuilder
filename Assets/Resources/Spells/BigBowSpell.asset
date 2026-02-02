@@ -25,7 +25,7 @@ MonoBehaviour:
   trajectoryMoveSpeed: 0.5
   maxPredictionTime: 5
   projectilePrefab: {fileID: 8189634300211145312, guid: bbc6b05aabd1e2442a86f81b99d24bdd, type: 3}
-  strengthMultiplier: 10
+  strengthMultiplier: 20
   duration: 1
   errorDegree: 2
   damage:
@@ -41,5 +41,4 @@ MonoBehaviour:
   bowDelay: 0.8
   bowDistance: 1
   bowLingerTime: 0.3
-  bowScale: 1
   useConstantScale: 1

@@ -14,8 +14,6 @@ public class BigBowSpell : ExampleSpell
     [SerializeField] private float bowDistance = 1.0f;
     [Tooltip("発射後に弓が残る時間（秒）")]
     [SerializeField] private float bowLingerTime = 0.3f;
-    [Tooltip("弓のサイズ（スケール）")]
-    [SerializeField] private float bowScale = 1.0f;
     [Tooltip("弓のサイズをアニメーションさせず、最初から固定にするか")]
     [SerializeField] private bool useConstantScale = true;
 
