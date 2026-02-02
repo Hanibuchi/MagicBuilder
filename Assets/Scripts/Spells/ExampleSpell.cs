@@ -40,6 +40,10 @@ public class ExampleSpell : SpellBase
         float angleRad = rotationZ * Mathf.Deg2Rad;
         Vector2 initialVelocity = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)) * strength * strengthMultiplier;
         float gravityMagnitude = Physics2D.gravity.magnitude;
+        if (projectilePrefab != null && projectilePrefab.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
+        {
+            gravityMagnitude *= rb.gravityScale;
+        }
 
         // 2. 一定時間ごとに軌道上の点を計算し、trajectoryPrefabを生成
         foreach (var obj in trajectoryPrefabs)
