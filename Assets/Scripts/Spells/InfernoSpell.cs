@@ -76,19 +76,4 @@ public class InfernoSpell : ExampleSpell
     {
         base.DisplayAimingLine(wandSpells, currentSpellIndex, rotationZ, strength, context, clearLine);
     }
-
-    public override List<SpellDescriptionItem> GetDescriptionDetails()
-    {
-        // 親クラスの説明を取得
-        List<SpellDescriptionItem> items = base.GetDescriptionDetails();
-
-        // 隕石固有の情報を追加
-        items.Add(new SpellDescriptionItem
-        {
-            icon = null,
-            descriptionText = $"発動遅延 : {magicCircleDelay:F1}秒",
-        });
-
-        return items;
-    }
 }
