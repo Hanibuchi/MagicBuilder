@@ -68,12 +68,4 @@ public class InfernoSpell : ExampleSpell
             magicCircle.Hide(magicCircleDelay);
         }
     }
-
-    public override void DisplayAimingLine(
-        List<SpellBase> wandSpells, int currentSpellIndex,
-        float rotationZ, float strength, SpellContext context,
-        bool clearLine = false)
-    {
-        base.DisplayAimingLine(wandSpells, currentSpellIndex, rotationZ, strength, context, clearLine);
-    }
 }

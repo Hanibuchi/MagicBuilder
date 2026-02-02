@@ -15,6 +15,7 @@ public class SpellContext
 {
     public Vector2 CasterPosition;
     public Action<GameObject> ProjectileModifier;
+    public Action<GameObject> AimingModifier;
     public float errorDegree = 0;
     public Damage damage;
     public SpellLayer layer;
@@ -100,6 +101,7 @@ public class SpellContext
 
             // 参照型 (Action) は参照がコピーされるが、Actionは不変(イミュータブル)なので問題なし
             ProjectileModifier = this.ProjectileModifier,
+            AimingModifier = this.AimingModifier,
             damage = this.damage
         };
     }

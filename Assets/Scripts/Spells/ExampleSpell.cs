@@ -80,7 +80,7 @@ public class ExampleSpell : SpellBase
 
     protected virtual void ApplyTrajectoryModifier(GameObject trajectoryObj, SpellContext context)
     {
-        context.ProjectileModifier?.Invoke(trajectoryObj);
+        context.AimingModifier?.Invoke(trajectoryObj);
     }
     [Header("投射物設定")]
     [Tooltip("発射する魔法弾のプレハブ。Rigidbody2Dが必要です。")]

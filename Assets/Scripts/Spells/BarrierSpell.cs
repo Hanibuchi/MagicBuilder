@@ -91,7 +91,7 @@ public class BarrierSpell : SpellBase
         info.instance.transform.localScale = targetPrefab.transform.localScale;
 
         // 修飾子の実行（例：ExpansionSpellによる拡大など）
-        context.ProjectileModifier?.Invoke(info.instance);
+        context.AimingModifier?.Invoke(info.instance);
     }
 
     /// <summary>

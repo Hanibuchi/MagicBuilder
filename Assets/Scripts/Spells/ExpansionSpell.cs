@@ -32,7 +32,7 @@ public class ExpansionSpell : SpellBase
         float strength, SpellContext context,
         bool clearLine = false)
     {
-        context.ProjectileModifier += (projectile) =>
+        context.AimingModifier += (projectile) =>
         {
             if (projectile != null)
                 projectile.transform.localScale *= scaleMultiplier;
