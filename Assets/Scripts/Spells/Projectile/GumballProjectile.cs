@@ -30,6 +30,26 @@ public class GumballProjectile : SpellProjectileDamageSource, IClickTriggerFireL
     {
         if (isStuck) return;
 
+        HandleStick(collision.transform);
+
+        // 基本クラスの衝突処理（エフェクト生成など）を実行
+        base.OnCollisionEnter2D(collision);
+    }
+
+    protected override void OnTriggerEnter2D(Collider2D other)
+    {
+        if (isStuck) return;
+
+        // Triggerの場合は、Groundレイヤーなら無視する
+        if (other.gameObject.layer != LayerMask.NameToLayer("Ground"))
+            HandleStick(other.transform);
+
+        // 基本クラスの衝突処理を実行
+        base.OnTriggerEnter2D(other);
+    }
+
+    private void HandleStick(Transform target)
+    {
         // 何かに衝突したら、その物理挙動を止めて親子関係を設定する（くっつく動作）
         if (rb != null)
         {
@@ -39,7 +59,7 @@ public class GumballProjectile : SpellProjectileDamageSource, IClickTriggerFireL
         }
 
         // 衝突相手の子になることで追従する
-        transform.SetParent(collision.transform);
+        transform.SetParent(target);
         isStuck = true;
 
         // Collider2Dを非アクティブにして、以降の衝突を無効化する
@@ -53,8 +73,5 @@ public class GumballProjectile : SpellProjectileDamageSource, IClickTriggerFireL
         {
             SoundManager.Instance.PlaySE(stickSound, stickSoundVolume);
         }
-
-        // 基本クラスの衝突処理（エフェクト生成など）を実行
-        base.OnCollisionEnter2D(collision);
     }
 }
