@@ -49,7 +49,7 @@ public class InfernoSpell : ExampleSpell
         if (magicCircle != null)
         {
             // 修飾子の適用（魔法陣にも拡大などの効果を乗せる）
-            context.ProjectileModifier?.Invoke(circleGo);
+            context.AimingModifier?.Invoke(circleGo);
 
             // 表示演出の開始
             magicCircle.Show(magicCircleDelay);

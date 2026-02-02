@@ -32,17 +32,22 @@ public class ExpansionSpell : SpellBase
         float strength, SpellContext context,
         bool clearLine = false)
     {
-        context.AimingModifier += (projectile) =>
-        {
-            if (projectile != null)
-                projectile.transform.localScale *= scaleMultiplier;
-        };
+        AddAimingModifier(context);
 
         // 2. 次の呪文に対して、新しい修飾子で DisplayAimingLine を呼び出す
         DisplayAimingLineForNextSpells(
             GetNextSpellOffsets(wandSpells, currentSpellIndex),
             wandSpells, currentSpellIndex, rotationZ, strength, context, clearLine
         );
+    }
+
+    void AddAimingModifier(SpellContext context)
+    {
+        context.AimingModifier += (projectile) =>
+        {
+            if (projectile != null)
+                projectile.transform.localScale *= scaleMultiplier;
+        };
     }
 
     /// <summary>
@@ -53,6 +58,7 @@ public class ExpansionSpell : SpellBase
         List<SpellBase> wandSpells, int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
+        AddAimingModifier(context);
         // 新しいコンテキストに新しい修飾子を設定
         context.ProjectileModifier += (projectile) =>
         {

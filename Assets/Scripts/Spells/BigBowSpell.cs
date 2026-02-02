@@ -51,7 +51,7 @@ public class BigBowSpell : ExampleSpell
         if (magicCircle != null)
         {
             // 修飾子の適用（弓にも拡大などの効果を乗せる）
-            context.ProjectileModifier?.Invoke(bowGo);
+            context.AimingModifier?.Invoke(bowGo);
 
             // 表示演出の開始。useConstantScaleがtrueならスケールアニメーションを無効にする
             magicCircle.Show(bowDelay, animateScale: !useConstantScale);
