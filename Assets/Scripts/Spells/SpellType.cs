@@ -23,6 +23,7 @@ public enum SpellType
     Gumball,        // ガムボール（粘着弾）
     ExampleSpellClickTrigger,
     FireflyTrigger, // 蛍トリガー
+    AreaHeal,
 
     // --- 【攻撃：属性ダメージ・追加効果】 ---
     AdditionalDamage,
