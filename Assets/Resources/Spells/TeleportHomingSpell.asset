@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 900a0241df18e65448859e035d78efb8, type: 3}
+  m_Name: TeleportHomingSpell
+  m_EditorClassIdentifier: 
+  category: 1
+  spellType: TeleportHoming
+  cooldown: 0.5
+  spellName: "\u8EE2\u4F4D"
+  purchaseCosts: 64000000c80000009001000020030000
+  icon: {fileID: 0}
+  iconColor: {r: 1, g: 1, b: 1, a: 1}
+  iconMaterial: {fileID: 0}
+  spellDescription: 
+  searchRange: 3
+  teleportInterval: 0.1
