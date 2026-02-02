@@ -14,15 +14,18 @@ public class OrbitalSatellite : MonoBehaviour
     private bool _isInitialized = false;
 
     [Header("軌道設定")]
+    [Tooltip("最小の初期速度。これ未満の場合はこの速度まで加速します。")]
+    float minInitSpeed = 3f;
     [Tooltip("中心に向かう力の倍率")]
     float omega2;
 
 
-    public void Init(Transform center, bool isUpper, float radius)
+    public void Init(Transform center, bool isUpper, float radius, float minInitSpeed)
     {
         _center = center;
         _isUpper = isUpper;
         this._radius = radius;
+        this.minInitSpeed = minInitSpeed;
         _rb = GetComponent<Rigidbody2D>();
         if (_center != null) centerRb = _center.GetComponent<Rigidbody2D>();
 
@@ -36,6 +39,18 @@ public class OrbitalSatellite : MonoBehaviour
         if (_rb != null && centerRb != null)
         {
             float initSpeed = _rb.linearVelocity.magnitude;
+
+            // 速度が一定値未満なら、接線方向（正しい方向）へ加速させる
+            if (initSpeed < minInitSpeed)
+            {
+                // 中心からの相対位置
+                Vector2 relativePos = (Vector2)transform.position - (Vector2)_center.position;
+                // 接線方向（時計回り）を計算
+                Vector2 tangent = new Vector2(relativePos.y, -relativePos.x).normalized;
+
+                _rb.linearVelocity += tangent * minInitSpeed;
+                initSpeed = _rb.linearVelocity.magnitude;
+            }
 
             omega2 = (initSpeed * initSpeed) / (_radius * _radius);
 

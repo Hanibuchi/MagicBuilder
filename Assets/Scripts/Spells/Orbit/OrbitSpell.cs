@@ -12,6 +12,9 @@ public class OrbitSpell : SpellBase
     [Tooltip("中心に向かう力の倍率")]
     public float radius = 2f;
 
+    [Tooltip("衛星の最小初期速度")]
+    public float minInitSpeed = 3f;
+
     // キャッシュ用
     [System.NonSerialized] private List<SpellBase> _lastWandSpells;
     [System.NonSerialized] private Dictionary<int, int[]> _cachedIndicesMap = new Dictionary<int, int[]>();
@@ -112,7 +115,8 @@ public class OrbitSpell : SpellBase
                             satelliteIndices.ToList(),
                             new(context.layer),
                             magicCircleDelay,
-                            radius
+                            radius,
+                            minInitSpeed
                         );
                     }
                 };

@@ -13,10 +13,11 @@ public class OrbitCenter : MonoBehaviour
     private SpellContext _context;
     private float _magicCircleDelay;
     private float _radius;
+    private float _minInitSpeed;
 
     private Rigidbody2D _rb;
 
-    public void Init(List<SpellBase> satelliteSpells, List<SpellBase> wandSpells, List<int> satelliteIndices, SpellContext context, float magicCircleDelay, float radius)
+    public void Init(List<SpellBase> satelliteSpells, List<SpellBase> wandSpells, List<int> satelliteIndices, SpellContext context, float magicCircleDelay, float radius, float minInitSpeed)
     {
         _satelliteSpells = satelliteSpells;
         _wandSpells = wandSpells;
@@ -24,6 +25,7 @@ public class OrbitCenter : MonoBehaviour
         _context = context;
         _magicCircleDelay = magicCircleDelay;
         _radius = radius;
+        _minInitSpeed = minInitSpeed;
 
         _rb = GetComponent<Rigidbody2D>();
 
@@ -104,7 +106,7 @@ public class OrbitCenter : MonoBehaviour
                 if (satObj != null && this != null)
                 {
                     var orbital = satObj.AddComponent<OrbitalSatellite>();
-                    orbital.Init(transform, isUpper, _radius);
+                    orbital.Init(transform, isUpper, _radius, _minInitSpeed);
                 }
             };
 
