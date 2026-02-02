@@ -17,12 +17,13 @@ MonoBehaviour:
   cooldown: 0.5
   spellName: Example Spell
   purchaseCosts: 64000000c80000009001000020030000
-  icon: {fileID: -3209795618878514358, guid: 228cf124045c42547ad12aa38c08b6ef, type: 3}
+  icon: {fileID: -3674441939286190792, guid: c22aacc41a6edc04a98bfe2f2ff0a803, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
   spellDescription: "\u5149\u5F3E\u3092\u767A\u5C04\u3059\u308B\u3002"
   trajectoryPrefabInterval: 0.1
   trajectoryMoveSpeed: 0.5
+  maxPredictionTime: 5
   projectilePrefab: {fileID: 396131387130879284, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
   strengthMultiplier: 15
   duration: 2
@@ -34,6 +35,6 @@ MonoBehaviour:
     temperatureDamage: 0
     healing: 0
     knockback: 0
+  isTargetBoth: 0
   damageType: 0
   isClickTrigger: 0
-

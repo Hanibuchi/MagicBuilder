@@ -17,7 +17,7 @@ MonoBehaviour:
   cooldown: 0.5
   spellName: "\u30D5\u30A1\u30A4\u30A2\u30B7\u30E7\u30C3\u30C8"
   purchaseCosts: 64000000c80000009001000020030000
-  icon: {fileID: -6779250670645516563, guid: 228cf124045c42547ad12aa38c08b6ef, type: 3}
+  icon: {fileID: -498031150505441705, guid: c22aacc41a6edc04a98bfe2f2ff0a803, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
   spellDescription: "\u708E\u306E\u5149\u5F3E\u3092\u767A\u5C04\u3059\u308B\u3002"
@@ -35,5 +35,6 @@ MonoBehaviour:
     temperatureDamage: 5
     healing: 0
     knockback: 0
+  isTargetBoth: 0
   damageType: 0
   isClickTrigger: 0
