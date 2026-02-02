@@ -23,16 +23,18 @@ public class MagicCircle : MonoBehaviour
     /// 魔法陣を表示します。
     /// </summary>
     /// <param name="duration">完全に表示されるまでの時間</param>
-    /// <param name="size">最終的なサイズ（スケール。既定は1）</param>
     /// <param name="color">色（オプション。指定しない場合はそのままの色）</param>
-    /// <param name="animateScale">サイズを0からアニメーションさせるかどうか（falseの場合は最初からsizeの大きさ）</param>
-    public void Show(float duration, float size = 1f, Color? color = null, bool animateScale = true)
+    /// <param name="animateScale">サイズを0からアニメーションさせるかどうか（falseの場合は最初から現在の大きさ）</param>
+    public void Show(float duration, Color? color = null, bool animateScale = true)
     {
         if (spriteRenderers == null || spriteRenderers.Length == 0)
         {
             Debug.LogError($"[MagicCircle] No SpriteRenderers are assigned on {gameObject.name}");
             return;
         }
+
+        // 初期サイズの取得
+        float targetSize = transform.localScale.x;
 
         // SEの再生
         if (SoundManager.Instance != null && showSE != null)
@@ -48,10 +50,10 @@ public class MagicCircle : MonoBehaviour
             targetColor.a = 0f;
             sr.color = targetColor;
         }
-        transform.localScale = animateScale ? Vector3.zero : Vector3.one * size;
+        transform.localScale = animateScale ? Vector3.zero : Vector3.one * targetSize;
 
         StopAllCoroutines();
-        StartCoroutine(AnimateShow(size, duration, animateScale));
+        StartCoroutine(AnimateShow(targetSize, duration, animateScale));
     }
 
     /// <summary>

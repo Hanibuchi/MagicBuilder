@@ -56,7 +56,7 @@ public class BigBowSpell : ExampleSpell
             context.ProjectileModifier?.Invoke(bowGo);
 
             // 表示演出の開始。useConstantScaleがtrueならスケールアニメーションを無効にする
-            magicCircle.Show(bowDelay, size: bowScale, animateScale: !useConstantScale);
+            magicCircle.Show(bowDelay, animateScale: !useConstantScale);
             // 表示完了まで待機
             yield return new WaitForSeconds(bowDelay);
         }

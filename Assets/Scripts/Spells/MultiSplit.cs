@@ -153,7 +153,7 @@ public class MultiSplit : SpellBase
             {
                 // SpellCommonData.Instance.otherColor を使用
                 Color color = SpellCommonData.Instance.otherColor;
-                magicCircle.Show(magicCircleDelay, 1f, color);
+                magicCircle.Show(magicCircleDelay, color: color);
                 yield return new WaitForSeconds(magicCircleDelay);
             }
         }
