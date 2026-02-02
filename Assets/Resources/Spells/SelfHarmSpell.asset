@@ -20,5 +20,4 @@ MonoBehaviour:
   icon: {fileID: 1577628113736104931, guid: 643266bcf123b474fb21634ebd0f7ff6, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
-  spellDescription: "\u8A60\u5531\u8005\u3092\u50B7\u3064\u3051\u308B\u3088\u3046\u306B\u306A\u308B\u3002"
-
+  spellDescription: "\u653B\u6483\u5BFE\u8C61\u3092\u53CD\u8EE2\u3055\u305B\u308B\u3002"

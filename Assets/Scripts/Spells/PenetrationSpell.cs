@@ -46,18 +46,4 @@ public class PenetrationSpell : SpellBase
         // 1つの呪文（次のまとまり）を対象とする修飾呪文
         return new int[] { 1 };
     }
-
-    public override List<SpellDescriptionItem> GetDescriptionDetails()
-    {
-        // 基底クラスの初期化（必要であれば）
-        var items = base.GetDescriptionDetails();
-
-        items.Add(new SpellDescriptionItem
-        {
-            // アイコンが指定されていない場合はnullで可
-            descriptionText = "透過性: 弾丸がトリガーとなり、物理的な衝突を回避します（地形は通過できません）。"
-        });
-
-        return items;
-    }
 }

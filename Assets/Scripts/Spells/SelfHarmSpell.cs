@@ -44,17 +44,4 @@ public class SelfHarmSpell : SpellBase
     {
         return nextSpellOffsets;
     }
-
-    public override List<SpellDescriptionItem> GetDescriptionDetails()
-    {
-        // detailItems は SpellBase で定義されている（継承先で使える）
-        // ただし SpellBase を確認すると detailItems が定義されているか不明なので再確認
-        base.GetDescriptionDetails();
-        detailItems.Add(new SpellDescriptionItem
-        {
-            icon = SpellCommonData.Instance.damageIcon,
-            descriptionText = "自分自身を攻撃対象に含める",
-        });
-        return detailItems;
-    }
 }
