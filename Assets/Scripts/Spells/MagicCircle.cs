@@ -25,7 +25,8 @@ public class MagicCircle : MonoBehaviour
     /// <param name="duration">完全に表示されるまでの時間</param>
     /// <param name="size">最終的なサイズ（スケール。既定は1）</param>
     /// <param name="color">色（オプション。指定しない場合はそのままの色）</param>
-    public void Show(float duration, float size = 1f, Color? color = null)
+    /// <param name="animateScale">サイズを0からアニメーションさせるかどうか（falseの場合は最初からsizeの大きさ）</param>
+    public void Show(float duration, float size = 1f, Color? color = null, bool animateScale = true)
     {
         if (spriteRenderers == null || spriteRenderers.Length == 0)
         {
@@ -47,25 +48,26 @@ public class MagicCircle : MonoBehaviour
             targetColor.a = 0f;
             sr.color = targetColor;
         }
-        transform.localScale = Vector3.zero;
+        transform.localScale = animateScale ? Vector3.zero : Vector3.one * size;
 
         StopAllCoroutines();
-        StartCoroutine(AnimateShow(size, duration));
+        StartCoroutine(AnimateShow(size, duration, animateScale));
     }
 
     /// <summary>
     /// 魔法陣を表示時と同じ時間をかけて非表示にし、オブジェクトを破棄します。
     /// </summary>
     /// <param name="duration">消滅にかかる時間</param>
-    public void Hide(float duration)
+    /// <param name="animateScale">サイズを0へアニメーションさせるかどうか</param>
+    public void Hide(float duration, bool animateScale = true)
     {
         if (spriteRenderers == null || spriteRenderers.Length == 0) return;
 
         StopAllCoroutines();
-        StartCoroutine(AnimateHide(duration));
+        StartCoroutine(AnimateHide(duration, animateScale));
     }
 
-    private IEnumerator AnimateShow(float targetSize, float duration)
+    private IEnumerator AnimateShow(float targetSize, float duration, bool animateScale)
     {
         float elapsed = 0f;
 
@@ -82,14 +84,15 @@ public class MagicCircle : MonoBehaviour
             float t = elapsed / duration;
             // 正弦波（0からPI/2）を使用してイージング
             float sineT = Mathf.Sin(t * Mathf.PI * 0.5f);
-            ApplyState(Mathf.Lerp(0f, targetSize, sineT), Mathf.Lerp(0f, TargetAlpha, sineT));
+            float currentSize = animateScale ? Mathf.Lerp(0f, targetSize, sineT) : targetSize;
+            ApplyState(currentSize, Mathf.Lerp(0f, TargetAlpha, sineT));
             yield return null;
         }
 
         ApplyState(targetSize, TargetAlpha);
     }
 
-    private IEnumerator AnimateHide(float duration)
+    private IEnumerator AnimateHide(float duration, bool animateScale)
     {
         float elapsed = 0f;
         float startSize = transform.localScale.x;
@@ -111,7 +114,8 @@ public class MagicCircle : MonoBehaviour
             float t = elapsed / duration;
             // 正弦波を使用してイージング
             float sineT = Mathf.Sin(t * Mathf.PI * 0.5f);
-            ApplyState(Mathf.Lerp(startSize, 0f, sineT), Mathf.Lerp(startAlpha, 0f, sineT));
+            float currentSize = animateScale ? Mathf.Lerp(startSize, 0f, sineT) : startSize;
+            ApplyState(currentSize, Mathf.Lerp(startAlpha, 0f, sineT));
             yield return null;
         }
 
