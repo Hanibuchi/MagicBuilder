@@ -103,9 +103,11 @@ MonoBehaviour:
   spawnOnCollisionPrefab: {fileID: 0}
   autoDestroy: 1
   playLaunchSound: 1
-  launchSound: {fileID: 8300000, guid: aa56a9a240f7f4261b6b3c11198a0b1a, type: 3}
+  launchSound: {fileID: 8300000, guid: b69d67ac0a4ea4644be3d3fd73fa35ed, type: 3}
   launchSoundVolume: 1
   destroySound: {fileID: 0}
   destroySoundVolume: 1
   killSound: {fileID: 8300000, guid: a161527766be241efad062d931d302c5, type: 3}
   killSoundVolume: 1
+  killEffectPrefab: {fileID: 6706587201055572976, guid: a1903799774c5c340ab7b307c360ead1, type: 3}
+  effectDestroyDelay: 1
