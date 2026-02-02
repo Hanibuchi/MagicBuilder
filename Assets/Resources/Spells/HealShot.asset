@@ -23,6 +23,7 @@ MonoBehaviour:
   spellDescription: "\u7652\u3084\u3057\u306E\u5149\u5F3E\u3092\u767A\u5C04\u3059\u308B\u3002"
   trajectoryPrefabInterval: 0.1
   trajectoryMoveSpeed: 0.5
+  maxPredictionTime: 5
   projectilePrefab: {fileID: 5962447655912305462, guid: 960e5dcd325cbd04b9f16a5bc09e2a3f, type: 3}
   strengthMultiplier: 15
   duration: 2
@@ -34,6 +35,6 @@ MonoBehaviour:
     temperatureDamage: 0
     healing: 5
     knockback: 0
+  isTargetBoth: 1
   damageType: 0
   isClickTrigger: 0
-

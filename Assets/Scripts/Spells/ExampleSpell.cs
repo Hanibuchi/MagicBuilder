@@ -19,6 +19,11 @@ public class ExampleSpell : SpellBase
         float strength, SpellContext context,
         bool clearLine = false)
     {
+        if (isTargetBoth)
+        {
+            context.layer = SpellLayer.Attack_Both;
+        }
+
         var key = (currentSpellIndex, context.callId);
         if (!trajectoryPrefabsByCall.TryGetValue(key, out var trajectoryPrefabs))
         {
@@ -94,6 +99,11 @@ public class ExampleSpell : SpellBase
     [Tooltip("発射角に追加する誤差の標準偏差（度）。平均0の正規分布に従います。")]
     [SerializeField] float errorDegree = 2f; // 例として2度を設定
     [SerializeField] Damage damage; // 例として1度を設定
+
+    [Header("レイヤー設定")]
+    [Tooltip("有効な場合、この呪文とその後の呪文のターゲットレイヤーを 'Both' (味方と敵の両方) に設定します。")]
+    [SerializeField] bool isTargetBoth = false;
+
     [Header("説明設定")]
     [SerializeField] DamageSourceType damageType;
 
@@ -105,6 +115,11 @@ public class ExampleSpell : SpellBase
         {
             Debug.LogError($"呪文 [{spellName}] の発射に失敗しました: projectilePrefabが設定されていません。");
             return;
+        }
+
+        if (isTargetBoth)
+        {
+            context.layer = SpellLayer.Attack_Both;
         }
 
         // 誤差を元の角度に追加
