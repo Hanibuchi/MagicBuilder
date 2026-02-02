@@ -13,6 +13,13 @@ public class TeleportHomingSpell : SpellBase
     [Tooltip("ワープの間隔（秒）。0にすると毎フレーム実行。")]
     [SerializeField] private float teleportInterval = 0.1f;
 
+    [Header("範囲表示設定")]
+    [Tooltip("範囲を示すプレハブ")]
+    [SerializeField] private GameObject rangeVisualPrefab;
+
+    [Tooltip("出現・消失にかける時間（秒）")]
+    [SerializeField] private float animationDuration = 0.2f;
+
     readonly int[] nextSpellOffsets = { 1 };
 
     public override int[] GetNextSpellOffsets(List<SpellBase> wandSpells, int currentSpellIndex)
@@ -45,7 +52,7 @@ public class TeleportHomingSpell : SpellBase
             if (!projectile.TryGetComponent<TeleportHomingMover>(out var mover))
             {
                 mover = projectile.AddComponent<TeleportHomingMover>();
-                mover.Initialize(mask, searchRange, teleportInterval);
+                mover.Initialize(mask, searchRange, teleportInterval, rangeVisualPrefab, animationDuration);
             }
         };
 

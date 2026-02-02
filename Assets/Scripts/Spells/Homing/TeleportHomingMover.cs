@@ -16,6 +16,11 @@ public class TeleportHomingMover : MonoBehaviour
 
     private Rigidbody2D _rb;
 
+    // 範囲表示用
+    private GameObject _rangeVisualPrefab;
+    private float _animationDuration;
+    private RangeVisualCloser _visualController;
+
     private void Awake()
     {
         _rb = GetComponentInChildren<Rigidbody2D>();
@@ -24,15 +29,36 @@ public class TeleportHomingMover : MonoBehaviour
     /// <summary>
     /// ホーミング設定を初期化し、即座にワープを実行します。
     /// </summary>
-    public void Initialize(LayerMask targetLayer, float searchRange, float teleportInterval)
+    public void Initialize(LayerMask targetLayer, float searchRange, float teleportInterval,
+        GameObject rangeVisualPrefab, float animationDuration)
     {
         _targetLayer = targetLayer;
         _searchRange = searchRange;
         _teleportInterval = teleportInterval;
+        _rangeVisualPrefab = rangeVisualPrefab;
+        _animationDuration = animationDuration;
+
         _isInitialized = true;
         _timer = 0f; // 初回は即座にワープ
 
+        CreateRangeVisual();
         ExecuteTeleport();
+    }
+
+    private void CreateRangeVisual()
+    {
+        if (_rangeVisualPrefab == null) return;
+
+        GameObject visualInstance = Instantiate(_rangeVisualPrefab, transform.position, Quaternion.identity);
+        visualInstance.name = "TeleportHomingRangeVisual";
+
+        // プレハブにコンポーネントがついているか確認、なければ追加
+        if (!visualInstance.TryGetComponent<RangeVisualCloser>(out _visualController))
+        {
+            _visualController = visualInstance.AddComponent<RangeVisualCloser>();
+        }
+
+        _visualController.Setup(transform, _searchRange, _animationDuration);
     }
 
     private void FixedUpdate()
@@ -44,6 +70,16 @@ public class TeleportHomingMover : MonoBehaviour
         {
             ExecuteTeleport();
             _timer = _teleportInterval;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (_visualController != null)
+        {
+            // 削除時は徐々に小さくして消えるよう指示
+            _visualController.ShrinkAndDestroy(_animationDuration);
+            _visualController = null;
         }
     }
 
@@ -67,15 +103,14 @@ public class TeleportHomingMover : MonoBehaviour
 
             // 保存された相対位置だけずらした地点を目的地にする
             Vector2 destination = (Vector2)targetTransform.position + _relativeOffset;
-            
-            if (_rb != null)
-            {
-                // 慣性をリセットしてターゲット上で静止するようにする
-                _rb.linearVelocity = Vector2.zero;
-                _rb.angularVelocity = 0f;
-                _rb.position = destination;
-            }
+
             transform.position = destination;
+
+            // テレポート時にビジュアルも即座に同期させる
+            if (_visualController != null)
+            {
+                _visualController.SnapToTarget();
+            }
         }
         else
         {
