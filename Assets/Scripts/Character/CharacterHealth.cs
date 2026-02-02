@@ -213,6 +213,15 @@ public class CharacterHealth : MonoBehaviour
 
         currentHealth -= finalDamage;
 
+        // ヒットストップの発動（死亡時のみ）
+        if (currentHealth <= 0 && finalDamage > 0 && CharacterCommonData.Instance != null)
+        {
+            HitStopManager.Instance.PlayHitStop(
+                CharacterCommonData.Instance.hitStopDurationOnDie,
+                CharacterCommonData.Instance.hitStopTimeScaleOnDie
+            );
+        }
+
         // 回復処理
         if (modifiedDamage.healing > 0)
         {

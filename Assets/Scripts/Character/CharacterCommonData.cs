@@ -31,4 +31,10 @@ public class CharacterCommonData : ScriptableObject
     [Header("ダメージ蓄積設定")]
     [Tooltip("ダメージを適用するまで蓄積するフレーム数のデフォルト値")]
     public int defaultAccumulationFrames = 10;
+
+    [Header("死亡時ヒットストップ設定")]
+    [Tooltip("死亡した際のヒットストップ時間（秒）")]
+    public float hitStopDurationOnDie = 0.15f;
+    [Tooltip("死亡時のヒットストップ中のタイムスケール（0で完全停止）")]
+    public float hitStopTimeScaleOnDie = 0f;
 }
