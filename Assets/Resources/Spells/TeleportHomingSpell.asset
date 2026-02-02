@@ -21,7 +21,7 @@ MonoBehaviour:
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
   spellDescription: 
-  searchRange: 1
+  searchRange: 2
   teleportInterval: 0.1
   rangeVisualPrefab: {fileID: 3374450186592658842, guid: 8f93d93ca552b4744a9bba5b27a7afc6, type: 3}
   animationDuration: 0.5
