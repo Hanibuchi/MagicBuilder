@@ -40,7 +40,7 @@ public class ExtensionSpell : SpellBase
         detailItems.Add(new SpellDescriptionItem
         {
             icon = null, // 必要に応じて時計アイコンなどを指定
-            descriptionText = $"持続時間 : +{additionalDuration:F1} 秒",
+            descriptionText = $"持続時間 : {additionalDuration:+0.0;-0.0;0.0} 秒",
         });
         return detailItems;
     }

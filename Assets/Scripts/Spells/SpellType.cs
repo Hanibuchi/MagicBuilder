@@ -46,9 +46,10 @@ public enum SpellType
     KnockbackIncrease,   // ノックバック増加
     KnockbackReduce,     // ノックバック減少
     AdditionalKnockback, // ノックバック付与
-    Shorten,        // 短縮（倍率）
-    ShortenFlat,    // 短縮（固定）
-    Extension,      // 延長
+    CoolTimeShorten,        // クールタイム短縮（倍率）
+    CoolTimeShortenFlat,    // クールタイム短縮（固定）
+    Shorten,        // 持続時間短縮
+    Extension,      // 持続時間延長
     ZeroGravity,    // 無重力
     Penetration,    // 透過性
     Elasticity,     // 弾性
