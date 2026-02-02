@@ -33,7 +33,7 @@ MonoBehaviour:
     woodDamage: 0
     waterDamage: 0
     temperatureDamage: 0
-    healing: 0
+    healing: 1
     knockback: 0
   isTargetBoth: 1
   damageType: 0
