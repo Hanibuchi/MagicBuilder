@@ -38,6 +38,10 @@ public class OrbitalSatellite : MonoBehaviour
 
         if (_rb != null && centerRb != null)
         {
+            // 指定された半径と上下位置（centerのローカル座標基準）に基づいて初期座標を設定
+            Vector3 spawnOffset = (_isUpper ? _center.up : -_center.up) * _radius;
+            transform.position = _center.position + spawnOffset;
+
             float initSpeed = _rb.linearVelocity.magnitude;
 
             // 速度が一定値未満なら、接線方向（正しい方向）へ加速させる
@@ -72,7 +76,7 @@ public class OrbitalSatellite : MonoBehaviour
         // 弾丸が置いていかれないように、中心のRigidbodyがあればその速度をベースに考える
         if (centerRb != null)
         {
-            _rb.AddForce(omega2 * offset, ForceMode2D.Force);
+            _rb.AddForce(_rb.mass * omega2 * offset, ForceMode2D.Force);
         }
         else
         {
