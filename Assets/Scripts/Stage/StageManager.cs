@@ -30,6 +30,10 @@ public class StageManager : MonoBehaviour
     [Tooltip("プレイヤーをInstantiateする初期位置を示すTransformマーカー")]
     [SerializeField] private Transform playerSpawnPoint;
 
+    [Header("デバッグ設定")]
+    [Tooltip("これをチェックすると、敵のフェーズ（生成）を開始しません。")]
+    [SerializeField] private bool debugDisableEnemySpawning = false;
+
     // --- 定数 ---
 
     [SerializeField] Transform enemySpawnPoint;
@@ -300,6 +304,13 @@ public class StageManager : MonoBehaviour
 
     public void StartPhase()
     {
+        if (debugDisableEnemySpawning)
+        {
+            Debug.Log("🛡️ デバッグ設定により、敵のフェーズ開始をスキップしました。");
+            spawnComplete = true;
+            return;
+        }
+
         EnemyPhaseExecutor.Instance.SetSpawnPoint(enemySpawnPoint.position);
         EnemyPhaseExecutor.Instance.StartPhase(stageConfig.enemyPhases, () => { spawnComplete = true; });
     }

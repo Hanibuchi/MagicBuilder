@@ -1304,6 +1304,10 @@ PrefabInstance:
       propertyPath: playerSpawnPoint
       value: 
       objectReference: {fileID: 1008364732}
+    - target: {fileID: 2950603546146285152, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
+      propertyPath: debugDisableEnemySpawning
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4653788535072574927, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
