@@ -9,7 +9,12 @@ public class DamageText : MonoBehaviour
     [SerializeField] TextMeshProUGUI damageText;
     public void Initialize(float damage, float duration)
     {
-        damageText.text = Mathf.RoundToInt(damage).ToString();
+        Initialize(Mathf.RoundToInt(damage).ToString(), duration);
+    }
+
+    public void Initialize(string text, float duration)
+    {
+        damageText.text = text;
         Destroy(gameObject, duration);
     }
 }

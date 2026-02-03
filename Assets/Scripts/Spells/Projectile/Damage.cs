@@ -42,5 +42,6 @@ public enum DamageType
     Wood,   // 木
     Water,  // 水
     Ice,    // 氷
-    Heal    // 回復
+    Heal,   // 回復
+    InstantDeath // 即死
 }

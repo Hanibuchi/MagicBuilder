@@ -41,9 +41,15 @@ public class InstantDeathProjectile : SpellProjectileDamageSource
             health = target.GetComponentInChildren<CharacterHealth>();
         }
 
-        if (health != null)
+        if (health != null && !health.IsDead)
         {
             health.Kill();
+
+            // ダメージテキスト表示
+            if (DamageTextManager.Instance != null)
+            {
+                DamageTextManager.Instance.ShowDamageText(0, DamageType.InstantDeath, spawnPos);
+            }
             
             // SE再生
             if (SoundManager.Instance != null && killSound != null)
