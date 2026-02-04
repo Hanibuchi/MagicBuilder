@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3660a5a860f999d43a4e510b85ca0c49, type: 3}
+  m_Name: InvertVerticalSpell
+  m_EditorClassIdentifier: 
+  category: 1
+  spellType: InvertVertical
+  cooldown: 0.2
+  spellName: "\u4E0A\u4E0B\u53CD\u8EE2"
+  purchaseCosts: 64000000c80000009001000020030000
+  icon: {fileID: 6631304647116299442, guid: 3bab96da68c717b4ca72cc5934c9bfd2, type: 3}
+  iconColor: {r: 1, g: 1, b: 1, a: 1}
+  iconMaterial: {fileID: 0}
+  spellDescription: "\u546A\u6587\u306E\u767A\u5C04\u65B9\u5411\u3092\u4E0A\u4E0B\u53CD\u8EE2\u3055\u305B\u308B\u3002"
+  invertMode: 1
