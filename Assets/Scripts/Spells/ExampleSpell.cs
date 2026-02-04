@@ -47,7 +47,7 @@ public class ExampleSpell : SpellBase
         float gravityMagnitude = Physics2D.gravity.magnitude;
         if (projectilePrefab != null && projectilePrefab.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
         {
-            gravityMagnitude *= rb.gravityScale;
+            gravityMagnitude *= (rb.gravityScale + context.gravityModifier);
         }
 
         // 2. 一定時間ごとに軌道上の点を計算し、trajectoryPrefabを生成

@@ -20,6 +20,7 @@ public class SpellContext
     public Damage damage;
     public SpellLayer layer;
     public int bounceCount = 0;
+    public float gravityModifier = 0;
     /// <summary>
     /// 同一インデックスの呪文が複数呼び出される場合（多重詠唱など）に、
     /// それぞれの呼び出しを識別するためのID。
@@ -97,6 +98,7 @@ public class SpellContext
             errorDegree = this.errorDegree,
             duration = this.duration,
             bounceCount = this.bounceCount,
+            gravityModifier = this.gravityModifier,
             callId = this.callId,
 
             // 参照型 (Action) は参照がコピーされるが、Actionは不変(イミュータブル)なので問題なし
