@@ -26,6 +26,10 @@ public class MegaBeamProjectile : SpellProjectileDamageSource
     [Tooltip("先端オブジェクトの位置オフセット")]
     [SerializeField] private Vector3 tipOffset;
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioClip firingSound;
+    [SerializeField] private float firingSoundVolume = 1.0f;
+
     private float initialWidth;
     private float initialRadius;
 
@@ -134,7 +138,7 @@ public class MegaBeamProjectile : SpellProjectileDamageSource
         // 地面に当たった時のエフェクト生成などは UpdateBeam の Raycast 結果に基づいて 
         // 別の場所（tipObjectのパーティクルなど）で行うのが一般的。
         // ここでは基底の「Groundに当たったら消える」挙動を抑制したい場合は base を呼ばない。
-        
+
         // もしビームが CharacterHealth 以外（壁など）に当たった時の処理が必要ならここに記述。
     }
 
@@ -143,7 +147,16 @@ public class MegaBeamProjectile : SpellProjectileDamageSource
         // 敵などのトリガーに接触した際の処理。
         // SpellProjectileDamageSource では衝突エフェクトを生成するが、
         // ビームの場合は連続的に接触するため、ここで毎回生成すると過剰になる可能性がある。
-        
+
         // 何もしない、または特定の条件でのみエフェクトを出すように制限。
+    }
+
+    /// <summary>
+    /// 発射中の効果音を再生します。アニメーションイベントから呼び出すことができます。
+    /// </summary>
+    public void PlayFiringSound()
+    {
+        if (SoundManager.Instance != null && firingSound != null)
+            SoundManager.Instance.PlaySE(firingSound, firingSoundVolume);
     }
 }
