@@ -17,5 +17,13 @@ MonoBehaviour:
   SceneName: Stage_Template
   clearCondition: 2
   enemyPhases:
-  - {fileID: 11400000, guid: edb681d8b717ddf47a041e07a67666ca, type: 2}
+  - conditionType: 0
+    conditionValue: 0
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 5046662643123802713, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+    nextPhases: []
+  puzzleSpells: []
   stageType: 0

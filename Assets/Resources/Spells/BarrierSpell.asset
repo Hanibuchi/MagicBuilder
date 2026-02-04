@@ -17,7 +17,7 @@ MonoBehaviour:
   cooldown: 2
   spellName: "\u30D0\u30EA\u30A2"
   purchaseCosts: 64000000c80000009001000020030000
-  icon: {fileID: 8790154677910664958, guid: 45488465b9fd3cc4c80011555bbadd6f, type: 3}
+  icon: {fileID: -5627540392819486484, guid: a46d1e94095235140bd73bc80c4f9433, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
   spellDescription: "\u30D0\u30EA\u30A2\u3092\u751F\u6210\u3059\u308B\u3002"
@@ -43,4 +43,3 @@ MonoBehaviour:
   - {fileID: 1154555468632637730, guid: f3717e44b85f01d47bab85eb64340030, type: 3}
   barrierHP: 50
   duration: 10
-

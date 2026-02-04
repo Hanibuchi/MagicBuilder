@@ -44,10 +44,8 @@ GameObject:
   - component: {fileID: 2727814030185520410}
   - component: {fileID: 641030078378004233}
   - component: {fileID: 287619285694468492}
-  - component: {fileID: -8637763047155977215}
   - component: {fileID: 1255961539740624513}
   - component: {fileID: 5981366074365681528}
-  - component: {fileID: 2631631821793231421}
   m_Layer: 9
   m_Name: barrier0
   m_TagString: Untagged
@@ -113,6 +111,7 @@ MonoBehaviour:
   iceStopThreshold: 0.3
   iceStopDuration: 20
   maxSlowDurationOnIce: 10
+  accumulationFrames: -1
 --- !u!114 &641030078378004233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,7 +150,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 100
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0
@@ -166,51 +165,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!66 &-8637763047155977215
-CompositeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2719851900670582441}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
-  m_GenerationType: 0
-  m_EdgeRadius: 0
-  m_ColliderPaths: []
-  m_CompositePaths:
-    m_Paths: []
-  m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005
-  m_UseDelaunayMesh: 0
-  m_CompositeGameObject: {fileID: 2719851900670582441}
 --- !u!114 &1255961539740624513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,18 +193,6 @@ MonoBehaviour:
   audioClipToPlay: {fileID: 8300000, guid: 24eaeae153b524bb6a55fdcc7ee3c735, type: 3}
   delayInSeconds: 0
   volume: 1
---- !u!114 &2631631821793231421
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2719851900670582441}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93a32b6351d32c04b8468e3cfc53f208, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6291488981705466162
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,12 +270,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8356549782379596334, guid: 45488465b9fd3cc4c80011555bbadd6f, type: 3}
+  m_Sprite: {fileID: 8356549782379596334, guid: b24f45df17a60cf4b9d0e4aaf0f96acc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.65, y: 1.53}
+  m_Size: {x: 0.65, y: 1.54}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -377,8 +319,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.65, y: 1.53}
-    newSize: {x: 0.65, y: 1.53}
+    oldSize: {x: 0.65, y: 1.54}
+    newSize: {x: 0.65, y: 1.54}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
