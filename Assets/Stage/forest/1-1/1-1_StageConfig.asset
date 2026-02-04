@@ -37,14 +37,6 @@ MonoBehaviour:
     conditionValue: 10
     isBossPhase: 0
     spawnerConfig:
-      enemyPrefab: {fileID: 3138375678483179165, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
-      isBoss: 0
-      customDroppableSpells: []
-    nextPhases: []
-  - conditionType: 0
-    conditionValue: 10
-    isBossPhase: 0
-    spawnerConfig:
       enemyPrefab: {fileID: 7981699022232761973, guid: 97d64d8723cc2414ab250a3d6ff89bb6, type: 3}
       isBoss: 0
       customDroppableSpells: []
@@ -70,6 +62,14 @@ MonoBehaviour:
     isBossPhase: 0
     spawnerConfig:
       enemyPrefab: {fileID: 5046662643123802713, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+    nextPhases: []
+  - conditionType: 0
+    conditionValue: 10
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 3138375678483179165, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
       isBoss: 0
       customDroppableSpells: []
     nextPhases: []

@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eadd210553e5b38418dd74bde8e0068e, type: 3}
   m_Name: LowGravitySpell
   m_EditorClassIdentifier: 
-  category: 0
-  spellType: 
+  category: 1
+  spellType: LowGravity
   cooldown: 0.5
-  spellName: "\u672A\u5B9A\u7FA9\u306E\u546A\u6587"
+  spellName: "\u4F4E\u91CD\u529B"
   purchaseCosts: 64000000c80000009001000020030000
-  icon: {fileID: 0}
+  icon: {fileID: -1839379669933074059, guid: 0f0e278b612db1b4da4410bcae2e7bc9, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
-  spellDescription: 
+  spellDescription: "\u546A\u6587\u306B\u304B\u304B\u308B\u91CD\u529B\u3092\u6E1B\u3089\u3059\u3002"
   gravityChange: -0.5
