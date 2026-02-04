@@ -140,4 +140,6 @@ public enum PoolType
     Trajectory,
     // ブレイド呪文の予測表示用
     BladeTrajectory,
+    // メガビーム呪文の予測表示用
+    MegaBeamTrajectory,
 }
