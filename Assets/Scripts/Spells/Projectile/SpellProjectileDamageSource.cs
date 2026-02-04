@@ -35,12 +35,7 @@ public class SpellProjectileDamageSource : DamageSourceBase
 
         if (spellContext != null)
         {
-            var layer = spellContext.GetUnityLayer(true);
-            // SpellContext の Layer 情報に基づいて自身のレイヤーを設定
-            foreach (Transform t in gameObject.GetComponentsInChildren<Transform>(true))
-            {
-                t.gameObject.layer = layer;
-            }
+            SetLayer(spellContext.layer);
 
             if (spellContext.bounceCount > 0)
             {
@@ -67,6 +62,15 @@ public class SpellProjectileDamageSource : DamageSourceBase
     protected virtual void ApplyProjectileModifier(SpellContext spellContext)
     {
         spellContext?.ProjectileModifier?.Invoke(gameObject);
+    }
+
+    public override void SetLayer(SpellLayer newLayer)
+    {
+        base.SetLayer(newLayer);
+        if (cachedContext != null)
+        {
+            cachedContext.layer = newLayer;
+        }
     }
 
     protected override void Awake()

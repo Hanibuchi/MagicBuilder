@@ -17,6 +17,9 @@ public class DamageSourceBase : MonoBehaviour, IDamageSource
     [SerializeField]
     private int maxPierceCount = 1;
 
+    [Header("所属設定")]
+    [SerializeField] protected SpellLayer currentSpellLayer;
+
     [Header("演出設定")]
     [SerializeField] protected bool enableImpulse = false;
     [SerializeField] protected float impulseForce = 1f; // 振動の強さ
@@ -59,6 +62,41 @@ public class DamageSourceBase : MonoBehaviour, IDamageSource
     {
         return damageSourceType;
     }
+
+    /// <summary>
+    /// このダメージ源の所属レイヤー（攻撃対象）を設定します。
+    /// </summary>
+    /// <param name="newLayer">新しいレイヤー。Allyなら味方の攻撃(Enemyを狙う)、Enemyなら敵の攻撃(Allyを狙う)になります。</param>
+    public virtual void SetLayer(SpellLayer newLayer)
+    {
+        currentSpellLayer = newLayer;
+        int unityLayer = GetUnityLayer(newLayer);
+
+        foreach (Transform t in gameObject.GetComponentsInChildren<Transform>(true))
+        {
+            t.gameObject.layer = unityLayer;
+        }
+    }
+
+    protected int GetUnityLayer(SpellLayer layer)
+    {
+        switch (layer)
+        {
+            case SpellLayer.Attack_Ally:
+                return CharacterHealth.ALLAY_ATTACK_LAYER_INDEX;
+            case SpellLayer.Attack_Enemy:
+                return CharacterHealth.ENEMY_ATTACK_LAYER_INDEX;
+            case SpellLayer.Attack_Both:
+                return CharacterHealth.BOTH_ATTACK_LAYER_INDEX;
+            default:
+                return CharacterHealth.ALLAY_ATTACK_LAYER_INDEX;
+        }
+    }
+
+    /// <summary>
+    /// 現在の所属レイヤーを取得します。
+    /// </summary>
+    public SpellLayer GetSpellLayer() => currentSpellLayer;
 
     /// <summary>
     /// 単発ヒットのターゲットとしてヒット可能かどうかを判定し、可能であれば貫通回数を消費します。
