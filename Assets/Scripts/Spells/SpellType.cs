@@ -51,7 +51,7 @@ public enum SpellType
     CoolTimeShortenFlat,    // クールタイム短縮（固定）
     Shorten,        // 持続時間短縮
     Extension,      // 持続時間延長
-    ZeroGravity,    // 無重力
+    LowGravity,    // 低重力
     Penetration,    // 透過性
     Elasticity,     // 弾性
 
@@ -59,6 +59,7 @@ public enum SpellType
     Homing,         // 追尾
     Directivity,    // 指向
     Orbit,          // 公転
+    Following,       // 追従
     TurnRight,
     TurnLeft,
     InvertHorizontal, // 左右反転
@@ -79,8 +80,8 @@ public enum SpellType
     Repulsion,      // 斥力
     Teleport,           // テレポート
 
-    // --- 【トリガー・遅延系】 ---
-    Delay,          // 遅延
+    // --- 【トリガー】 ---
+    Pause,          // 一時停止
     AddTrigger,     // トリガー追加
     AddClickTrigger,// クリックトリガー追加
 
