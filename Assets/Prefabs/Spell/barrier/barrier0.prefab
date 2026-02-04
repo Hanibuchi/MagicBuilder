@@ -129,7 +129,7 @@ MonoBehaviour:
   damageTextSpawnPoint: {fileID: 4249120576296064341}
   playHitSoundOnDead: 1
   hitSound: {fileID: 8300000, guid: b9eff218e132a4e76be78840eca96fb2, type: 3}
-  hitSoundVolume: 0.5
+  hitSoundVolume: 0.3
   healSound: {fileID: 0}
   healSoundVolume: 1
   fireStunSound: {fileID: 0}
@@ -154,7 +154,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 27600682879357940a84b7b02d559b19, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

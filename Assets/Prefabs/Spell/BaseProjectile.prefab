@@ -134,6 +134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93a32b6351d32c04b8468e3cfc53f208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 0}
+  flipYToMaintainOrientation: 0
 --- !u!114 &8600365097350075244
 MonoBehaviour:
   m_ObjectHideFlags: 0
