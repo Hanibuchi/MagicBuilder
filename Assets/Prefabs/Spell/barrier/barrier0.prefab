@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 8003807749010863776}
-  hitBoxObject: {fileID: 0}
+  hitBoxObject: {fileID: 6291488981705466162}
   damageTextSpawnPoint: {fileID: 4249120576296064341}
   playHitSoundOnDead: 1
   hitSound: {fileID: 8300000, guid: b9eff218e132a4e76be78840eca96fb2, type: 3}

@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43a8d2a37957b9a45a81cecfe16eb118, type: 3}
+  m_Name: ReflectBarrierSpell
+  m_EditorClassIdentifier: 
+  category: 0
+  spellType: ReflectBarrier
+  cooldown: 2
+  spellName: "\u53CD\u5C04\u30D0\u30EA\u30A2"
+  purchaseCosts: 64000000c80000009001000020030000
+  icon: {fileID: 4672525543449580026, guid: a46d1e94095235140bd73bc80c4f9433, type: 3}
+  iconColor: {r: 1, g: 1, b: 1, a: 1}
+  iconMaterial: {fileID: 0}
+  spellDescription: "\u653B\u6483\u306E\u30BF\u30FC\u30B2\u30C3\u30C8\u3092\u5909\u66F4\u3059\u308B\u53CD\u5C04\u30D0\u30EA\u30A2\u3092\u751F\u6210\u3059\u308B\u3002"
+  barrierTrajectoryPrefabs:
+  - {fileID: 8075082112969415287, guid: 78522e2c7c857d146810dfef6da3168b, type: 3}
+  - {fileID: 7125903335348748597, guid: 7348a572a200f47418f7a09f93b3eb57, type: 3}
+  - {fileID: 5319495327638603745, guid: 789dbd7a16320f54bbaa3133df754c72, type: 3}
+  - {fileID: 7060840147140399012, guid: cbc9151606a201b40be92c1f6e3a603f, type: 3}
+  - {fileID: 5452682799913740652, guid: 1345c06a658ea3a47a90875520f241ca, type: 3}
+  - {fileID: 6801762806076407378, guid: 89c9fbe24678ce440a76e7bfc0dbb810, type: 3}
+  - {fileID: 7983550600557110689, guid: ea8c3313a7ad6864285e41444890ce31, type: 3}
+  - {fileID: 5349183852079704145, guid: 2e28805bd38853d4d9a600e41d79e25f, type: 3}
+  - {fileID: 233966801441486607, guid: 30d12478c9118ff4aa20349152f689fe, type: 3}
+  barrierPrefabs:
+  - {fileID: 7560541557941370153, guid: b34b197be5a784545b259509f9f35f8a, type: 3}
+  - {fileID: 3030927228884230018, guid: d0b89dffc3358724fb9387b9e9bbdd8d, type: 3}
+  - {fileID: 7703671601690688675, guid: 838a78f833ba0ab4baf181bc560bbec8, type: 3}
+  - {fileID: 7151962349876615579, guid: 08097aed4190fb143a78396467422e8a, type: 3}
+  - {fileID: 5148213088115804368, guid: 31309f135d89d834bb7da4f003d9094c, type: 3}
+  - {fileID: 3224312461124032037, guid: b69ac4b365bfe7e429dd558b674f6bd3, type: 3}
+  - {fileID: 4640262454878492424, guid: eab10edf817877d4c9caf3e392cecbec, type: 3}
+  - {fileID: 3192795385225692933, guid: 5ebd4b2b15e18e44f91b886e1123070e, type: 3}
+  - {fileID: 318490537554806006, guid: c1421e712cd24e94c9341c6aa92ed2b1, type: 3}
+  barrierHP: 50
+  duration: 10
