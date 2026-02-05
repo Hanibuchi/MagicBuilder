@@ -130,6 +130,7 @@ MonoBehaviour:
   launchSoundVolume: 1
   destroySound: {fileID: 0}
   destroySoundVolume: 1
-  maxRandomForce: 0.1
+  maxRandomForce: 0.05
   minInterval: 0.5
   maxInterval: 1.5
+  counterBias: 0.8

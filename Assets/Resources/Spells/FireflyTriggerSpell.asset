@@ -15,7 +15,7 @@ MonoBehaviour:
   category: 0
   spellType: FireflyTrigger
   cooldown: 0.5
-  spellName: "\u86CD\u30C8\u30EA\u30AC\u30FC"
+  spellName: "\u86CD"
   purchaseCosts: 00000000000000000000000000000000
   icon: {fileID: -8608178329922089135, guid: 8467aff73a9464441a459a30517e5a12, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
