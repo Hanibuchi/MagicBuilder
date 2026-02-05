@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b975af3169f87974fa597c53e07da22e, type: 3}
+  m_Name: ClickTriggerAddSpell
+  m_EditorClassIdentifier: 
+  category: 3
+  spellType: AddClickTrigger
+  cooldown: 0.1
+  spellName: "\u30AF\u30EA\u30C3\u30AF\u30C8\u30EA\u30AC\u30FC\u8FFD\u52A0"
+  purchaseCosts: 64000000c80000009001000020030000
+  icon: {fileID: -4188520033268591457, guid: e3f630e8db7daa04994c900e0edb1101, type: 3}
+  iconColor: {r: 1, g: 1, b: 1, a: 1}
+  iconMaterial: {fileID: 0}
+  spellDescription: "\u53F3\u306B\u3042\u308B\u546A\u6587\u306B\u30AF\u30EA\u30C3\u30AF\u30C8\u30EA\u30AC\u30FC\u3092\u4ED8\u4E0E\u3057\u3001\u305D\u306E\u6B21\u306E\u546A\u6587\u3092\u767A\u52D5\u3055\u305B\u308B\u3002"
+  magicCircleDelay: 0.3

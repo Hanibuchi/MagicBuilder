@@ -157,7 +157,7 @@ public class ExampleSpell : SpellBase
 
         if (isClickTrigger)
         {
-            context.ProjectileModifier += ClickTriggerSpell.CreateClickTriggerAction(wandSpells, currentSpellIndex, context);
+            context.ProjectileModifier += ClickTriggerAddSpell.CreateClickTriggerAction(wandSpells, currentSpellIndex, context);
         }
 
         projectileGO.GetComponent<SpellProjectileDamageSource>().Initialize(strength, context);// initialize()でcontext.ProjectileModifierがInvokeされるため、最後に実行。
