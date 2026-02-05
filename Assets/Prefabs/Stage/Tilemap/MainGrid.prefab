@@ -62,6 +62,8 @@ MonoBehaviour:
   targetTilemap: {fileID: 1090865052906805750}
   animationPrefab: {fileID: 6431448006924039183, guid: bffb9d75dea7dcb45a5072b9873bfe31, type: 3}
   animationWaitTime: 0.5
+  eraseSound: {fileID: 8300000, guid: 3becec1909f194046945d85ac1077772, type: 3}
+  eraseSoundVolume: 0.5
 --- !u!1 &5413026052746738475
 GameObject:
   m_ObjectHideFlags: 0

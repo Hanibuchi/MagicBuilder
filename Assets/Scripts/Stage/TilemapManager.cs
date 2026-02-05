@@ -14,6 +14,10 @@ public class TilemapManager : MonoBehaviour
     [SerializeField] private GameObject animationPrefab;
     [SerializeField] private float animationWaitTime = 0.5f; // アニメーションが完了するまでの待機時間
 
+    [Header("サウンド設定")]
+    [SerializeField] private AudioClip eraseSound;
+    [SerializeField] private float eraseSoundVolume = 0.5f;
+
     private void Awake()
     {
         if (Instance == null)
@@ -109,6 +113,12 @@ public class TilemapManager : MonoBehaviour
         if (eraseEffect != null)
         {
             eraseEffect.PlayEraseAnimation(tileSprite, worldCenterPos);
+        }
+
+        // 削れる音を再生
+        if (SoundManager.Instance != null && eraseSound != null)
+        {
+            SoundManager.Instance.PlaySE(eraseSound, eraseSoundVolume);
         }
 
         // タイルを消去
