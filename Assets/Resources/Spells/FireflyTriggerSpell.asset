@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eead4a52643cdf42bb45d6397bce3c4, type: 3}
+  m_Name: FireflyTriggerSpell
+  m_EditorClassIdentifier: 
+  category: 0
+  spellType: FireflyTrigger
+  cooldown: 0.5
+  spellName: "\u86CD\u30C8\u30EA\u30AC\u30FC"
+  purchaseCosts: 00000000000000000000000000000000
+  icon: {fileID: -8608178329922089135, guid: 8467aff73a9464441a459a30517e5a12, type: 3}
+  iconColor: {r: 1, g: 1, b: 1, a: 1}
+  iconMaterial: {fileID: 0}
+  spellDescription: "\u3075\u308F\u3075\u308F\u3068\u98DB\u3073\u56DE\u308B\u86CD\u3092\u767A\u5C04\u3059\u308B\u3002\u30AF\u30EA\u30C3\u30AF\u3067\u8D77\u52D5\u3059\u308B\u3002"
+  trajectoryPrefabInterval: 0.1
+  trajectoryMoveSpeed: 0.5
+  maxPredictionTime: 0.5
+  projectilePrefab: {fileID: 6403702933833385397, guid: 7dd50ee5a530b604ab7fcc2027a33fca, type: 3}
+  strengthMultiplier: 5
+  duration: 60
+  errorDegree: 10
+  damage:
+    baseDamage: 0
+    woodDamage: 0
+    waterDamage: 0
+    temperatureDamage: 0
+    healing: 0
+    knockback: 0
+  isTargetBoth: 0
+  damageType: 0
+  isClickTrigger: 1
