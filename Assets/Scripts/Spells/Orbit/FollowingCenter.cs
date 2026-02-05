@@ -42,7 +42,7 @@ public class FollowingCenter : MonoBehaviour, ISpellProjectileDestroyListener
         float centerRotationZ = transform.rotation.eulerAngles.z;
         Vector2 forward = _rb != null && _rb.linearVelocity.sqrMagnitude > 0.01f
             ? _rb.linearVelocity.normalized
-            : (Vector2)(Quaternion.Euler(0, 0, centerRotationZ) * Vector2.right);
+            : (Vector2)transform.right;
         Vector2 up = new Vector2(-forward.y, forward.x);
 
         // 魔法陣の表示
@@ -75,6 +75,10 @@ public class FollowingCenter : MonoBehaviour, ISpellProjectileDestroyListener
         if (_followerSpells == null || _followerSpells.Count == 0 || _context == null) return;
 
         float centerRotationZ = transform.rotation.eulerAngles.z;
+        Vector2 forward = _rb != null && _rb.linearVelocity.sqrMagnitude > 0.01f
+            ? _rb.linearVelocity.normalized
+            : (Vector2)transform.right;
+        Vector2 up = new Vector2(-forward.y, forward.x);
 
         for (int i = 0; i < _followerSpells.Count; i++)
         {
@@ -82,10 +86,11 @@ public class FollowingCenter : MonoBehaviour, ISpellProjectileDestroyListener
             if (spell == null) continue;
 
             float side = (i % 2 == 0) ? 1f : -1f;
+            Vector2 offset = _amplitude * side * up;
 
             SpellContext folContext = _context.Clone();
-            // 初期位置はあらかじめ少しずらしておく
-            folContext.CasterPosition = (Vector2)transform.position; 
+            // 魔法陣と同じ正しい位置から生成されるように設定
+            folContext.CasterPosition = (Vector2)transform.position + offset; 
 
             folContext.ProjectileModifier += folObj =>
             {

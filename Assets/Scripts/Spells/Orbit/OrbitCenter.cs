@@ -45,7 +45,7 @@ public class OrbitCenter : MonoBehaviour, ISpellProjectileDestroyListener
         // 速度が0の場合は前方を向いていると仮定
         Vector2 forward = _rb != null && _rb.linearVelocity.sqrMagnitude > 0.01f
             ? _rb.linearVelocity.normalized
-            : (Vector2)(Quaternion.Euler(0, 0, centerRotationZ) * Vector2.right);
+            : (Vector2)transform.right;
 
         Vector2 up = new Vector2(-forward.y, forward.x); // 前方に垂直なベクトル
 
@@ -108,7 +108,7 @@ public class OrbitCenter : MonoBehaviour, ISpellProjectileDestroyListener
         // 速度が0の場合は前方を向いていると仮定
         Vector2 forward = _rb != null && _rb.linearVelocity.sqrMagnitude > 0.01f
             ? _rb.linearVelocity.normalized
-            : (Vector2)(Quaternion.Euler(0, 0, centerRotationZ) * Vector2.right);
+            : (Vector2)transform.right;
 
         Vector2 up = new Vector2(-forward.y, forward.x); // 前方に垂直なベクトル
 
