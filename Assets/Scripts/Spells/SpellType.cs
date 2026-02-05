@@ -18,7 +18,7 @@ public enum SpellType
     MegaBeam,       // 極太ビーム
     Blade,          // ブレイド
     GiantArrow,     // 巨大矢
-    BlackHole,      // ブラックホール
+    VoidGate,      // ヴォイドゲート
     InstantDeath,   // 即死
     Gumball,        // ガムボール（粘着弾）
     ExampleSpellClickTrigger,
