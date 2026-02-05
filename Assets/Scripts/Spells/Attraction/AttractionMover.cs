@@ -20,10 +20,20 @@ public class AttractionMover : MonoBehaviour, ISpellProjectileDestroyListener
         // プレハブ情報を更新（最新の呪文の設定を優先）
         if (attractionPrefab != null) _attractionPrefab = attractionPrefab;
         if (repulsionPrefab != null) _repulsionPrefab = repulsionPrefab;
+
+        RefreshVisual();
     }
 
-    private void Start()
+    private void RefreshVisual()
     {
+        if (_hasFinished) return;
+
+        // すでに演出がある場合は即座に破棄して新しく生成（設定更新のため）
+        if (_effectInstance != null)
+        {
+            Destroy(_effectInstance.gameObject);
+        }
+
         // 最終的な「範囲の値（_totalRange）」の正負で引力か斥力か（演出）を判定
         float absRange = Mathf.Abs(_totalRange);
         bool isAttraction = _totalRange >= 0;
