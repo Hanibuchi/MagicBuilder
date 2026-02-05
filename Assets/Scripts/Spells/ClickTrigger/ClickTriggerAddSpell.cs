@@ -160,15 +160,11 @@ public class ClickTriggerAddSpell : SpellBase
                     triggerSpellIndex = currentSpellIndex + 1;
                 }
 
+                SpellBase triggerSpell = null;
                 if (triggerSpellIndex >= 0 && triggerSpellIndex < wandSpells.Count)
-                {
-                    var triggerSpell = wandSpells[triggerSpellIndex];
-                    if (triggerSpell != null)
-                    {
-                        var modifier = obj.AddComponent<ClickTriggerProjectileModifier>();
-                        modifier.Init(triggerSpell, wandSpells, triggerSpellIndex, new SpellContext(context.layer), delay);
-                    }
-                }
+                    triggerSpell = wandSpells[triggerSpellIndex];
+                var modifier = obj.AddComponent<ClickTriggerProjectileModifier>();
+                modifier.Init(triggerSpell, wandSpells, triggerSpellIndex, new SpellContext(context.layer), delay);
             }
         };
     }
