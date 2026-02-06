@@ -75,8 +75,10 @@ public class OrbitCenter : MonoBehaviour, ISpellProjectileDestroyListener
             GameObject mcPrefab = SpellCommonData.Instance?.magicCirclePrefab;
             if (mcPrefab != null)
             {
+                // 反時計回りに合わせて魔法陣の向きも調整（上側は後ろ、下側は前）
+                float mcRotationZ = p.index % 2 == 0 ? centerRotationZ + 180f : centerRotationZ;
                 // OrbitCenterの子オブジェクトとして生成し、相対座標を維持して追従させる
-                GameObject mc = Instantiate(mcPrefab, spawnPos, Quaternion.Euler(0, 0, centerRotationZ), this.transform);
+                GameObject mc = Instantiate(mcPrefab, spawnPos, Quaternion.Euler(0, 0, mcRotationZ), this.transform);
                 if (mc.TryGetComponent<MagicCircle>(out var magicCircle))
                 {
                     magicCircle.Show(_magicCircleDelay, color: SpellCommonData.Instance.otherColor);
@@ -135,8 +137,8 @@ public class OrbitCenter : MonoBehaviour, ISpellProjectileDestroyListener
                 }
             };
 
-            // 発射
-            float rotationZ = i % 2 == 0 ? centerRotationZ : centerRotationZ + 180f;
+            // 発射（反時計回りに合わせて：上側は後ろ向き、下側は前向きに発射）
+            float rotationZ = i % 2 == 0 ? centerRotationZ + 180f : centerRotationZ;
             spell.FireSpell(_wandSpells, _satelliteIndices[i], rotationZ, 1.0f, satContext);
         }
     }

@@ -49,8 +49,8 @@ public class OrbitalSatellite : MonoBehaviour
             {
                 // 中心からの相対位置
                 Vector2 relativePos = (Vector2)transform.position - (Vector2)_center.position;
-                // 接線方向（時計回り）を計算
-                Vector2 tangent = new Vector2(relativePos.y, -relativePos.x).normalized;
+                // 接線方向（反時計回り）を計算
+                Vector2 tangent = new Vector2(-relativePos.y, relativePos.x).normalized;
 
                 _rb.linearVelocity += tangent * minInitSpeed;
                 initSpeed = _rb.linearVelocity.magnitude;
