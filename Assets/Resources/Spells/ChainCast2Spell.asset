@@ -26,5 +26,5 @@ MonoBehaviour:
   positionOffsets:
   - {x: 0, y: 0}
   - {x: 0.5, y: 0.5}
-  magicCircleDelay: 0.5
+  magicCircleDelay: 0.3
   additionalErrorDegree: 1
