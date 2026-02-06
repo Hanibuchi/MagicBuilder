@@ -21,6 +21,7 @@ MonoBehaviour:
   iceDamageIcon: {fileID: 3666318163671857395, guid: be966d344179f0f4db8d61b48fd2995f, type: 3}
   waterDamageIcon: {fileID: -8328814260516165795, guid: be966d344179f0f4db8d61b48fd2995f, type: 3}
   woodDamageIcon: {fileID: 6189148352442403826, guid: be966d344179f0f4db8d61b48fd2995f, type: 3}
+  healingIcon: {fileID: 3130467686543574262, guid: b0a0b558bc70ee14a8e92fa26b9f69f6, type: 3}
   knockbackIcon: {fileID: 1272822241129982336, guid: ba6239a6f6793f04891ceb6956141e51, type: 3}
   attackColor: {r: 0.8, g: 0.50048, b: 0.32, a: 1}
   modifierColor: {r: 0.32156864, g: 0.3705305, b: 0.8, a: 1}

@@ -61,6 +61,8 @@ public class SpellCommonData : ScriptableObject
     public Sprite waterDamageIcon;
     [Tooltip("木ダメージに使用するアイコン")]
     public Sprite woodDamageIcon;
+    [Tooltip("回復に使用するアイコン")]
+    public Sprite healingIcon;
     [Tooltip("ノックバックに使用するアイコン")]
     public Sprite knockbackIcon;
 

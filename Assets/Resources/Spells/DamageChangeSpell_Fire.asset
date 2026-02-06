@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6052c0ea546e30f4d9098b669b246c06, type: 3}
+  m_Name: DamageChangeSpell_Fire
+  m_EditorClassIdentifier: 
+  category: 1
+  spellType: FireDamage
+  cooldown: 0.5
+  spellName: "\u706B\u30C0\u30E1\u30FC\u30B8\u8FFD\u52A0"
+  purchaseCosts: 64000000c80000009001000020030000
+  icon: {fileID: 7310007968907825485, guid: be966d344179f0f4db8d61b48fd2995f, type: 3}
+  iconColor: {r: 1, g: 1, b: 1, a: 1}
+  iconMaterial: {fileID: 0}
+  spellDescription: "\u706B\u30C0\u30E1\u30FC\u30B8\u3092\u8FFD\u52A0\u3059\u308B\u3002\u6728\u30FB\u6C37\u30BF\u30A4\u30D7\u306E\u6575\u306B\u52B9\u679C\u629C\u7FA4\uFF01"
+  additionalDamage:
+    baseDamage: 0
+    woodDamage: 0
+    waterDamage: 0
+    temperatureDamage: 5
+    healing: 0
+    knockback: 0

@@ -46,6 +46,10 @@ public class DamageChangeSpell : SpellBase
         {
             AddDamageDetail(SpellCommonData.Instance.woodDamageIcon, "木ダメージ", additionalDamage.woodDamage);
         }
+        if (additionalDamage.healing != 0)
+        {
+            AddDamageDetail(SpellCommonData.Instance.healingIcon, "回復量", additionalDamage.healing);
+        }
         if (additionalDamage.knockback != 0)
         {
             AddDamageDetail(SpellCommonData.Instance.knockbackIcon, "ノックバック", additionalDamage.knockback);
