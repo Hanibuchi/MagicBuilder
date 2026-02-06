@@ -17,13 +17,13 @@ MonoBehaviour:
   cooldown: 0.5
   spellName: "\u30A2\u30A4\u30B9\u30D6\u30EC\u30A4\u30AF"
   purchaseCosts: 64000000c80000009001000020030000
-  icon: {fileID: -9012197075394581844, guid: 448d4f2a46008764d80d295d713bc3a5, type: 3}
+  icon: {fileID: -5924015675943012725, guid: 1e224f2e919b11744847fadaeaca7a73, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
   spellDescription: "\u5DE8\u5927\u306A\u6C37\u306E\u584A\u3092\u653E\u3064\u3002"
   trajectoryPrefabInterval: 0.1
-  maxPredictionTime: 2
   trajectoryMoveSpeed: 0.5
+  maxPredictionTime: 2
   projectilePrefab: {fileID: 5088680967346809471, guid: d37c584f0d35b4943b45f1c3b4c0ba99, type: 3}
   strengthMultiplier: 8
   duration: 2
@@ -33,7 +33,8 @@ MonoBehaviour:
     woodDamage: 0
     waterDamage: 0
     temperatureDamage: -10
+    healing: 0
     knockback: 0
+  isTargetBoth: 0
   damageType: 1
   isClickTrigger: 0
-
