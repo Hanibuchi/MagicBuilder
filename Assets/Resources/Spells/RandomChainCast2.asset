@@ -9,23 +9,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49731d737066a5d459d3e45743c0f7a7, type: 3}
-  m_Name: ChainCast3Spell
+  m_Script: {fileID: 11500000, guid: 0539f293a65bc9840909b65e202e34b2, type: 3}
+  m_Name: RandomChainCast2
   m_EditorClassIdentifier: 
   category: 2
-  spellType: ThreeChainCast
+  spellType: TwoRandomChainCast
   cooldown: 0.5
-  spellName: "\u540C\u6642\u8A60\u5531 x3"
+  spellName: "\u30E9\u30F3\u30C0\u30E0\u540C\u6642\u8A60\u5531 x2"
   purchaseCosts: 64000000c80000009001000020030000
-  icon: {fileID: 4323707765852580557, guid: 414f7f3aaac112b42b84cad86d834bc0, type: 3}
+  icon: {fileID: 2149621775196152536, guid: ce713ff896a8e75478326c9ea04fe072, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
-  spellDescription: "\u546A\u6587\u30923\u3064\u307E\u3068\u3081\u3066\u5531\u3048\u308B\u3002\u5531\u3048\u3089\u308C\u305F\u546A\u6587\u306B\u52B9\u679C\u304C\u8907\u88FD\u3055\u308C\u308B\u3002"
+  spellDescription: 
   relativeSpellGroupOffsets: 010000000200000003000000
   delayMultiplier: 0.2
   positionOffsets:
   - {x: 0, y: 0}
-  - {x: 0.5, y: 0.5}
-  - {x: 0.5, y: -0.5}
-  magicCircleDelay: 0.3
-  additionalErrorDegree: 1
+  - {x: 0, y: 0}
+  magicCircleDelay: 0.5
+  additionalErrorDegree: 2
+  randomCount: 2

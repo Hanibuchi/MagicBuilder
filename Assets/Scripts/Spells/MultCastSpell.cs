@@ -26,7 +26,7 @@ public class MultCastSpell : SpellBase
     [System.NonSerialized] private List<SpellBase> _lastWandSpells;
     [System.NonSerialized] private Dictionary<int, int[]> _cachedIndicesMap = new Dictionary<int, int[]>();
 
-    private int[] GetTargetIndices(List<SpellBase> wandSpells, int currentSpellIndex)
+    protected int[] GetTargetIndices(List<SpellBase> wandSpells, int currentSpellIndex)
     {
         // 呪文リストが変更された場合はキャッシュをクリア
         if (!AreSpellsEqual(_lastWandSpells, wandSpells))
@@ -72,9 +72,6 @@ public class MultCastSpell : SpellBase
     // 抽象メソッドの実装
     // ----------------------------------------------------------------------------------
 
-    /// <summary>
-    /// 補助線（軌道予測）を表示します。次の呪文のまとまりへ処理を連鎖させます。
-    /// </summary>
     public override void DisplayAimingLine(
         List<SpellBase> wandSpells,
         int currentSpellIndex,
@@ -83,11 +80,20 @@ public class MultCastSpell : SpellBase
         SpellContext context,
         bool clearLine = false)
     {
-        Debug.Log($"spells: {string.Join(", ", wandSpells.Select(s => s?.name ?? "null"))}");
         // relativeSpellGroupOffsetsに基づいて呼び出す次の呪文の絶対インデックスを取得
         int[] targetIndices = GetTargetIndices(wandSpells, currentSpellIndex);
-        Debug.Log($"targetIndices: {string.Join(", ", targetIndices)}");
+        DisplaySelectedAimingLine(targetIndices, wandSpells, currentSpellIndex, rotationZ, strength, context, clearLine);
+    }
 
+    protected void DisplaySelectedAimingLine(
+        int[] targetIndices,
+        List<SpellBase> wandSpells,
+        int currentSpellIndex,
+        float rotationZ,
+        float strength,
+        SpellContext context,
+        bool clearLine = false)
+    {
         Vector2 baseCasterPoint = context.CasterPosition;
         for (int i = 0; i < targetIndices.Length; i++)
         {
@@ -121,7 +127,7 @@ public class MultCastSpell : SpellBase
         }
     }
 
-    [SerializeField] float additionalErrorDegree = 2;
+    [SerializeField] protected float additionalErrorDegree = 2;
 
     /// <summary>
     /// 呪文を発射・実行します。このメソッド自体は非同期ではありませんが、
@@ -135,6 +141,17 @@ public class MultCastSpell : SpellBase
         SpellContext context)
     {
         int[] targetIndices = GetTargetIndices(wandSpells, currentSpellIndex);
+        FireSelectedSpells(targetIndices, wandSpells, currentSpellIndex, rotationZ, strength, context);
+    }
+
+    protected void FireSelectedSpells(
+        int[] targetIndices,
+        List<SpellBase> wandSpells,
+        int currentSpellIndex,
+        float rotationZ,
+        float strength,
+        SpellContext context)
+    {
         context.errorDegree += additionalErrorDegree;
         float interval = delayMultiplier * context.errorDegree;
 
@@ -187,7 +204,7 @@ public class MultCastSpell : SpellBase
     /// <summary>
     /// 単一の呪文を指定された遅延後に発射するロジック
     /// </summary>
-    private IEnumerator FireSingleSpellDelayed(
+    protected IEnumerator FireSingleSpellDelayed(
         SpellBase spellToFire,
         List<SpellBase> wandSpells,
         int targetIndex,

@@ -89,6 +89,11 @@ public enum SpellType
     TwoChainCast,
     ThreeChainCast,
     FiveChainCast,
+
+    TwoRandomChainCast,
+    ThreeRandomChainCast,
+    FiveRandomChainCast,
+
     TwoMultiplier,  // 2倍複製
     ThreeMultiplier,
     FiveMultiplier,

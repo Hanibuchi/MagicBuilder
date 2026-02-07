@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0539f293a65bc9840909b65e202e34b2, type: 3}
+  m_Name: RandomChainCast3
+  m_EditorClassIdentifier: 
+  category: 2
+  spellType: ThreeRandomChainCast
+  cooldown: 0.5
+  spellName: "\u30E9\u30F3\u30C0\u30E0\u540C\u6642\u8A60\u5531 x3"
+  purchaseCosts: 64000000c80000009001000020030000
+  icon: {fileID: 7562101257942454543, guid: ce713ff896a8e75478326c9ea04fe072, type: 3}
+  iconColor: {r: 1, g: 1, b: 1, a: 1}
+  iconMaterial: {fileID: 0}
+  spellDescription: 
+  relativeSpellGroupOffsets: 01000000020000000300000004000000
+  delayMultiplier: 0.2
+  positionOffsets:
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  magicCircleDelay: 0.5
+  additionalErrorDegree: 2
+  randomCount: 3
