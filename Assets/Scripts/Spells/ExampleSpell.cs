@@ -5,7 +5,7 @@ using System;
 [CreateAssetMenu(fileName = "ExampleSpell", menuName = "Wand System/Example Spell")]
 public class ExampleSpell : SpellBase
 {
-    private Dictionary<(int index, int callId), List<GameObject>> trajectoryPrefabsByCall = new();
+    protected Dictionary<(int index, int callId), List<GameObject>> trajectoryPrefabsByCall = new();
     [Header("補助線設定")]
     [Tooltip("軌道プレハブの生成間隔（秒）。小さいほど密になります。")]
     public float trajectoryPrefabInterval = 0.1f;
@@ -44,11 +44,7 @@ public class ExampleSpell : SpellBase
         // 1. Z回転と強さから初速ベクトルを計算
         float angleRad = rotationZ * Mathf.Deg2Rad;
         Vector2 initialVelocity = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)) * strength * strengthMultiplier;
-        float gravityMagnitude = Physics2D.gravity.magnitude;
-        if (projectilePrefab != null && projectilePrefab.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
-        {
-            gravityMagnitude *= (rb.gravityScale + context.gravityModifier);
-        }
+        float gravityMagnitude = GetGravityMagnitude(context);
 
         // 2. 一定時間ごとに軌道上の点を計算し、trajectoryPrefabを生成
         foreach (var obj in trajectoryPrefabs)
@@ -87,6 +83,17 @@ public class ExampleSpell : SpellBase
     {
         context.AimingModifier?.Invoke(trajectoryObj);
     }
+
+    protected virtual float GetGravityMagnitude(SpellContext context)
+    {
+        float gravityMagnitude = Physics2D.gravity.magnitude;
+        if (projectilePrefab != null && projectilePrefab.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
+        {
+            gravityMagnitude *= (rb.gravityScale + context.gravityModifier);
+        }
+        return gravityMagnitude;
+    }
+
     [Header("投射物設定")]
     [Tooltip("発射する魔法弾のプレハブ。Rigidbody2Dが必要です。")]
     public GameObject projectilePrefab;

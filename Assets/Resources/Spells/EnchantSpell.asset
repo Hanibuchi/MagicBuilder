@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5f359b0ca21d5641b00c24c3e63c72d, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d6d3a91d1f69114bb9b91631bf06ce0, type: 3}
   m_Name: EnchantSpell
   m_EditorClassIdentifier: 
   category: 0
