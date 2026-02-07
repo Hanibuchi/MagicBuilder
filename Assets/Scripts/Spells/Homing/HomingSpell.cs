@@ -13,6 +13,7 @@ public class HomingSpell : SpellBase
     [SerializeField] private float searchRange = 10f;
     [SerializeField] private float springConstant = 1f; // ばね定数
     [SerializeField] private float characterSpringConstant = 50f; // プロジェクタイルがキャラクターの場合のばね定数
+    [SerializeField] private float effectDuration = 30f;
 
     readonly int[] nextSpellOffsets = { 1 };
 
@@ -56,13 +57,13 @@ public class HomingSpell : SpellBase
             if (projectile.TryGetComponent<HomingMover>(out var homing))
             {
                 // すでにHomingMoverがある場合はばね定数を加算する
-                homing.AddSpringConstant(targetSpringConstant);
+                homing.AddSpringConstant(targetSpringConstant, effectDuration);
             }
             else
             {
                 // まだない場合は新しく追加して初期化する
                 homing = projectile.AddComponent<HomingMover>();
-                homing.Initialize(mask, searchRange, targetSpringConstant);
+                homing.Initialize(mask, searchRange, targetSpringConstant, effectDuration);
             }
         };
         FireSpellForNextSpells(

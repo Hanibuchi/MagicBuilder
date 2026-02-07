@@ -12,6 +12,8 @@ public class LowGravitySpell : SpellBase
     [Tooltip("Rigidbody2DのgravityScaleに加える値。負の値で重力が軽くなります。")]
     [SerializeField] private float gravityChange = -0.5f;
 
+    [SerializeField] private float effectDuration = 30f;
+
     public override int[] GetNextSpellOffsets(List<SpellBase> wandSpells, int currentSpellIndex)
     {
         return new int[] { 1 };
@@ -41,9 +43,17 @@ public class LowGravitySpell : SpellBase
         // 発射体のRigidbody2Dを修正するアクションを追加
         context.ProjectileModifier += (projectile) =>
         {
-            if (projectile != null && projectile.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
+            if (projectile != null)
             {
-                rb.gravityScale += gravityChange;
+                if (projectile.TryGetComponent<LowGravityModifier>(out var modifier))
+                {
+                    modifier.AddEffect(gravityChange, effectDuration);
+                }
+                else
+                {
+                    modifier = projectile.AddComponent<LowGravityModifier>();
+                    modifier.Initialize(gravityChange, effectDuration);
+                }
             }
         };
 

@@ -9,6 +9,7 @@ public class TeleportHomingMover : MonoBehaviour
     private float _searchRange;
     private float _teleportInterval;
     private float _timer;
+    private float _durationTimer = -1f;
     private bool _isInitialized = false;
 
     private Vector2 _relativeOffset;
@@ -30,19 +31,35 @@ public class TeleportHomingMover : MonoBehaviour
     /// ホーミング設定を初期化し、即座にワープを実行します。
     /// </summary>
     public void Initialize(LayerMask targetLayer, float searchRange, float teleportInterval,
-        GameObject rangeVisualPrefab, float animationDuration)
+        GameObject rangeVisualPrefab, float animationDuration, float duration)
     {
         _targetLayer = targetLayer;
         _searchRange = searchRange;
         _teleportInterval = teleportInterval;
         _rangeVisualPrefab = rangeVisualPrefab;
         _animationDuration = animationDuration;
+        _durationTimer = duration;
 
         _isInitialized = true;
         _timer = 0f; // 初回は即座にワープ
 
         CreateRangeVisual();
         ExecuteTeleport();
+    }
+
+    public void AddTeleportHomingData(float searchRange, float teleportInterval, float duration)
+    {
+        // 効果を累積させるか上書きするか。
+        // ここでは、サーチ範囲は最大値を取り、間隔は最小値を取るなどの調整が考えられるが、
+        // 単純に上書き・更新とする。
+        _searchRange = Mathf.Max(_searchRange, searchRange);
+        _teleportInterval = Mathf.Min(_teleportInterval, teleportInterval);
+        _durationTimer = duration;
+
+        if (_visualController != null)
+        {
+            _visualController.Setup(transform, _searchRange, _animationDuration);
+        }
     }
 
     private void CreateRangeVisual()
@@ -59,6 +76,20 @@ public class TeleportHomingMover : MonoBehaviour
         }
 
         _visualController.Setup(transform, _searchRange, _animationDuration);
+    }
+
+    private void Update()
+    {
+        if (!_isInitialized) return;
+
+        if (_durationTimer > 0)
+        {
+            _durationTimer -= Time.deltaTime;
+            if (_durationTimer <= 0)
+            {
+                Destroy(this);
+            }
+        }
     }
 
     private void FixedUpdate()

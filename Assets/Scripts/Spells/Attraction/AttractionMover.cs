@@ -10,8 +10,9 @@ public class AttractionMover : MonoBehaviour, ISpellProjectileDestroyListener
     private GameObject _repulsionPrefab;
     private AttractionEffect _effectInstance;
     private bool _hasFinished = false;
+    private float _durationTimer = -1f;
 
-    public void AddAttractionData(float range, float force, GameObject attractionPrefab, GameObject repulsionPrefab, LayerMask targetLayer)
+    public void AddAttractionData(float range, float force, GameObject attractionPrefab, GameObject repulsionPrefab, LayerMask targetLayer, float duration)
     {
         _totalRange += range;
         _totalForce += force;
@@ -21,7 +22,23 @@ public class AttractionMover : MonoBehaviour, ISpellProjectileDestroyListener
         if (attractionPrefab != null) _attractionPrefab = attractionPrefab;
         if (repulsionPrefab != null) _repulsionPrefab = repulsionPrefab;
 
+        _durationTimer = duration;
+
         RefreshVisual();
+    }
+
+    private void Update()
+    {
+        if (_hasFinished) return;
+
+        if (_durationTimer > 0)
+        {
+            _durationTimer -= Time.deltaTime;
+            if (_durationTimer <= 0)
+            {
+                Destroy(this);
+            }
+        }
     }
 
     private void RefreshVisual()

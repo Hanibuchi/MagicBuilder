@@ -16,6 +16,8 @@ public class AttractionSpell : SpellBase
     public GameObject attractionEffectPrefab;
     [Tooltip("斥力時の演出用プレハブ")]
     public GameObject repulsionEffectPrefab;
+    [Tooltip("効果持続時間（秒）")]
+    [SerializeField] private float effectDuration = 30f;
 
     public override void FireSpell(
         List<SpellBase> wandSpells, int currentSpellIndex,
@@ -23,13 +25,15 @@ public class AttractionSpell : SpellBase
     {
         context.ProjectileModifier += (GameObject obj) =>
         {
-            AttractionMover mover = obj.GetComponent<AttractionMover>();
-            if (mover == null)
+            if (obj.TryGetComponent<AttractionMover>(out var mover))
+            {
+                mover.AddAttractionData(range, force, attractionEffectPrefab, repulsionEffectPrefab, targetLayer, effectDuration);
+            }
+            else
             {
                 mover = obj.AddComponent<AttractionMover>();
+                mover.AddAttractionData(range, force, attractionEffectPrefab, repulsionEffectPrefab, targetLayer, effectDuration);
             }
-            
-            mover.AddAttractionData(range, force, attractionEffectPrefab, repulsionEffectPrefab, targetLayer);
         };
 
         // 次の呪文を実行

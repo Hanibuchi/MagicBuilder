@@ -9,23 +9,40 @@ public class HomingMover : MonoBehaviour
     private Rigidbody2D _rb;
     private Transform _target;
     private bool _isInitialized = false;
+    private float _durationTimer = -1f;
 
     private void Awake()
     {
         _rb = GetComponentInChildren<Rigidbody2D>();
     }
 
-    public void Initialize(LayerMask targetLayer, float searchRange, float springConstant)
+    public void Initialize(LayerMask targetLayer, float searchRange, float springConstant, float duration)
     {
         _targetLayer = targetLayer;
         _searchRange = searchRange;
         _springConstant = springConstant;
+        _durationTimer = duration;
         _isInitialized = true;
     }
 
-    public void AddSpringConstant(float value)
+    public void AddSpringConstant(float value, float duration)
     {
         _springConstant += value;
+        _durationTimer = duration;
+    }
+
+    private void Update()
+    {
+        if (!_isInitialized) return;
+
+        if (_durationTimer > 0)
+        {
+            _durationTimer -= Time.deltaTime;
+            if (_durationTimer <= 0)
+            {
+                Destroy(this);
+            }
+        }
     }
 
     private void FixedUpdate()

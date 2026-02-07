@@ -20,6 +20,9 @@ public class TeleportHomingSpell : SpellBase
     [Tooltip("出現・消失にかける時間（秒）")]
     [SerializeField] private float animationDuration = 0.2f;
 
+    [Tooltip("効果持続時間（秒）")]
+    [SerializeField] private float effectDuration = 30f;
+
     readonly int[] nextSpellOffsets = { 1 };
 
     public override int[] GetNextSpellOffsets(List<SpellBase> wandSpells, int currentSpellIndex)
@@ -48,11 +51,14 @@ public class TeleportHomingSpell : SpellBase
         {
             LayerMask mask = context.GetTargetLayerMask();
 
-            // TeleportHomingMoverがまだない場合のみアタッチして初期化
-            if (!projectile.TryGetComponent<TeleportHomingMover>(out var mover))
+            if (projectile.TryGetComponent<TeleportHomingMover>(out var mover))
+            {
+                mover.AddTeleportHomingData(searchRange, teleportInterval, effectDuration);
+            }
+            else
             {
                 mover = projectile.AddComponent<TeleportHomingMover>();
-                mover.Initialize(mask, searchRange, teleportInterval, rangeVisualPrefab, animationDuration);
+                mover.Initialize(mask, searchRange, teleportInterval, rangeVisualPrefab, animationDuration, effectDuration);
             }
         };
 

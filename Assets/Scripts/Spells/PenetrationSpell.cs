@@ -4,6 +4,8 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "PenetrationSpell", menuName = "Wand System/PenetrationSpell")]
 public class PenetrationSpell : SpellBase
 {
+    [SerializeField] private float effectDuration = 30f;
+
     public override void FireSpell(List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ, float strength, SpellContext context)
     {
         AddPenetrationModifier(context);
@@ -21,21 +23,14 @@ public class PenetrationSpell : SpellBase
         {
             if (obj != null)
             {
-                if (obj.TryGetComponent<Collider2D>(out var col))
+                if (obj.TryGetComponent<PenetrationModifier>(out var modifier))
                 {
-                    col.isTrigger = true;
+                    modifier.AddEffect(effectDuration);
                 }
-                // 衝突相手からCharacterControllerを取得
-                if (obj.TryGetComponent<MyCharacterController>(out var controller))
+                else
                 {
-                    // ヒットボックスを取得してすべてTriggerにする
-                    foreach (var collider in controller.GetHitBoxes())
-                    {
-                        if (collider != null)
-                        {
-                            collider.isTrigger = true;
-                        }
-                    }
+                    modifier = obj.AddComponent<PenetrationModifier>();
+                    modifier.Initialize(effectDuration);
                 }
             }
         };
