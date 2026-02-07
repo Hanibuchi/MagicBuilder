@@ -6,6 +6,10 @@ public class MegaBeamSpell : ExampleSpell
 {
     private Dictionary<(int index, int callId), GameObject> beamDisplayObjects = new();
 
+    [Header("ビーム発射前演出")]
+    [SerializeField] private GameObject chargeEffectPrefab;
+    [SerializeField] private float chargeTime = 1.0f;
+
     public override void DisplayAimingLine(
         List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ,
         float strength, SpellContext context,
@@ -44,5 +48,33 @@ public class MegaBeamSpell : ExampleSpell
             // 正確なスケールに基づいてビームを計算
             trajectory.UpdateBeam(context.CasterPosition, direction);
         }
+    }
+
+    public override void FireSpell(List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ, float strength, SpellContext context)
+    {
+        // 演出がない、または時間が0以下の場合は即座に発射
+        if (chargeEffectPrefab == null || chargeTime <= 0f)
+        {
+            base.FireSpell(wandSpells, currentSpellIndex, rotationZ, strength, context);
+            return;
+        }
+
+        // 演出用のコルーチンを開始 (SpellScheduler経由)
+        SpellScheduler.Instance.StartSpellCoroutine(ChargeAndFire(wandSpells, currentSpellIndex, rotationZ, strength, context));
+    }
+
+    private System.Collections.IEnumerator ChargeAndFire(List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ, float strength, SpellContext context)
+    {
+        // 1. 演出用プレハブを生成
+        GameObject chargeEffect = Instantiate(chargeEffectPrefab, context.CasterPosition, Quaternion.Euler(0, 0, rotationZ));
+
+        // 2. AimingModifierを適用
+        context.AimingModifier?.Invoke(chargeEffect);
+
+        // 3. 一定時間待機
+        yield return new WaitForSeconds(chargeTime);
+
+        // 5. 実際のFireSpellを実行
+        base.FireSpell(wandSpells, currentSpellIndex, rotationZ, strength, context);
     }
 }

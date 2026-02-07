@@ -15,7 +15,7 @@ MonoBehaviour:
   category: 0
   spellType: MegaBeam
   cooldown: 0.5
-  spellName: "\u6975\u592A\u30D3\u30FC\u30E0"
+  spellName: "\u30D3\u30FC\u30E0"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: 5026184849517852720, guid: 5f48692d38a36ab458dad28a7fd44383, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
@@ -38,3 +38,5 @@ MonoBehaviour:
   isTargetBoth: 0
   damageType: 2
   isClickTrigger: 0
+  chargeEffectPrefab: {fileID: 6237751522480992962, guid: 34fe18cb63bd72245bb58018ada902fc, type: 3}
+  chargeTime: 2.8
