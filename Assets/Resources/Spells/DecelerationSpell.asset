@@ -22,3 +22,4 @@ MonoBehaviour:
   iconMaterial: {fileID: 0}
   spellDescription: "\u546A\u6587\u306E\u521D\u901F\u3092\u4E0B\u3052\u308B\u3002"
   strengthMultiplier: 0.5
+  effectDuration: 20

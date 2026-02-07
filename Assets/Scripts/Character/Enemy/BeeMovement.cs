@@ -82,12 +82,11 @@ public class BeeMovement : EnemyMovementBase
         base.HandleMovement();
         if (!isInitialized) return;
 
-        // EnemyMovementBase.moveSpeed の比率（減速状態など）を移動速度に反映させる
-        // 比率 = 現在のmoveSpeed / デフォルトのmoveSpeed
-        float speedRatio = defaultMoveSpeed > 0 ? moveSpeed / defaultMoveSpeed : 1.0f;
+        // 合計速度倍率（状態異常比率 * 呪文倍率）を移動経過時間に反映させる
+        float currentMultiplier = GetTotalSpeedMultiplier();
 
-        // 経過時間を加算（速度比率を掛けることで、減速時に移動がゆっくりになるようにする）
-        elapsedTime += Time.fixedDeltaTime * speedRatio;
+        // 経過時間を加算（倍率を掛けることで、減速時に移動がゆっくりになるようにする）
+        elapsedTime += Time.fixedDeltaTime * currentMultiplier;
 
         // 補間割合 (0.0 ～ 1.0)
         float t = Mathf.Clamp01(elapsedTime / moveDuration);

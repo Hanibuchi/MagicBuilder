@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class AccelerationSpell : SpellBase
 {
     [SerializeField] private float strengthMultiplier = 1.5f;
+    [SerializeField] private float effectDuration = 20f;
 
     public override void DisplayAimingLine(
         List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ,
@@ -18,6 +19,22 @@ public class AccelerationSpell : SpellBase
         List<SpellBase> wandSpells, int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
+        context.ProjectileModifier += (projectile) =>
+        {
+            if (projectile.TryGetComponent<EnemyMovementBase>(out var enemy))
+            {
+                if (projectile.TryGetComponent<EnemySpeedModifier>(out var modifier))
+                {
+                    modifier.AddEffect(strengthMultiplier, effectDuration);
+                }
+                else
+                {
+                    modifier = projectile.AddComponent<EnemySpeedModifier>();
+                    modifier.Initialize(strengthMultiplier, effectDuration);
+                }
+            }
+        };
+
         FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, currentSpellIndex, rotationZ, strength * strengthMultiplier, context);
     }
 
