@@ -11,7 +11,7 @@ public class InstantDeathProjectile : SpellProjectileDamageSource
     [Tooltip("即死発生時に生成するエフェクトのプレハブ")]
     [SerializeField] private GameObject killEffectPrefab;
     [Tooltip("エフェクトを削除するまでの時間")]
-    [SerializeField] private float effectDestroyDelay = 2.0f;
+    [SerializeField] private float effectDestroyDelay = 1.0f;
 
     protected override void OnCollisionEnter2D(Collision2D collision)
     {

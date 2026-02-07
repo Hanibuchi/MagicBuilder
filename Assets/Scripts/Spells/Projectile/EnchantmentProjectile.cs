@@ -8,6 +8,10 @@ public class EnchantmentProjectile : SpellProjectileDamageSource
     [Header("エンチャント設定")]
     [SerializeField] AudioClip enchantSound;
     [SerializeField] float enchantSoundVolume = 1.0f;
+    [Tooltip("エンチャント発生時に生成するエフェクトのプレハブ")]
+    [SerializeField] private GameObject enchantEffectPrefab;
+    [Tooltip("エフェクトを削除するまでの時間")]
+    [SerializeField] private float effectDestroyDelay = 1.0f;
 
     protected override void ApplyProjectileModifier(SpellContext spellContext)
     {
@@ -16,19 +20,20 @@ public class EnchantmentProjectile : SpellProjectileDamageSource
 
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
-        ApplyEnchantment(collision.gameObject);
+        Vector2 contactPoint = collision.contacts.Length > 0 ? collision.contacts[0].point : (Vector2)transform.position;
+        ApplyEnchantment(collision.gameObject, contactPoint);
         // 基本クラスの処理（衝突時のプレハブ生成や破壊など）を呼び出す
         base.OnCollisionEnter2D(collision);
     }
 
     protected override void OnTriggerEnter2D(Collider2D other)
     {
-        ApplyEnchantment(other.gameObject);
+        ApplyEnchantment(other.gameObject, transform.position);
         // 基本クラスの処理（衝突時のプレハブ生成や破壊など）を呼び出す
         base.OnTriggerEnter2D(other);
     }
 
-    private void ApplyEnchantment(GameObject hitObject)
+    private void ApplyEnchantment(GameObject hitObject, Vector3 spawnPos)
     {
         if (hitObject == null) return;
 
@@ -39,7 +44,17 @@ public class EnchantmentProjectile : SpellProjectileDamageSource
             {
                 cachedContext.ProjectileModifier.Invoke(hitObject.transform.root.gameObject);
                 PlayEnchantSound();
+                SpawnEnchantEffect(spawnPos);
             }
+        }
+    }
+
+    private void SpawnEnchantEffect(Vector3 spawnPos)
+    {
+        if (enchantEffectPrefab != null)
+        {
+            GameObject effect = Instantiate(enchantEffectPrefab, spawnPos, Quaternion.identity);
+            Destroy(effect, effectDestroyDelay);
         }
     }
 

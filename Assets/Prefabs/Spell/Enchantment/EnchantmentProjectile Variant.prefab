@@ -84,6 +84,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageSourceType: 0
   maxPierceCount: 1
+  currentSpellLayer: 0
   enableImpulse: 0
   impulseForce: 1
   animator: {fileID: 5728392482699618263}
@@ -96,6 +97,8 @@ MonoBehaviour:
   destroySoundVolume: 1
   enchantSound: {fileID: 8300000, guid: 113a0f1929ad74dcba20169a2eaa5e57, type: 3}
   enchantSoundVolume: 1
+  enchantEffectPrefab: {fileID: 4326538175768013781, guid: 96457124f94bca5418afe4424cd539b4, type: 3}
+  effectDestroyDelay: 1.2
 --- !u!95 &5728392482699618263 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 4652757309359089412, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
