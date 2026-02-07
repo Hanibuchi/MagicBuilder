@@ -21,10 +21,11 @@ MonoBehaviour:
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
   spellDescription: "\u546A\u6587\u306B\u65A5\u529B\u3092\u4ED8\u4E0E\u3059\u308B\u3002"
-  range: -3
+  range: -2.5
   force: -15
   targetLayer:
     serializedVersion: 2
     m_Bits: 530432
   attractionEffectPrefab: {fileID: 7971729231282367626, guid: 53ff81d00d363614a8f6a56f62bae9b0, type: 3}
   repulsionEffectPrefab: {fileID: 994417386674244441, guid: 261d8ddfcddfc004fbf2bc6dfe8844a8, type: 3}
+  effectDuration: 30
