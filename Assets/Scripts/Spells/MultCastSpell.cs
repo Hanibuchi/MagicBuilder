@@ -95,6 +95,8 @@ public class MultCastSpell : SpellBase
         bool clearLine = false)
     {
         Vector2 baseCasterPoint = context.CasterPosition;
+        Dictionary<int, int> callCountPerIndex = new Dictionary<int, int>();
+
         for (int i = 0; i < targetIndices.Length; i++)
         {
             int targetIndex = targetIndices[i];
@@ -112,6 +114,12 @@ public class MultCastSpell : SpellBase
                 SpellContext newContext = context;
                 if (i > 0)
                     newContext = context.Clone();
+
+                // 同じインデックスが指定されている場合、callIdをインクリメントして区別できるようにする
+                callCountPerIndex.TryGetValue(targetIndex, out int currentCallCount);
+                newContext.callId = currentCallCount;
+                callCountPerIndex[targetIndex] = currentCallCount + 1;
+
                 newContext.CasterPosition = baseCasterPoint + rotatedOffset;
 
                 // 対象の呪文のDisplayAimingLineを呼び出し
@@ -127,7 +135,7 @@ public class MultCastSpell : SpellBase
         }
     }
 
-    [SerializeField] protected float additionalErrorDegree = 2;
+    [SerializeField] protected float additionalErrorDegree = 1;
 
     /// <summary>
     /// 呪文を発射・実行します。このメソッド自体は非同期ではありませんが、
@@ -156,6 +164,7 @@ public class MultCastSpell : SpellBase
         float interval = delayMultiplier * context.errorDegree;
 
         Vector2 baseCasterPoint = context.CasterPosition;
+        Dictionary<int, int> callCountPerIndex = new Dictionary<int, int>();
 
         // 💡 各ターゲット呪文の発射を独立したコルーチンとして等間隔に実行
         for (int i = 0; i < targetIndices.Length; i++)
@@ -174,6 +183,13 @@ public class MultCastSpell : SpellBase
 
                 // 最初の発射の時は元のSpellContextを使用し、それ以外はCloneする
                 SpellContext newContext = (i == 0) ? context : context.Clone();
+
+                // 同じインデックスが指定されている場合、callIdをインクリメントして区別できるようにする
+                int currentCallCount = 0;
+                callCountPerIndex.TryGetValue(targetIndex, out currentCallCount);
+                newContext.callId = currentCallCount;
+                callCountPerIndex[targetIndex] = currentCallCount + 1;
+
                 newContext.CasterPosition = baseCasterPoint + rotatedOffset;
 
                 float delayTime = i * interval;

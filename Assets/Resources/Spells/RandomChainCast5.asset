@@ -33,5 +33,4 @@ MonoBehaviour:
   - {x: 1.5, y: 0.5}
   - {x: 1.5, y: -0.5}
   magicCircleDelay: 0.3
-  additionalErrorDegree: 2
-  randomCount: 8
+  additionalErrorDegree: 1
