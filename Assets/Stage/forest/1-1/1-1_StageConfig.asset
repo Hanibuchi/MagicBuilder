@@ -21,7 +21,7 @@ MonoBehaviour:
     conditionValue: 0
     isBossPhase: 0
     spawnerConfig:
-      enemyPrefab: {fileID: 3738908839911435214, guid: 541b412a452207d45909e95a7ee45512, type: 3}
+      enemyPrefab: {fileID: 7981699022232761973, guid: 97d64d8723cc2414ab250a3d6ff89bb6, type: 3}
       isBoss: 0
       customDroppableSpells: []
     nextPhases: []
