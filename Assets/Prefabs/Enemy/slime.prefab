@@ -730,6 +730,7 @@ GameObject:
   - component: {fileID: 427356011830783050}
   - component: {fileID: 6875321328670521665}
   - component: {fileID: 551951246347731591}
+  - component: {fileID: 2293810429420409791}
   m_Layer: 10
   m_Name: slime
   m_TagString: Untagged
@@ -860,6 +861,7 @@ MonoBehaviour:
   attackLauncher3: {fileID: 0}
   mainSpriteRenderer: {fileID: 4801315807863467480}
   statusEffectSpriteRenderer: {fileID: 7268731733992222618}
+  flipCooldown: 1
 --- !u!114 &427356011830783050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -923,6 +925,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   droppableSpells: []
   dropDelay: 0.2
+--- !u!114 &2293810429420409791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8884610926546658600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e375830a7c9c8643a45b205bc8c3f37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  suffocationDelay: 0.5
+  damagePerFrame: 0.5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 16384
+  checkOffset: {x: 0, y: 0.5}
 --- !u!1001 &4614337404976686399
 PrefabInstance:
   m_ObjectHideFlags: 0
