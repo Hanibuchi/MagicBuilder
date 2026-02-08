@@ -80,6 +80,22 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 2426319430043351137, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: m_Points.Array.data[0].x
+      value: -0.9063921
+      objectReference: {fileID: 0}
+    - target: {fileID: 2426319430043351137, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: m_Points.Array.data[0].y
+      value: 0.10940075
+      objectReference: {fileID: 0}
+    - target: {fileID: 2426319430043351137, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: m_Points.Array.data[1].x
+      value: -0.90204716
+      objectReference: {fileID: 0}
+    - target: {fileID: 2426319430043351137, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: m_Points.Array.data[1].y
+      value: 0.4804262
+      objectReference: {fileID: 0}
     - target: {fileID: 3054214445999646573, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_Size.x
       value: 0.5231804
@@ -128,6 +144,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 0e3950437c1ce074fb6472a3ee893ff8, type: 3}
+    - target: {fileID: 7268731733992222618, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7809496392863742821, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_Radius
       value: 0.7427451

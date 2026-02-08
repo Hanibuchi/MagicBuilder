@@ -51,6 +51,11 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
     /// <summary>最後にセンサーが感知したターゲットのワールド座標</summary>
     private Vector2 _lastSensedTargetPosition = Vector2.zero;
 
+    // --- 反転クールダウン設定 ---
+    private float _lastFlipTime = -1f;
+    [SerializeField, Tooltip("向きを反転させる際のクールダウン時間")]
+    private float flipCooldown = 1.0f;
+
     // ★ 追加: ノックバック処理のためのEffector
     private KnockbackEffector _knockbackEffector;
     // ★ 追加: Rigidbody2D（ノックバック時間計算に必要）
@@ -175,6 +180,7 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
     // --- ITriggerHandler の実装 ---
     private bool _isTargetSensed = false;
     private string _currentTriggerID = "";
+    private const string TRIGGER_WALL = "Wall";
 
     /// <summary>
     /// LayerSensorによってトリガーが感知された際に呼び出されます。
@@ -183,6 +189,13 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
     /// <param name="target">感知された対象のワールド座標</param>
     public void OnTriggerSensed(string triggerID, Vector2 target)
     {
+        // 壁を感知した場合の反転処理
+        if (triggerID == TRIGGER_WALL)
+        {
+            FlipScale();
+            return;
+        }
+
         // ターゲット座標をメンバ変数に格納
         _lastSensedTargetPosition = target;
 
@@ -195,6 +208,19 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         _attackModel.RequestAttack(triggerID);
 
         enemyMovement?.StopMovement();
+    }
+
+    /// <summary>
+    /// キャラクターの向き（scale.x）を反転させます。クールダウン中は実行されません。
+    /// </summary>
+    private void FlipScale()
+    {
+        if (Time.time < _lastFlipTime + flipCooldown) return;
+        _lastFlipTime = Time.time;
+
+        Vector3 scale = transform.localScale;
+        scale.x *= -1f;
+        transform.localScale = scale;
     }
 
     /// <summary>

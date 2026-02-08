@@ -115,7 +115,9 @@ public class EnemyMovementBase : MonoBehaviour
         // 外部からの AddForce（ノックバックや引き寄せなど）と共存させます。
         if (rb != null)
         {
-            float targetVelocityX = -GetCurrentMoveSpeed();
+            // キャラクターが向いている方向（localScale.x）の符号のみを取得
+            // Unityのtransform.rightはスケール反転を無視するため、localScaleを直接参照します
+            float targetVelocityX = Mathf.Sign(transform.localScale.x) * -GetCurrentMoveSpeed();
             float currentVelocityX = rb.linearVelocity.x;
 
             // 目標速度との差分を埋めるための力を計算
