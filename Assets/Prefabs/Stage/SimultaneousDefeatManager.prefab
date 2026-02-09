@@ -88,6 +88,9 @@ MonoBehaviour:
     spawnedControllers: []
     isCleared: 0
     firstDeathTime: 0
+  respawnSE: {fileID: 8300000, guid: 303d44c8d6ec943a38df8ec10b19d9c7, type: 3}
+  respawnEffectPrefab: {fileID: 4021103657954561961, guid: 5c755f9bc5253ea418e919994537dcc7, type: 3}
+  effectDestroyDelay: 2
 --- !u!1 &4817711732433983824
 GameObject:
   m_ObjectHideFlags: 0

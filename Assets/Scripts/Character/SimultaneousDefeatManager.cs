@@ -50,6 +50,14 @@ public class SimultaneousDefeatManager : MonoBehaviour
 
     [SerializeField] private List<EnemyGroup> groups = new List<EnemyGroup>();
 
+    [Header("再生成演出設定")]
+    [Tooltip("復活・再スポーン時に再生するSE")]
+    [SerializeField] private AudioClip respawnSE;
+    [Tooltip("復活・再スポーン時に生成するエフェクトなどのプレハブ")]
+    [SerializeField] private GameObject respawnEffectPrefab;
+    [Tooltip("演出用オブジェクトを削除するまでの時間")]
+    [SerializeField] private float effectDestroyDelay = 2.0f;
+
     private void Start()
     {
         foreach (var group in groups)
@@ -81,17 +89,22 @@ public class SimultaneousDefeatManager : MonoBehaviour
                     
                     // 初期スポーン（ダミーのnullを入れておいてSpawnEnemy内でセット）
                     group.spawnedControllers.Add(null);
-                    SpawnEnemy(group, group.spawnContexts.Count - 1);
+                    SpawnEnemy(group, group.spawnContexts.Count - 1, false); // 初回は演出なし
                     controllerIndex++;
                 }
             }
         }
     }
 
-    private void SpawnEnemy(EnemyGroup group, int contextIndex)
+    private void SpawnEnemy(EnemyGroup group, int contextIndex, bool showEffect)
     {
         var context = group.spawnContexts[contextIndex];
         if (context.prefab == null || context.spawnPoint == null) return;
+
+        if (showEffect)
+        {
+            PlayRespawnEffect(context.spawnPoint.position);
+        }
 
         GameObject go = Instantiate(context.prefab, context.spawnPoint.position, context.spawnPoint.rotation);
 
@@ -108,6 +121,20 @@ public class SimultaneousDefeatManager : MonoBehaviour
         else
         {
             Debug.LogWarning($"SimultaneousDefeatManager: Prefab {context.prefab.name} does not have MyCharacterController.");
+        }
+    }
+
+    private void PlayRespawnEffect(Vector3 position)
+    {
+        if (SoundManager.Instance != null && respawnSE != null)
+        {
+            SoundManager.Instance.PlaySE(respawnSE);
+        }
+
+        if (respawnEffectPrefab != null)
+        {
+            GameObject effect = Instantiate(respawnEffectPrefab, position, Quaternion.identity);
+            Destroy(effect, effectDestroyDelay);
         }
     }
 
@@ -165,12 +192,13 @@ public class SimultaneousDefeatManager : MonoBehaviour
                             int contextIdx = group.spawnContexts.FindIndex(c => c.controllerIndex == i);
                             if (contextIdx >= 0)
                             {
-                                SpawnEnemy(group, contextIdx);
+                                SpawnEnemy(group, contextIdx, true);
                             }
                         }
                         else if (controller.GetComponent<CharacterHealth>().IsDead)
                         {
-                            // 生き残っているが死亡状態の場合は復活
+                            // 死んでいるオブジェクトが残っている場合も演出を再生して復活
+                            PlayRespawnEffect(controller.transform.position);
                             controller.Revive();
                         }
                     }
