@@ -438,6 +438,17 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         NotifyDie(true);
     }
 
+    /// <summary>
+    /// 敵を復活させ、移動やフラグを初期化します。
+    /// </summary>
+    public override void Revive()
+    {
+        isDead = false;
+        base.Revive();
+        enemyMovement?.RemoveStun();
+        UpdateStatusEffectRenderer();
+    }
+
     bool isDead = false; // ボス敵が複数回死亡通知される可能性があるため、フラグで制御
     public override void NotifyDie(bool silent = false)
     {

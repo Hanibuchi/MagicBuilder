@@ -106,6 +106,32 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
             PlayDieSound();
         }
     }
+
+    /// <summary>
+    /// キャラクターを復活させ、状態を元に戻します。
+    /// </summary>
+    public virtual void Revive()
+    {
+        if (characterHealth != null)
+        {
+            characterHealth.Revive();
+        }
+
+        if (animator != null && animator.enabled)
+        {
+            animator.SetBool(PARAM_IS_DEAD, false);
+        }
+
+        if (hitBoxObject != null)
+        {
+            Collider2D[] colliders = GetHitBoxes();
+            foreach (var col in colliders)
+            {
+                col.enabled = true;
+            }
+        }
+    }
+
     public void NotifyDieSilent()
     {
         if (animator == null || !animator.enabled) return;
