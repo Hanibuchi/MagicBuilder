@@ -31907,6 +31907,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SimultaneousDefeatManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8359022915018741208, guid: 05095faae935f7f45835ee9c7c97ec64, type: 3}
+      propertyPath: groups.Array.data[0].dropSpells.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8503131583399328107, guid: 05095faae935f7f45835ee9c7c97ec64, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -30,6 +30,9 @@ public class SimultaneousDefeatManager : MonoBehaviour
         [Tooltip("このグループに含まれる敵の種類ごとの出現設定")]
         public List<EnemySpawnInfo> spawnInfos = new List<EnemySpawnInfo>();
 
+        [Tooltip("グループ全滅時にドロップする呪文のリスト")]
+        public SpellBase[] dropSpells;
+
         // 全ての敵のコントローラーをフラットに保持
         [HideInInspector] public List<MyCharacterController> spawnedControllers = new List<MyCharacterController>();
 
@@ -169,6 +172,26 @@ public class SimultaneousDefeatManager : MonoBehaviour
                 {
                     TeleportManager.Instance.UnregisterEnemy(group.stageId);
                 }
+
+                // 呪文のドロップ処理
+                if (group.dropSpells != null && group.dropSpells.Length > 0 && SpellDropManager.Instance != null)
+                {
+                    // 代表として一つ目の出現ポイントをドロップ位置とする
+                    Vector3 dropPos = transform.position;
+                    if (group.spawnContexts.Count > 0 && group.spawnContexts[0].spawnPoint != null)
+                    {
+                        dropPos = group.spawnContexts[0].spawnPoint.position;
+                    }
+
+                    foreach (var spell in group.dropSpells)
+                    {
+                        if (spell != null)
+                        {
+                            SpellDropManager.Instance.DropSpell(dropPos, spell);
+                        }
+                    }
+                }
+
                 Debug.Log($"SimultaneousDefeatManager: Group {group.DisplayId} (StageID: {group.stageId}) CLEARED!");
             }
             // 一部が撃破されている場合（復活判定）
