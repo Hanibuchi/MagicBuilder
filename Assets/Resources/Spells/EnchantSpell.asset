@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 0
   spellType: Enchant
-  cooldown: 0.5
+  cooldown: 3
   spellName: "\u4ED8\u4E0E"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: 4650833445447063721, guid: c22aacc41a6edc04a98bfe2f2ff0a803, type: 3}

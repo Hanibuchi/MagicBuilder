@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 0
   spellType: FireflyTrigger
-  cooldown: 0.5
+  cooldown: 1
   spellName: "\u86CD"
   purchaseCosts: 00000000000000000000000000000000
   icon: {fileID: -8608178329922089135, guid: 8467aff73a9464441a459a30517e5a12, type: 3}

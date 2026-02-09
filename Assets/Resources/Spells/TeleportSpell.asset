@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 0
   spellType: Teleport
-  cooldown: 0.5
+  cooldown: 3
   spellName: "\u30C6\u30EC\u30DD\u30FC\u30C8"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: -4034597643228481169, guid: 3a51fd2f03ae4e0459588aac11ce109b, type: 3}

@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 1
   spellType: Penetration
-  cooldown: 0.1
+  cooldown: 1
   spellName: "\u900F\u904E\u6027"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: 1402902171128163390, guid: 62f55362e24c72d46bda946f4c223552, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
   spellDescription: "\u546A\u6587\u304C\u900F\u904E\u6027\u3092\u6301\u3064\u3088\u3046\u306B\u306A\u308B\u3002"
+  effectDuration: 30

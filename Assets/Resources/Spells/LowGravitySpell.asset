@@ -22,3 +22,4 @@ MonoBehaviour:
   iconMaterial: {fileID: 0}
   spellDescription: "\u546A\u6587\u306B\u304B\u304B\u308B\u91CD\u529B\u3092\u6E1B\u3089\u3059\u3002"
   gravityChange: -0.5
+  effectDuration: 30

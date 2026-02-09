@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 0
   spellType: Gumball
-  cooldown: 0.5
+  cooldown: 1
   spellName: "\u30AC\u30E0\u30DC\u30FC\u30EB"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: -4619987123921624084, guid: 7c966cfbbb4d36a419f200b4e826381a, type: 3}

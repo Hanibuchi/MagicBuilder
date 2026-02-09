@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 2
   spellType: Skip
-  cooldown: 0.5
+  cooldown: 1
   spellName: "\u30B9\u30AD\u30C3\u30D7"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: 9074279920672940234, guid: ec9bb5a9def8f034bb3351a63694f13e, type: 3}

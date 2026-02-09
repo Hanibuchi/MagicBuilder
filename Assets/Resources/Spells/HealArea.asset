@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 0
   spellType: AreaHeal
-  cooldown: 0.5
+  cooldown: 10
   spellName: "\u30D2\u30FC\u30EB\u30A8\u30EA\u30A2"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: 7837233560208939015, guid: 1be93c3254b864446b90f85818118949, type: 3}

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 0
   spellType: GiantArrow
-  cooldown: 0.5
+  cooldown: 10
   spellName: "\u5DE8\u5927\u77E2"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: 343932831540123903, guid: 6e23ff91565431641bbf48ab71e4369f, type: 3}

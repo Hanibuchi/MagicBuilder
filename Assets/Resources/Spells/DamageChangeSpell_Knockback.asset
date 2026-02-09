@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 1
   spellType: AdditionalKnockback
-  cooldown: 0.5
+  cooldown: 1
   spellName: "\u30CE\u30C3\u30AF\u30D0\u30C3\u30AF"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: 1272822241129982336, guid: ba6239a6f6793f04891ceb6956141e51, type: 3}

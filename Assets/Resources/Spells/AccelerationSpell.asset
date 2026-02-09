@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 1
   spellType: Acceleration
-  cooldown: 0.2
+  cooldown: 0.5
   spellName: "\u52A0\u901F"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: -2287283157862202444, guid: 1acc19a8b26b8844aab1a97cd46071d0, type: 3}

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 0
   spellType: MegaBeam
-  cooldown: 0.5
+  cooldown: 15
   spellName: "\u30D3\u30FC\u30E0"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: 5026184849517852720, guid: 5f48692d38a36ab458dad28a7fd44383, type: 3}

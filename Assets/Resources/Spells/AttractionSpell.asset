@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 1
   spellType: Attraction
-  cooldown: 0.2
+  cooldown: 1
   spellName: "\u5F15\u529B"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: 1571690669277093118, guid: 62fabd6d1ae30f14f8591df7124767b6, type: 3}
@@ -28,3 +28,4 @@ MonoBehaviour:
     m_Bits: 530432
   attractionEffectPrefab: {fileID: 7971729231282367626, guid: 53ff81d00d363614a8f6a56f62bae9b0, type: 3}
   repulsionEffectPrefab: {fileID: 994417386674244441, guid: 261d8ddfcddfc004fbf2bc6dfe8844a8, type: 3}
+  effectDuration: 30

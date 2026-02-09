@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 0
   spellType: Blade
-  cooldown: 0.5
+  cooldown: 6
   spellName: "\u30D6\u30EC\u30A4\u30C9"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: -6920231263525051304, guid: a5f84612c56adec4c931847c21fa28ca, type: 3}
@@ -35,6 +35,7 @@ MonoBehaviour:
     temperatureDamage: 0
     healing: 0
     knockback: 0
+  isTargetBoth: 0
   damageType: 2
   isClickTrigger: 0
   minRotationAngle: -45

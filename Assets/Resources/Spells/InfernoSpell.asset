@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 0
   spellType: Inferno
-  cooldown: 2
+  cooldown: 3
   spellName: "\u9695\u77F3"
   purchaseCosts: 00000000000000000000000000000000
   icon: {fileID: -5728341008824094197, guid: 4c4ecee0dbfe19e4a9fe3f0cb94b7935, type: 3}

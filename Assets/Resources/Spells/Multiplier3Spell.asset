@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 3
   spellType: ThreeMultiplier
-  cooldown: 0.5
+  cooldown: 1.5
   spellName: "\u8907\u88FD x3"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: 7709829495316133606, guid: 92095f358acf0884d93f3cb7ee4dad9f, type: 3}

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 1
   spellType: Pause
-  cooldown: 0.2
+  cooldown: 0.5
   spellName: "\u4E00\u6642\u505C\u6B62"
   purchaseCosts: 00000000000000000000000000000000
   icon: {fileID: -7762350047352875558, guid: a39144336ef4d5448b8af335c5c9aa21, type: 3}

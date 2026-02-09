@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 3
   spellType: FiveSplit
-  cooldown: 0.5
+  cooldown: 3
   spellName: "\u591A\u91CD\u8A60\u5531 x5"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: 4459817746713722393, guid: 6c1dcb866f2ab9d41b3fd26b344e3736, type: 3}

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 1
   spellType: Repulsion
-  cooldown: 0.2
+  cooldown: 1
   spellName: "\u65A5\u529B"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: -3734256424976767799, guid: 62fabd6d1ae30f14f8591df7124767b6, type: 3}

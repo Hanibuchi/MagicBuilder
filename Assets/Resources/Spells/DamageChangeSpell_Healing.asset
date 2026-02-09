@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 1
   spellType: HealingDamage
-  cooldown: 0.5
+  cooldown: 1
   spellName: "\u56DE\u5FA9\u91CF\u8FFD\u52A0"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: 3130467686543574262, guid: b0a0b558bc70ee14a8e92fa26b9f69f6, type: 3}

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 3
   spellType: Orbit
-  cooldown: 0.2
+  cooldown: 1
   spellName: "\u516C\u8EE2"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: 3957399766666169555, guid: dc10d637d950bd94eaba4f13de5d3bbe, type: 3}

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 0
   spellType: FireShot
-  cooldown: 0.5
+  cooldown: 1.5
   spellName: "\u30D5\u30A1\u30A4\u30A2\u30B7\u30E7\u30C3\u30C8"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: -498031150505441705, guid: c22aacc41a6edc04a98bfe2f2ff0a803, type: 3}

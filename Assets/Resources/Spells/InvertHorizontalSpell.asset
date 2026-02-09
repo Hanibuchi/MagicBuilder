@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 1
   spellType: InvertHorizontal
-  cooldown: 0.2
+  cooldown: 0.5
   spellName: "\u5DE6\u53F3\u53CD\u8EE2"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: -1571885925794029214, guid: 3bab96da68c717b4ca72cc5934c9bfd2, type: 3}

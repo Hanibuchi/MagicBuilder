@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 0
   spellType: InstantDeath
-  cooldown: 0.5
+  cooldown: 15
   spellName: "\u5373\u6B7B"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: 4213405785599041273, guid: c22aacc41a6edc04a98bfe2f2ff0a803, type: 3}

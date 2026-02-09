@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 3
   spellType: Following
-  cooldown: 0.5
+  cooldown: 1
   spellName: "\u8FFD\u5F93"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: 8144627652066120075, guid: 1fb7a24bdf81fc740958fb4e672e423e, type: 3}

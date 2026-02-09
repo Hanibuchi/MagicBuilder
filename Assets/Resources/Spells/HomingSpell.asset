@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 1
   spellType: Homing
-  cooldown: 0.5
+  cooldown: 1
   spellName: "\u8FFD\u5C3E"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: -8952597660576484044, guid: 1342d4ba84af509469700050572d536f, type: 3}
@@ -27,3 +27,4 @@ MonoBehaviour:
   searchRange: 10
   springConstant: 1
   characterSpringConstant: 50
+  effectDuration: 30

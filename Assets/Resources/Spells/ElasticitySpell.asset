@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 1
   spellType: Elasticity
-  cooldown: 0.5
+  cooldown: 1
   spellName: "\u5F3E\u6027"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: -8939950432946601015, guid: 29aeaecad74aafb41a8f84385313f0b1, type: 3}

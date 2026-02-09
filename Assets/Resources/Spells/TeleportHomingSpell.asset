@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 1
   spellType: TeleportHoming
-  cooldown: 0.5
+  cooldown: 1
   spellName: "\u8EE2\u4F4D"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: -54502824745702160, guid: 61d69b3f9520d0446abf72dbb11143e8, type: 3}
@@ -25,3 +25,4 @@ MonoBehaviour:
   teleportInterval: 0.1
   rangeVisualPrefab: {fileID: 3374450186592658842, guid: 8f93d93ca552b4744a9bba5b27a7afc6, type: 3}
   animationDuration: 0.5
+  effectDuration: 30

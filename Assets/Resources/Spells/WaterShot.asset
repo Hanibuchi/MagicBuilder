@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5eead4a52643cdf42bb45d6397bce3c4, type: 3}
-  m_Name: IceShot 2
+  m_Name: WaterShot
   m_EditorClassIdentifier: 
   category: 0
   spellType: WaterShot
-  cooldown: 0.5
+  cooldown: 1.5
   spellName: "\u30A6\u30A9\u30FC\u30BF\u30FC\u30B7\u30E7\u30C3\u30C8"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: 6153959538487484169, guid: c22aacc41a6edc04a98bfe2f2ff0a803, type: 3}

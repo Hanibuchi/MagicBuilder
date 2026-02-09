@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 1
   spellType: Extension
-  cooldown: 0.5
+  cooldown: 1
   spellName: "\u5EF6\u9577"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: 3435567990011867454, guid: 9ec7b48664f5677458a00337588dbe21, type: 3}

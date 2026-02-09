@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 0
   spellType: IceBreak
-  cooldown: 0.5
+  cooldown: 3
   spellName: "\u30A2\u30A4\u30B9\u30D6\u30EC\u30A4\u30AF"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: -5924015675943012725, guid: 1e224f2e919b11744847fadaeaca7a73, type: 3}

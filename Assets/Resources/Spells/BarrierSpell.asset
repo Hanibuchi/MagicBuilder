@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 0
   spellType: Barrier
-  cooldown: 2
+  cooldown: 6
   spellName: "\u30D0\u30EA\u30A2"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: -5627540392819486484, guid: a46d1e94095235140bd73bc80c4f9433, type: 3}

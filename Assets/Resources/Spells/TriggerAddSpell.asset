@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 3
   spellType: AddTrigger
-  cooldown: 0.2
+  cooldown: 2
   spellName: "\u30C8\u30EA\u30AC\u30FC\u8FFD\u52A0"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: 3617630818602472543, guid: d6ea895fe16d6284983e3a7c2b8a161d, type: 3}
