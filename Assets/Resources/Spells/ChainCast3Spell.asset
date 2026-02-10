@@ -17,7 +17,7 @@ MonoBehaviour:
   cooldown: 0.5
   spellName: "\u540C\u6642\u8A60\u5531 x3"
   purchaseCosts: 64000000c80000009001000020030000
-  icon: {fileID: 4323707765852580557, guid: 414f7f3aaac112b42b84cad86d834bc0, type: 3}
+  icon: {fileID: -331289001849531770, guid: 414f7f3aaac112b42b84cad86d834bc0, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
   spellDescription: "\u546A\u6587\u30923\u3064\u307E\u3068\u3081\u3066\u5531\u3048\u308B\u3002\u5531\u3048\u3089\u308C\u305F\u546A\u6587\u306B\u52B9\u679C\u304C\u8907\u88FD\u3055\u308C\u308B\u3002"
