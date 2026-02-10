@@ -61,6 +61,10 @@ public class SimultaneousDefeatManager : MonoBehaviour
     [Tooltip("演出用オブジェクトを削除するまでの時間")]
     [SerializeField] private float effectDestroyDelay = 2.0f;
 
+    [Header("ドロップ演出設定")]
+    [Tooltip("全ての呪文をドロップし終えるまでの合計時間")]
+    [SerializeField] private float totalDropDuration = 1.0f;
+
     private void Start()
     {
         foreach (var group in groups)
@@ -141,6 +145,27 @@ public class SimultaneousDefeatManager : MonoBehaviour
         }
     }
 
+    private IEnumerator DropSpellsDelayed(Vector3 dropPos, SpellBase[] spells)
+    {
+        if (spells == null || spells.Length == 0) yield break;
+
+        // 合計時間が一定（totalDropDuration）になるように間隔を計算
+        float interval = spells.Length > 1 ? totalDropDuration / (spells.Length - 1) : 0f;
+
+        for (int i = 0; i < spells.Length; i++)
+        {
+            if (spells[i] != null && SpellDropManager.Instance != null)
+            {
+                SpellDropManager.Instance.DropSpell(dropPos, spells[i]);
+            }
+            
+            if (i < spells.Length - 1 && interval > 0)
+            {
+                yield return new WaitForSeconds(interval);
+            }
+        }
+    }
+
     private void Update()
     {
         foreach (var group in groups)
@@ -174,7 +199,7 @@ public class SimultaneousDefeatManager : MonoBehaviour
                 }
 
                 // 呪文のドロップ処理
-                if (group.dropSpells != null && group.dropSpells.Length > 0 && SpellDropManager.Instance != null)
+                if (group.dropSpells != null && group.dropSpells.Length > 0)
                 {
                     // 代表として一つ目の出現ポイントをドロップ位置とする
                     Vector3 dropPos = transform.position;
@@ -183,13 +208,7 @@ public class SimultaneousDefeatManager : MonoBehaviour
                         dropPos = group.spawnContexts[0].spawnPoint.position;
                     }
 
-                    foreach (var spell in group.dropSpells)
-                    {
-                        if (spell != null)
-                        {
-                            SpellDropManager.Instance.DropSpell(dropPos, spell);
-                        }
-                    }
+                    StartCoroutine(DropSpellsDelayed(dropPos, group.dropSpells));
                 }
 
                 Debug.Log($"SimultaneousDefeatManager: Group {group.DisplayId} (StageID: {group.stageId}) CLEARED!");
@@ -209,20 +228,16 @@ public class SimultaneousDefeatManager : MonoBehaviour
                     for (int i = 0; i < group.spawnedControllers.Count; i++)
                     {
                         var controller = group.spawnedControllers[i];
-                        if (controller == null)
+                        bool isDead = controller == null || controller.GetComponent<CharacterHealth>().IsDead;
+
+                        if (isDead)
                         {
-                            // オブジェクトが削除されている場合は対応するコンテキストから再生成
+                            // 対応するコンテキストから再生成
                             int contextIdx = group.spawnContexts.FindIndex(c => c.controllerIndex == i);
                             if (contextIdx >= 0)
                             {
                                 SpawnEnemy(group, contextIdx, true);
                             }
-                        }
-                        else if (controller.GetComponent<CharacterHealth>().IsDead)
-                        {
-                            // 死んでいるオブジェクトが残っている場合も演出を再生して復活
-                            PlayRespawnEffect(controller.transform.position);
-                            controller.Revive();
                         }
                     }
                     group.firstDeathTime = -1f;
