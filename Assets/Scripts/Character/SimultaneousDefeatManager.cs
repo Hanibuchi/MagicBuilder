@@ -13,8 +13,8 @@ public class SimultaneousDefeatManager : MonoBehaviour
     {
         [Tooltip("敵のプレハブ")]
         public GameObject prefab;
-        [Tooltip("出現させる位置のリスト")]
-        public Transform[] spawnPoints;
+        [Tooltip("出現させる位置の親オブジェクト。この子の位置に出現させます。")]
+        public Transform spawnPointRoot;
     }
 
     [System.Serializable]
@@ -80,12 +80,10 @@ public class SimultaneousDefeatManager : MonoBehaviour
             int controllerIndex = 0;
             foreach (var info in group.spawnInfos)
             {
-                if (info.prefab == null) continue;
+                if (info.prefab == null || info.spawnPointRoot == null) continue;
 
-                foreach (var spawnPoint in info.spawnPoints)
+                foreach (Transform spawnPoint in info.spawnPointRoot)
                 {
-                    if (spawnPoint == null) continue;
-
                     // 再生成用に情報を保存
                     group.spawnContexts.Add(new EnemyGroup.SpawnContext 
                     { 

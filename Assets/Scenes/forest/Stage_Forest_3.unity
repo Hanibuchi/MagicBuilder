@@ -1114,6 +1114,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 831774505}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &965655944 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5181742871047665508, guid: 05095faae935f7f45835ee9c7c97ec64, type: 3}
+  m_PrefabInstance: {fileID: 8393551836207417564}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1008364731
 GameObject:
   m_ObjectHideFlags: 0
@@ -30957,6 +30962,22 @@ PrefabInstance:
       propertyPath: groups.Array.data[4].spawnInfos.Array.data[0].prefab
       value: 
       objectReference: {fileID: 9075239715010903994, guid: 6c3deadbe14a47c44935244b6a0aa0e2, type: 3}
+    - target: {fileID: 8359022915018741208, guid: 05095faae935f7f45835ee9c7c97ec64, type: 3}
+      propertyPath: groups.Array.data[0].spawnInfos.Array.data[0].spawnPointRoot
+      value: 
+      objectReference: {fileID: 965655944}
+    - target: {fileID: 8359022915018741208, guid: 05095faae935f7f45835ee9c7c97ec64, type: 3}
+      propertyPath: groups.Array.data[1].spawnInfos.Array.data[0].spawnPointRoot
+      value: 
+      objectReference: {fileID: 1661093124}
+    - target: {fileID: 8359022915018741208, guid: 05095faae935f7f45835ee9c7c97ec64, type: 3}
+      propertyPath: groups.Array.data[2].spawnInfos.Array.data[0].spawnPointRoot
+      value: 
+      objectReference: {fileID: 207253137}
+    - target: {fileID: 8359022915018741208, guid: 05095faae935f7f45835ee9c7c97ec64, type: 3}
+      propertyPath: groups.Array.data[3].spawnInfos.Array.data[0].spawnPointRoot
+      value: 
+      objectReference: {fileID: 202352161}
     - target: {fileID: 8359022915018741208, guid: 05095faae935f7f45835ee9c7c97ec64, type: 3}
       propertyPath: groups.Array.data[1].spawnInfos.Array.data[0].spawnPoints.Array.size
       value: 2
