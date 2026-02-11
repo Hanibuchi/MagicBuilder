@@ -89,6 +89,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDragDistance: 400
+  throwSound: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
+  throwSoundVolume: 1
 --- !u!1 &3860825592120938575
 GameObject:
   m_ObjectHideFlags: 0

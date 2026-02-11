@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// 画面のドラッグ入力から発射角度と強さを計算し、IAimControllerに伝えるクラス
 /// </summary>
-public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler
+public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler, IDropHandler
 {
     public static AimInputReader Instance { get; private set; }
     [Header("設定")]
@@ -15,6 +15,11 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     [Tooltip("最大のドラッグ距離に対応する発射強度 (1.0f)")]
     [SerializeField]
     private float maxDragDistance = 400f;
+
+    [Header("ドロップ設定（ゴミ箱機能）")]
+    [SerializeField]
+    private AudioClip throwSound; // 呪文を破棄した時に再生するAudioClip
+    [SerializeField] float throwSoundVolume = 1.0f;
 
     private IAimController aimController;
 
@@ -135,6 +140,28 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
         // 3. IAimControllerのメソッドを呼び出し、魔法を発射
         aimController.ReleaseMagic(angle, power);
+    }
+
+    /// <summary>
+    /// ドロップされたオブジェクトが SpellUI である場合、杖から削除（破棄）します。
+    /// </summary>
+    public void OnDrop(PointerEventData eventData)
+    {
+        if (eventData.pointerDrag == null) return;
+
+        // 1. ドロップされたオブジェクトが SpellUI であるかを確認します。
+        SpellUI droppedSpellUI = eventData.pointerDrag.GetComponent<SpellUI>();
+
+        if (droppedSpellUI != null)
+        {
+            if (SoundManager.Instance != null && throwSound != null)
+                SoundManager.Instance.PlaySE(throwSound, throwSoundVolume);
+
+            // 2. SpellUIにドロップ成功を通知し、元の杖から削除させます。
+            droppedSpellUI.NotifyDropSuccess();
+
+            Debug.Log($"呪文 '{droppedSpellUI.GetSpellData().spellName}' が射撃エリアにドロップされ、杖から削除されました。");
+        }
     }
 
     /// <summary>
