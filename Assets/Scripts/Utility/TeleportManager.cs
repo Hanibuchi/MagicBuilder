@@ -3,6 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
+/// テレポート対象となる敵（または敵グループの管理者）のためのインターフェース。
+/// ForceClear は、呼び出された際にそのステージが完了し、次のステージへ移行することを保証する必要があります。
+/// </summary>
+public interface ITeleportEnemy
+{
+    void ForceClear(string stageId);
+}
+
+/// <summary>
 /// プレイヤーのテレポートと、それに伴うアニメーション・フェードを管理するクラス。
 /// 敵のグループ（場面）ごとの全滅を検知してテレポートを実行します。
 /// </summary>
@@ -39,8 +48,10 @@ public class TeleportManager : MonoBehaviour
 
     // 各ステージIDに対応する生存している敵の数
     private Dictionary<string, int> enemyCounts = new Dictionary<string, int>();
+    // 各ステージIDに対応する敵のハンドラー（デバッグ用）
+    private Dictionary<string, List<ITeleportEnemy>> enemyHandlers = new Dictionary<string, List<ITeleportEnemy>>();
+
     private int currentStageIndex = 0;
-    private bool isTeleporting = false;
 
     private void Awake()
     {
@@ -57,28 +68,39 @@ public class TeleportManager : MonoBehaviour
     /// <summary>
     /// 指定された場面の敵を1体登録します。
     /// </summary>
-    public void RegisterEnemy(string stageId)
+    public void RegisterEnemy(string stageId, ITeleportEnemy enemy)
     {
         if (string.IsNullOrEmpty(stageId)) return;
 
         if (!enemyCounts.ContainsKey(stageId))
         {
             enemyCounts[stageId] = 0;
+            enemyHandlers[stageId] = new List<ITeleportEnemy>();
         }
         enemyCounts[stageId]++;
+
+        if (enemy != null && !enemyHandlers[stageId].Contains(enemy))
+        {
+            enemyHandlers[stageId].Add(enemy);
+        }
     }
 
     /// <summary>
     /// 指定された場面の敵が1体倒されたことを通知します。
     /// リストの進行状況に応じて次のテレポートまたはクリア判定を行います。
     /// </summary>
-    public void UnregisterEnemy(string stageId)
+    public void UnregisterEnemy(string stageId, ITeleportEnemy enemy)
     {
-        if (isTeleporting || string.IsNullOrEmpty(stageId)) return;
+        if (string.IsNullOrEmpty(stageId)) return;
 
         if (enemyCounts.ContainsKey(stageId))
         {
             enemyCounts[stageId]--;
+
+            if (enemy != null && enemyHandlers.ContainsKey(stageId))
+            {
+                enemyHandlers[stageId].Remove(enemy);
+            }
 
             // 現在の進行度（currentStageIndex）に対応する敵グループが全滅したかチェック
             if (currentStageIndex < stageTeleportInfos.Count &&
@@ -95,7 +117,6 @@ public class TeleportManager : MonoBehaviour
         // 最後のステージの設定をクリアし終えた場合（＝全ての敵グループを倒した）
         if (currentStageIndex >= stageTeleportInfos.Count - 1)
         {
-            isTeleporting = true;
             if (StageManager.Instance != null)
             {
                 StageManager.Instance.HandleStageClear();
@@ -126,10 +147,65 @@ public class TeleportManager : MonoBehaviour
         StartCoroutine(TeleportSequence(info));
     }
 
+
+    /// <summary>
+    /// 【デバッグ用】指定されたステージインデックスまでスキップし、そこへ移動します。
+    /// 各ステージの遷移の間にわずかな待機時間を設けます。
+    /// </summary>
+    public void DebugSkipToStage(int targetIndex)
+    {
+        StartCoroutine(DebugSkipToStageRoutine(targetIndex));
+    }
+
+    private IEnumerator DebugSkipToStageRoutine(int targetIndex)
+    {
+        if (targetIndex < 0 || targetIndex >= stageTeleportInfos.Count)
+        {
+            Debug.LogWarning($"TeleportManager: 無効なステージインデックス {targetIndex} です。");
+            yield break;
+        }
+
+        while (currentStageIndex < targetIndex)
+        {
+            string sId = stageTeleportInfos[currentStageIndex].stageId;
+            if (enemyHandlers.TryGetValue(sId, out var handlers) && handlers.Count > 0)
+            {
+                // ForceClear 内で UnregisterEnemy が呼ばれリストが変動する可能性があるためコピーを使用
+                var copy = new List<ITeleportEnemy>(handlers);
+                foreach (var handler in copy)
+                {
+                    handler.ForceClear(sId);
+                }
+            }
+            else
+            {
+                // 敵が登録されていない、あるいは既にいない場合は直接次のステージへ
+                AdvanceStage();
+            }
+
+            // 次のステージのスキップ処理へ移る前に少し待機
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+
+    /// <summary>
+    /// 【デバッグ用】指定されたステージIDまでスキップします。
+    /// </summary>
+    public void DebugSkipToStage(string stageId)
+    {
+        int index = stageTeleportInfos.FindIndex(x => x.stageId == stageId);
+        if (index != -1)
+        {
+            DebugSkipToStage(index);
+        }
+        else
+        {
+            Debug.LogWarning($"TeleportManager: stageId '{stageId}' が見つかりません。");
+        }
+    }
+
     private IEnumerator TeleportSequence(StageTeleportInfo info)
     {
-        isTeleporting = true;
-
         // 最後の敵を倒してから SE を鳴らすまでの待ち
         yield return new WaitForSeconds(waveClearDelay);
 
@@ -187,8 +263,6 @@ public class TeleportManager : MonoBehaviour
         {
             yield return StartCoroutine(screenFader.FadeIn(fadeDuration));
         }
-
-        isTeleporting = false;
     }
 
     private void OnDrawGizmosSelected()

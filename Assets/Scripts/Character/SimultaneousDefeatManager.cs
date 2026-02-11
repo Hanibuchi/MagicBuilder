@@ -6,7 +6,7 @@ using System.Collections.Generic;
 /// 複数の敵を同時に倒さないと復活する仕組みを管理するクラス。
 /// インスペクタから設定した敵のグループが全滅した際、TeleportManagerに通知します。
 /// </summary>
-public class SimultaneousDefeatManager : MonoBehaviour
+public class SimultaneousDefeatManager : MonoBehaviour, ITeleportEnemy
 {
     [System.Serializable]
     public class EnemySpawnInfo
@@ -72,7 +72,7 @@ public class SimultaneousDefeatManager : MonoBehaviour
             // グループ全体で1体の敵としてTeleportManagerに登録
             if (TeleportManager.Instance != null && !string.IsNullOrEmpty(group.stageId))
             {
-                TeleportManager.Instance.RegisterEnemy(group.stageId);
+                TeleportManager.Instance.RegisterEnemy(group.stageId, this);
                 Debug.Log($"SimultaneousDefeatManager: Registered group {group.DisplayId} with StageID {group.stageId}");
             }
 
@@ -85,13 +85,13 @@ public class SimultaneousDefeatManager : MonoBehaviour
                 foreach (Transform spawnPoint in info.spawnPointRoot)
                 {
                     // 再生成用に情報を保存
-                    group.spawnContexts.Add(new EnemyGroup.SpawnContext 
-                    { 
-                        prefab = info.prefab, 
-                        spawnPoint = spawnPoint, 
-                        controllerIndex = controllerIndex 
+                    group.spawnContexts.Add(new EnemyGroup.SpawnContext
+                    {
+                        prefab = info.prefab,
+                        spawnPoint = spawnPoint,
+                        controllerIndex = controllerIndex
                     });
-                    
+
                     // 初期スポーン（ダミーのnullを入れておいてSpawnEnemy内でセット）
                     group.spawnedControllers.Add(null);
                     SpawnEnemy(group, group.spawnContexts.Count - 1, false); // 初回は演出なし
@@ -156,7 +156,7 @@ public class SimultaneousDefeatManager : MonoBehaviour
             {
                 SpellDropManager.Instance.DropSpell(dropPos, spells[i]);
             }
-            
+
             if (i < spells.Length - 1 && interval > 0)
             {
                 yield return new WaitForSeconds(interval);
@@ -193,7 +193,7 @@ public class SimultaneousDefeatManager : MonoBehaviour
                 group.isCleared = true;
                 if (TeleportManager.Instance != null && !string.IsNullOrEmpty(group.stageId))
                 {
-                    TeleportManager.Instance.UnregisterEnemy(group.stageId);
+                    TeleportManager.Instance.UnregisterEnemy(group.stageId, this);
                 }
 
                 // 呪文のドロップ処理
@@ -239,6 +239,32 @@ public class SimultaneousDefeatManager : MonoBehaviour
                         }
                     }
                     group.firstDeathTime = -1f;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// ForceClear は、そのステージが完了し、次のステージへ移行することを保証する必要があります。
+    /// 指定されたstageIdに一致するグループを即座に撃破状態にします。
+    /// </summary>
+    public void ForceClear(string stageId)
+    {
+        foreach (var group in groups)
+        {
+            if (group.stageId == stageId && !group.isCleared)
+            {
+                // グループ内の全生存敵を死亡させる
+                foreach (var controller in group.spawnedControllers)
+                {
+                    if (controller != null)
+                    {
+                        var health = controller.GetComponent<CharacterHealth>();
+                        if (health != null && !health.IsDead)
+                        {
+                            health.Kill(true);
+                        }
+                    }
                 }
             }
         }
