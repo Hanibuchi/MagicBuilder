@@ -22,7 +22,7 @@ MonoBehaviour:
   iconMaterial: {fileID: 0}
   spellDescription: "\u53F3\u306E\u546A\u6587\u30922\u56DE\u547C\u3073\u51FA\u3059\u3002"
   repeatCount: 2
-  delayMultiplier: 0.2
+  delayMultiplier: 0.05
   positionOffsets:
   - {x: 0, y: 0}
   - {x: 0, y: 0.3}
