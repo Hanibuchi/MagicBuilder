@@ -27,7 +27,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 1727460332986801326, guid: 942e37509e01d9243add21530ba6480f, type: 3}
   strengthMultiplier: 10
   duration: 60
-  errorDegree: 2
+  errorDegree: 1
   damage:
     baseDamage: 0
     woodDamage: 0

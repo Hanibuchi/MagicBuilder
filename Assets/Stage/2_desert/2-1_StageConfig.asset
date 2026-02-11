@@ -15,7 +15,10 @@ MonoBehaviour:
   stageName: 2-1
   subStageName: "2\u756A\u76EE\u306E\u5CF6\u306E\u6700\u521D"
   SceneName: Stage_Desert_1
-  clearCondition: 1
+  clearCondition: 0
   enemyPhases: []
-  puzzleSpells: []
+  puzzleSpells:
+  - {fileID: 11400000, guid: 8f637262ee480304689f7206945793e5, type: 2}
+  - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
+  - {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
   stageType: 1
