@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.Linq;
-using NUnit.Framework.Internal;
 /// <summary>
 /// 全ての具体的な呪文クラスの抽象基底クラス。
 /// ScriptableObjectを継承することで、Unity Inspectorで設定可能なデータアセットとして扱えます。

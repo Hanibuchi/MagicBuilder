@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
@@ -277,3 +278,4 @@ public class SpellGroupCalculatorTests
         Assert.That(actual, Is.EqualTo(expected), "Case 8: null呪文の直後の呪文がグループの先頭になる");
     }
 }
+#endif
