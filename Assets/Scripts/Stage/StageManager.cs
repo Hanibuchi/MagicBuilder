@@ -326,7 +326,7 @@ public class StageManager : MonoBehaviour
             HandleStageClear();
     }
 
-    bool spawnComplete = false;
+    public bool spawnComplete = false;
 
     void OnGameEnd()
     {

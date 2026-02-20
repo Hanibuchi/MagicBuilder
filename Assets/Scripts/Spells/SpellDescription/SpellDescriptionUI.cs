@@ -43,7 +43,6 @@ public class SpellDescriptionUI : MonoBehaviour, IPointerClickHandler
     private bool isHiding = false;
     private bool isShow = false;
 
-    private float timeScale = 1f;
     protected virtual void Awake()
     {
         if (Instance == null)

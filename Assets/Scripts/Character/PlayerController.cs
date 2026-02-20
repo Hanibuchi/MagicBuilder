@@ -123,7 +123,7 @@ public class PlayerController : MyCharacterController
     /// <summary>
     /// プレイヤーを復活させます。
     /// </summary>
-    public void Revive()
+    public override void Revive()
     {
         if (characterHealth != null)
         {

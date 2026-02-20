@@ -124,7 +124,6 @@ public class SettingsUI : MonoBehaviour
         text.text = percentage.ToString() + "%";
     }
 
-    private float timeScale = 1f;
 
     /// <summary>
     /// 設定パネルを開くボタンが押されたときに呼び出されます。

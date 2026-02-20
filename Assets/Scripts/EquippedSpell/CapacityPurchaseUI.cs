@@ -43,7 +43,6 @@ public class CapacityPurchaseUI : MonoBehaviour, IPointerClickHandler
 
     private bool isHiding = false;
     private bool isShow = false;
-    private float timeScale = 1f;
 
     private void Awake()
     {
