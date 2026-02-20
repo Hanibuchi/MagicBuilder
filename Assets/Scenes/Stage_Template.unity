@@ -662,7 +662,7 @@ PrefabInstance:
     - target: {fileID: 2950603546146285152, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
       propertyPath: stageConfig
       value: 
-      objectReference: {fileID: 11400000, guid: 4b8250a657e13c545b4af63dba66b6da, type: 2}
+      objectReference: {fileID: 11400000, guid: c8fafffecc49e9342b95974c0d2f3db9, type: 2}
     - target: {fileID: 2950603546146285152, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
       propertyPath: clearCondition
       value: 2

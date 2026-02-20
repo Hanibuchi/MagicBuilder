@@ -38,6 +38,12 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
 
     private void InitializeAds()
     {
+        if (settings == null)
+        {
+            Debug.LogError("[AdManager] AdSettings がアサインされていません。");
+            return;
+        }
+
         // プラットフォームごとにIDを切り替え
 #if UNITY_IOS
         _gameId = settings.iosGameId;
@@ -52,6 +58,12 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
 #else
         _gameId = "unused"; // 他プラットフォーム用
 #endif
+
+        if (string.IsNullOrEmpty(_gameId) || _gameId == "unused")
+        {
+            Debug.LogWarning("[AdManager] Game ID が設定されていないか、未対応のプラットフォームです。広告を初期化しません。");
+            return;
+        }
 
         if (!Advertisement.isInitialized && Advertisement.isSupported)
         {

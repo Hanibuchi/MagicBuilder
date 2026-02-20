@@ -72,18 +72,26 @@ public class AdController : MonoBehaviour
                     {
                         // 広告の表示を開始し、完了時に報酬を付与、失敗/スキップ時にキャンセル処理を実行
                         Debug.Log("[AdController] 動画広告の表示をリクエストします。");
-                        AdManager.Instance.ShowRewarded(
-                            onComplete: () =>
-                            {
-                                Debug.Log("[AdController] 動画広告の視聴が完了しました。報酬を付与します。");
-                                onReward?.Invoke();
-                            },
-                            onFailed: () =>
-                            {
-                                Debug.Log("[AdController] 動画広告がスキップまたは失敗しました。");
-                                onCancel?.Invoke();
-                            }
-                        );
+                        if (AdManager.Instance != null)
+                        {
+                            AdManager.Instance.ShowRewarded(
+                                onComplete: () =>
+                                {
+                                    Debug.Log("[AdController] 動画広告の視聴が完了しました。報酬を付与します。");
+                                    onReward?.Invoke();
+                                },
+                                onFailed: () =>
+                                {
+                                    Debug.Log("[AdController] 動画広告がスキップまたは失敗しました。");
+                                    onCancel?.Invoke();
+                                }
+                            );
+                        }
+                        else
+                        {
+                            Debug.LogWarning("[AdController] AdManager.Instance が null のため動画広告を表示できません。");
+                            onCancel?.Invoke();
+                        }
                     }
                 },
                 onTimeExpired: onCancel
@@ -135,9 +143,19 @@ public class AdController : MonoBehaviour
         if (IAPManager.Instance.IsAdsRemoved)
         {
             Debug.Log("[AdController] 広告非表示が有効なため、バナー表示をスキップします。");
-            AdManager.Instance.HideBanner();
+            if (AdManager.Instance != null)
+            {
+                AdManager.Instance.HideBanner();
+            }
             return;
         }
+
+        if (AdManager.Instance == null)
+        {
+            Debug.LogWarning("[AdController] AdManager.Instance が null のためバナーを表示できません。シーンに AdManager が存在するか確認してください。");
+            return;
+        }
+
         AdManager.Instance.ShowBanner();
     }
 
@@ -146,7 +164,10 @@ public class AdController : MonoBehaviour
     /// </summary>
     public void HideBanner()
     {
-        AdManager.Instance.HideBanner();
+        if (AdManager.Instance != null)
+        {
+            AdManager.Instance.HideBanner();
+        }
     }
 
 
@@ -181,6 +202,14 @@ public class AdController : MonoBehaviour
         }
 
         Debug.Log("[AdController] インタースティシャル広告の表示をリクエストします。");
-        AdManager.Instance.ShowInterstitial(onComplete);
+        if (AdManager.Instance != null)
+        {
+            AdManager.Instance.ShowInterstitial(onComplete);
+        }
+        else
+        {
+            Debug.LogWarning("[AdController] AdManager.Instance が null のため広告を表示できません。");
+            onComplete?.Invoke();
+        }
     }
 }

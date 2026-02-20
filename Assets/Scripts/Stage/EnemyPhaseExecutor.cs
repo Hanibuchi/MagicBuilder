@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System;
 
 /// <summary>
-/// EnemyPhaseConfigの木構造を読み込み、敵の出現を制御するクラス。
+/// EnemyPhaseConfigの配列を読み込み、敵の出現を制御するクラス。
 /// </summary>
 public class EnemyPhaseExecutor : MonoBehaviour
 {
@@ -75,16 +75,6 @@ public class EnemyPhaseExecutor : MonoBehaviour
             if (currentPhase.spawnerConfig != null)
             {
                 currentPhase.spawnerConfig.SpawnEnemy(spawnPosition);
-            }
-
-            // 3. 行きがけ順の深さ優先探索のため、次のフェーズをスタックに追加
-            // 配列の逆順でPushすることで、スタックからPopする際に行きがけ順になる
-            if (currentPhase.nextPhases != null)
-            {
-                for (int i = currentPhase.nextPhases.Length - 1; i >= 0; i--)
-                {
-                    phaseStack.Push(currentPhase.nextPhases[i]);
-                }
             }
         }
 

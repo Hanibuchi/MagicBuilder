@@ -23,9 +23,6 @@ public struct EnemyPhaseConfig
     [SerializeField]
     public EnemySpawnerConfig spawnerConfig;
 
-    [Tooltip("このフェーズの処理後に実行する次のフェーズ")]
-    public EnemyPhaseConfig[] nextPhases;
-
     public enum PhaseConditionType
     {
         TimeElapsed, // 時間経過

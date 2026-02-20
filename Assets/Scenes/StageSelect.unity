@@ -802,6 +802,7 @@ MonoBehaviour:
   limitPointB: {fileID: 1058915807}
   minRelativeSize: 1
   maxRelativeSize: 5
+  scrollSensitivity: 0.5
   moveSpeed: 5
 --- !u!114 &655938786
 MonoBehaviour:
@@ -1002,7 +1003,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -831012941
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: -694042396339802943, guid: 0d14be0cce313454fb6ab95a55beeceb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -11017,7 +11018,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -831012941
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: -3677683710822102812, guid: 0d14be0cce313454fb6ab95a55beeceb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -11109,7 +11110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: 106a792630573e34887954bc4e9ffe96, type: 2}
-  testMode: 1
+  testMode: 0
 --- !u!4 &1547114320
 Transform:
   m_ObjectHideFlags: 0

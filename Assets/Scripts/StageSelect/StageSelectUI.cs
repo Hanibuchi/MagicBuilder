@@ -146,6 +146,12 @@ public class StageSelectUI : MonoBehaviour
             return;
         }
 
+        if (StageStarter.Instance == null)
+        {
+            Debug.LogError("StageStarterが見つかりません。ステージ情報を取得できません。", this);
+            return;
+        }
+
         // 最新到達ステージIDを取得 (このIDの次のステージが「NEW!」となる)
         string latestReachedStageId = StageUnlockManager.Instance.GetLatestReachedStageID();
 
@@ -162,6 +168,14 @@ public class StageSelectUI : MonoBehaviour
             if (stageButton != null)
             {
                 var stageInfo = StageStarter.Instance.GetStageInfoByName(entry);
+
+                if (stageInfo == null)
+                {
+                    Debug.LogWarning($"'{entry}' に対応するStageConfigが見つかりませんでした。ボタン生成をスキップします。");
+                    Destroy(buttonObject);
+                    continue;
+                }
+
                 string displayStageName = num.ToString();
                 string displaySubName = stageInfo.subStageName;
                 bool isUnlocked = StageUnlockManager.Instance.IsStageUnlocked(stageInfo.stageName);
