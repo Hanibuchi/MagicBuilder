@@ -135,6 +135,36 @@ public class StageUnlockManager : MonoBehaviour
     }
 
     /// <summary>
+    /// デバッグ用：全てのステージを解放します。
+    /// </summary>
+    public void UnlockAllStages()
+    {
+        if (stageListConfig == null || stageListConfig.stages == null)
+        {
+            Debug.LogError("ShowAllStages: StageListConfig またはその stages 配列が不正です。");
+            return;
+        }
+
+        foreach (var stageConfig in stageListConfig.stages)
+        {
+            if (stageConfig == null) continue;
+            UnlockStage(stageConfig.stageName);
+        }
+        
+        // 念のため最新到達ステージも最後のステージにしておくと良いかもしれません
+        if (stageListConfig.stages.Length > 0)
+        {
+            var lastStage = stageListConfig.stages.LastOrDefault();
+            if (lastStage != null)
+            {
+                UpdateLatestReachedStage(lastStage.stageName);
+            }
+        }
+        
+        Debug.Log("全てのステージを解放しました。");
+    }
+
+    /// <summary>
     /// 現在のステージ識別子と、保存されている最新のステージ識別子を比較し、
     /// StageListConfigの登録順に基づき、より新しいステージであれば更新して保存します。
     /// </summary>

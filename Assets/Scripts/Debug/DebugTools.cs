@@ -29,6 +29,22 @@ public class DebugTools : MonoBehaviour
 
 
     /// <summary>
+    /// すべてのステージを開放します。
+    /// </summary>
+    public void UnlockAllStage()
+    {
+        if (StageUnlockManager.Instance != null)
+        {
+            StageUnlockManager.Instance.UnlockAllStages();
+        }
+        else
+        {
+            Debug.LogError("StageUnlockManager.Instance が見つかりません。");
+        }
+    }
+
+
+    /// <summary>
     /// 持ち込み呪文の容量を最大にします。
     /// </summary>
     public void MaximizeEquippedSpellCapacity()
