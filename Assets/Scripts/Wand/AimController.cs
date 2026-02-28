@@ -12,7 +12,6 @@ public class AimController : MonoBehaviour, IAimController
     private AimInputReader aimInputReader;
 
     [Tooltip("現在選択されている杖のインデックス")]
-    [SerializeField]
     private int selectedWandIndex => AttackManager.Instance.GetCurrentWandIndex();
 
     [Tooltip("キャラクターのアニメーションコントローラー")]
