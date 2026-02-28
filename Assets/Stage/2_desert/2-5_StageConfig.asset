@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5a650050e8b9af4fb26a39e8f20ffc0, type: 3}
-  m_Name: 2-3_StageConfig
+  m_Name: 2-5_StageConfig
   m_EditorClassIdentifier: 
-  stageName: 2-3
-  subStageName: "\u86CD"
+  stageName: 2-5
+  subStageName: "\u53CD\u5C04\u30D0\u30EA\u30A2"
   SceneName: Stage_Desert_3
   clearCondition: 0
   enemyPhases: []

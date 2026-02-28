@@ -22,11 +22,17 @@ MonoBehaviour:
     - 1-3
     - 1-4
     - 1-5
+    - 1-6
   - islandID: desert
     islandName: "\u5E72\u304B\u3089\u3073\u305F\u90FD"
     wandToUnlock: 1
     stages:
     - 2-1
+    - 2-2
+    - 2-3
+    - 2-4
+    - 2-5
+    - 2-6
   - islandID: volcanic
     islandName: "\u6D3B\u706B\u5C71"
     wandToUnlock: 3
