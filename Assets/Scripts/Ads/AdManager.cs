@@ -1,7 +1,15 @@
-using UnityEngine;
-using UnityEngine.Advertisements;
+//#define ENABLE_ADS // ← 広告機能を復元する際は、この行のコメントアウトを外してください
 
+using UnityEngine;
+#if ENABLE_ADS
+using UnityEngine.Advertisements;
+#endif
+
+#if ENABLE_ADS
 public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityAdsLoadListener, IUnityAdsShowListener
+#else
+public class AdManager : MonoBehaviour
+#endif
 {
     public static AdManager Instance { get; private set; }
 
@@ -38,6 +46,7 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
 
     private void InitializeAds()
     {
+#if ENABLE_ADS
         if (settings == null)
         {
             Debug.LogError("[AdManager] AdSettings がアサインされていません。");
@@ -69,14 +78,32 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
         {
             Advertisement.Initialize(_gameId, testMode, this);
         }
+#else
+        Debug.Log("[AdManager] 広告機能は現在無効化されています。(ENABLE_ADS not defined)");
+#endif
     }
+
 
     // --- 広告のロード (プレロード用) ---
 
-    public void LoadInterstitial() => Advertisement.Load(_interstitialId, this);
-    public void LoadRewarded() => Advertisement.Load(_rewardedId, this);
+    // 広告無効時は何もしない
+    public void LoadInterstitial()
+    {
+#if ENABLE_ADS
+        Advertisement.Load(_interstitialId, this);
+#endif
+    }
+
+    public void LoadRewarded()
+    {
+#if ENABLE_ADS
+        Advertisement.Load(_rewardedId, this);
+#endif
+    }
+
     public void LoadBanner()
     {
+#if ENABLE_ADS
         BannerLoadOptions options = new BannerLoadOptions
         {
             loadCallback = () =>
@@ -95,7 +122,9 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
             }
         };
         Advertisement.Banner.Load(_bannerId, options);
+#endif
     }
+
 
     // --- 広告の表示 ---
 
@@ -104,8 +133,13 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
     /// </summary>
     public void ShowInterstitial(System.Action onComplete = null)
     {
+#if ENABLE_ADS
         _onInterstitialComplete = onComplete;
         Advertisement.Show(_interstitialId, this);
+#else
+        // 無効時は即完了とする
+        onComplete?.Invoke();
+#endif
     }
 
     /// <summary>
@@ -113,10 +147,17 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
     /// </summary>
     public void ShowRewarded(System.Action onComplete = null, System.Action onFailed = null)
     {
+#if ENABLE_ADS
         _onRewardedComplete = onComplete;
         _onRewardedFailed = onFailed;
         Advertisement.Show(_rewardedId, this);
+#else
+        // 無効時はデバッグ用に即成功とする
+        Debug.Log("[AdManager] 広告無効モードのため、リワード報酬を即座に付与します。");
+        onComplete?.Invoke();
+#endif
     }
+
 
     /// <summary>
     /// 以前の共通メソッド(互換用)。リワード広告として動作させます。
@@ -130,6 +171,7 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
 
     public void ShowBanner()
     {
+#if ENABLE_ADS
         _showBannerRequested = true;
 
         if (!_isBannerLoaded)
@@ -146,14 +188,20 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
             hideCallback = () => Debug.Log("Banner hidden")
         };
         Advertisement.Banner.Show(_bannerId, options);
+#endif
     }
 
     public void HideBanner()
     {
+#if ENABLE_ADS
         _showBannerRequested = false;
         Advertisement.Banner.Hide();
+#endif
     }
 
+    // --- インターフェースの実装 ---
+
+#if ENABLE_ADS
     private void ShowNetworkErrorUI(string placementId)
     {
         if (_errorUIInstance == null)
@@ -282,4 +330,5 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
     {
         ShowBanner();
     }
+#endif
 }
