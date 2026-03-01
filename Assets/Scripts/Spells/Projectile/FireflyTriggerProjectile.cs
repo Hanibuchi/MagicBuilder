@@ -13,6 +13,10 @@ public class FireflyTriggerProjectile : SpellProjectileDamageSource, IClickTrigg
     [Tooltip("反対方向へ向かうバイアスの強さ。高いほどその場にとどまりやすくなります。")]
     [SerializeField] private float counterBias = 0.8f;
 
+    [Header("回転制御")]
+    [Tooltip("回転を固定する対象のトランスフォーム。指定しない場合は自身のTransformが使用されます。")]
+    [SerializeField] private Transform rotationTarget;
+
     private Rigidbody2D _rb;
     private Vector2 _lastImpulse;
     private bool _isFlying = true;
@@ -21,7 +25,12 @@ public class FireflyTriggerProjectile : SpellProjectileDamageSource, IClickTrigg
     {
         base.Awake();
         _rb = GetComponent<Rigidbody2D>();
-        
+
+        if (rotationTarget == null)
+        {
+            rotationTarget = transform.GetChild(0);
+        }
+
         if (_rb != null)
         {
             StartCoroutine(FlyCoroutine());
@@ -38,8 +47,12 @@ public class FireflyTriggerProjectile : SpellProjectileDamageSource, IClickTrigg
 
     private void LateUpdate()
     {
-        // 常に rotation.z を 0 に固定する
-        transform.rotation = Quaternion.identity;
+        if (rotationTarget != null)
+        {
+            // グローバル回転のZ軸回転を0にする (X, Yは維持)
+            Vector3 currentEuler = rotationTarget.eulerAngles;
+            rotationTarget.rotation = Quaternion.Euler(currentEuler.x, currentEuler.y, 0f);
+        }
     }
 
     private IEnumerator FlyCoroutine()
@@ -54,17 +67,17 @@ public class FireflyTriggerProjectile : SpellProjectileDamageSource, IClickTrigg
 
             // ランダムな新しい方向を生成
             Vector2 randomDir = Random.insideUnitCircle.normalized;
-            
+
             // 前回の方向の逆ベクトルへのバイアスをかける
             // これにより、右に行った次は左に行きやすくなる
             Vector2 biasDir = -_lastImpulse * counterBias;
-            
+
             // 最終的な力を計算
             Vector2 combinedDir = (randomDir + biasDir).normalized;
             float randomStrength = Random.Range(0f, maxRandomForce);
-            
+
             Vector2 impulse = combinedDir * randomStrength;
-            
+
             _rb.AddForce(impulse, ForceMode2D.Impulse);
             _lastImpulse = combinedDir; // 今回の方向を記録
         }

@@ -134,3 +134,9 @@ MonoBehaviour:
   minInterval: 0.5
   maxInterval: 1.5
   counterBias: 0.8
+  rotationTarget: {fileID: 8108052184111957231}
+--- !u!4 &8108052184111957231 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3252799626688289902, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
+  m_PrefabInstance: {fileID: 6746905189947906177}
+  m_PrefabAsset: {fileID: 0}
