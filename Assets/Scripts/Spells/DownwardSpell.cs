@@ -1,22 +1,41 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 [CreateAssetMenu(fileName = "DownwardSpell", menuName = "Wand System/Downward Spell")]
-public class Downward : SpellBase
+public class DownwardSpell : SpellBase
 {
-    [SerializeField] bool upward = false;
+    public enum SpellDirection
+    {
+        Down,
+        Up,
+    }
+
+    [SerializeField] SpellDirection direction = SpellDirection.Down;
+
+    private float GetRotation()
+    {
+        return direction switch
+        {
+            SpellDirection.Up => 90f,
+            SpellDirection.Down => -90f,
+            _ => -90f
+        };
+    }
+
     public override void DisplayAimingLine(
         List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ,
-        float strength, Vector2 casterPosition, bool clearLine = false)
+        float strength, SpellContext context,
+        bool clearLine = false)
     {
-        DisplayAimingLineForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, currentSpellIndex, upward ? 90 : -90, strength, casterPosition, clearLine);
+        DisplayAimingLineForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, currentSpellIndex, GetRotation(), strength, context, clearLine);
     }
 
     public override void FireSpell(
         List<SpellBase> wandSpells, int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
-        FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, currentSpellIndex, upward ? 90 : -90, strength, context);
+        FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, currentSpellIndex, GetRotation(), strength, context);
     }
 
     readonly int[] nextSpellOffsets = { 1 };

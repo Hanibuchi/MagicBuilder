@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 /// <summary>
 /// 攻撃の発射と杖のリスト管理を行うシングルトンクラス。
@@ -18,18 +19,15 @@ public class AttackManager : MonoBehaviour
     [Tooltip("プレイヤーが現在所持している杖の配列")]
     public List<Wand> playerWands = new List<Wand>();
     protected Transform casterPositionTransform;
+    [SerializeField] bool isPlayer = false;
 
     private void Awake()
     {
         // シングルトンの初期設定
-        if (instance == null)
+        if (isPlayer && instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
+            // DontDestroyOnLoad(gameObject);
         }
     }
 
@@ -55,11 +53,13 @@ public class AttackManager : MonoBehaviour
 
         Wand wandToUse = playerWands[wandIndex];
 
-        if (wandToUse == null || wandToUse.spells.Count == 0)
+        if (wandToUse == null || wandToUse.AllSpells.Count == 0)
         {
             Debug.LogWarning($"杖 (Index: {wandIndex}) がnullか、呪文がセットされていません。");
             return;
         }
+
+        List<SpellBase> processedSpells = ProcessWandSpellsBeforeFire(wandToUse.AllSpells);
 
         int[] arr = new int[displayAimingLineSpellCount];
         for (int i = 0; i < displayAimingLineSpellCount; i++)
@@ -67,7 +67,7 @@ public class AttackManager : MonoBehaviour
         // GetAbsoluteIndicesFromSpellGroupArray を使用して、呪文の連鎖全体で次に発動すべき呪文を特定
         // 最初の呪文は「1つ目の呪文」として処理するため、relativeGroupOffsets は [1] を渡す
         int[] targetIndices = SpellBase.GetAbsoluteIndicesFromSpellGroupArray(
-            wandToUse.spells,
+            processedSpells,
             -1,
             arr // 最初の呪文グループ（すなわち最初の呪文）の次のインデックスを取得
         );
@@ -77,15 +77,19 @@ public class AttackManager : MonoBehaviour
         // 取得した全ての開始インデックスの呪文に対して DisplayAimingLine を呼び出す
         foreach (int targetIndex in targetIndices)
         {
-            if (targetIndex >= 0 && targetIndex < wandToUse.spells.Count)
+            if (targetIndex >= 0 && targetIndex < processedSpells.Count)
             {
-                SpellBase spell = wandToUse.spells[targetIndex];
+                SpellBase spell = processedSpells[targetIndex];
+                SpellContext context = new SpellContext(SpellLayer.Attack_Ally)
+                {
+                    CasterPosition = casterPositionTransform.position
+                };
                 spell?.DisplayAimingLine(
-                    wandToUse.spells,
+                    processedSpells,
                     targetIndex,
                     rotationZ,
                     strength,
-                    casterPositionTransform.position,
+                    context,
                     clearLine // clearLineは最初の呼び出しでのみ意味を持つが、ここでは全ての開始点で実行させる
                 );
             }
@@ -101,7 +105,7 @@ public class AttackManager : MonoBehaviour
     /// <param name="wandIndex">発射する対象の杖のインデックス（番号）</param>
     /// <param name="rotationZ">発射角度 (Z軸回転、float)。</param>
     /// <param name="strength">発射の強さ（大きさ、float）。</param>
-    public void FireWand(int wandIndex, float rotationZ, float strength)
+    public void FireWand(int wandIndex, float rotationZ, float strength, SpellLayer layer = SpellLayer.Attack_Ally)
     {
         if (wandIndex < 0 || wandIndex >= playerWands.Count)
         {
@@ -110,13 +114,28 @@ public class AttackManager : MonoBehaviour
         }
 
         Wand wandToUse = playerWands[wandIndex];
-        if (wandToUse == null || wandToUse.spells.Count == 0)
+        Vector2 casterPos = casterPositionTransform != null ? (Vector2)casterPositionTransform.position : Vector2.zero;
+        FireWand(wandToUse, casterPos, rotationZ, strength, layer);
+    }
+
+    /// <summary>
+    /// 指定された杖の発射をトリガーします (Wandオブジェクトを直接指定)。
+    /// </summary>
+    /// <param name="wandToUse">使用する杖オブジェクト</param>
+    /// <param name="casterPosition">発射開始位置</param>
+    /// <param name="rotationZ">発射角度 (Z軸回転、float)。</param>
+    /// <param name="strength">発射の強さ（大きさ、float）。</param>
+    /// <param name="layer">呪文のレイヤー</param>
+    public void FireWand(Wand wandToUse, Vector2 casterPosition, float rotationZ, float strength, SpellLayer layer)
+    {
+        if (wandToUse.AllSpells.Count == 0) return;
+        if (wandToUse == null)
         {
-            Debug.LogError("wandToUse is null or no spell");
+            Debug.LogError("wandToUse is null");
             return;
         }
 
-        List<SpellBase> processedSpells = ProcessWandSpellsBeforeFire(wandToUse.spells);
+        List<SpellBase> processedSpells = ProcessWandSpellsBeforeFire(wandToUse.AllSpells);
 
         int[] targetIndices = SpellBase.GetAbsoluteIndicesFromSpellGroupArray(
             processedSpells,
@@ -125,16 +144,16 @@ public class AttackManager : MonoBehaviour
             true
         );
 
-        Debug.Log($"杖を発射: Index={wandIndex} | 角度={rotationZ:F2}° | 強さ={strength:F2}");
+        Debug.Log($"杖を発射: {wandToUse.wandName} | 角度={rotationZ:F2}° | 強さ={strength:F2}");
 
         // 取得した全ての開始インデックスの呪文に対して FireSpell を呼び出す
         foreach (int targetIndex in targetIndices)
         {
             if (targetIndex >= 0 && targetIndex < processedSpells.Count)
             {
-                SpellContext context = new()
+                SpellContext context = new(layer)
                 {
-                    CasterPosition = casterPositionTransform.position
+                    CasterPosition = casterPosition
                 };
                 SpellBase spell = processedSpells[targetIndex];
                 spell?.FireSpell(
@@ -146,14 +165,13 @@ public class AttackManager : MonoBehaviour
                 );
             }
         }
-        // --- 修正終了 ---
     }
 
     /// <summary>
     /// 杖の発射前に、呪文リストのプリプロセス（例: Modifiersによる呪文リストの操作）を実行します。
     /// </summary>
-    /// <param name="wandToUse">処理対象の杖</param>
-    private List<SpellBase> ProcessWandSpellsBeforeFire(List<SpellBase> spells)
+    /// <param name="spells">処理対象の呪文の配列</param>
+    public List<SpellBase> ProcessWandSpellsBeforeFire(List<SpellBase> spells)
     {
         // 杖の呪文リストをクローンし、プリプロセスで変更があっても元のリストに影響を与えないようにする
         List<SpellBase> processedSpells = new List<SpellBase>(spells);

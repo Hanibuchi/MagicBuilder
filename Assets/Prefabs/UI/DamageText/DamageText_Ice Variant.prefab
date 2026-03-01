@@ -120,6 +120,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8168343355631470130, guid: 60ee3f2197cafdb4980334a55814b474, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.59748423
+      objectReference: {fileID: 0}
+    - target: {fileID: 8168343355631470130, guid: 60ee3f2197cafdb4980334a55814b474, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.0799964
+      objectReference: {fileID: 0}
+    - target: {fileID: 8168343355631470130, guid: 60ee3f2197cafdb4980334a55814b474, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8168343355631470130, guid: 60ee3f2197cafdb4980334a55814b474, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4288156672
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

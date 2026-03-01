@@ -18,6 +18,24 @@ public class ProjectileDamageSource : DamageSourceBase
     [SerializeField] Damage damageData;
 
     /// <summary>
+    /// ダメージ情報を設定します。
+    /// </summary>
+    /// <param name="damage">設定するダメージ情報</param>
+    public void SetDamage(Damage damage)
+    {
+        damageData = damage;
+    }
+
+    /// <summary>
+    /// 消滅までの時間を設定します。
+    /// </summary>
+    /// <param name="time">秒数</param>
+    public void SetDestroyTime(float time)
+    {
+        destroyTime = time;
+    }
+
+    /// <summary>
     /// このダメージ源が持つダメージ情報を取得します。
     /// </summary>
     /// <returns>設定されたDamage構造体。</returns>
@@ -31,5 +49,21 @@ public class ProjectileDamageSource : DamageSourceBase
         // 指定した時間経過後に自身を破棄
         if (autoDestroy)
             Destroy(gameObject, destroyTime);
+
+        PlayLaunchSound();
+        
+        if (enableImpulse)
+            GenerateImpulse();
+    }
+
+    [SerializeField] AudioClip launchSound;
+    [SerializeField] float launchSoundVolume = 1.0f;
+    /// <summary>
+    /// 再生する発射音を設定し、再生します。
+    /// </summary>
+    public void PlayLaunchSound()
+    {
+        if (SoundManager.Instance != null && launchSound != null)
+            SoundManager.Instance.PlaySE(launchSound, launchSoundVolume);
     }
 }

@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.U2D.Animation;
 using UnityEngine.UI;
 
@@ -15,11 +16,8 @@ public class WandUI : MonoBehaviour, ISpellContainer
     // 呪文UIとスペーシングUIを格納するリスト（交互に並ぶ）
     private List<GameObject> uiElements = new List<GameObject>();
 
-    void Awake()
-    {
-        // 初期状態では空の杖を表現するために、スペーシングUIを一つ配置する
-        CreateSpacingUI(0);
-    }
+    private List<SpellBase> fixedSpellBasesCashe = new List<SpellBase>();
+    private List<SpellBase> spellBasesCashe = new List<SpellBase>();
 
     public void SetWandEditor(IWandEditor wandEditor)
     {
@@ -37,11 +35,26 @@ public class WandUI : MonoBehaviour, ISpellContainer
             spellUI.Initialize(this); // このWandUI自身への参照を渡す
         }
 
-        // リストに挿入 (UIの並び順は (Spacing, Spell, Spacing, Spell, Spacing, ...) となる)
-        uiElements.Insert(index * 2 + 1, spellUI.gameObject);
+        // リストに挿入 (UIの並び順は Fixed..., Spacing, Spell, Spacing, Spell, Spacing, ...) となる
+        int fixedCount = fixedSpellBasesCashe.Count;
+        uiElements.Insert(fixedCount + index * 2 + 1, spellUI.gameObject);
     }
 
-    private void CreateSpacingUI(int index)
+    private void CreateFixedSpellUI(SpellBase spell)
+    {
+        SpellUI spellUI = spell.CreateUI();
+        if (spellUI != null)
+        {
+            spellUI.transform.SetParent(spellFrame);
+            spellUI.Initialize(this);
+            spellUI.SetActive(false); // 固定呪文は移動・削除不可
+        }
+
+        // 固定呪文はリストの先頭付近（他の固定呪文の後）に追加
+        uiElements.Add(spellUI.gameObject);
+    }
+
+    private void CreateSpacingUI(int index, bool isAlwaysHighlight = false)
     {
         GameObject spacingObj = Instantiate(spacingUIPrefab, spellFrame);
         SpacingUI spacingUI = spacingObj.GetComponent<SpacingUI>();
@@ -49,12 +62,30 @@ public class WandUI : MonoBehaviour, ISpellContainer
         {
             spacingUI.SetIndex(index);
             spacingUI.Initialize(this); // このWandUI自身への参照を渡す
+            spacingUI.SetAlwaysHighlight(isAlwaysHighlight);
         }
 
         // リストに挿入 (SpacingUIはSpellUIの前後に配置される)
-        int insertionIndex = index * 2;
+        int fixedCount = fixedSpellBasesCashe.Count;
+        int insertionIndex = fixedCount + index * 2;
 
         uiElements.Insert(insertionIndex, spacingObj);
+    }
+
+    /// <summary>
+    /// SpacingUIからの要求に基づき、ドラッグ中の呪文を挿入可能か判定する。
+    /// </summary>
+    /// <param name="isMovingFromSelf">挿入を試みている呪文が、もともとこのWandUIに属していたかどうか。</param>
+    /// <returns>挿入可能であればtrue。</returns>
+    public bool CanDropSpell(bool isMovingFromSelf)
+    {
+        if (wandEditor == null)
+        {
+            Debug.LogError("WandEditorが設定されていません。挿入判定ができません。");
+            return false;
+        }
+        // Editor側の新しい判定メソッドを呼び出す
+        return wandEditor.CanAddSpell(isMovingFromSelf);
     }
 
     /// <summary>
@@ -85,10 +116,10 @@ public class WandUI : MonoBehaviour, ISpellContainer
         }
     }
 
-    SpellBase[] spellBasesCashe;
     // UI要素をクリアし、現在の呪文の並びに基づいて再生成する
-    public void RebuildUI(SpellBase[] newSequence)
+    public void RebuildUI(List<SpellBase> fixedSequence, List<SpellBase> newSequence)
     {
+        fixedSpellBasesCashe = fixedSequence;
         spellBasesCashe = newSequence;
         // 全てのUI要素をクリア
         foreach (var element in uiElements)
@@ -97,37 +128,183 @@ public class WandUI : MonoBehaviour, ISpellContainer
         }
         uiElements.Clear();
 
-        // スペーシングの数 = 呪文の数 + 1
-        // 例：呪文が3つあれば、SpacingUIは4つ
-        // 実際の実装では、IWandEditorから最新の呪文リストを取得し、それに基づいて
-        // CreateSpacingUIとCreateSpellUIを交互に呼び出す
-
-        // 例：現在の呪文リストがwandEditor.GetCurrentSpells()で取得できる場合
-        for (int i = 0; i < newSequence.Length; i++)
+        // 1. 固定呪文を生成
+        foreach (var spell in fixedSequence)
         {
-            CreateSpacingUI(i);
+            CreateFixedSpellUI(spell);
+        }
+
+        // 2. 通常の呪文とスペーシングを交互に生成
+        for (int i = 0; i < newSequence.Count; i++)
+        {
+            CreateSpacingUI(i, false);
             CreateSpellUI(i, newSequence[i]);
         }
-        CreateSpacingUI(newSequence.Length);
+
+        // 最後のSpacingUIの前に空間を作るための空オブジェクトを挿入
+        GameObject spacer = new GameObject("Spacer", typeof(RectTransform));
+        spacer.transform.SetParent(spellFrame, false);
+        if (spacer.TryGetComponent<RectTransform>(out var spacerRect))
+        {
+            spacerRect.sizeDelta = new Vector2(0, spacerRect.sizeDelta.y);
+        }
+        uiElements.Add(spacer);
+
+        CreateSpacingUI(newSequence.Count, false);
     }
     public void RebuildUI()
     {
-        RebuildUI(spellBasesCashe);
+        RebuildUI(fixedSpellBasesCashe, spellBasesCashe);
     }
 
     /// <summary>
     /// SpacingUIがPointerEnterイベントを受け取ったことを通知する。
-    /// この通知を受け取ったWandUIは、他のSpacingUIのハイライトを解除する。
+    /// この通知を受け取ったWandUIは、他のSpacingUIのハイライトを解除し、
+    /// 挿入時に連鎖する呪文をハイライトする。
     /// </summary>
-    public void NotifySpacingUIEntered(SpacingUI enteredSpacing)
+    /// <param name="enteredSpacing">Enterイベントが発生したSpacingUI。</param>
+    /// <param name="draggedSpellUI">ドラッグ中のSpellUI。</param>
+    public void NotifySpellEntered(SpacingUI enteredSpacing, SpellUI draggedSpellUI)
     {
-        // ハイライトの排他制御
+        // 1. SpacingUIのハイライト排他制御
         foreach (var element in uiElements)
         {
             SpacingUI spacing = element.GetComponent<SpacingUI>();
             if (spacing != null && spacing != enteredSpacing)
             {
                 spacing.StopHighlight();
+            }
+        }
+
+        // 2. SpellUIのハイライトをリセット
+        ResetAllSpellHighlights();
+
+        // 3. 次に呼ばれる呪文の予測とハイライト
+        HighlightNextSpells(enteredSpacing, draggedSpellUI);
+    }
+
+    /// <summary>
+    /// SpacingUIからPointerExitイベントを受け取ったことを通知する。
+    /// </summary>
+    public void NotifySpellExited()
+    {
+        ResetAllSpellHighlights();
+    }
+
+    /// <summary>
+    /// 全てのSpellUIのハイライトを解除する。
+    /// </summary>
+    private void ResetAllSpellHighlights()
+    {
+        foreach (var element in uiElements)
+        {
+            if (element != null && element.TryGetComponent<SpellUI>(out var spellUI))
+            {
+                spellUI.SetHighlight(false);
+            }
+        }
+    }
+
+    /// <summary>
+    /// シミュレーション用の呪文情報保持クラス
+    /// </summary>
+    private class TmpSpell
+    {
+        public SpellBase Data;
+        public SpellUI UI;
+    }
+
+    private void HighlightNextSpells(SpacingUI enteredSpacing, SpellUI draggedSpellUI)
+    {
+        if (enteredSpacing == null || draggedSpellUI == null) return;
+        SpellBase draggedSpell = draggedSpellUI.GetSpellData();
+        if (draggedSpell == null) return;
+
+        // 1. 現在の全ての呪文を TmpSpell のリスト（mockList）に変換
+        List<TmpSpell> mockList = new List<TmpSpell>();
+        int fixedCount = fixedSpellBasesCashe.Count;
+
+        // 固定呪文
+        for (int i = 0; i < fixedSpellBasesCashe.Count; i++)
+        {
+            mockList.Add(new TmpSpell { Data = fixedSpellBasesCashe[i], UI = uiElements[i].GetComponent<SpellUI>() });
+        }
+
+        // 通常呪文（SpacingUIと交互に並んでいるため index*2+1 でアクセス）
+        for (int i = 0; i < spellBasesCashe.Count; i++)
+        {
+            int uiIndex = fixedCount + i * 2 + 1;
+            if (uiIndex < uiElements.Count)
+            {
+                mockList.Add(new TmpSpell { Data = spellBasesCashe[i], UI = uiElements[uiIndex].GetComponent<SpellUI>() });
+            }
+        }
+
+        // 2. シミュレーション: 移動元がこの杖自身なら、一旦元の位置から削除
+        bool isMovingFromSelf = (draggedSpellUI.spellContainerUI as WandUI == this);
+        int finalAbsInsertIndex = fixedCount + enteredSpacing.Index;
+
+        if (isMovingFromSelf)
+        {
+            int oldAbsIndex = fixedCount + draggedSpellUI.index;
+            if (oldAbsIndex >= 0 && oldAbsIndex < mockList.Count)
+            {
+                mockList.RemoveAt(oldAbsIndex);
+                // 削除によって挿入予定の絶対インデックスがずれる場合の補正
+                if (oldAbsIndex < finalAbsInsertIndex)
+                {
+                    finalAbsInsertIndex--;
+                }
+            }
+        }
+
+        // 3. 予定位置にドラッグ中の呪文を挿入
+        TmpSpell draggedTmp = new TmpSpell { Data = draggedSpell, UI = draggedSpellUI };
+        mockList.Insert(finalAbsInsertIndex, draggedTmp);
+
+        // 4. PreProcessに対応させる
+        List<SpellBase> simulatedSequence = mockList.Select(x => x.Data).ToList();
+        List<SpellBase> processedSequence = AttackManager.Instance != null
+            ? AttackManager.Instance.ProcessWandSpellsBeforeFire(simulatedSequence)
+            : simulatedSequence;
+
+        // 5. 加工後のリストを TmpSpell のリストに再変換（対応するUIを紐付け直す）
+        List<TmpSpell> remainingSource = new List<TmpSpell>(mockList);
+        List<TmpSpell> processedMockList = new List<TmpSpell>();
+
+        for (int i = processedSequence.Count - 1; i >= 0; i--)
+        {
+            var sData = processedSequence[i];
+            TmpSpell match = null;
+            if (remainingSource.Count >= 1 && remainingSource[^1]?.Data == sData)
+                match = remainingSource[^1];
+            if (match != null)
+            {
+                processedMockList.Insert(0, match);
+                remainingSource.RemoveAt(remainingSource.Count - 1); // 1対1の対応を維持するため、一度使ったソースは除外
+            }
+            else
+            {
+                processedMockList.Insert(0, new TmpSpell { Data = sData, UI = null });
+            }
+        }
+
+        // 6. 加工後のリスト内でドラッグ中の呪文がどこに移動したかを探す
+        int processedIndex = processedMockList.IndexOf(draggedTmp);
+        if (processedIndex == -1) return;
+
+        // 7. GetNextSpellOffsets を使用して次に呼び出される呪文の相対インデックスを取得
+        int[] offsets = draggedSpell.GetNextSpellOffsets(processedSequence, processedIndex);
+
+        if (offsets == null) return;
+
+        // 8. 取得したオフセットに基づき、対応する SpellUI をハイライト
+        foreach (int offset in offsets)
+        {
+            int targetIndex = processedIndex + offset;
+            if (targetIndex >= 0 && targetIndex < processedMockList.Count)
+            {
+                processedMockList[targetIndex].UI?.SetHighlight(true);
             }
         }
     }
@@ -142,7 +319,25 @@ public class WandUI : MonoBehaviour, ISpellContainer
         // 全てのSpacingUIの拡張トリガーをアクティブ化
         foreach (var element in uiElements)
         {
-            element.GetComponent<SpacingUI>()?.SetExtendedTriggerActive(true);
+            SpacingUI spacing = element.GetComponent<SpacingUI>();
+            if (spacing != null)
+            {
+                spacing.SetExtendedTriggerActive(true);
+            }
+        }
+
+        // 最後のSpacingUIをハイライト（空きがある場合のみ）
+        if (CanDropSpell(false))
+        {
+            for (int i = uiElements.Count - 1; i >= 0; i--)
+            {
+                SpacingUI lastSpacing = uiElements[i].GetComponent<SpacingUI>();
+                if (lastSpacing != null)
+                {
+                    lastSpacing.SetAlwaysHighlight(true);
+                    break;
+                }
+            }
         }
     }
 
@@ -151,11 +346,17 @@ public class WandUI : MonoBehaviour, ISpellContainer
     /// </summary>
     public void NotifySpellDragEnded()
     {
-        // 全てのSpacingUIの拡張トリガーを非アクティブ化
+        // 全てのSpacingUIの拡張トリガーを非アクティブ化し、ハイライトを強制解除
         foreach (var element in uiElements)
         {
-            element.GetComponent<SpacingUI>()?.SetExtendedTriggerActive(false);
+            SpacingUI spacing = element.GetComponent<SpacingUI>();
+            if (spacing != null)
+            {
+                spacing.SetExtendedTriggerActive(false);
+                spacing.SetAlwaysHighlight(false);
+            }
         }
+        ResetAllSpellHighlights(); // 追加
     }
 
 
@@ -164,9 +365,9 @@ public class WandUI : MonoBehaviour, ISpellContainer
     [SerializeField] Image wandImage;
 
     /// <summary>
-    /// 指定されたWandTypeに基づいて杖の見た目を変更します。
+    /// 杖の見た目を変更します。
     /// </summary>
-    /// <param name="wandSprite">設定する杖のタイプ</param>
+    /// <param name="wandSprite">設定するスプライト</param>
     public void ChangeAppearance(Sprite wandSprite)
     {
         wandImage.sprite = wandSprite;
@@ -193,4 +394,11 @@ public interface IWandEditor
     /// </summary>
     /// <param name="index">削除する呪文の位置（0から始まる）。</param>
     void RemoveSpell(int index);
+
+    /// <summary>
+    /// 指定された呪文をこの杖に追加できるかどうかを判定する。
+    /// </summary>
+    /// <param name="isMovingFromSelf">追加を試みている呪文が、もともとこの杖に属していたか (移動) どうか。</param>
+    /// <returns>追加可能であればtrue、そうでなければfalse。</returns>
+    bool CanAddSpell(bool isMovingFromSelf);
 }

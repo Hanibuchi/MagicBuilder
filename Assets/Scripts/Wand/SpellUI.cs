@@ -8,27 +8,54 @@ using System.Collections;
 /// <summary>
 /// 杖に組み込まれている呪文のUI。ドラッグによる削除と並び替えの起点となる。
 /// </summary>
-public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler
 {
     public int index;
     public ISpellContainer spellContainerUI;
     private SpellBase spellData;
+    private bool isActive = true;
+    public bool IsUIActive => isActive;
 
     // UIパーツ
     public Image iconImage;
+    [SerializeField] private GameObject newBadge;
+    [SerializeField] private Animator animator;
+
+    private static readonly int IsHighlightedHash = Animator.StringToHash("IsHighlighted");
 
     public void Initialize(ISpellContainer parentWandUI)
     {
         activeColor = frame.color;
         this.spellContainerUI = parentWandUI;
+        SetNewBadgeActive(false);
     }
 
     public void SetData(SpellBase data)
     {
         this.spellData = data;
-        if (iconImage != null && data.icon != null)
+        if (iconImage != null && data != null)
         {
-            iconImage.sprite = data.icon;
+            if (data.icon != null) iconImage.sprite = data.icon;
+            iconImage.color = data.iconColor;
+            iconImage.material = data.iconMaterial;
+        }
+
+        if (data != null)
+        {
+            SetColor(SpellCommonData.Instance.GetCategoryColor(data.category));
+        }
+    }
+
+    /// <summary>
+    /// ハイライト表示を切り替えます。
+    /// Animatorの"IsHighlighted"パラメータ(bool)を操作します。
+    /// </summary>
+    /// <param name="highlight">ハイライトするかどうか</param>
+    public void SetHighlight(bool highlight)
+    {
+        if (animator != null)
+        {
+            animator.SetBool(IsHighlightedHash, highlight);
         }
     }
 
@@ -43,10 +70,33 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         this.gameObject.name = $"SpellUI_{index}";
     }
 
-    // --- ドラッグ処理 ---
+    /// <summary>
+    /// 新規取得バッジの表示・非表示を切り替える
+    /// </summary>
+    public void SetNewBadgeActive(bool active)
+    {
+        if (newBadge != null)
+        {
+            newBadge.SetActive(active);
+        }
+    }
 
+    // --- ドラッグ処理 ---
+    [SerializeField]
+    private AudioClip dragStartClip; // ドラッグ開始時に再生するAudioClip
+    [SerializeField] float dragStartClipVolume = 1.0f;
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (!isActive)
+        {
+            // EventSystemに対して、このオブジェクトはドラッグ不可能であることを伝える
+            eventData.pointerDrag = null;
+            return;
+        }
+
+        if (SoundManager.Instance != null && dragStartClip != null)
+            SoundManager.Instance.PlaySE(dragStartClip, dragStartClipVolume);
+
         dropSuccess = false;
         spellContainerUI.NotifyDragBegin(index);
         // 1. ドラッグ開始時に、自身をCanvasの最前面に移動
@@ -61,11 +111,13 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!isActive) return;
         transform.position = eventData.position;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!isActive) return;
         // このメソッドはDragが成功した場合はなぜか呼ばれない。ただ、失敗した場合は呼ばれる必要がある。
         Debug.Log("OnEndDrag called");
         WandUIManager.Instance?.NotifySpellDragEndedToAll();
@@ -88,6 +140,19 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     }
 
     /// <summary>
+    /// ベースの色を設定します。
+    /// </summary>
+    /// <param name="color">設定する色</param>
+    public void SetColor(Color color)
+    {
+        activeColor = color;
+        if (isActive && frame != null)
+        {
+            frame.color = color;
+        }
+    }
+
+    /// <summary>
     /// 非アクティブのとき色を変えるFrame
     /// </summary>
     [SerializeField] Image frame;
@@ -97,17 +162,55 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     Color activeColor;
     public void SetActive(bool active)
     {
+        this.isActive = active;
         if (active)
         {
             frame.color = activeColor;
-            iconImage.material = null;
-            raycastTargetImage.raycastTarget = true;
+            if (iconImage != null && spellData != null)
+            {
+                iconImage.color = spellData.iconColor;
+                iconImage.material = spellData.iconMaterial;
+            }
         }
         else
         {
             frame.color = disableColor;
-            iconImage.material = disableMaterial;
-            raycastTargetImage.raycastTarget = false;
+            if (iconImage != null)
+            {
+                iconImage.color = Color.white;
+                iconImage.material = disableMaterial;
+            }
+        }
+
+        // ドラッグは制限するが、クリック（詳細表示）はできるようにRaycastTargetは常にtrueにする
+        if (raycastTargetImage != null)
+        {
+            raycastTargetImage.raycastTarget = true;
+        }
+    }
+
+    /// <summary>
+    /// クリック（タップ）されたときに呪文の詳細説明を表示する。
+    /// </summary>
+    /// <param name="eventData"></param>
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        // SpellBaseデータがない場合は何もしない
+        if (spellData == null) return;
+
+        // 通常はドラッグ操作中はクリック判定を無視するが、
+        // isActiveがfalseの時はドラッグ機能を無効化しているため、移動があってもクリックとして受け付ける
+        if (eventData.dragging && isActive) return;
+
+        // 新規取得フラグをクリア
+        spellContainerUI?.NotifyPointerClick(index);
+        SetNewBadgeActive(false);
+
+        // シングルトン経由で詳細パネルの表示を開始
+        if (SpellDescriptionUI.Instance != null)
+        {
+            // 自身の持つ呪文データを渡して表示アニメーションを開始
+            SpellDescriptionUI.Instance.StartShowAnimation(spellData);
         }
     }
 }
@@ -125,6 +228,12 @@ public interface ISpellContainer
     /// </summary>
     /// <param name="index"></param>
     void NotifyDragBegin(int index) { }
+
+    /// <summary>
+    /// クリックされたことを通知。
+    /// </summary>
+    /// <param name="index"></param>
+    void NotifyPointerClick(int index) { }
 
     /// <summary>
     /// SpellUIがドラッグ＆ドロップによってコンテナから削除されたことを通知します。

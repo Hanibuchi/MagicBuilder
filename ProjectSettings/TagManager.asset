@@ -19,13 +19,13 @@ TagManager:
   - Attack_Ally
   - Attack_Enemy
   - Click_Target
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Enemy_Sensor
+  - Enemy_Base
+  - PlayerBarrier
+  - LivingArea
+  - Attack_Both
+  - EnemyBarrier
   - 
   - 
   - 
@@ -40,6 +40,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 3203429699
     locked: 0
   - name: Attack
     uniqueID: 2860272233
@@ -64,6 +67,9 @@ TagManager:
     locked: 0
   - name: AImStartObject
     uniqueID: 2588249511
+    locked: 0
+  - name: SpecialEffect
+    uniqueID: 1598000337
     locked: 0
   m_RenderingLayers:
   - Default

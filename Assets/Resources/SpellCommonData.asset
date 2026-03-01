@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b89e6fb925dfd44e86d50a0451131f9, type: 3}
+  m_Name: SpellCommonData
+  m_EditorClassIdentifier: 
+  coolDownIcon: {fileID: -8801819111103863087, guid: 12d33c45df2a46642bbc13c03009055b, type: 3}
+  HPIcon: {fileID: 21300000, guid: 097aa0cbb13e9d94da95ce9ccc760a73, type: 3}
+  scaleIcon: {fileID: 3268053152027995096, guid: 4097139315edc2e42beab8c65644c0c6, type: 3}
+  errorDegreeIcon: {fileID: 3625483126538235353, guid: aea9b623fcbfefb4c8ffc0d5fd06b207, type: 3}
+  damageIcon: {fileID: -7230480776765142227, guid: be966d344179f0f4db8d61b48fd2995f, type: 3}
+  fireDamageIcon: {fileID: 7310007968907825485, guid: be966d344179f0f4db8d61b48fd2995f, type: 3}
+  iceDamageIcon: {fileID: 3666318163671857395, guid: be966d344179f0f4db8d61b48fd2995f, type: 3}
+  waterDamageIcon: {fileID: -8328814260516165795, guid: be966d344179f0f4db8d61b48fd2995f, type: 3}
+  woodDamageIcon: {fileID: 6189148352442403826, guid: be966d344179f0f4db8d61b48fd2995f, type: 3}
+  healingIcon: {fileID: 3130467686543574262, guid: b0a0b558bc70ee14a8e92fa26b9f69f6, type: 3}
+  knockbackIcon: {fileID: 1272822241129982336, guid: ba6239a6f6793f04891ceb6956141e51, type: 3}
+  attackColor: {r: 0.8, g: 0.50048, b: 0.32, a: 1}
+  modifierColor: {r: 0.32156864, g: 0.3705305, b: 0.8, a: 1}
+  branchColor: {r: 0.32, g: 0.8, b: 0.32383993, a: 1}
+  otherColor: {r: 0.8, g: 0.7697902, b: 0.32, a: 1}
+  spellUIPrefab: {fileID: 5499559984272135055, guid: a8aa928887aa65d429d07a9b1f220163, type: 3}
+  dropUIPrefab: {fileID: 1104287654635820185, guid: af09b9e47e48e2b4593b9a8e28d2e8f0, type: 3}
+  equippedSpellIconUIPrefab: {fileID: 4605705667940410137, guid: b0e9178e9a980024f9b844179ff255a5, type: 3}
+  magicCirclePrefab: {fileID: 971840952152581679, guid: 247d42e75ebf3244eba88c4d93b2035d, type: 3}
+  triggerMagicCircleColor: {r: 0.8, g: 0.5019608, b: 0.32156864, a: 1}
+  spellDropSound: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
+  spellDropSoundVolume: 1

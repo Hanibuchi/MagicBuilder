@@ -8,6 +8,7 @@ public struct Damage
     public float woodDamage;        // 木ダメージ
     public float waterDamage;       // 水ダメージ
     public float temperatureDamage; // 温度ダメージ (正: 火、負: 氷)
+    public float healing;           // 回復量
     public float knockback;         // ノックバック量
 
     // 便宜上のプロパティ
@@ -24,6 +25,7 @@ public struct Damage
             waterDamage = a.waterDamage + b.waterDamage,
             // temperatureDamageは、火（正の値）と氷（負の値）の合計を表すため、そのまま加算します。
             temperatureDamage = a.temperatureDamage + b.temperatureDamage,
+            healing = a.healing + b.healing,
             // ノックバックも合計します。
             knockback = a.knockback + b.knockback
         };
@@ -39,5 +41,7 @@ public enum DamageType
     Fire,   // 火
     Wood,   // 木
     Water,  // 水
-    Ice     // 氷
+    Ice,    // 氷
+    Heal,   // 回復
+    InstantDeath // 即死
 }

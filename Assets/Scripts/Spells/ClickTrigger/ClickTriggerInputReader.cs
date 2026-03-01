@@ -6,7 +6,7 @@ using System;
 /// 画面クリック（ポインターダウン）を感知し、登録されたメソッドを実行するシングルトンクラス。
 /// Noitaのクリックトリガー呪文などの実装に利用できます。
 /// </summary>
-public class ClickTriggerInputReader : MonoBehaviour, IPointerDownHandler
+public class ClickTriggerInputReader : MonoBehaviour, IPointerClickHandler
 {
     // 💡 シングルトンインスタンス
     private static ClickTriggerInputReader _instance;
@@ -54,13 +54,15 @@ public class ClickTriggerInputReader : MonoBehaviour, IPointerDownHandler
     }
 
     /// <summary>
-    /// IPointerDownHandler インターフェースの実装。
-    /// 画面がクリック（ポインターダウン）されたときにUnityによって自動で呼び出されます。
+    /// IPointerClickHandler インターフェースの実装。
+    /// 画面がクリック（タップ）されたときにUnityによって自動で呼び出されます。
     /// </summary>
     /// <param name="eventData">イベントデータ</param>
-    public void OnPointerDown(PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("Pointer down detected.");
+        if (eventData.dragging) return;
+
+        Debug.Log("Pointer click detected.");
         _onPointerDownAction?.Invoke();
         _onPointerDownAction = null;
     }

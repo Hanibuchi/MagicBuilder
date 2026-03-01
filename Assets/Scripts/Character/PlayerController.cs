@@ -9,6 +9,11 @@ public class PlayerController : MyCharacterController
     private const string FIRE_DEGREE_PARAM = "attack_degree";
     private const string AIM_TRIGGER = "aim";
     private const string AIM_DEGREE_PARAM = "aim_degree";
+    private const string VICTORY_TRIGGER = "victory";
+    private const string TELEPORT_TRIGGER = "teleport";
+
+    [Header("Screen Shake Settings")]
+    [SerializeField] private float damageShakeForce = 0.5f;
 
     [SerializeField] public Transform aimStartPoint;
 
@@ -47,7 +52,7 @@ public class PlayerController : MyCharacterController
         float normalizedValue = Mathf.InverseLerp(0f, 90f, clampedAngle);
         // 3. Animatorのfloatパラメーターに設定
         animator.SetFloat(FIRE_DEGREE_PARAM, normalizedValue);
-        animator.SetTrigger(FIRE_TRIGGER);
+        animator.SetTrigger(PARAM_ATTACK_TRIGGER);
     }
 
     /// <param name="angle">狙いの角度 (度)</param>
@@ -55,7 +60,10 @@ public class PlayerController : MyCharacterController
     {
         if (animator == null || !animator.enabled) return;
         if (reset)
+        {
+            animator.ResetTrigger(AIM_TRIGGER);
             return;
+        }
 
         // 1. 角度を0度から90度の範囲にクランプ（制限）
         // 例: -45 -> 0, 125 -> 90, 45 -> 45
@@ -69,5 +77,65 @@ public class PlayerController : MyCharacterController
         // 3. Animatorのfloatパラメーターに設定
         animator.SetFloat(AIM_DEGREE_PARAM, normalizedValue);
         animator.SetTrigger(AIM_TRIGGER);
+    }
+
+    public void Victory()
+    {
+        if (animator == null || !animator.enabled) return;
+        animator.SetTrigger(VICTORY_TRIGGER);
+    }
+
+    public void PlayTeleportAnimation()
+    {
+        if (animator == null || !animator.enabled) return;
+        animator.SetTrigger(TELEPORT_TRIGGER);
+    }
+
+    /// <summary>
+    /// プレイヤーを指定されたワールド座標にテレポートさせます。
+    /// </summary>
+    /// <param name="position">移動先のワールド座標</param>
+    public void TeleportTo(Vector2 position)
+    {
+        transform.position = position;
+    }
+
+    /// <summary>
+    /// ダメージを受け取ったことを通知し、カメラを揺らします。
+    /// </summary>
+    public override void NotifyDamage(DamageType damageType, float damageValue)
+    {
+        base.NotifyDamage(damageType, damageValue);
+
+        // ダメージを受けた際（回復以外）に画面を揺らす
+        if (damageType != DamageType.Heal && CameraManager.Instance != null)
+        {
+            CameraManager.Instance.RequestImpulse(damageShakeForce);
+        }
+    }
+
+    public override void NotifyDie(bool silent = false)
+    {
+        base.NotifyDie(silent);
+        StageManager.Instance.GameOver();
+    }
+
+    /// <summary>
+    /// プレイヤーを復活させます。
+    /// </summary>
+    public override void Revive()
+    {
+        if (characterHealth != null)
+        {
+            characterHealth.Revive();
+        }
+
+        if (animator != null && animator.enabled)
+        {
+            // 死亡アニメーションから復帰するために、トリガーをリセットまたは初期状態に戻す
+            animator.Rebind();
+            // animator.Rebind() は animator を初期状態(エントリー状態)に戻します。
+            // これにより、死亡アニメーションで止まっている場合に強制的にアイドル状態に戻せます。
+        }
     }
 }

@@ -5,6 +5,12 @@ using UnityEngine;
 /// </summary>
 public class ProjectileController : MonoBehaviour
 {
+    [SerializeField, Tooltip("左方向移動時にスプライトを上下反転させ、見た目上の上下を維持するためのSpriteRenderer")]
+    private SpriteRenderer spriteRenderer;
+
+    [SerializeField, Tooltip("左方向移動時にSpriteRendererを上下反転（FlipY）して、見た目の上下を維持するかどうか")]
+    private bool flipYToMaintainOrientation = false;
+
     private Rigidbody2D rb;
     void Start()
     {
@@ -25,6 +31,12 @@ public class ProjectileController : MonoBehaviour
 
             // 自身のTransformに回転を適用
             transform.rotation = Quaternion.Euler(0, 0, angle);
+
+            if (flipYToMaintainOrientation && spriteRenderer != null)
+            {
+                // X方向が正ならそのまま(false)、負ならY反転(true)
+                spriteRenderer.flipY = rb.linearVelocity.x < 0f;
+            }
         }
     }
 }

@@ -88,6 +88,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7abfcc93a1f34d4f8acc4f293f99566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  throwSound: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
+  throwSoundVolume: 0.5
   setActiveObject: {fileID: 9015308416365106781}
 --- !u!1 &9015308416365106781
 GameObject:

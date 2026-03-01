@@ -7,10 +7,18 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
 {
     [SerializeField] protected Animator animator;
     protected HPBarController hpBarController;
-    // --- アニメーションのトリガー名 ---
-    protected const string HIT_TRIGGER = "damage";          // ダメージを受けた時のアニメーション
-    protected const string DIE_TRIGGER = "die";          // 死亡時のアニメーション
-    protected const string FIRE_TRIGGER = "attack";
+    // --- アニメーションのパラメータ名 ---
+    protected const string PARAM_IS_IDLE = "idle";
+    protected const string PARAM_IS_RUNNING = "run";
+    protected const string PARAM_IS_STUNNED = "stun";
+    protected const string PARAM_IS_DEAD = "die";
+
+    protected const string PARAM_IS_FIRE_STUNNED = "FireStun";
+    protected const string PARAM_IS_FROZEN = "FreezeStun";
+    protected const string PARAM_IS_SLOWED = "IceSlow";
+
+    protected const string PARAM_DAMAGE_TRIGGER = "damage";
+    protected const string PARAM_ATTACK_TRIGGER = "attack"; // 汎用、または ID を直接使用
 
     private StatusEffectModel _statusModel;
 
@@ -36,17 +44,36 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
         }
     }
 
+    [Tooltip("死亡時に無効化するColliderがアタッチされているオブジェクト（攻撃判定を消すために使用）")]
+    [SerializeField] GameObject hitBoxObject;
+    [SerializeField] Transform damageTextSpawnPoint;
     /// <summary>
     /// ダメージを受け取ったことを通知し、アニメーション表示処理を委譲します。
     /// </summary>
-    public void NotifyDamage(DamageType damageType, float damageValue)
+    public virtual void NotifyDamage(DamageType damageType, float damageValue)
     {
-        if (animator == null || !animator.enabled || characterHealth.IsDead) return;
+        if (animator == null || !animator.enabled) return;
 
-        // 例: 基本/全てのダメージで共通の"Hit"アニメーションを再生
-        animator.SetTrigger(HIT_TRIGGER);
+        Vector3 spawnPoint;
+        if (damageTextSpawnPoint != null)
+            spawnPoint = damageTextSpawnPoint.position;
+        else
+            spawnPoint = transform.position;
+        DamageTextManager.Instance.ShowDamageText(damageValue, damageType, spawnPoint);
 
-        DamageTextManager.Instance.ShowDamageText(damageValue, damageType, transform.position);
+        if (!characterHealth.IsDead)
+        {
+            if (damageType == DamageType.Heal)
+            {
+                PlayHealSound();
+            }
+            else
+            {
+                // 例: 基本/全てのダメージで共通の"Hit"アニメーションを再生
+                animator.SetTrigger(PARAM_DAMAGE_TRIGGER);
+                PlayHitSound();
+            }
+        }
     }
 
     public void NotifyFireStun(float duration)
@@ -64,15 +91,69 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
         _statusModel.IceSlow(duration);
     }
 
+    [SerializeField] private bool playHitSoundOnDead = true;
     /// <summary>
     /// 死亡を通知し、死亡アニメーションのトリガーを設定します。
     /// </summary>
-    public virtual void NotifyDie()
+    public virtual void NotifyDie(bool silent = false)
     {
-        // if (gameObject.TryGetComponent<Collider2D>(out Collider2D collider))
-        // collider.enabled = false;
+        NotifyDieSilent();
+        if (!silent)
+        {
+            if (playHitSoundOnDead)
+                PlayHitSound();
+
+            PlayDieSound();
+        }
+    }
+
+    /// <summary>
+    /// キャラクターを復活させ、状態を元に戻します。
+    /// </summary>
+    public virtual void Revive()
+    {
+        if (characterHealth != null)
+        {
+            characterHealth.Revive();
+        }
+
+        if (animator != null && animator.enabled)
+        {
+            animator.SetBool(PARAM_IS_DEAD, false);
+        }
+
+        if (hitBoxObject != null)
+        {
+            Collider2D[] colliders = GetHitBoxes();
+            foreach (var col in colliders)
+            {
+                col.enabled = true;
+            }
+        }
+    }
+
+    public void NotifyDieSilent()
+    {
         if (animator == null || !animator.enabled) return;
-        animator.SetTrigger(DIE_TRIGGER);
+        animator.SetBool(PARAM_IS_DEAD, true);
+
+        if (hitBoxObject != null)
+        {
+            Collider2D[] colliders = GetHitBoxes();
+            foreach (var col in colliders)
+            {
+                col.enabled = false;
+            }
+        }
+    }
+
+    /// <summary>
+    /// ヒット判定用のCollider2Dの配列を返します。
+    /// </summary>
+    public Collider2D[] GetHitBoxes()
+    {
+        if (hitBoxObject == null) return new Collider2D[0];
+        return hitBoxObject.GetComponents<Collider2D>();
     }
 
     /// <summary>
@@ -97,27 +178,81 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
 
     public virtual void OnFireStunStart()
     {
+        PlayFireStunSound();
+        animator.SetBool(PARAM_IS_FIRE_STUNNED, true);
         Debug.Log("FireStun started");
     }
 
     public virtual void OnFireStunEnd()
     {
+        animator.SetBool(PARAM_IS_FIRE_STUNNED, false);
         Debug.Log("FireStun ended");
     }
 
     public virtual void OnFreezeStunStart()
     {
+        PlayFreezeStunSound();
+        animator.SetBool(PARAM_IS_FROZEN, true);
     }
 
     public virtual void OnFreezeStunEnd()
     {
+        animator.SetBool(PARAM_IS_FROZEN, false);
     }
 
     public virtual void OnIceSlowStart()
     {
+        animator.SetBool(PARAM_IS_SLOWED, true);
     }
 
     public virtual void OnIceSlowEnd()
     {
+        animator.SetBool(PARAM_IS_SLOWED, false);
+    }
+
+
+    [SerializeField] AudioClip hitSound;
+    [SerializeField] float hitSoundVolume = 1.0f;
+
+    public void PlayHitSound()
+    {
+        if (SoundManager.Instance != null && hitSound != null)
+            SoundManager.Instance.PlaySE(hitSound, hitSoundVolume);
+    }
+
+    [SerializeField] AudioClip healSound;
+    [SerializeField] float healSoundVolume = 1.0f;
+
+    public void PlayHealSound()
+    {
+        if (SoundManager.Instance != null && healSound != null)
+            SoundManager.Instance.PlaySE(healSound, healSoundVolume);
+    }
+
+    [SerializeField] AudioClip fireStunSound;
+    [SerializeField] float fireStunSoundVolume = 1.0f;
+
+    public void PlayFireStunSound()
+    {
+        if (SoundManager.Instance != null && fireStunSound != null)
+            SoundManager.Instance.PlaySE(fireStunSound, fireStunSoundVolume);
+    }
+
+    [SerializeField] AudioClip freezeStunSound;
+    [SerializeField] float freezeStunSoundVolume = 1.0f;
+
+    public void PlayFreezeStunSound()
+    {
+        if (SoundManager.Instance != null && freezeStunSound != null)
+            SoundManager.Instance.PlaySE(freezeStunSound, freezeStunSoundVolume);
+    }
+
+    [SerializeField] AudioClip dieSound;
+    [SerializeField] float dieSoundVolume = 1.0f;
+
+    public void PlayDieSound()
+    {
+        if (SoundManager.Instance != null && dieSound != null)
+            SoundManager.Instance.PlaySE(dieSound, dieSoundVolume);
     }
 }

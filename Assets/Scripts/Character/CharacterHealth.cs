@@ -25,6 +25,14 @@ public class CharacterHealth : MonoBehaviour
     [Tooltip("氷ダメージによる減速の最大時間")]
     public float maxSlowDurationOnIce = 10.0f;
 
+    [Header("ダメージ蓄積設定")]
+    [Tooltip("ダメージを適用するまで蓄積するフレーム数。-1の場合はCharacterCommonDataのデフォルト値を使用します。")]
+    [SerializeField] private int accumulationFrames = -1;
+
+    private Damage _accumulatedDamage;
+    private int _remainingAccumulationFrames = -1;
+    private GameObject _lastAccumulatedOther;
+
     // ノックバック処理を委譲するためのインターフェース（ノックバック処理を行うコンポーネントが実装）
     private IKickbackHandler knockbackHandler;
 
@@ -43,12 +51,30 @@ public class CharacterHealth : MonoBehaviour
         damageNotifier = GetComponent<IDamageNotifier>();
         dieNotifier = GetComponent<IDieNotifier>();
         healthNotifier = GetComponent<IHealthNotifier>();
+
+        // ダメージ蓄積フレームの設定
+        accumulationFrames = CharacterCommonData.Instance.defaultAccumulationFrames;
+        Debug.Log($"Damage accumulation frames set to: {accumulationFrames}");
     }
 
-    private static int ALLAY_LAYER_INDEX = 9;
-    private static int ENEMY_LAYER_INDEX = 10;
-    private static int ALLAY_ATTACK_LAYER_INDEX = 11;
-    private static int ENEMY_ATTACK_LAYER_INDEX = 12;
+    private void Update()
+    {
+        if (_remainingAccumulationFrames > 0)
+        {
+            _remainingAccumulationFrames--;
+            if (_remainingAccumulationFrames == 0)
+            {
+                ApplyDamageImmediate(_accumulatedDamage, _lastAccumulatedOther);
+                _remainingAccumulationFrames = -1;
+            }
+        }
+    }
+
+    public static int ALLAY_LAYER_INDEX = 9;
+    public static int ENEMY_LAYER_INDEX = 10;
+    public static int ALLAY_ATTACK_LAYER_INDEX = 11;
+    public static int ENEMY_ATTACK_LAYER_INDEX = 12;
+    public static int BOTH_ATTACK_LAYER_INDEX = 19;
 
     // 衝突時にダメージ源からダメージを受け取る。（単発/範囲）
     public void OnCollisionEnter2D(Collision2D collision)
@@ -73,8 +99,12 @@ public class CharacterHealth : MonoBehaviour
     // 衝突処理を統合する新しいメソッド
     void HandleCollisionEnter(GameObject obj)
     {
-        // 衝突したオブジェクトからIDamageSourceインターフェースを持つコンポーネントを取得
-        IDamageSource damageSource = obj.GetComponent<IDamageSource>();
+        // 衝突したオブジェクト、またはその親や子からIDamageSourceインターフェースを持つコンポーネントを取得
+        IDamageSource damageSource = obj.GetComponentInParent<IDamageSource>();
+        if (damageSource == null)
+        {
+            damageSource = obj.GetComponentInChildren<IDamageSource>();
+        }
 
         if (damageSource != null)
         {
@@ -110,8 +140,12 @@ public class CharacterHealth : MonoBehaviour
     // 衝突処理を統合する新しいメソッド
     void HandleCollisionStay(GameObject obj)
     {
-        // 衝突したオブジェクトからIDamageSourceインターフェースを持つコンポーネントを取得
-        IDamageSource damageSource = obj.GetComponent<IDamageSource>();
+        // 衝突したオブジェクト、またはその親や子からIDamageSourceインターフェースを持つコンポーネントを取得
+        IDamageSource damageSource = obj.GetComponentInParent<IDamageSource>();
+        if (damageSource == null)
+        {
+            damageSource = obj.GetComponentInChildren<IDamageSource>();
+        }
 
         if (damageSource != null)
         {
@@ -137,11 +171,36 @@ public class CharacterHealth : MonoBehaviour
     }
 
     /// <summary>
-    /// ダメージを計算し、適用するメインメソッド。
+    /// ダメージを受け取り、必要に応じて蓄積または即座に適用します。
+    /// </summary>
+    public void ApplyDamage(Damage damage, GameObject other)
+    {
+        if (currentHealth <= 0) return;
+
+        if (accumulationFrames <= 0)
+        {
+            ApplyDamageImmediate(damage, other);
+            return;
+        }
+
+        if (_remainingAccumulationFrames < 0)
+        {
+            _accumulatedDamage = damage;
+            _remainingAccumulationFrames = accumulationFrames;
+        }
+        else
+        {
+            _accumulatedDamage += damage;
+        }
+        _lastAccumulatedOther = other;
+    }
+
+    /// <summary>
+    /// ダメージを計算し、即座に適用する内部メソッド。
     /// </summary>
     /// <param name="damage">受けた生のダメージデータ</param>
     /// <param name="other">ぶつかってきたオブジェクト</param>
-    public void ApplyDamage(Damage damage, GameObject other)
+    private void ApplyDamageImmediate(Damage damage, GameObject other)
     {
         if (currentHealth <= 0) return; // 既に死んでいる場合は処理しない
         float previousHealth = currentHealth;
@@ -153,6 +212,27 @@ public class CharacterHealth : MonoBehaviour
         float finalDamage = modifiedDamage.baseDamage + totalElementalDamage;
 
         currentHealth -= finalDamage;
+
+        // ヒットストップの発動（死亡時のみ）
+        if (currentHealth <= 0 && finalDamage > 0 && CharacterCommonData.Instance != null)
+        {
+            TimeStopManager.Instance.PlayHitStop(
+                CharacterCommonData.Instance.hitStopDurationOnDie,
+                CharacterCommonData.Instance.hitStopTimeScaleOnDie
+            );
+        }
+
+        // 回復処理
+        if (modifiedDamage.healing > 0)
+        {
+            currentHealth += modifiedDamage.healing;
+            if (currentHealth > maxHealth)
+            {
+                currentHealth = maxHealth;
+            }
+            Debug.Log($"{gameObject.name}は{modifiedDamage.healing}回復しました。");
+        }
+
         Debug.Log($"{gameObject.name}は{finalDamage}のダメージを受けました。残り体力: {currentHealth}");
 
         // 4. ノックバック処理の委譲
@@ -163,7 +243,6 @@ public class CharacterHealth : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
-            return;
         }
 
         // 3. 受けたダメージによる状態異常処理
@@ -197,6 +276,11 @@ public class CharacterHealth : MonoBehaviour
             {
                 damageNotifier.NotifyDamage(DamageType.Water, modifiedDamage.waterDamage);
             }
+            // 回復
+            if (modifiedDamage.healing > 0)
+            {
+                damageNotifier.NotifyDamage(DamageType.Heal, modifiedDamage.healing);
+            }
         }
     }
 
@@ -220,6 +304,7 @@ public class CharacterHealth : MonoBehaviour
         {
             case CharacterElement.Fire:
                 // 火属性の場合: 水ダメージ3倍、木ダメージ0.5倍
+                fireMod = 0f;
                 waterMod *= 3.0f;
                 woodMod *= 0.5f;
                 iceMod *= 5.0f;
@@ -227,15 +312,18 @@ public class CharacterHealth : MonoBehaviour
             case CharacterElement.Wood:
                 // 木属性の場合: 火ダメージ3倍、水ダメージ0.5倍
                 fireMod *= 3.0f; // FireDamageに適用
+                woodMod = 0f;
                 waterMod *= 0.5f;
                 break;
             case CharacterElement.Water:
                 // 水属性の場合: 木ダメージ3倍、火ダメージ0.5倍
-                woodMod *= 3.0f;
                 fireMod *= 0.5f; // FireDamageに適用
+                woodMod *= 3.0f;
+                waterMod = 0f;
                 break;
             case CharacterElement.Ice:
                 fireMod *= 5.0f;
+                iceMod = 0f;
                 break;
             default:
                 break;
@@ -325,11 +413,42 @@ public class CharacterHealth : MonoBehaviour
     /// </summary>
     private void Die()
     {
+        Kill(false);
+    }
+
+    /// <summary>
+    /// キャラクターを即死させます。
+    /// </summary>
+    /// <param name="silent">無音（エフェクトなし）で死亡させるかどうか</param>
+    public void Kill(bool silent = false)
+    {
         if (isDead) return; // 既に死亡済みなら重複処理を避ける
         isDead = true;
+        currentHealth = 0;
         Debug.Log($"{gameObject.name}は倒れた。");
         // 死亡時のアニメーションやゲームオーバー処理などを記述
-        dieNotifier?.NotifyDie();
+        dieNotifier?.NotifyDie(silent);
+    }
+
+    /// <summary>
+    /// 引数なしで Kill(true) を呼び出すためのヘルパーメソッド。
+    /// Invoke などで使用します。
+    /// </summary>
+    public void KillSilently()
+    {
+        Kill(true);
+    }
+
+    /// <summary>
+    /// キャラクターを復活させ、体力を最大まで回復します。
+    /// </summary>
+    public void Revive()
+    {
+        isDead = false;
+        float previousHealth = currentHealth;
+        currentHealth = maxHealth;
+        healthNotifier?.NotifyHealthChange(maxHealth, previousHealth, currentHealth);
+        Debug.Log($"{gameObject.name}が復活しました！");
     }
 }
 
@@ -426,7 +545,7 @@ public interface IDamageNotifier
 
 public interface IDieNotifier
 {
-    void NotifyDie();
+    void NotifyDie(bool silent = false);
 }
 
 

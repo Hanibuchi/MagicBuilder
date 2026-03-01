@@ -10,6 +10,9 @@ public class SpellTrashCanUI : MonoBehaviour, IDropHandler
 {
     // --- ドロップ処理 ---
 
+    [SerializeField]
+    private AudioClip throwSound; // ドラッグ開始時に再生するAudioClip
+    [SerializeField] float throwSoundVolume = 1.0f;
     public void OnDrop(PointerEventData eventData)
     {
         Debug.Log("OnDrop called");
@@ -18,6 +21,8 @@ public class SpellTrashCanUI : MonoBehaviour, IDropHandler
 
         if (droppedSpellUI != null)
         {
+            if (SoundManager.Instance != null && throwSound != null)
+                SoundManager.Instance.PlaySE(throwSound, throwSoundVolume);
             // 2. SpellUIが持つインターフェース ISpellContainer を通じて、
             //    元の杖UIに「削除が成功した」ことを通知します。
             //    これにより、

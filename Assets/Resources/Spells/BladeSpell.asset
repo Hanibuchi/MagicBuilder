@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d5646e5c304f6846ac8b87f62073bce, type: 3}
+  m_Name: BladeSpell
+  m_EditorClassIdentifier: 
+  category: 0
+  spellType: Blade
+  cooldown: 6
+  spellName: "\u30D6\u30EC\u30A4\u30C9"
+  purchaseCosts: 64000000c80000009001000020030000
+  icon: {fileID: -6920231263525051304, guid: a5f84612c56adec4c931847c21fa28ca, type: 3}
+  iconColor: {r: 1, g: 1, b: 1, a: 1}
+  iconMaterial: {fileID: 0}
+  spellDescription: "\u92ED\u3044\u9B54\u529B\u306E\u5203\u3092\u56DE\u8EE2\u3055\u305B\u308B\u3002"
+  trajectoryPrefabInterval: 0.1
+  trajectoryMoveSpeed: 0.5
+  maxPredictionTime: 5
+  projectilePrefab: {fileID: 91964344994281694, guid: e3edbbc90167d6e42a0d183b212bf5ab, type: 3}
+  strengthMultiplier: 0
+  duration: 0.5
+  errorDegree: 0
+  damage:
+    baseDamage: 1
+    woodDamage: 0
+    waterDamage: 0
+    temperatureDamage: 0
+    healing: 0
+    knockback: 0
+  isTargetBoth: 0
+  damageType: 2
+  isClickTrigger: 0
+  minRotationAngle: -45
+  maxRotationAngle: 45
+  sweepDuration: 0.5

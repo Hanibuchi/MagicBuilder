@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eead4a52643cdf42bb45d6397bce3c4, type: 3}
+  m_Name: IceShot
+  m_EditorClassIdentifier: 
+  category: 0
+  spellType: IceShot
+  cooldown: 1.5
+  spellName: "\u30A2\u30A4\u30B9\u30B7\u30E7\u30C3\u30C8"
+  purchaseCosts: 64000000c80000009001000020030000
+  icon: {fileID: 1335907900, guid: c22aacc41a6edc04a98bfe2f2ff0a803, type: 3}
+  iconColor: {r: 1, g: 1, b: 1, a: 1}
+  iconMaterial: {fileID: 0}
+  spellDescription: "\u6C37\u306E\u5149\u5F3E\u3092\u767A\u5C04\u3059\u308B\u3002"
+  trajectoryPrefabInterval: 0.1
+  trajectoryMoveSpeed: 0.5
+  maxPredictionTime: 5
+  projectilePrefab: {fileID: 8635935382217397692, guid: 4f4c71b8d500a944988052fca46ac523, type: 3}
+  strengthMultiplier: 15
+  duration: 2
+  errorDegree: 2
+  damage:
+    baseDamage: 0
+    woodDamage: 0
+    waterDamage: 0
+    temperatureDamage: -5
+    healing: 0
+    knockback: 0
+  isTargetBoth: 0
+  damageType: 0
+  isClickTrigger: 0

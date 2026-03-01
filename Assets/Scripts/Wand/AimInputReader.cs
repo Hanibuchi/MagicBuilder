@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// 画面のドラッグ入力から発射角度と強さを計算し、IAimControllerに伝えるクラス
 /// </summary>
-public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler, IDropHandler
 {
     public static AimInputReader Instance { get; private set; }
     [Header("設定")]
@@ -14,13 +14,19 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
     [Tooltip("最大のドラッグ距離に対応する発射強度 (1.0f)")]
     [SerializeField]
-    private float maxDragDistance = 200f;
+    private float maxDragDistance = 400f;
+
+    [Header("ドロップ設定（ゴミ箱機能）")]
+    [SerializeField]
+    private AudioClip throwSound; // 呪文を破棄した時に再生するAudioClip
+    [SerializeField] float throwSoundVolume = 1.0f;
 
     private IAimController aimController;
 
     // 発射開始地点のスクリーン座標を格納するフィールド
-    private Vector2 startPointScreenPosition;
     private bool isAiming = false;
+    private float currentAngle;
+    private float currentPower;
 
     private void Awake()
     {
@@ -45,7 +51,20 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
     void Update()
     {
-        transform.position = startPointTransform.position;
+        if (startPointTransform != null && Camera.main != null)
+        {
+            Vector3 screenPoint = Camera.main.WorldToScreenPoint(startPointTransform.position);
+
+            if (transform is RectTransform rectTransform)
+            {
+                rectTransform.position = screenPoint;
+            }
+        }
+
+        if (isAiming && aimController != null)
+        {
+            aimController.UpdateAimLine(currentAngle, currentPower);
+        }
     }
 
     /// <summary>
@@ -54,6 +73,18 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     public void SetAimController(IAimController controller)
     {
         this.aimController = controller;
+    }
+
+    /// <summary>
+    /// ポインターがクリック（タップ）された時の処理。ドラッグ時は呼ばれません。
+    /// </summary>
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        // eventData.dragging が false の場合のみ（＝ドラッグしなかった場合のみ）実行
+        if (!eventData.dragging && ClickTriggerInputReader.Instance != null)
+        {
+            ClickTriggerInputReader.Instance.OnPointerClick(eventData);
+        }
     }
 
     /// <summary>
@@ -69,6 +100,10 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         }
 
         isAiming = true;
+        
+        // 開始時の角度と強さを初期化
+        Vector2 dragDelta = eventData.position - (Vector2)Camera.main.WorldToScreenPoint(startPointTransform.position);
+        CalculateAimParameters(dragDelta, out currentAngle, out currentPower);
     }
 
     /// <summary>
@@ -80,14 +115,10 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
         // 1. ドラッグの変位（画面座標）を計算
         // 現在のドラッグ位置から、発射開始地点のスクリーン座標を引く
-        startPointScreenPosition = Camera.main.WorldToScreenPoint(startPointTransform.position);
-        Vector2 dragDelta = eventData.position - startPointScreenPosition;
+        Vector2 dragDelta = eventData.position - (Vector2)Camera.main.WorldToScreenPoint(startPointTransform.position);
 
-        // 2. 角度と強さを計算
-        CalculateAimParameters(dragDelta, out float angle, out float power);
-
-        // 3. IAimControllerのメソッドを呼び出し、補助線を表示
-        aimController.UpdateAimLine(angle, power);
+        // 2. 角度と強さを更新（UpdateメソッドでUpdateAimLineが呼ばれる）
+        CalculateAimParameters(dragDelta, out currentAngle, out currentPower);
     }
 
     /// <summary>
@@ -99,17 +130,38 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
         // 1. ドラッグの変位（画面座標）を計算
         // 現在のドラッグ位置から、発射開始地点のスクリーン座標を引く
-        startPointScreenPosition = Camera.main.WorldToScreenPoint(startPointTransform.position);
-        Vector2 dragDelta = eventData.position - startPointScreenPosition;
+        Vector2 dragDelta = eventData.position - (Vector2)Camera.main.WorldToScreenPoint(startPointTransform.position);
 
         // 2. 角度と強さを計算
         CalculateAimParameters(dragDelta, out float angle, out float power);
 
-        // 3. IAimControllerのメソッドを呼び出し、魔法を発射
-        aimController.ReleaseMagic(angle, power);
-
         isAiming = false;
         aimController.ClearAimLine();
+
+        // 3. IAimControllerのメソッドを呼び出し、魔法を発射
+        aimController.ReleaseMagic(angle, power);
+    }
+
+    /// <summary>
+    /// ドロップされたオブジェクトが SpellUI である場合、杖から削除（破棄）します。
+    /// </summary>
+    public void OnDrop(PointerEventData eventData)
+    {
+        if (eventData.pointerDrag == null) return;
+
+        // 1. ドロップされたオブジェクトが SpellUI であるかを確認します。
+        SpellUI droppedSpellUI = eventData.pointerDrag.GetComponent<SpellUI>();
+
+        if (droppedSpellUI != null)
+        {
+            if (SoundManager.Instance != null && throwSound != null)
+                SoundManager.Instance.PlaySE(throwSound, throwSoundVolume);
+
+            // 2. SpellUIにドロップ成功を通知し、元の杖から削除させます。
+            droppedSpellUI.NotifyDropSuccess();
+
+            Debug.Log($"呪文 '{droppedSpellUI.GetSpellData().spellName}' が射撃エリアにドロップされ、杖から削除されました。");
+        }
     }
 
     /// <summary>
@@ -124,12 +176,14 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
         // 角度の計算: X軸 (右) を基準にした角度
         angle = Mathf.Atan2(launchVector.y, launchVector.x) * Mathf.Rad2Deg;
-        if (-180f <= angle && angle < -45f)
-            angle = Mathf.Clamp(angle + 180f, 0f, 90f);
-        else if (-45f <= angle && angle <= 135f)
-            angle = Mathf.Clamp(angle, 0f, 90f);
-        else
-            angle = 0f;
+
+        angle = Mathf.Clamp(angle, -45f, 90f);
+        // if (-180f <= angle && angle <= -90f)
+        //     angle = Mathf.Clamp(angle + 180f, -45f, 135f);
+        // else if (-90f <= angle && angle <= 180f)
+        //     angle = Mathf.Clamp(angle, -45f, 135f);
+        // else
+        //     angle = Mathf.Clamp(angle - 180f, -45f, 135f);
     }
 }
 

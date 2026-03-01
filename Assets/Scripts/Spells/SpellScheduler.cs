@@ -10,17 +10,29 @@ using System;
 public class SpellScheduler : MonoBehaviour
 {
     // シングルトンパターンでどこからでもアクセス可能にする
-    public static SpellScheduler Instance { get; private set; }
+    private static SpellScheduler _instance;
+    public static SpellScheduler Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                GameObject go = new GameObject("SpellScheduler");
+                _instance = go.AddComponent<SpellScheduler>();
+            }
+            return _instance;
+        }
+    }
 
     void Awake()
     {
-        if (Instance == null)
+        if (_instance == null)
         {
-            Instance = this;
+            _instance = this;
             // シーンをまたいでも破棄されないように設定することが多い
             // DontDestroyOnLoad(gameObject); 
         }
-        else
+        else if (_instance != this)
         {
             Destroy(gameObject);
         }

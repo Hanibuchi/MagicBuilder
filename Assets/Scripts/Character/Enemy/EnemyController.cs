@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
@@ -14,6 +15,9 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
     [Tooltip("攻撃や感知に使うLayerSensorコンポーネントの配列")]
     [SerializeField]
     private LayerSensor[] layerSensors;
+
+    [Header("イベント設定")]
+    public UnityEvent OnDie;
 
     [Header("攻撃モデル設定")]
     [Tooltip("この敵が持つ攻撃のデータ配列")]
@@ -32,12 +36,25 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
     [SerializeField]
     private AttackLauncher attackLauncher3;
 
+    [Header("表示設定")]
+    [Tooltip("キャラクターのメインSpriteRenderer")]
+    [SerializeField]
+    private SpriteRenderer mainSpriteRenderer;
+    [Tooltip("状態異常表示用のSpriteRenderer")]
+    [SerializeField]
+    private SpriteRenderer statusEffectSpriteRenderer;
+
     // --- 内部メンバー ---
 
     private EnemyAttackModel _attackModel;
 
     /// <summary>最後にセンサーが感知したターゲットのワールド座標</summary>
     private Vector2 _lastSensedTargetPosition = Vector2.zero;
+
+    // --- 反転クールダウン設定 ---
+    private float _lastFlipTime = -1f;
+    [SerializeField, Tooltip("向きを反転させる際のクールダウン時間")]
+    private float flipCooldown = 1.0f;
 
     // ★ 追加: ノックバック処理のためのEffector
     private KnockbackEffector _knockbackEffector;
@@ -46,8 +63,8 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
 
     private Coroutine _kickbackStunCoroutine;
 
-
-    protected const string STOP_PARAM = "is_stop";
+    // ★ 追加: 状態異常の発生数をカウントするフィールド
+    private int _activeStatusEffectCount = 0;
 
 
     // --- Unity イベント関数 ---
@@ -114,6 +131,7 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
     private void Start()
     {
         EnemyCounter.Instance?.AddEnemy();
+        StageManager.OnStageClearForceDie += ForceDie;
     }
 
     protected override void Update()
@@ -129,11 +147,40 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
 
         // 攻撃モデルのクールタイム・実行時間を更新
         _attackModel.Update(Time.deltaTime);
+
+        // --- アニメーションパラメータの更新 ---
+        if (animator != null && animator.enabled)
+        {
+            bool isStunned = _kickbackStunCoroutine != null || (enemyMovement != null && enemyMovement.IsStunned);
+            bool isMoving = enemyMovement != null && enemyMovement.IsMoving && !isStunned && !isDead;
+
+            animator.SetBool(PARAM_IS_STUNNED, isStunned);
+            animator.SetBool(PARAM_IS_RUNNING, isMoving);
+            animator.SetBool(PARAM_IS_IDLE, !isMoving && !isStunned && !isDead);
+        }
+
+        // 状態異常中の時のみ、メインのスプライトと同期させる
+        if (_activeStatusEffectCount > 0 && statusEffectSpriteRenderer != null && mainSpriteRenderer != null)
+        {
+            statusEffectSpriteRenderer.sprite = mainSpriteRenderer.sprite;
+        }
+    }
+
+    /// <summary>
+    /// 状態異常表示用のSpriteRendererの表示・非表示を切り替えます。
+    /// </summary>
+    private void UpdateStatusEffectRenderer()
+    {
+        if (statusEffectSpriteRenderer != null)
+        {
+            statusEffectSpriteRenderer.enabled = _activeStatusEffectCount > 0 && !isDead;
+        }
     }
 
     // --- ITriggerHandler の実装 ---
     private bool _isTargetSensed = false;
     private string _currentTriggerID = "";
+    private const string TRIGGER_WALL = "Wall";
 
     /// <summary>
     /// LayerSensorによってトリガーが感知された際に呼び出されます。
@@ -142,6 +189,13 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
     /// <param name="target">感知された対象のワールド座標</param>
     public void OnTriggerSensed(string triggerID, Vector2 target)
     {
+        // 壁を感知した場合の反転処理
+        if (triggerID == TRIGGER_WALL)
+        {
+            FlipScale();
+            return;
+        }
+
         // ターゲット座標をメンバ変数に格納
         _lastSensedTargetPosition = target;
 
@@ -150,11 +204,23 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         _currentTriggerID = triggerID;
 
         // 攻撃モデルに攻撃の発射を試行させる
-        // LayerSensorのIDはEnemyAttackModelのAttackData IDと一致している必要があります
+        // LayerSensorのIDはEnemyAttackModel of AttackData IDと一致している必要があります
         _attackModel.RequestAttack(triggerID);
 
         enemyMovement?.StopMovement();
-        animator.SetBool(STOP_PARAM, true);
+    }
+
+    /// <summary>
+    /// キャラクターの向き（scale.x）を反転させます。クールダウン中は実行されません。
+    /// </summary>
+    private void FlipScale()
+    {
+        if (Time.time < _lastFlipTime + flipCooldown) return;
+        _lastFlipTime = Time.time;
+
+        Vector3 scale = transform.localScale;
+        scale.x *= -1f;
+        transform.localScale = scale;
     }
 
     /// <summary>
@@ -169,8 +235,6 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         _isTargetSensed = false;
 
         enemyMovement?.ResumeMovement();
-
-        animator.SetBool(STOP_PARAM, false);
     }
 
     // --- IEnemyAttackExecutor の実装 ---
@@ -246,6 +310,8 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         _attackModel.StopAttack();
         // 動きも停止
         enemyMovement?.ApplyStun();
+
+        _activeStatusEffectCount++;
     }
 
     public override void OnFireStunEnd()
@@ -255,6 +321,8 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         _attackModel.ResumeAttack();
         // 動きも再開
         enemyMovement?.RemoveStun();
+
+        _activeStatusEffectCount--;
     }
 
     public override void OnFreezeStunStart()
@@ -264,6 +332,8 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         _attackModel.StopAttack();
         // 動きも停止
         enemyMovement?.ApplyStun();
+
+        _activeStatusEffectCount++;
     }
 
     public override void OnFreezeStunEnd()
@@ -273,6 +343,8 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         _attackModel.ResumeAttack();
         // 動きも再開。減速（Slow）状態もリセットされる。
         enemyMovement?.RemoveStun();
+
+        _activeStatusEffectCount--;
     }
 
     public override void OnIceSlowStart()
@@ -282,6 +354,8 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         enemyMovement?.ApplyIceSlow();
         // ★ 追加: 攻撃頻度を半分にするため、クールタイムを2.0倍に設定
         _attackModel.SetCooldownMultiplier(2.0f);
+
+        _activeStatusEffectCount++;
     }
 
     public override void OnIceSlowEnd()
@@ -291,6 +365,8 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         enemyMovement?.RemoveSlow();
         // ★ 追加: クールタイムの倍率をリセット (1.0倍)
         _attackModel.ResetCooldownMultiplier();
+
+        _activeStatusEffectCount--;
     }
 
 
@@ -302,10 +378,19 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
     /// <param name="other">ぶつかってきた放射物（ダメージ源）</param>
     public void ApplyKickback(float knockbackValue, GameObject other)
     {
-        if (_knockbackEffector == null || _rb2d == null || knockbackValue <= 0f || _kickbackStunCoroutine != null) return;
+        if (_knockbackEffector == null || _rb2d == null || knockbackValue <= 0f || _kickbackStunCoroutine != null || other == null) return;
+
+        // 放射物(other)との位置関係を確認
+        // 敵のX座標 - 放射物のX座標
+        float diffX = transform.position.x - other.transform.position.x;
+        
+        // 放射物が右側(diffX < 0)なら左上(-1, 1)、左側(diffX >= 0)なら右上(1, 1)へ飛ばす
+        Vector2 direction = new Vector2(diffX < 0 ? -1f : 1f, 1f).normalized;
+        Vector2 force = direction * knockbackValue;
+
         enemyMovement?.ApplyStun();
 
-        _knockbackEffector.ApplyKnockback(knockbackValue);
+        _knockbackEffector.ApplyKnockback(force);
 
         // 2. 移動を停止し、ノックバックによるスタン処理を開始
 
@@ -336,12 +421,55 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         Debug.Log("ノックバックスタン終了。移動を再開します。");
     }
 
-    public override void NotifyDie()
+    /// <summary>
+    /// ステージクリア時などに外部から強制的に死亡させるために呼び出されます。
+    /// </summary>
+    public void ForceDie()
     {
+        // ノックバックスタン中のコルーチンが実行中であれば停止
+        if (_kickbackStunCoroutine != null)
+        {
+            StopCoroutine(_kickbackStunCoroutine);
+            _kickbackStunCoroutine = null;
+        }
+
+        // 死亡処理を呼び出す
+        // 既に死んでいる場合は、NotifyDie() 内で処理がスキップされることを期待します
+        NotifyDie(true);
+    }
+
+    /// <summary>
+    /// 敵を復活させ、移動やフラグを初期化します。
+    /// </summary>
+    public override void Revive()
+    {
+        isDead = false;
+        base.Revive();
+        enemyMovement?.RemoveStun();
+        UpdateStatusEffectRenderer();
+    }
+
+    bool isDead = false; // ボス敵が複数回死亡通知される可能性があるため、フラグで制御
+    public override void NotifyDie(bool silent = false)
+    {
+        if (isDead) return;
+        isDead = true;
+        UpdateStatusEffectRenderer();
+
         enemyMovement?.ApplyStun();
-        base.NotifyDie();
+        if (characterHealth != null)
+            ScoreManager.Instance?.AddScore(characterHealth.maxHealth);
+
+        base.NotifyDie(silent);
+
         GetComponent<SpellDropper>()?.DropSpells();
         GetComponent<BossClearNotifier>()?.NotifyDefeated();
         EnemyCounter.Instance?.RemoveEnemy();
+        OnDie?.Invoke();
+    }
+
+    private void OnDestroy()
+    {
+        StageManager.OnStageClearForceDie -= ForceDie;
     }
 }

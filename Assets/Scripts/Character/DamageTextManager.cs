@@ -33,6 +33,8 @@ public class DamageTextManager : MonoBehaviour
     [SerializeField] GameObject icePrefab;
     [SerializeField] GameObject woodPrefab;
     [SerializeField] GameObject waterPrefab;
+    [SerializeField] GameObject healPrefab;
+    [SerializeField] GameObject instantDeathPrefab;
 
     private void Awake()
     {
@@ -83,6 +85,12 @@ public class DamageTextManager : MonoBehaviour
             case DamageType.Water:
                 textPrefab = waterPrefab;
                 break;
+            case DamageType.Heal:
+                textPrefab = healPrefab;
+                break;
+            case DamageType.InstantDeath:
+                textPrefab = instantDeathPrefab != null ? instantDeathPrefab : basePrefab;
+                break;
             default:
                 textPrefab = basePrefab;
                 break;
@@ -117,6 +125,18 @@ public class DamageTextManager : MonoBehaviour
         rectTransform.position = screenPos + offsetVector; // 👈 変更: 新しいオフセットベクトルを適用v
 
         var animator = textObj.GetComponent<DamageText>();
-        animator.Initialize(damageValue, displayDuration);
+
+        if (damageType == DamageType.InstantDeath)
+        {
+            rectTransform.localScale = Vector3.one * 1.5f; // 即死は大きめに表示
+            animator.Initialize("即死", displayDuration);
+        }
+        else
+        {
+            // ダメージ量に応じたスケーリング (10を基準に1.0、対数的に計算)
+            float scale = Mathf.Max(0.5f, Mathf.Log10(Mathf.Max(1f, damageValue) / 10f) + 1f);
+            rectTransform.localScale = Vector3.one * scale;
+            animator.Initialize(damageValue, displayDuration);
+        }
     }
 }

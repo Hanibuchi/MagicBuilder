@@ -10,17 +10,48 @@ using System;
 public class Wand
 {
     [Header("杖の特性")]
+    [Tooltip("この杖の名称")]
+    public string wandName;
+
+    [Tooltip("この杖の説明文")]
+    [TextArea]
+    public string description;
+
     [Tooltip("この杖の種類")]
     public WandType type = WandType.Default;
+
+    [Tooltip("演出時に使用するスプライト")]
+    public Sprite presentationSprite;
+
+    [Tooltip("杖の見た目として使用するスプライト")]
+    public Sprite wandSprite;
+
+    [Tooltip("この杖に追加できる呪文の最大数。")]
+    public int maxSpellCount = 12; // デフォルト値として12を設定
+
+    [Header("デフォルト呪文")]
+    [Tooltip("この杖に固定でセットされている、外すことのできない呪文。")]
+    [SerializeReference] public List<SpellBase> fixedSpells = new List<SpellBase>();
 
     [Header("呪文スロット")]
     [Tooltip("この杖にセットされている呪文の配列。")]
     [SerializeReference] public List<SpellBase> spells = new List<SpellBase>();
 
+    /// <summary>
+    /// 固定呪文と通常の呪文を合わせた、この杖のすべての呪文リストを返します。
+    /// </summary>
+    public List<SpellBase> AllSpells
+    {
+        get
+        {
+            List<SpellBase> all = new List<SpellBase>(fixedSpells);
+            all.AddRange(spells);
+            return all;
+        }
+    }
+
     // 呪文リストの変更を監視するリスナーのリスト
     private ISpellListChangeListener listener;
-    [SerializeField] Sprite sprite;
-    public Sprite Sprite => sprite;
 
     /// <summary>
     /// 現在の杖にセットされている呪文リストを取得します。
@@ -45,6 +76,15 @@ public class Wand
     }
 
     /// <summary>
+    /// 杖の状態をリセットします（セットされている通常の呪文をすべてクリアします）。
+    /// </summary>
+    public void Reset()
+    {
+        spells.Clear();
+        NotifyListChanged();
+    }
+
+    /// <summary>
     /// 呪文リストの変更をすべてのリスナーに通知します。
     /// </summary>
     private void NotifyListChanged()
@@ -63,14 +103,55 @@ public class Wand
     public float GetTotalCooldown()
     {
         float totalCooldown = 0f;
-        foreach (var spell in spells)
+        // まず全呪文の基本クールタイムを合計する
+        foreach (var spell in AllSpells)
         {
             if (spell != null)
             {
                 totalCooldown += spell.cooldown;
             }
         }
-        return totalCooldown;
+
+        // 次に各呪文の修正（倍率や加減算）を適用する
+        foreach (var spell in AllSpells)
+        {
+            if (spell != null)
+            {
+                totalCooldown = spell.ModifyCooldown(totalCooldown);
+            }
+        }
+
+        return Mathf.Max(0f, totalCooldown);
+    }
+
+    /// <summary>
+    /// 指定された呪文をこの杖に挿入できるかどうかを判定する。
+    /// </summary>
+    /// <param name="isMovingFromSelf">挿入を試みている呪文が、もともとこの杖に属していたか (移動) どうか。</param>
+    /// <returns>挿入可能であればtrue、そうでなければfalse。</returns>
+    public bool CanAddSpell(bool isMovingFromSelf)
+    {
+        // 1. 杖の中での移動（配置換え）の場合
+        if (isMovingFromSelf)
+        {
+            // 呪文の総数は変わらないため、常に挿入可能
+            return true;
+        }
+
+        // 2. 新規の呪文を追加する場合
+        // 現在の合計呪文数（固定呪文を含む）と最大許容数を比較
+        int currentCount = spells.Count + fixedSpells.Count;
+
+        if (currentCount < maxSpellCount)
+        {
+            // 最大スロット数に達していないため、追加可能
+            return true;
+        }
+        else
+        {
+            // 最大スロット数に達しているため、追加不可
+            return false;
+        }
     }
 }
 
@@ -91,8 +172,10 @@ public interface ISpellListChangeListener
 public enum WandType
 {
     Default,
-    Crystal,
-    Steam,
+    Water,
+    Ice,
+    Fire,
     Wood,
-    Dark,
+    Sky,
+    Magic,
 }

@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eead4a52643cdf42bb45d6397bce3c4, type: 3}
+  m_Name: TeleportSpell
+  m_EditorClassIdentifier: 
+  category: 0
+  spellType: Teleport
+  cooldown: 3
+  spellName: "\u30C6\u30EC\u30DD\u30FC\u30C8"
+  purchaseCosts: 64000000c80000009001000020030000
+  icon: {fileID: -4034597643228481169, guid: 3a51fd2f03ae4e0459588aac11ce109b, type: 3}
+  iconColor: {r: 1, g: 1, b: 1, a: 1}
+  iconMaterial: {fileID: 0}
+  spellDescription: "\u30C6\u30EC\u30DD\u30FC\u30C8\u3059\u308B\u3002"
+  trajectoryPrefabInterval: 0.1
+  trajectoryMoveSpeed: 0.5
+  maxPredictionTime: 5
+  projectilePrefab: {fileID: 289159110306795444, guid: 54418c9c68b53a740bc8b5743a008184, type: 3}
+  strengthMultiplier: 15
+  duration: 2
+  errorDegree: 2
+  damage:
+    baseDamage: 0
+    woodDamage: 0
+    waterDamage: 0
+    temperatureDamage: 0
+    healing: 0
+    knockback: 0
+  isTargetBoth: 0
+  damageType: 0
+  isClickTrigger: 0

@@ -9,10 +9,17 @@ public class AttackLauncher : MonoBehaviour
 
     [Header("設定")]
     [Tooltip("攻撃を発射するワールド座標のTransform")]
-    [SerializeField] private Transform launchPoint;
+    [SerializeField] protected Transform launchPoint;
 
     [Tooltip("発射する攻撃のプレハブ (GameObject)")]
-    [SerializeField] private GameObject attackPrefab;
+    [SerializeField] protected GameObject attackPrefab;
+
+    [Header("攻撃詳細設定")]
+    [Tooltip("攻撃のダメージ情報")]
+    [SerializeField] protected Damage attackDamage;
+
+    [Tooltip("攻撃オブジェクトが消滅するまでの時間 (秒)")]
+    [SerializeField] protected float destroyTime = 1.0f;
 
     // --- 公開メソッド ---
 
@@ -20,8 +27,7 @@ public class AttackLauncher : MonoBehaviour
     /// 指定されたワールド座標に向かって攻撃を発射する。
     /// </summary>
     /// <param name="targetPosition">狙う地点のワールド座標 (Vector2)</param>
-    /// <param name="spellCooldown">使用した呪文のクールタイムの合計時間</param>
-    public void LaunchAttack(Vector2 targetPosition)
+    public virtual void LaunchAttack(Vector2 targetPosition)
     {
 
         if (launchPoint == null || attackPrefab == null)
@@ -45,8 +51,18 @@ public class AttackLauncher : MonoBehaviour
         Quaternion rotation = Quaternion.Euler(0f, 0f, angle);
         GameObject attackInstance = Instantiate(attackPrefab, launchPosition, rotation);
 
+        // --- 追加: ProjectileDamageSourceへの値のセット ---
+        if (attackInstance.TryGetComponent<ProjectileDamageSource>(out var damageSource))
+        {
+            damageSource.SetDamage(attackDamage);
+            damageSource.SetDestroyTime(destroyTime);
+        }
+
         // 5. 発射した攻撃をこのオブジェクトの子にする (オプション: シーンの整理のため)
         attackInstance.transform.SetParent(transform);
+
+        // rootのスケールを適用して、生成されたオブジェクトを親（root）の大きさに拡大する
+        attackInstance.transform.localScale = Vector3.Scale(attackInstance.transform.localScale, transform.root.localScale);
 
         // 6. X軸負の方向を向く場合の調整
         // Unityの2Dスプライトは通常、X軸正の方向を「前」とする。

@@ -18,6 +18,9 @@ public class HPBarController : MonoBehaviour
     // HPアニメーションに使用するコルーチン
     private Coroutine _hpUpdateCoroutine;
 
+    // 現在HPバーが表示されているかどうかのフラグ
+    private bool _isShown = false;
+
     /// <summary>
     /// HPバーの表示を更新します。HPの増減に応じてスライダーを徐々に変化させ、
     /// HPバーの表示/非表示アニメーションのトリガーを呼び出します。
@@ -35,17 +38,23 @@ public class HPBarController : MonoBehaviour
         }
 
         // 1. HPバーの表示/非表示制御
-        if (previousHP >= maxHP && currentHP < maxHP)
+        if (currentHP > 0 && currentHP < maxHP)
         {
-            // HPが最大値からダメージを受けた場合（透明状態から表示へ）
-            // アニメーションの「Show」トリガーを呼び出し、HPバーを徐々に表出させる
-            hpBarAnimator.SetTrigger(SHOW_TRIGGER);
+            // 体力が最大値未満で、かつ生存している場合
+            if (!_isShown)
+            {
+                _isShown = true;
+                hpBarAnimator.SetTrigger(SHOW_TRIGGER);
+            }
         }
-        else if (currentHP == 0 || (previousHP < maxHP && currentHP >= maxHP))
+        else
         {
-            // HPが最大値に回復した場合（表示状態から透明へ）
-            // アニメーションの「Hide」トリガーを呼び出し、HPバーを徐々に透明にする
-            hpBarAnimator.SetTrigger(HIDE_TRIGGER);
+            // 体力が最大値に戻った、あるいは0以下になった場合
+            if (_isShown)
+            {
+                _isShown = false;
+                hpBarAnimator.SetTrigger(HIDE_TRIGGER);
+            }
         }
 
         // 2. HP値の更新アニメーション

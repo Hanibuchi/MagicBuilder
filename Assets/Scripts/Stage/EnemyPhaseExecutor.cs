@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System;
 
 /// <summary>
-/// EnemyPhaseConfigの木構造を読み込み、敵の出現を制御するクラス。
+/// EnemyPhaseConfigの配列を読み込み、敵の出現を制御するクラス。
 /// </summary>
 public class EnemyPhaseExecutor : MonoBehaviour
 {
@@ -61,33 +61,37 @@ public class EnemyPhaseExecutor : MonoBehaviour
         while (phaseStack.Count > 0)
         {
             EnemyPhaseConfig currentPhase = phaseStack.Pop();
-            if (currentPhase == null)
-                continue;
-
-            Debug.Log($"--- New Phase: {currentPhase.name} ---");
 
             // 1. 条件が満たされるまで待機
             yield return StartCoroutine(WaitForCondition(currentPhase));
+
+            // ボス出現演出の実行
+            if (currentPhase.isBossPhase)
+            {
+                PerformBossAppearance();
+            }
 
             // 2. 敵の生成を実行
             if (currentPhase.spawnerConfig != null)
             {
                 currentPhase.spawnerConfig.SpawnEnemy(spawnPosition);
             }
-
-            // 3. 行きがけ順の深さ優先探索のため、次のフェーズをスタックに追加
-            // 配列の逆順でPushすることで、スタックからPopする際に行きがけ順になる
-            if (currentPhase.nextPhases != null)
-            {
-                for (int i = currentPhase.nextPhases.Length - 1; i >= 0; i--)
-                {
-                    phaseStack.Push(currentPhase.nextPhases[i]);
-                }
-            }
         }
 
         Debug.Log("EnemyPhaseExecutor: すべてのフェーズの実行が完了しました。");
         callback?.Invoke();
+    }
+
+    /// <summary>
+    /// ボス出現演出のアニメーションを再生します。
+    /// </summary>
+    private void PerformBossAppearance()
+    {
+        Debug.Log("EnemyPhaseExecutor: ボス出現演出開始");
+        if (BossAppearanceManager.Instance != null)
+        {
+            BossAppearanceManager.Instance.PlayBossAppearanceAnimation();
+        }
     }
 
     /// <summary>
@@ -102,17 +106,14 @@ public class EnemyPhaseExecutor : MonoBehaviour
                 yield return new WaitForSeconds(phase.conditionValue);
                 break;
 
-            case EnemyPhaseConfig.PhaseConditionType.None:
-                // 即時実行
-                yield break;
-
-            // 今後の拡張性のためのプレースホルダー
-            // case EnemyPhaseConfig.PhaseConditionType.AllEnemiesDefeated:
-            //     while (/* 敵が残っている場合 */)
-            //     {
-            //         yield return null;
-            //     }
-            //     break;
+            case EnemyPhaseConfig.PhaseConditionType.AllEnemiesDefeated:
+                yield return null;
+                Debug.Log("条件: すべての敵が倒されるまで待機...");
+                while (EnemyCounter.Instance != null && EnemyCounter.Instance.CurrentEnemyCount > 0)
+                {
+                    yield return null;
+                }
+                break;
 
             default:
                 Debug.LogWarning($"未定義の条件タイプ: {phase.conditionType}");

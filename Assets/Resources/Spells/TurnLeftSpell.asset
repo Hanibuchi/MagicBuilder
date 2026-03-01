@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af9b51f728f40dc458dd79ac267fb37a, type: 3}
+  m_Name: TurnLeftSpell
+  m_EditorClassIdentifier: 
+  category: 1
+  spellType: TurnLeft
+  cooldown: 0.5
+  spellName: "\u5DE6\u6298"
+  purchaseCosts: 64000000c80000009001000020030000
+  icon: {fileID: 327006421684145539, guid: 52b4ba75fff419145a3260e8924f3e19, type: 3}
+  iconColor: {r: 1, g: 1, b: 1, a: 1}
+  iconMaterial: {fileID: 0}
+  spellDescription: "\u767A\u5C04\u65B9\u5411\u3092\u5DE6\u306B90\u5EA6\u56DE\u8EE2\u3055\u305B\u308B\u3002"
+  direction: 1

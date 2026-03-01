@@ -20,4 +20,25 @@ public class ErrorDegreeChangeSpell : SpellBase
     {
         return nextSpellOffsets;
     }
+
+
+    public override List<SpellDescriptionItem> GetDescriptionDetails()
+    {
+        base.GetDescriptionDetails();
+        string text = "誤差 : ";
+        if (additionalErrorDegree > 0)
+        {
+            text += "+" + additionalErrorDegree.ToString() + "度";
+        }
+        else
+        {
+            text += additionalErrorDegree.ToString() + "度";
+        }
+        detailItems.Add(new SpellDescriptionItem
+        {
+            icon = SpellCommonData.Instance.errorDegreeIcon,
+            descriptionText = text,
+        });
+        return detailItems;
+    }
 }

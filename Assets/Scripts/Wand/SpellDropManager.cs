@@ -34,6 +34,9 @@ public class SpellDropManager : MonoBehaviour
         }
     }
 
+    [SerializeField] AudioClip dropSound;
+    [SerializeField] float dropSoundVolume = 1.0f;
+
     /// <summary>
     /// 呪文ドロップアニメーションを開始し、完了後にインベントリに追加します。
     /// </summary>
@@ -75,6 +78,11 @@ public class SpellDropManager : MonoBehaviour
             targetCanvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : targetCanvas.worldCamera,
             out endPosition
         );
+
+        if (SoundManager.Instance != null && dropSound != null)
+        {
+            SoundManager.Instance.PlaySE(dropSound, dropSoundVolume);
+        }
 
         // 5. アニメーションコルーチンを開始
         StartCoroutine(AnimateDrop(dropUIObject.GetComponent<RectTransform>(), startPosition, endPosition, spellData));

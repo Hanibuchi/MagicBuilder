@@ -9,12 +9,15 @@ using System.Collections;
 // ISpellContainer を実装
 public class SpellInventory : MonoBehaviour, ISpellContainer
 {
-
+    [Header("Inventory Settings")]
+    [Tooltip("インベントリに格納できる呪文の最大数")]
+    public int maxInventoryCount = 30; // 追加: 最大値
     public static SpellInventory Instance { get; private set; }
     public List<SpellBase> availableSpells = new List<SpellBase>();
     [SerializeField] private RectTransform inventoryFrame;
 
     private List<SpellUI> spellUIs = new List<SpellUI>();
+    private List<SpellBase> newSpells = new List<SpellBase>(); // 新しく取得した呪文を保持
     SpellUI draggingSpellUI;
 
 
@@ -24,6 +27,7 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         {
             Instance = this;
             // シーンをまたいで保持する場合はDontDestroyOnLoad(gameObject);
+            transform.root.gameObject.SetActive(false);
         }
         else
         {
@@ -34,7 +38,8 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
 
     void Start()
     {
-        availableSpells = SpellDatabase.Instance.allSpells.Select(e => e.spellAsset).ToList();
+        // デバッグ用。本番では変更する。
+        // availableSpells = SpellDatabase.Instance.allSpells.Select(e => e.spellAsset).ToList();
 
         // 初期位置を最小Y座標として保存
         inventoryUIPosY_Min = inventoryUI.anchoredPosition.y;
@@ -69,6 +74,8 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         var wand = AttackManager.Instance.GetCurrentWand();
         if (wand != null)
             DeactivateSpellUIs(wand.GetSpells());
+
+        ApplyNewBadges();
     }
 
     public void RebuildUIWhileDragging()
@@ -79,6 +86,8 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         if (draggingSpellUI != null)
             spellList.Add(draggingSpellUI.GetSpellData());
         DeactivateSpellUIs(spellList);
+
+        ApplyNewBadges();
     }
 
     /// <summary>
@@ -108,9 +117,9 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
     /// </summary>
     private void CreateSpellUI(int index, SpellBase spell)
     {
-        if (spell == null || spell.uiPrefab == null)
+        if (spell == null)
         {
-            Debug.LogError($"Index {index} の呪文 '{spell.spellName}' に uiPrefab が設定されていません。");
+            Debug.LogError($"spell is null");
             return;
         }
 
@@ -143,9 +152,28 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
     public void NotifyDragBegin(int index)
     {
         draggingSpellUI = spellUIs[index];
+        SpellBase spell = draggingSpellUI.GetSpellData();
         spellUIs[index] = null;
 
+        // ドラッグされたら新規取得フラグを削除 (1つ分)
+        if (newSpells.Contains(spell))
+        {
+            newSpells.Remove(spell);
+            if (draggingSpellUI != null)
+                draggingSpellUI.SetNewBadgeActive(false);
+        }
+
         RebuildUIWhileDragging();
+    }
+
+    public void NotifyPointerClick(int index)
+    {
+        SpellBase spell = availableSpells[index];
+        if (newSpells.Contains(spell))
+        {
+            newSpells.Remove(spell);
+            // 本来は再構築しなくても、UI側で直接消しているのでここではリストの更新のみ
+        }
     }
 
     /// <summary>
@@ -225,6 +253,10 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         }
     }
 
+
+    [SerializeField] AudioClip moveInventorySound; // ドラッグ開始時に再生するAudioClip
+    [SerializeField] float moveInventorySoundVolume = 1.0f;
+
     /// <summary>
     /// インベントリを上に移動させる。
     /// </summary>
@@ -232,6 +264,7 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
     {
         if (isInventoryUp) return; // すでに上がっていたら何もしない
 
+        PlayMoveInventorySound();
         targetPosY = inventoryUIPosY_Max;
         isInventoryUp = true;
         moveUpButton.gameObject.SetActive(false);
@@ -246,11 +279,18 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
     {
         if (!isInventoryUp) return; // すでに下がっていたら何もしない
 
+        PlayMoveInventorySound();
         targetPosY = inventoryUIPosY_Min;
         isInventoryUp = false;
         moveUpButton.gameObject.SetActive(true);
         moveDownButton.gameObject.SetActive(false);
         Debug.Log("インベントリを下に移動します。");
+    }
+
+    void PlayMoveInventorySound()
+    {
+        if (SoundManager.Instance != null && moveInventorySound != null)
+            SoundManager.Instance.PlaySE(moveInventorySound, moveInventorySoundVolume);
     }
 
     void Update()
@@ -331,6 +371,35 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
     }
 
     /// <summary>
+    /// 現在の newSpells リストに基づいて、SpellUI に新規取得バッジを適用します。
+    /// アクティブな UI を優先して前から順番に割り当てます。
+    /// </summary>
+    private void ApplyNewBadges()
+    {
+        // 作業用のリストを作成
+        List<SpellBase> pending = new List<SpellBase>(newSpells);
+
+        foreach (var ui in spellUIs)
+        {
+            if (ui == null) continue;
+
+            // 一旦オフにする
+            ui.SetNewBadgeActive(false);
+
+            // アクティブな UI に対してのみ、該当する呪文があればバッジをオンにする
+            if (ui.IsUIActive)
+            {
+                SpellBase data = ui.GetSpellData();
+                if (pending.Contains(data))
+                {
+                    ui.SetNewBadgeActive(true);
+                    pending.Remove(data);
+                }
+            }
+        }
+    }
+
+    /// <summary>
     /// 新しい呪文をインベントリのデータリストに追加し、UIを再構築します。
     /// このメソッドは、呪文がドロップアニメーションを完了した後、DropManagerから呼び出されます。
     /// </summary>
@@ -343,8 +412,33 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
             return;
         }
 
+        if (availableSpells.Count >= maxInventoryCount)
+        {
+            Debug.LogWarning($"インベントリが満杯です。呪文 '{spellToAdd.spellName}' は追加できませんでした。(上限: {maxInventoryCount})");
+            // インベントリ満杯SEを再生
+            PlayInventoryFullSound();
+            return;
+        }
+
         // 1. データリストに追加
         availableSpells.Add(spellToAdd);
+        newSpells.Add(spellToAdd); // 新規取得フラグをセット
+
+        // 呪文の保持情報を更新（未開放なら開放する）
+        SpellType type = SpellDatabase.Instance.GetSpellType(spellToAdd);
+        if (type != SpellType.None)
+        {
+            SpellHoldInfoManager.Instance.UnlockSpell(type);
+        }
+
+        if (SoundManager.Instance != null)
+        {
+            spellToAdd.GetDropSound(out AudioClip clip, out float volume);
+            if (clip != null)
+            {
+                SoundManager.Instance.PlaySE(clip, volume);
+            }
+        }
 
         // 2. UIを再構築 (新しい呪文のUIも含まれる)
         // ※ RebuildUIが呼ばれる前に、DeactivateSpellUIsの処理で、新しく追加された
@@ -354,6 +448,18 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         Debug.Log($"呪文 '{spellToAdd.spellName}' をインベントリに追加しました。");
         // スクロールが必要になる可能性があるので、スクロール制御も更新
         UpdateScroll();
+    }
+
+    [Header("Sound Settings")]
+    [SerializeField] AudioClip inventoryFullSound; // インベントリ満杯時のSE
+    [SerializeField] float inventoryFullSoundVolume = 1.0f;
+    /// <summary>
+    /// インベントリ満杯時のSEを再生します。
+    /// </summary>
+    void PlayInventoryFullSound()
+    {
+        if (SoundManager.Instance != null && inventoryFullSound != null)
+            SoundManager.Instance.PlaySE(inventoryFullSound, inventoryFullSoundVolume);
     }
 
     [SerializeField] RectTransform dropTargetRect;
@@ -386,49 +492,18 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
 
         return screenPoint;
     }
-
-    [SerializeField] float test_delayTime;
-    [SerializeField] SpellBase test_spell;
-    /// <summary>
-    /// 遅延処理のテストを開始するメソッド
-    /// </summary>
-    public void Test()
+    public void Show()
     {
-        // コルーチンを開始
-        StartCoroutine(TestCoroutine());
+        transform.root.gameObject.SetActive(true);
     }
 
-    /// <summary>
-    /// test_delayTime秒後にAddSpellToInventoryを実行するコルーチン
-    /// </summary>
-    public IEnumerator TestCoroutine()
+    const string HIDE_TRIGGER = "Hide";
+    [SerializeField] Animator animator;
+    public void Hide()
     {
-        // test_delayTime秒間待機
-        yield return new WaitForSeconds(test_delayTime);
-
-        // 待機後にAddSpellToInventoryを実行
-        AddSpellToInventory(test_spell);
-
-        Debug.Log($"遅延時間 {test_delayTime}秒後に呪文 '{test_spell.spellName}' をインベントリに追加しました。");
-    }
-
-    [SerializeField] RectTransform test_rect;
-    public void Test2()
-    {
-        Camera uiCamera = test_rect.GetComponentInParent<Canvas>().renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main;
-
-        // UIの中心のワールド座標を取得（これ自体はあまり使わないが中間ステップとして）
-        Vector3 uiWorldPosition = test_rect.position;
-
-        // ワールド座標からスクリーン座標に変換
-        // RectTransformUtility.WorldToScreenPointを使用するのが一般的ですが、
-        // 階層を無視して「スクリーン上のどこか」を取得するだけなら、
-        // 実際にはそのUI要素のピボット（position）が既にスクリーン座標に近い値を持っていることが多いです。
-        // シンプルにCanvas内のpositionを取得し、画面サイズで正規化して利用する方法もありますが、
-        // 確実に取得するなら以下の方法です。
-
-        // 確実な方法: 画面の中央からの相対位置ではなく、Rawなスクリーン座標を取得
-        Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(uiCamera, uiWorldPosition);
-        Debug.Log($"Screen Point: {screenPoint}");
+        if (animator != null)
+        {
+            animator.SetTrigger(HIDE_TRIGGER);
+        }
     }
 }

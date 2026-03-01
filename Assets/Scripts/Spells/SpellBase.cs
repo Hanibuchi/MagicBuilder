@@ -9,11 +9,21 @@ using System.Linq;
 public abstract class SpellBase : ScriptableObject
 {
     [Header("基本設定")]
+    [Tooltip("呪文のカテゴリ（UIの色などに影響します）")]
+    public SpellCategory category = SpellCategory.Attack;
+
+    [Tooltip("データベース上の呪文の種類")]
+    public string spellType = "";
+
     [Tooltip("呪文が発動した際に追加されるクールタイム（秒）")]
     public float cooldown = 0.5f;
 
     [Tooltip("この呪文のゲーム内での表示名")]
     public string spellName = "未定義の呪文";
+
+    [Header("購入設定")]
+    [Tooltip("保有数ごとの購入コスト。インデックスが保有数に対応します。")]
+    public int[] purchaseCosts = new int[] { 100, 200, 400, 800 };
 
     /// <summary>
     /// 補助線（軌道予測）を表示するためのロジックを定義します。
@@ -23,21 +33,21 @@ public abstract class SpellBase : ScriptableObject
     /// <param name="currentSpellIndex">この呪文が杖の配列の何番目にあるか</param>
     /// <param name="rotationZ">発射角度（Z軸回転）</param>
     /// <param name="strength">発射の強さ。0~1の範囲</param>
-    /// <param name="casterPosition">発射元となる位置</param>
-    /// <param name="gravityMagnitude">重力の大きさ</param>
+    /// <param name="context">発射時の環境情報を持つインスタンス</param>
+    /// <param name="clearLine">ラインをクリアするかどうか</param>
     public virtual void DisplayAimingLine(
         List<SpellBase> wandSpells,
         int currentSpellIndex,
         float rotationZ,
         float strength,
-        Vector2 casterPosition,
+        SpellContext context,
         bool clearLine = false
     )
     {
         // GetNextSpellOffsetsで得られた次の呪文に対して、同じ引数でDisplayAimingLineを呼び出す
         DisplayAimingLineForNextSpells(
             GetNextSpellOffsets(wandSpells, currentSpellIndex),
-            wandSpells, currentSpellIndex, rotationZ, strength, casterPosition, clearLine
+            wandSpells, currentSpellIndex, rotationZ, strength, context, clearLine
         );
     }
 
@@ -49,7 +59,7 @@ public abstract class SpellBase : ScriptableObject
     /// <param name="currentSpellIndex">この呪文（呼び出し元）が杖の配列の何番目にあるか</param>
     /// <param name="rotationZ">発射角度</param>
     /// <param name="strength">発射の強さ</param>
-    /// <param name="casterPosition">発射元となる位置</param>
+    /// <param name="context">発射時の環境情報を持つインスタンス</param>
     /// <param name="clearLine">ラインをクリアするかどうか</param>
     protected void DisplayAimingLineForNextSpells(
         int[] nextSpelloffsets,
@@ -57,10 +67,11 @@ public abstract class SpellBase : ScriptableObject
         int currentSpellIndex,
         float rotationZ,
         float strength,
-        Vector2 casterPosition,
+        SpellContext context,
         bool clearLine = false
     )
     {
+        int count = 0;
         foreach (int offset in nextSpelloffsets)
         {
             // 相対オフセットを絶対インデックスに変換
@@ -69,6 +80,9 @@ public abstract class SpellBase : ScriptableObject
             // インデックスが杖リストの範囲内にあるかチェック
             if (targetIndex >= 0 && targetIndex < wandSpells.Count)
             {
+                if (nextSpelloffsets.Length >= 2 && count > 0)
+                    context = context.Clone();
+
                 SpellBase spellToDisplay = wandSpells[targetIndex];
 
                 // 対象の呪文のDisplayAimingLineを呼び出し
@@ -77,9 +91,10 @@ public abstract class SpellBase : ScriptableObject
                     targetIndex,        // 新しい開始インデックス
                     rotationZ,
                     strength,
-                    casterPosition,
+                    context,
                     clearLine         // 最初の呼び出しでのみクリアを実行
                 );
+                count++;
             }
         }
     }
@@ -127,6 +142,7 @@ public abstract class SpellBase : ScriptableObject
         SpellContext context
     )
     {
+        int count = 0;
         foreach (int offset in nextSpelloffsets)
         {
             // 相対オフセットを絶対インデックスに変換
@@ -136,6 +152,8 @@ public abstract class SpellBase : ScriptableObject
             if (targetIndex >= 0 && targetIndex < wandSpells.Count)
             {
                 SpellBase spellToDisplay = wandSpells[targetIndex];
+                if (nextSpelloffsets.Length >= 2 && count > 0)
+                    context = context.Clone();
 
                 // 対象の呪文のDisplayAimingLineを呼び出し
                 spellToDisplay?.FireSpell(
@@ -145,13 +163,9 @@ public abstract class SpellBase : ScriptableObject
                     strength,
                     context
                 );
+                count++;
             }
         }
-    }
-
-    public void ModifyProjectile(SpellContext context, GameObject projectile)
-    {
-        context.ProjectileModifier?.Invoke(projectile);
     }
 
     public virtual int[] GetNextSpellOffsets(List<SpellBase> wandSpells,
@@ -286,10 +300,21 @@ public abstract class SpellBase : ScriptableObject
         return currentSpellIndex + 1;
     }
 
+    /// <summary>
+    /// クールダウン時間を計算する際に、この呪文による修正を適用します。
+    /// </summary>
+    /// <param name="currentCooldown">修正前のクールダウン合計値</param>
+    /// <returns>修正後のクールダウン合計値</returns>
+    public virtual float ModifyCooldown(float currentCooldown)
+    {
+        return currentCooldown;
+    }
+
 
     [Header("UI")]
     public Sprite icon;
-    public GameObject uiPrefab;
+    public Color iconColor = Color.white;
+    public Material iconMaterial;
 
     /// <summary>
     /// このSpellBaseに対応するSpellUIインスタンスを生成する。
@@ -297,16 +322,39 @@ public abstract class SpellBase : ScriptableObject
     public virtual SpellUI CreateUI()
     {
         // プレハブから生成
-        SpellUI uiInstance = Instantiate(uiPrefab).GetComponent<SpellUI>();
-        // アイコンを設定
+        SpellUI uiInstance = Instantiate(SpellCommonData.Instance.spellUIPrefab).GetComponent<SpellUI>();
+        // アイコンと色を設定
         uiInstance.SetData(this);
 
         return uiInstance;
     }
 
+    /// <summary>
+    /// このSpellBaseに対応するEquippedSpellIconUIインスタンスを生成します。
+    /// </summary>
+    public virtual EquippedSpellIconUI CreateEquippedIconUI()
+    {
+        if (SpellCommonData.Instance.equippedSpellIconUIPrefab == null)
+        {
+            Debug.LogError($"SpellCommonData.Instance.equippedSpellIconUIPrefab is null.");
+            return null;
+        }
 
-    [Tooltip("ドロップ時のアニメーションに使用するUIプレハブ。nullの場合は uiPrefab を使用。")]
-    public GameObject dropUIPrefab;
+        // プレハブから生成
+        // EquippedSpellIconUIがアタッチされているプレハブを SpellCommonData が保持している前提
+        EquippedSpellIconUI uiInstance = Instantiate(SpellCommonData.Instance.equippedSpellIconUIPrefab).GetComponent<EquippedSpellIconUI>();
+
+        if (uiInstance == null)
+        {
+            Debug.LogError($"Instantiated prefab from equippedSpellIconUIPrefab does not contain EquippedSpellIconUI component.");
+            return null;
+        }
+
+        // 呪文データと色を設定
+        uiInstance.SetData(this);
+
+        return uiInstance;
+    }
 
     /// <summary>
     /// 呪文がワールドからドロップしてインベントリに回収される際のアニメーションに使用するUIオブジェクトを生成します。
@@ -314,51 +362,53 @@ public abstract class SpellBase : ScriptableObject
     /// <returns>生成されたUIオブジェクトのGameObject。</returns>
     public virtual GameObject CreateDropUI()
     {
-        if (dropUIPrefab == null)
+        if (SpellCommonData.Instance.dropUIPrefab == null)
         {
-            Debug.LogError($"呪文 '{spellName}' に dropUIPrefabが設定されていません。");
+            Debug.LogError($"SpellCommonData.Instance.dropUIPrefab is null");
             return null;
         }
         // UIオブジェクトを生成
-        GameObject dropUIInstance = Instantiate(dropUIPrefab);
+        GameObject dropUIInstance = Instantiate(SpellCommonData.Instance.dropUIPrefab);
         if (dropUIInstance.TryGetComponent<SpellDropUI>(out var spellDropUI))
         {
+            // データと色を設定
             spellDropUI.SetData(this);
         }
         return dropUIInstance;
     }
-}
 
-/// <summary>
-/// 呪文の発射・実行時に、環境や発射元の情報などを伝達するためのクラス。
-/// </summary>
-public class SpellContext
-{
-    public Vector2 CasterPosition;
-    public Action<GameObject> ProjectileModifier;
-    public float errorDegree = 0;
-    public Damage damage;
-
-    public SpellContext()
+    public void GetDropSound(out AudioClip clip, out float volume)
     {
-
+        clip = SpellCommonData.Instance.spellDropSound;
+        volume = SpellCommonData.Instance.spellDropSoundVolume;
     }
 
-    /// <summary>
-    /// このコンテキストの値をコピーした新しいインスタンスを返す。
-    /// </summary>
-    /// <returns>値が同じ新しい SpellContext インスタンス。</returns>
-    public SpellContext Clone()
-    {
-        return new SpellContext
-        {
-            // 値型 (Vector2, float) は値そのものがコピーされる
-            CasterPosition = this.CasterPosition,
-            errorDegree = this.errorDegree,
+    [Tooltip("呪文の説明文")]
+    [TextArea(1, 3)]
+    [SerializeField] string spellDescription = "";
 
-            // 参照型 (Action) は参照がコピーされるが、Actionは不変(イミュータブル)なので問題なし
-            ProjectileModifier = this.ProjectileModifier,
-            damage = this.damage
-        };
+    public string GetDescription()
+    {
+        return spellDescription;
+    }
+    protected List<SpellDescriptionItem> detailItems = new();
+    /// <summary>
+    /// 呪文の詳細説明パネルに表示するための項目リストを取得します。
+    /// 具体的な呪文クラスはこれをオーバーライドして動的な情報を追加できます。
+    /// </summary>
+    /// <returns>SpellDescriptionItemのリスト</returns>
+    public virtual List<SpellDescriptionItem> GetDescriptionDetails()
+    {
+        detailItems.Clear();
+
+        // クールタイム項目を動的に生成
+        if (cooldown != 0)
+            detailItems.Add(new SpellDescriptionItem
+            {
+                icon = SpellCommonData.Instance.coolDownIcon,
+                descriptionText = $"クールタイム : {cooldown:F1} 秒"
+            });
+
+        return detailItems;
     }
 }

@@ -12,23 +12,35 @@ public class BarrierSpell : SpellBase
     public GameObject[] barrierPrefabs;
 
     // 軌道表示用のバッファ
-    private GameObject currentBarrierInstance = null;
-    private int lastPrefabIndex = -1; // 前回使用したPrefabのインデックス
+    private class BarrierInstanceInfo
+    {
+        public GameObject instance;
+        public int lastPrefabIndex = -1;
+    }
+    private Dictionary<(int index, int callId), BarrierInstanceInfo> barrierInstancesByCall = new();
 
     /// <summary>
     /// Strengthに応じてバリアのプレハブを選択し、軌道（Aiming Line）として表示します。
     /// </summary>
     public override void DisplayAimingLine(
         List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ,
-        float strength, Vector2 casterPosition, bool clearLine = false)
+        float strength, SpellContext context,
+        bool clearLine = false)
     {
+        var key = (currentSpellIndex, context.callId);
+        if (!barrierInstancesByCall.TryGetValue(key, out var info))
+        {
+            info = new BarrierInstanceInfo();
+            barrierInstancesByCall[key] = info;
+        }
+
         // 1. 補助線のクリア処理
         if (clearLine)
         {
-            if (currentBarrierInstance != null)
+            if (info.instance != null)
             {
                 // PoolManagerを使用していないため、非アクティブ化で対応
-                currentBarrierInstance.SetActive(false);
+                info.instance.SetActive(false);
             }
             return;
         }
@@ -46,35 +58,40 @@ public class BarrierSpell : SpellBase
         {
             Debug.LogError($"呪文 [{spellName}] のインデックス [{targetIndex}] にPrefabが設定されていません。");
             // Prefabがない場合は表示をクリア
-            if (currentBarrierInstance != null)
+            if (info.instance != null)
             {
-                currentBarrierInstance.SetActive(false);
+                info.instance.SetActive(false);
             }
             return;
         }
 
         // 3. インスタンスの再利用または新規取得
-        if (targetIndex != lastPrefabIndex || currentBarrierInstance == null)
+        if (targetIndex != info.lastPrefabIndex || info.instance == null)
         {
             // 前回のインスタンスを破棄 (PoolManagerを使っていないため)
-            if (currentBarrierInstance != null)
+            if (info.instance != null)
             {
-                Destroy(currentBarrierInstance);
+                Destroy(info.instance);
             }
 
             // 新しいバリアを生成
-            currentBarrierInstance = Instantiate(targetPrefab);
-            currentBarrierInstance.SetActive(true); // 新規作成時はアクティブ化
-            lastPrefabIndex = targetIndex;
+            info.instance = Instantiate(targetPrefab);
+            info.instance.SetActive(true); // 新規作成時はアクティブ化
+            info.lastPrefabIndex = targetIndex;
         }
-        else if (!currentBarrierInstance.activeSelf)
+        else if (!info.instance.activeSelf)
         {
             // インスタンスを使い回す場合でも非アクティブならアクティブに戻す
-            currentBarrierInstance.SetActive(true);
+            info.instance.SetActive(true);
         }
 
-        currentBarrierInstance.transform.rotation = Quaternion.Euler(0, 0, rotationZ); // rotationZをそのまま設定
-        currentBarrierInstance.transform.position = casterPosition;
+        info.instance.transform.rotation = Quaternion.Euler(0, 0, rotationZ); // rotationZをそのまま設定
+        info.instance.transform.position = context.CasterPosition;
+        // スケールを一旦プレハブのデフォルトに戻す（修飾子の累積適用を防ぐため）
+        info.instance.transform.localScale = targetPrefab.transform.localScale;
+
+        // 修飾子の実行（例：ExpansionSpellによる拡大など）
+        context.AimingModifier?.Invoke(info.instance);
     }
 
     /// <summary>
@@ -109,11 +126,56 @@ public class BarrierSpell : SpellBase
             rotation
         );
 
-        // 4. 速度は追加しない（静止バリアのため）
+        // SpellContext の Layer 情報に基づいてバリアのレイヤーを設定
+        barrierGO.layer = context.GetUnityLayer(false);
+
+        float totalDuration = context.duration + duration;
+        context.duration = totalDuration;
+        if (barrierGO.TryGetComponent(out CharacterHealth health))
+        {
+            health.maxHealth = barrierHP;
+            if (!context.IsPermanent())
+            {
+                // バリアの場合は持続時間終了時に Kill(true) を呼び出す
+                health.Invoke(nameof(health.KillSilently), context.duration);
+            }
+        }
 
         // 5. 投射物修正ロジックの実行
         ModifyProjectile(context, barrierGO);
 
+        // CharacterHealth がない場合のみ従来の Destroy を使用（寿命管理）
+        if (health == null && !context.IsPermanent())
+        {
+            Destroy(barrierGO, context.duration);
+        }
+
         Debug.Log($"[{spellName}]を発射！バリアの種類インデックス:{targetIndex}、角度:{rotationZ}°、強さ:{strength}");
+    }
+
+
+    public void ModifyProjectile(SpellContext context, GameObject projectile)
+    {
+        context.ProjectileModifier?.Invoke(projectile);
+    }
+    [SerializeField] float barrierHP = 50;
+    [Tooltip("呪文の持続時間（秒）。-1の場合は無限。")]
+    [SerializeField] float duration = 10f;
+
+    public override List<SpellDescriptionItem> GetDescriptionDetails()
+    {
+        base.GetDescriptionDetails();
+        detailItems.Add(new SpellDescriptionItem
+        {
+            icon = SpellCommonData.Instance.HPIcon,
+            descriptionText = "耐久値 : " + barrierHP.ToString(),
+        });
+        if (duration > 0)
+            detailItems.Add(new SpellDescriptionItem
+            {
+                icon = null,
+                descriptionText = "持続時間 : " + duration.ToString("F1") + " 秒",
+            });
+        return detailItems;
     }
 }

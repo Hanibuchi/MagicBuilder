@@ -1,0 +1,54 @@
+*音楽、効果音*
+- 魔王魂
+
+- OtoLogic
+https://otologic.jp/free/se/warning01.html
+
+- Free Sound Effects Pack
+https://assetstore.unity.com/packages/audio/sound-fx/free-sound-effects-pack-155776
+Olivier Girardot
+Standard Unity Asset Store EULA
+
+- Shapeforms Audio Free Sound Effects
+https://assetstore.unity.com/packages/audio/sound-fx/shapeforms-audio-free-sound-effects-183649
+Shapeforms
+Standard Unity Asset Store EULA
+
+- Shooting Sound
+https://assetstore.unity.com/packages/audio/sound-fx/shooting-sound-177096
+B.G.M
+Standard Unity Asset Store EULA
+
+- Force Field - Sci-Fi Collection
+https://assetstore.unity.com/packages/audio/sound-fx/force-field-sci-fi-collection-113256
+Alpine Audio
+Standard Unity Asset Store EULA
+
+- FREE Casual Game SFX Pack
+https://assetstore.unity.com/packages/audio/sound-fx/free-casual-game-sfx-pack-54116
+Dustyroom
+Standard Unity Asset Store EULA
+
+- Demo Ancient Magic Pack FREE
+https://assetstore.unity.com/packages/audio/sound-fx/weapons/demo-ancient-magic-pack-free-175093#content
+SF Audio Guild
+Standard Unity Asset Store
+
+*イラスト*
+- 2D Platformer Tileset
+https://assetstore.unity.com/packages/2d/environments/2d-platformer-tileset-173155
+Danil Chernyaev
+Standard Unity Asset Store EULA
+
+- AI-Generated Images by Google's Gemini
+
+- Violet Themed UI
+https://assetstore.unity.com/packages/2d/gui/violet-themed-ui-235559
+Giniel Villacote
+Standard Unity Asset Store EULA
+
+*Effect*
+- Cartoon FX Remaster Free
+https://assetstore.unity.com/packages/vfx/particles/cartoon-fx-remaster-free-109565
+Jean Moreno
+Standard Unity Asset Store EULA

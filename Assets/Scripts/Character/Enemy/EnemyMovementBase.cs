@@ -7,16 +7,33 @@ public class EnemyMovementBase : MonoBehaviour
 {
     [Header("移動設定")]
     [SerializeField]
-    protected float moveSpeed = 1.0f; // 単位時間あたりの移動速度
+    protected float defaultMoveSpeed = 1.0f; // 基準となる移動速度
 
-    // 通常の移動速度を保持するフィールドを追加
-    protected float defaultMoveSpeed;
+    [Tooltip("目標速度への追従強度。高いほど物理的な干渉に強くなります。")]
+    [SerializeField]
+    protected float movementForceGain = 10.0f;
 
     protected Rigidbody2D rb;
-    protected bool isMoving = true; // 現在移動中かどうかのフラグ
+    protected bool isMoving = false; // 現在移動中かどうかのフラグ
+
+    public bool IsMoving => isMoving;
+
+    // --- 速度制御用フィールド ---
+    protected float speedRatio = 1.0f;        // 状態異常（スロウ等）による速度比率
+    protected float spellSpeedMultiplier = 1.0f; // 呪文による追加の速度効果
+
+    /// <summary>
+    /// 呪文による追加の速度倍率。
+    /// </summary>
+    public float SpellSpeedMultiplier
+    {
+        get => spellSpeedMultiplier;
+        set => spellSpeedMultiplier = value;
+    }
 
     // --- 状態異常管理用フィールド ---
     protected int isStunned = 0; // 気絶（FireStun, FreezeStun）中かどうか
+    public bool IsStunned => isStunned > 0;
     protected bool isSlowed = false;  // 減速（IceSlow）中かどうか
 
     // --- Unity ライフサイクルメソッド ---
@@ -29,9 +46,11 @@ public class EnemyMovementBase : MonoBehaviour
         {
             Debug.LogError("Rigidbody2Dが見つかりません。敵モブにはRigidbody2Dが必要です。", this);
         }
+    }
 
-        // 速度比率制御のために、Awake時に現在のmoveSpeedをデフォルト値として保持する
-        defaultMoveSpeed = moveSpeed;
+    private void Start()
+    {
+        isMoving = true;
     }
 
     protected virtual void FixedUpdate()
@@ -47,25 +66,43 @@ public class EnemyMovementBase : MonoBehaviour
     // --- 動きの制御メソッド ---
 
     /// <summary>
-    /// 0.0fから1.0fのfloat型を取り、1.0fを通常状態として移動速度をその比率にする。
-    /// 例: ratioが0.5fなら、速度は通常の半分になる。
+    /// 現在の適用されるべき移動速度を計算して返します。
     /// </summary>
-    /// <param name="ratio">移動速度の比率 (0.0f - 1.0f)。</param>
-    public virtual void SetMovementSpeedRatio(float ratio)
+    public float GetCurrentMoveSpeed()
     {
-        // 比率を0.0fから1.0fの間にクランプ（制限）する
-        float clampedRatio = Mathf.Clamp01(ratio);
-
-        // moveSpeedをデフォルトの速度に比率を掛けた値に設定
-        moveSpeed = defaultMoveSpeed * clampedRatio;
+        return defaultMoveSpeed * GetTotalSpeedMultiplier();
     }
 
     /// <summary>
-    /// 移動速度を通常の速度に戻す (SetMovementSpeedRatio(1.0f) と同じ)。
+    /// 状態異常比率と呪文倍率を掛け合わせた合計倍率を返します。
+    /// </summary>
+    public float GetTotalSpeedMultiplier()
+    {
+        return speedRatio * spellSpeedMultiplier;
+    }
+
+    /// <summary>
+    /// 速度比率を設定します。1.0fを通常状態とします。
+    /// </summary>
+    public virtual void SetMovementSpeedRatio(float ratio)
+    {
+        speedRatio = ratio;
+    }
+
+    /// <summary>
+    /// 呪文による速度倍率を設定します。
+    /// </summary>
+    public virtual void SetSpellSpeedMultiplier(float multiplier)
+    {
+        spellSpeedMultiplier = multiplier;
+    }
+
+    /// <summary>
+    /// 移動速度を通常の速度に戻します。
     /// </summary>
     protected virtual void ResetMovementSpeed()
     {
-        moveSpeed = defaultMoveSpeed;
+        speedRatio = 1.0f;
     }
 
     /// <summary>
@@ -74,12 +111,18 @@ public class EnemyMovementBase : MonoBehaviour
     /// </summary>
     protected virtual void HandleMovement()
     {
-        // デフォルトの動き: 左に移動
-        // Velocityを直接操作
+        // 直接速度を上書きせず、目標速度に近づくように力を加えることで
+        // 外部からの AddForce（ノックバックや引き寄せなど）と共存させます。
         if (rb != null)
         {
-            // 更新された moveSpeed を使用
-            rb.linearVelocity = new Vector2(-moveSpeed, rb.linearVelocity.y);
+            // キャラクターが向いている方向（localScale.x）の符号のみを取得
+            // Unityのtransform.rightはスケール反転を無視するため、localScaleを直接参照します
+            float targetVelocityX = Mathf.Sign(transform.localScale.x) * -GetCurrentMoveSpeed();
+            float currentVelocityX = rb.linearVelocity.x;
+
+            // 目標速度との差分を埋めるための力を計算
+            float forceX = (targetVelocityX - currentVelocityX) * rb.mass * movementForceGain;
+            rb.AddForce(new Vector2(forceX, 0));
         }
     }
 
@@ -113,7 +156,7 @@ public class EnemyMovementBase : MonoBehaviour
         // 状態異常フラグをリセット
         isSlowed = false;
 
-        // 速度をデフォルトに戻す（減速状態からの復帰）
+        // 速度比率をデフォルトに戻す
         ResetMovementSpeed();
     }
 
