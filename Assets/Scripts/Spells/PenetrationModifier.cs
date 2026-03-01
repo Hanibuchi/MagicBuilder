@@ -15,7 +15,7 @@ public class PenetrationModifier : MonoBehaviour
             col.isTrigger = true;
         }
 
-        if (TryGetComponent<MyCharacterController>(out var controller))
+        if (TryGetComponent<MyObjectController>(out var controller))
         {
             foreach (var collider in controller.GetHitBoxes())
             {

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2458508899010072383}
   - component: {fileID: 5118549587851864268}
   - component: {fileID: 4810254490372469270}
+  - component: {fileID: 2980755947402717953}
   m_Layer: 0
   m_Name: SpikeBall
   m_TagString: Untagged
@@ -147,6 +148,23 @@ MonoBehaviour:
   iceStopDuration: 20
   maxSlowDurationOnIce: 10
   accumulationFrames: -1
+--- !u!114 &2980755947402717953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483641854408877120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8148ca60f29b345449068d194df6cf09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MyObjectController
+  hitBoxObject: {fileID: 1483641854408877120}
+  hitSound: {fileID: 8300000, guid: d7da440ad4f6c4e7489efd85844988d8, type: 3}
+  hitSoundVolume: 1
+  healSound: {fileID: 8300000, guid: c48a972d3d024c2408a3331750786a29, type: 3}
+  healSoundVolume: 1
 --- !u!1 &3924106780849821183
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,6 +199,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3423952883302602147
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -199,6 +218,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -220,9 +241,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 447856426745747066, guid: e8282099a3327c148a79efa859394801, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -232,5 +255,4 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0

@@ -20,4 +20,6 @@ MonoBehaviour:
   puzzleSpells:
   - {fileID: 11400000, guid: d01b125e34b6968459c46f40f2db332c, type: 2}
   - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
+  - {fileID: 11400000, guid: 2978f5589a3566942b666714a1d53b54, type: 2}
+  - {fileID: 11400000, guid: 91a88df000abd0746ab7dd76dc0ccb3e, type: 2}
   stageType: 1
