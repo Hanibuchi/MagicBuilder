@@ -17,6 +17,16 @@ public class RemoteSpell : SpellBase
         Vector2 offset = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)) * distance;
         context.CasterPosition += offset;
 
+        // context.ProjectileModifier にキャラクター移動処理を追加
+        context.ProjectileModifier += (projectile) =>
+        {
+            // キャラクターコントローラーを持っている場合は、座標をオフセット分移動させる
+            if (projectile.GetComponent<MyCharacterController>() != null)
+            {
+                projectile.transform.position += (Vector3)offset;
+            }
+        };
+
         if (SpellScheduler.Instance != null && magicCircleDelay > 0)
         {
             SpellScheduler.Instance.StartCoroutine(FireNextSpellsDelayed(
