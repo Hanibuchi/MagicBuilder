@@ -92,7 +92,7 @@ public class CameraInputHandler : MonoBehaviour, IDragHandler, IBeginDragHandler
         }
 
         isSmoothMoving = false;
-        TrySetCameraPosition(newPosition);
+        CameraManager.Instance.SetCameraPosition(newPosition);
     }
 
     void Start()
