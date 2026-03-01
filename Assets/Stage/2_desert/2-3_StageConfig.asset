@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 2-3_StageConfig
   m_EditorClassIdentifier: 
   stageName: 2-3
-  subStageName: "\u86CD"
+  subStageName: "\u58C1\u629C\u3051"
   SceneName: Stage_Desert_3
   clearCondition: 0
   enemyPhases: []
@@ -21,8 +21,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d01b125e34b6968459c46f40f2db332c, type: 2}
   - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
   - {fileID: 11400000, guid: 2978f5589a3566942b666714a1d53b54, type: 2}
-  - {fileID: 11400000, guid: 91a88df000abd0746ab7dd76dc0ccb3e, type: 2}
-  - {fileID: 11400000, guid: 7e3feae1173e04644a83b7a29c6a72bd, type: 2}
-  - {fileID: 11400000, guid: 91a88df000abd0746ab7dd76dc0ccb3e, type: 2}
-  - {fileID: 11400000, guid: 58e39f3da21b47449a3f2b1c4e9d8e7c, type: 2}
   stageType: 1
