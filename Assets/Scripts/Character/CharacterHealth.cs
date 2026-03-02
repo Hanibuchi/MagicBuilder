@@ -97,7 +97,7 @@ public class CharacterHealth : MonoBehaviour
     }
 
     // 衝突処理を統合する新しいメソッド
-    void HandleCollisionEnter(GameObject obj)
+    protected virtual void HandleCollisionEnter(GameObject obj)
     {
         // 衝突したオブジェクト、またはその親や子からIDamageSourceインターフェースを持つコンポーネントを取得
         IDamageSource damageSource = obj.GetComponentInParent<IDamageSource>();
@@ -138,7 +138,7 @@ public class CharacterHealth : MonoBehaviour
 
 
     // 衝突処理を統合する新しいメソッド
-    void HandleCollisionStay(GameObject obj)
+    protected virtual void HandleCollisionStay(GameObject obj)
     {
         // 衝突したオブジェクト、またはその親や子からIDamageSourceインターフェースを持つコンポーネントを取得
         IDamageSource damageSource = obj.GetComponentInParent<IDamageSource>();
