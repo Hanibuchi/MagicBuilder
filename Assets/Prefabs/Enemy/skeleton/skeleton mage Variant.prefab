@@ -165,7 +165,6 @@ MonoBehaviour:
     maxSpellCount: 12
     fixedSpells: []
     spells:
-    - {fileID: 11400000, guid: cd4b1eff96d849342bdda04938fc9a11, type: 2}
     - {fileID: 11400000, guid: ca748ee532558a04db48184ac5b52399, type: 2}
   baseFireStrength: 1
   expectedStrengthMultiplier: 20

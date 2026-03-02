@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageName: 2-5
   subStageName: "\u53CD\u5C04\u30D0\u30EA\u30A2"
-  SceneName: Stage_Desert_3
+  SceneName: Stage_Desert_5
   clearCondition: 0
   enemyPhases: []
   puzzleSpells:
-  - {fileID: 11400000, guid: d01b125e34b6968459c46f40f2db332c, type: 2}
-  - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
+  - {fileID: 11400000, guid: 8ce3a351f7d98fb4fa75564c564cf499, type: 2}
   stageType: 1
