@@ -753,7 +753,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2929764447234934401, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2929764447234934401, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
+      propertyPath: isStationaryMode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3337923683835934890, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: maxHealth
@@ -806,6 +810,10 @@ PrefabInstance:
     - target: {fileID: 3910093249005156441, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4345826317169825376, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
+      propertyPath: attackDatas.Array.data[0].CoolDownTime
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5046662643123802713, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: m_Name
@@ -1053,7 +1061,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2929764447234934401, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2929764447234934401, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
+      propertyPath: isStationaryMode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3337923683835934890, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: maxHealth
@@ -1200,6 +1212,10 @@ PrefabInstance:
     - target: {fileID: 1375723898961235931, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: maxHealth
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1580129330808173040, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_Name
@@ -1851,6 +1867,10 @@ PrefabInstance:
     - target: {fileID: 1375723898961235931, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: maxHealth
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1580129330808173040, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_Name

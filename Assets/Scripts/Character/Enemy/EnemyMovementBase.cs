@@ -13,10 +13,17 @@ public class EnemyMovementBase : MonoBehaviour
     [SerializeField]
     protected float movementForceGain = 10.0f;
 
+    [Header("待機設定")]
+    [Tooltip("有効にすると、常にその場で待機し、移動を行いません。（タレットモード）")]
+    [SerializeField]
+    protected bool isStationaryMode = false;
+
     protected Rigidbody2D rb;
     protected bool isMoving = false; // 現在移動中かどうかのフラグ
 
     public bool IsMoving => isMoving;
+
+    public bool IsStationaryMode => isStationaryMode;
 
     // --- 速度制御用フィールド ---
     protected float speedRatio = 1.0f;        // 状態異常（スロウ等）による速度比率
@@ -50,7 +57,7 @@ public class EnemyMovementBase : MonoBehaviour
 
     private void Start()
     {
-        isMoving = true;
+        isMoving = !isStationaryMode;
     }
 
     protected virtual void FixedUpdate()
@@ -139,6 +146,11 @@ public class EnemyMovementBase : MonoBehaviour
     /// </summary>
     public virtual void ResumeMovement()
     {
+        if (isStationaryMode)
+        {
+            isMoving = false;
+            return;
+        }
         isMoving = true;
     }
 
