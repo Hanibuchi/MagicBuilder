@@ -21,7 +21,7 @@ public class RemoteSpell : SpellBase
         context.ProjectileModifier += (projectile) =>
         {
             // キャラクターコントローラーを持っている場合は、座標をオフセット分移動させる
-            if (projectile.GetComponent<MyObjectController>() != null)
+            if (projectile.TryGetComponent<MyObjectController>(out var controller) && !controller.IsProjectile)
             {
                 projectile.transform.position += (Vector3)offset;
             }

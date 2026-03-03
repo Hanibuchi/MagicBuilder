@@ -52,7 +52,7 @@ public class HomingSpell : SpellBase
         {
             LayerMask mask = context.GetTargetLayerMask();
             // プロジェクタイル自体にCharacterControllerがアタッチされているか（モブ召喚など）で値を切り替える
-            float targetSpringConstant = projectile.GetComponent<MyObjectController>() != null ? characterSpringConstant : springConstant;
+            float targetSpringConstant = projectile.TryGetComponent<MyObjectController>(out var controller) && !controller.IsProjectile ? characterSpringConstant : springConstant;
 
             if (projectile.TryGetComponent<HomingMover>(out var homing))
             {

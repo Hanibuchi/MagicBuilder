@@ -11,6 +11,15 @@ public class MyObjectController : MonoBehaviour, IDamageNotifier, IDieNotifier, 
     [Tooltip("死亡時に無効化するColliderがアタッチされているオブジェクト（攻撃判定を消すために使用）")]
     [SerializeField] protected GameObject hitBoxObject;
 
+    [Header("オブジェクト設定")]
+    [Tooltip("このオブジェクトが放射物（Projectile）であるかどうか")]
+    [SerializeField] protected bool isProjectile = false;
+
+    /// <summary>
+    /// このオブジェクトが放射物（Projectile）であるかどうかを取得します。
+    /// </summary>
+    public bool IsProjectile => isProjectile;
+
     protected virtual void Awake()
     {
         if (TryGetComponent<CharacterHealth>(out var health))
