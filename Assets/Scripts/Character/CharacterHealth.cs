@@ -112,12 +112,6 @@ public class CharacterHealth : MonoBehaviour
             int selfLayer = gameObject.layer;
             int otherLayer = obj.layer;
 
-            // 1. 自分(Allay)が味方弾(Allay_Projectile)に当たった場合
-            // 2. 自分(Enemy)が敵弾(Enemy_Projectile)に当たった場合
-            if ((selfLayer == ALLAY_LAYER_INDEX && otherLayer == ALLAY_ATTACK_LAYER_INDEX) ||
-                (selfLayer == ENEMY_LAYER_INDEX && otherLayer == ENEMY_ATTACK_LAYER_INDEX))
-                return; // 処理を無視して終了
-
             DamageSourceType sourceType = damageSource.GetDamageSourceType();
 
             switch (sourceType)
@@ -153,11 +147,6 @@ public class CharacterHealth : MonoBehaviour
             int selfLayer = gameObject.layer;
             int otherLayer = obj.layer;
 
-            // 1. 自分(Allay)が味方弾(Allay_Projectile)に当たった場合
-            // 2. 自分(Enemy)が敵弾(Enemy_Projectile)に当たった場合
-            if ((selfLayer == ALLAY_LAYER_INDEX && otherLayer == ALLAY_ATTACK_LAYER_INDEX) ||
-                (selfLayer == ENEMY_LAYER_INDEX && otherLayer == ENEMY_ATTACK_LAYER_INDEX))
-                return; // 処理を無視して終了
             DamageSourceType sourceType = damageSource.GetDamageSourceType();
 
             if (sourceType == DamageSourceType.MultiHit)
