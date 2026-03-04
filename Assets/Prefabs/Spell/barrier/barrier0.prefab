@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4249120576296064341}
-  m_Layer: 9
+  m_Layer: 21
   m_Name: damageTextPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 287619285694468492}
   - component: {fileID: 1255961539740624513}
   - component: {fileID: 5981366074365681528}
-  m_Layer: 9
+  m_Layer: 21
   m_Name: barrier0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 5824992157508030861}
   - component: {fileID: 7388924217456478655}
   - component: {fileID: 4283708535566409029}
-  m_Layer: 9
+  m_Layer: 21
   m_Name: barrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
