@@ -589,7 +589,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 2097664
   triggerID: attack1
 --- !u!50 &3383132597069574367
 Rigidbody2D:

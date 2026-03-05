@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1668475516632567836, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: m_Size.x
-      value: 7.0053177
+      value: 11.497342
       objectReference: {fileID: 0}
     - target: {fileID: 1668475516632567836, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: m_Size.y
@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1668475516632567836, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: m_Offset.x
-      value: -13.984043
+      value: -20.722082
       objectReference: {fileID: 0}
     - target: {fileID: 1668475516632567836, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: m_Offset.y
@@ -38,11 +38,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3670012433102301572, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 35.92871
+      value: 39.921745
       objectReference: {fileID: 0}
     - target: {fileID: 3670012433102301572, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.91523594
+      value: -1.097092
       objectReference: {fileID: 0}
     - target: {fileID: 3670012433102301572, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -107,26 +107,5 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5046662643123802713, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2092352443588939594}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
---- !u!1 &5071074052353935681 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5046662643123802713, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
-  m_PrefabInstance: {fileID: 29636322866043672}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2092352443588939594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5071074052353935681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45a7c9f6e889f2d45b3418d567c3d183, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyTeleportTrigger
-  stageId: 1

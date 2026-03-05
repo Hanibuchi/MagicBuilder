@@ -32,7 +32,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 145.45432, y: 2.571019, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6631748838807584999}
   m_Father: {fileID: 0}
@@ -161,6 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyObjectController
   hitBoxObject: {fileID: 1483641854408877120}
+  isProjectile: 0
   hitSound: {fileID: 8300000, guid: d7da440ad4f6c4e7489efd85844988d8, type: 3}
   hitSoundVolume: 1
   healSound: {fileID: 8300000, guid: c48a972d3d024c2408a3331750786a29, type: 3}
