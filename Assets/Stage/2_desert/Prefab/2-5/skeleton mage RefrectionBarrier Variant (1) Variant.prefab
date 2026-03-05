@@ -28,6 +28,10 @@ PrefabInstance:
       propertyPath: defaultMoveSpeed
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5596516368123381673, guid: 4121302df1a4f564db0eb5b6271c332b, type: 3}
+      propertyPath: isStationaryMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5999144167383267697, guid: 4121302df1a4f564db0eb5b6271c332b, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
