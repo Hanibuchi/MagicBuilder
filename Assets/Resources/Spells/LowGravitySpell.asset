@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eadd210553e5b38418dd74bde8e0068e, type: 3}
+  m_Script: {fileID: 11500000, guid: fd6e68abd50c8d64b81d312483747b33, type: 3}
   m_Name: LowGravitySpell
   m_EditorClassIdentifier: 
   category: 1
@@ -23,3 +23,9 @@ MonoBehaviour:
   spellDescription: "\u546A\u6587\u306B\u304B\u304B\u308B\u91CD\u529B\u3092\u6E1B\u3089\u3059\u3002"
   gravityChange: -0.5
   effectDuration: 30
+  balloonEffectPrefab: {fileID: 2289220840403627110, guid: 78d7dcc977b23654f88e147e73cb89e4, type: 3}
+  balloonAreaMin: {x: -0.3, y: 0}
+  balloonAreaMax: {x: 0.3, y: 0.5}
+  weightEffectPrefab: {fileID: 1064214888030240528, guid: 6aa3467b864a40f459e4c6c28844abe1, type: 3}
+  weightAreaMin: {x: -0.3, y: -0.5}
+  weightAreaMax: {x: 0.3, y: 0}

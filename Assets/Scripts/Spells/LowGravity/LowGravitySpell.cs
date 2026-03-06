@@ -14,6 +14,21 @@ public class LowGravitySpell : SpellBase
 
     [SerializeField] private float effectDuration = 30f;
 
+    [Header("エフェクト設定")]
+    [Tooltip("重力軽減時の風船エフェクトプレハブ")]
+    [SerializeField] private GameObject balloonEffectPrefab;
+    [Tooltip("風船エフェクト表示のランダム範囲 (最小)")]
+    [SerializeField] private Vector2 balloonAreaMin = new Vector2(-0.3f, 0f);
+    [Tooltip("風船エフェクト表示のランダム範囲 (最大)")]
+    [SerializeField] private Vector2 balloonAreaMax = new Vector2(0.3f, 0.5f);
+    
+    [Tooltip("重力増加時のおもりエフェクトプレハブ")]
+    [SerializeField] private GameObject weightEffectPrefab;
+    [Tooltip("おもりエフェクト表示のランダム範囲 (最小)")]
+    [SerializeField] private Vector2 weightAreaMin = new Vector2(-0.3f, -0.5f);
+    [Tooltip("おもりエフェクト表示のランダム範囲 (最大)")]
+    [SerializeField] private Vector2 weightAreaMax = new Vector2(0.3f, 0f);
+
     public override int[] GetNextSpellOffsets(List<SpellBase> wandSpells, int currentSpellIndex)
     {
         return new int[] { 1 };
@@ -45,14 +60,25 @@ public class LowGravitySpell : SpellBase
         {
             if (projectile != null)
             {
+                // エフェクトの種類と相対位置をSpell側で計算してModifierに渡す
+                GameObject prefabToUse = gravityChange < 0 ? balloonEffectPrefab : weightEffectPrefab;
+                Vector2 minArea = gravityChange < 0 ? balloonAreaMin : weightAreaMin;
+                Vector2 maxArea = gravityChange < 0 ? balloonAreaMax : weightAreaMax;
+                
+                Vector3 randomOffset = new Vector3(
+                    UnityEngine.Random.Range(minArea.x, maxArea.x),
+                    UnityEngine.Random.Range(minArea.y, maxArea.y),
+                    0f
+                );
+
                 if (projectile.TryGetComponent<LowGravityModifier>(out var modifier))
                 {
-                    modifier.AddEffect(gravityChange, effectDuration);
+                    modifier.AddEffect(gravityChange, effectDuration, prefabToUse, randomOffset);
                 }
                 else
                 {
                     modifier = projectile.AddComponent<LowGravityModifier>();
-                    modifier.Initialize(gravityChange, effectDuration);
+                    modifier.Initialize(gravityChange, effectDuration, prefabToUse, randomOffset);
                 }
             }
         };
