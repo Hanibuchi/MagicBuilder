@@ -94,4 +94,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DestructibleTileObject
   targetDamageType: 4
-  restoreDelay: 9999
+  restoreDelay: 20
+  destroySound: {fileID: 8300000, guid: bc03640afc3e5d24ea0f45032df5507a, type: 3}
+  destroySoundVolume: 1

@@ -18,6 +18,7 @@ MonoBehaviour:
   clearCondition: 0
   enemyPhases: []
   puzzleSpells:
-  - {fileID: 11400000, guid: 5c8a7351f36c0ac4999d4762af8f1ab6, type: 2}
-  - {fileID: 11400000, guid: efb0a3b35b9742446bbafb9d0059d3c1, type: 2}
+  - {fileID: 11400000, guid: 7a1e6f21092e19448a9c39c509bc6a22, type: 2}
+  - {fileID: 11400000, guid: 44e790c6019bcec408f158c334e87af3, type: 2}
+  - {fileID: 11400000, guid: 91a88df000abd0746ab7dd76dc0ccb3e, type: 2}
   stageType: 1
