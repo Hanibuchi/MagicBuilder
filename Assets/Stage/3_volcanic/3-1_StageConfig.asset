@@ -17,5 +17,7 @@ MonoBehaviour:
   SceneName: Stage_Volcanic_1
   clearCondition: 0
   enemyPhases: []
-  puzzleSpells: []
+  puzzleSpells:
+  - {fileID: 11400000, guid: 5c8a7351f36c0ac4999d4762af8f1ab6, type: 2}
+  - {fileID: 11400000, guid: efb0a3b35b9742446bbafb9d0059d3c1, type: 2}
   stageType: 1
