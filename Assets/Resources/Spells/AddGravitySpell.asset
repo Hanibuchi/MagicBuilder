@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd6e68abd50c8d64b81d312483747b33, type: 3}
+  m_Name: AddGravitySpell
+  m_EditorClassIdentifier: 
+  category: 1
+  spellType: AddGravity
+  cooldown: 0.5
+  spellName: "\u91CD\u529B\u8FFD\u52A0"
+  purchaseCosts: 64000000c80000009001000020030000
+  icon: {fileID: 2927892974243244725, guid: f2bc87e3fe93f0a41a6aeb4cd5c9bb3e, type: 3}
+  iconColor: {r: 1, g: 1, b: 1, a: 1}
+  iconMaterial: {fileID: 0}
+  spellDescription: "\u546A\u6587\u306B\u304B\u304B\u308B\u91CD\u529B\u3092\u5897\u3084\u3059\u3002"
+  gravityChange: 0.5
+  effectDuration: 30
+  balloonEffectPrefab: {fileID: 2289220840403627110, guid: 78d7dcc977b23654f88e147e73cb89e4, type: 3}
+  balloonAreaMin: {x: -0.3, y: 0}
+  balloonAreaMax: {x: 0.3, y: 0.5}
+  weightEffectPrefab: {fileID: 1064214888030240528, guid: 6aa3467b864a40f459e4c6c28844abe1, type: 3}
+  weightAreaMin: {x: -0.3, y: -0.5}
+  weightAreaMax: {x: 0.3, y: 0}

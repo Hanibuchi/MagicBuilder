@@ -941,12 +941,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 551951246347731591, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: droppableSpells.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 551951246347731591, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: droppableSpells.Array.data[0].spellData
       value: 
-      objectReference: {fileID: 11400000, guid: 6abafd8e81b8866468c46b473fdd1073, type: 2}
+      objectReference: {fileID: 11400000, guid: 9d80b434c3145494fb8e1cd4385d8007, type: 2}
     - target: {fileID: 551951246347731591, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: droppableSpells.Array.data[0].dropChance
       value: 1

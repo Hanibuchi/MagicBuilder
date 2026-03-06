@@ -52,6 +52,7 @@ public enum SpellType
     Shorten,        // 持続時間短縮
     Extension,      // 持続時間延長
     LowGravity,    // 低重力
+    AddGravity,      // 重力追加
     Penetration,    // 透過性
     Elasticity,     // 弾性
 
