@@ -14,6 +14,14 @@ public class DestructibleTileObject : MonoBehaviour
     [Tooltip("破壊されてから復活するまでの時間（秒）。0より大きい場合は復活します")]
     [SerializeField] private float restoreDelay = 9999f;
 
+    [Header("サウンド設定")]
+    [Tooltip("破壊されたときに鳴らす音")]
+    [SerializeField] private AudioClip destroySound;
+
+    [Tooltip("破壊音の音量")]
+    [Range(0f, 1f)]
+    [SerializeField] private float destroySoundVolume = 0.5f;
+
     private bool _isDestroyed = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -87,6 +95,12 @@ public class DestructibleTileObject : MonoBehaviour
     private void DestroyTile()
     {
         _isDestroyed = true;
+
+        // 破壊音の再生
+        if (SoundManager.Instance != null && destroySound != null)
+        {
+            SoundManager.Instance.PlaySE(destroySound, destroySoundVolume);
+        }
 
         if (TilemapManager.Instance != null)
         {
