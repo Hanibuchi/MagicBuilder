@@ -21,7 +21,7 @@ MonoBehaviour:
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
   spellDescription: "\u546A\u6587\u306B\u304B\u304B\u308B\u91CD\u529B\u3092\u6E1B\u3089\u3059\u3002"
-  gravityChange: -0.5
+  gravityChange: -1
   effectDuration: 30
   balloonEffectPrefab: {fileID: 2289220840403627110, guid: 78d7dcc977b23654f88e147e73cb89e4, type: 3}
   balloonAreaMin: {x: -0.3, y: 0}
