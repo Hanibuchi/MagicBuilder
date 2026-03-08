@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b48f00c1923a04780af9061d4c9346, type: 3}
   m_Name: CoolTimeShortenSpell
   m_EditorClassIdentifier: 
-  category: 1
+  category: 3
   spellType: CoolTimeShorten
   cooldown: 0
   spellName: "\u500D\u7387\u77ED\u7E2E"
@@ -20,6 +20,6 @@ MonoBehaviour:
   icon: {fileID: -4617658828189747046, guid: ac82641f5c92fb946b7451522d2ee146, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
-  spellDescription: "\u8A60\u5531\u5168\u4F53\u306E\u30AF\u30FC\u30EB\u30BF\u30A4\u30E0\u306B\u500D\u7387\u3092\u304B\u3051\u3066\u77ED\u7E2E\u3059\u308B\u3002"
+  spellDescription: "\u30AF\u30FC\u30EB\u30BF\u30A4\u30E0\u3092\u77ED\u7E2E\u3059\u308B\u3002"
   coolDownMultiplier: 0.6
   coolDownReduction: 0

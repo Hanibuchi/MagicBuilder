@@ -26,9 +26,9 @@ TagManager:
   - LivingArea
   - Attack_Both
   - EnemyBarrier
-  - 
-  - 
-  - 
+  - Ally_BarrierSpell
+  - Enemy_BarrierSpell
+  - Chain
   - 
   - 
   - 

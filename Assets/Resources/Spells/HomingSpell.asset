@@ -26,5 +26,5 @@ MonoBehaviour:
     m_Bits: 1024
   searchRange: 10
   springConstant: 1
-  characterSpringConstant: 50
+  characterSpringConstant: 150
   effectDuration: 30

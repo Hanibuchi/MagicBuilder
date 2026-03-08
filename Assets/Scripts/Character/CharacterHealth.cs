@@ -26,6 +26,8 @@ public class CharacterHealth : MonoBehaviour
     public float maxSlowDurationOnIce = 10.0f;
 
     [Header("ダメージ蓄積設定")]
+    [Tooltip("trueの場合、ダメージを受けるたびに即座に処理します。蓄積処理は行われません。")]
+    public bool processDamageImmediately = false;
     [Tooltip("ダメージを適用するまで蓄積するフレーム数。-1の場合はCharacterCommonDataのデフォルト値を使用します。")]
     [SerializeField] private int accumulationFrames = -1;
 
@@ -97,7 +99,7 @@ public class CharacterHealth : MonoBehaviour
     }
 
     // 衝突処理を統合する新しいメソッド
-    void HandleCollisionEnter(GameObject obj)
+    protected virtual void HandleCollisionEnter(GameObject obj)
     {
         // 衝突したオブジェクト、またはその親や子からIDamageSourceインターフェースを持つコンポーネントを取得
         IDamageSource damageSource = obj.GetComponentInParent<IDamageSource>();
@@ -111,12 +113,6 @@ public class CharacterHealth : MonoBehaviour
             // *** Layer Filtering: 敵味方/同陣営の弾丸を無視する処理を追加 ***
             int selfLayer = gameObject.layer;
             int otherLayer = obj.layer;
-
-            // 1. 自分(Allay)が味方弾(Allay_Projectile)に当たった場合
-            // 2. 自分(Enemy)が敵弾(Enemy_Projectile)に当たった場合
-            if ((selfLayer == ALLAY_LAYER_INDEX && otherLayer == ALLAY_ATTACK_LAYER_INDEX) ||
-                (selfLayer == ENEMY_LAYER_INDEX && otherLayer == ENEMY_ATTACK_LAYER_INDEX))
-                return; // 処理を無視して終了
 
             DamageSourceType sourceType = damageSource.GetDamageSourceType();
 
@@ -138,7 +134,7 @@ public class CharacterHealth : MonoBehaviour
 
 
     // 衝突処理を統合する新しいメソッド
-    void HandleCollisionStay(GameObject obj)
+    protected virtual void HandleCollisionStay(GameObject obj)
     {
         // 衝突したオブジェクト、またはその親や子からIDamageSourceインターフェースを持つコンポーネントを取得
         IDamageSource damageSource = obj.GetComponentInParent<IDamageSource>();
@@ -153,11 +149,6 @@ public class CharacterHealth : MonoBehaviour
             int selfLayer = gameObject.layer;
             int otherLayer = obj.layer;
 
-            // 1. 自分(Allay)が味方弾(Allay_Projectile)に当たった場合
-            // 2. 自分(Enemy)が敵弾(Enemy_Projectile)に当たった場合
-            if ((selfLayer == ALLAY_LAYER_INDEX && otherLayer == ALLAY_ATTACK_LAYER_INDEX) ||
-                (selfLayer == ENEMY_LAYER_INDEX && otherLayer == ENEMY_ATTACK_LAYER_INDEX))
-                return; // 処理を無視して終了
             DamageSourceType sourceType = damageSource.GetDamageSourceType();
 
             if (sourceType == DamageSourceType.MultiHit)
@@ -177,7 +168,7 @@ public class CharacterHealth : MonoBehaviour
     {
         if (currentHealth <= 0) return;
 
-        if (accumulationFrames <= 0)
+        if (processDamageImmediately || accumulationFrames <= 0)
         {
             ApplyDamageImmediate(damage, other);
             return;

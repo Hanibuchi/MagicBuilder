@@ -10,7 +10,8 @@ public class TilemapManager : MonoBehaviour
     public static TilemapManager Instance { get; private set; }
 
     [Header("設定")]
-    [SerializeField] private Tilemap targetTilemap;
+    [SerializeField] private Tilemap groundTilemap;
+    [SerializeField] private Tilemap hazardTilemap;
     [SerializeField] private GameObject animationPrefab;
     [SerializeField] private float animationWaitTime = 0.5f; // アニメーションが完了するまでの待機時間
 
@@ -35,22 +36,29 @@ public class TilemapManager : MonoBehaviour
     /// </summary>
     /// <param name="worldPosition">ワールド座標</param>
     /// <param name="restoreDelay">再出現までの待ち時間</param>
-    public void HandleTileEraseAndRestore(Vector3 worldPosition, float restoreDelay)
+    /// <param name="useHazardTilemap">対象をHazardsタイルマップにするかどうか。デフォルトはGround。</param>
+    public void HandleTileEraseAndRestore(Vector3 worldPosition, float restoreDelay, bool useHazardTilemap = false)
     {
-        Vector3Int cellPosition = targetTilemap.WorldToCell(worldPosition);
-        if (targetTilemap.HasTile(cellPosition))
+        Tilemap target = useHazardTilemap ? hazardTilemap : groundTilemap;
+        if (target == null) return;
+
+        Vector3Int cellPosition = target.WorldToCell(worldPosition);
+        if (target.HasTile(cellPosition))
         {
-            StartCoroutine(EraseAndRestoreRoutine(cellPosition, restoreDelay));
+            StartCoroutine(EraseAndRestoreRoutine(cellPosition, restoreDelay, target));
         }
     }
 
     /// <summary>
     /// 指定された境界（Bounds）内に含まれる全てのタイルをアニメーション後に消去し、復元する
     /// </summary>
-    public void HandleTilesInBounds(Bounds bounds, float restoreDelay)
+    public void HandleTilesInBounds(Bounds bounds, float restoreDelay, bool useHazardTilemap = false)
     {
-        Vector3Int min = targetTilemap.WorldToCell(bounds.min);
-        Vector3Int max = targetTilemap.WorldToCell(bounds.max);
+        Tilemap target = useHazardTilemap ? hazardTilemap : groundTilemap;
+        if (target == null) return;
+
+        Vector3Int min = target.WorldToCell(bounds.min);
+        Vector3Int max = target.WorldToCell(bounds.max);
 
         // Z軸は無視して2D範囲をループ
         for (int x = min.x; x <= max.x; x++)
@@ -58,10 +66,10 @@ public class TilemapManager : MonoBehaviour
             for (int y = min.y; y <= max.y; y++)
             {
                 Vector3Int cellPos = new Vector3Int(x, y, 0);
-                if (targetTilemap.HasTile(cellPos))
+                if (target.HasTile(cellPos))
                 {
                     // 重複してコルーチンが走らないよう、タイルが存在する場合のみ開始
-                    StartCoroutine(EraseAndRestoreRoutine(cellPos, restoreDelay));
+                    StartCoroutine(EraseAndRestoreRoutine(cellPos, restoreDelay, target));
                 }
             }
         }
@@ -70,34 +78,37 @@ public class TilemapManager : MonoBehaviour
     /// <summary>
     /// 指定された円形範囲内（中心と半径）に含まれる全てのタイルをアニメーション後に消去し、復元する
     /// </summary>
-    public void HandleTilesInCircle(Vector3 center, float radius, float restoreDelay)
+    public void HandleTilesInCircle(Vector3 center, float radius, float restoreDelay, bool useHazardTilemap = false)
     {
+        Tilemap target = useHazardTilemap ? hazardTilemap : groundTilemap;
+        if (target == null) return;
+
         // 半径を元に境界を計算
         Vector3 minPos = center - new Vector3(radius, radius, 0);
         Vector3 maxPos = center + new Vector3(radius, radius, 0);
         
-        Vector3Int min = targetTilemap.WorldToCell(minPos);
-        Vector3Int max = targetTilemap.WorldToCell(maxPos);
+        Vector3Int min = target.WorldToCell(minPos);
+        Vector3Int max = target.WorldToCell(maxPos);
 
         for (int x = min.x; x <= max.x; x++)
         {
             for (int y = min.y; y <= max.y; y++)
             {
                 Vector3Int cellPos = new Vector3Int(x, y, 0);
-                if (targetTilemap.HasTile(cellPos))
+                if (target.HasTile(cellPos))
                 {
-                    Vector3 tileWorldPos = targetTilemap.GetCellCenterWorld(cellPos);
+                    Vector3 tileWorldPos = target.GetCellCenterWorld(cellPos);
                     // 中心からの距離が半径以内かチェック（2D平面）
                     if (Vector2.Distance((Vector2)center, (Vector2)tileWorldPos) <= radius)
                     {
-                        StartCoroutine(EraseAndRestoreRoutine(cellPos, restoreDelay));
+                        StartCoroutine(EraseAndRestoreRoutine(cellPos, restoreDelay, target));
                     }
                 }
             }
         }
     }
 
-    private IEnumerator EraseAndRestoreRoutine(Vector3Int cellPosition, float delay)
+    private IEnumerator EraseAndRestoreRoutine(Vector3Int cellPosition, float delay, Tilemap targetTilemap)
     {
         // 処理開始時にタイルが既になければ（他のコルーチンで消去中など）中断
         if (!targetTilemap.HasTile(cellPosition)) yield break;

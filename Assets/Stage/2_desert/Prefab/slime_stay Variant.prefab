@@ -66,11 +66,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4801315807863467480, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_Color.b
-      value: 0.8
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 4801315807863467480, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_Color.g
-      value: 0.8
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 4801315807863467480, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_Color.r
@@ -78,7 +78,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_Name
-      value: slime_stay
+      value: slime_stay Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

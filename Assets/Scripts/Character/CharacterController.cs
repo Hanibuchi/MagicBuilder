@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// 各種interfaceを実装してアニメーションを再生するためのクラス
 /// </summary>
-public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifier, IHealthNotifier, IStatusEffectReceiver
+public class MyCharacterController : MyObjectController, IStatusEffectReceiver
 {
     [SerializeField] protected Animator animator;
     protected HPBarController hpBarController;
@@ -22,9 +22,9 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
 
     private StatusEffectModel _statusModel;
 
-    protected CharacterHealth characterHealth;
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         if (animator == null)
         {
             animator = GetComponent<Animator>();
@@ -33,25 +33,15 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
         }
         hpBarController = GetComponent<HPBarController>();
         _statusModel = new StatusEffectModel(this);
-
-        if (TryGetComponent<CharacterHealth>(out var health))
-        {
-            characterHealth = health;
-        }
-        else
-        {
-            Debug.LogError("CharacterHealth component is required on " + gameObject.name);
-        }
     }
 
-    [Tooltip("死亡時に無効化するColliderがアタッチされているオブジェクト（攻撃判定を消すために使用）")]
-    [SerializeField] GameObject hitBoxObject;
     [SerializeField] Transform damageTextSpawnPoint;
     /// <summary>
     /// ダメージを受け取ったことを通知し、アニメーション表示処理を委譲します。
     /// </summary>
-    public virtual void NotifyDamage(DamageType damageType, float damageValue)
+    public override void NotifyDamage(DamageType damageType, float damageValue)
     {
+        base.NotifyDamage(damageType, damageValue);
         if (animator == null || !animator.enabled) return;
 
         Vector3 spawnPoint;
@@ -63,30 +53,23 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
 
         if (!characterHealth.IsDead)
         {
-            if (damageType == DamageType.Heal)
-            {
-                PlayHealSound();
-            }
-            else
-            {
+            if (damageType != DamageType.Heal)
                 // 例: 基本/全てのダメージで共通の"Hit"アニメーションを再生
                 animator.SetTrigger(PARAM_DAMAGE_TRIGGER);
-                PlayHitSound();
-            }
         }
     }
 
-    public void NotifyFireStun(float duration)
+    public override void NotifyFireStun(float duration)
     {
         _statusModel.FireStun(duration);
     }
 
-    public void NotifyFreezeStun(float duration)
+    public override void NotifyFreezeStun(float duration)
     {
         _statusModel.FreezeStun(duration);
     }
 
-    public void NotifyIceSlow(float duration)
+    public override void NotifyIceSlow(float duration)
     {
         _statusModel.IceSlow(duration);
     }
@@ -95,9 +78,9 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
     /// <summary>
     /// 死亡を通知し、死亡アニメーションのトリガーを設定します。
     /// </summary>
-    public virtual void NotifyDie(bool silent = false)
+    public override void NotifyDie(bool silent = false)
     {
-        NotifyDieSilent();
+        base.NotifyDie(silent);
         if (!silent)
         {
             if (playHitSoundOnDead)
@@ -110,50 +93,21 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
     /// <summary>
     /// キャラクターを復活させ、状態を元に戻します。
     /// </summary>
-    public virtual void Revive()
+    public override void Revive()
     {
-        if (characterHealth != null)
-        {
-            characterHealth.Revive();
-        }
+        base.Revive();
 
         if (animator != null && animator.enabled)
         {
             animator.SetBool(PARAM_IS_DEAD, false);
         }
-
-        if (hitBoxObject != null)
-        {
-            Collider2D[] colliders = GetHitBoxes();
-            foreach (var col in colliders)
-            {
-                col.enabled = true;
-            }
-        }
     }
 
-    public void NotifyDieSilent()
+    public override void NotifyDieSilent()
     {
+        base.NotifyDieSilent();
         if (animator == null || !animator.enabled) return;
         animator.SetBool(PARAM_IS_DEAD, true);
-
-        if (hitBoxObject != null)
-        {
-            Collider2D[] colliders = GetHitBoxes();
-            foreach (var col in colliders)
-            {
-                col.enabled = false;
-            }
-        }
-    }
-
-    /// <summary>
-    /// ヒット判定用のCollider2Dの配列を返します。
-    /// </summary>
-    public Collider2D[] GetHitBoxes()
-    {
-        if (hitBoxObject == null) return new Collider2D[0];
-        return hitBoxObject.GetComponents<Collider2D>();
     }
 
     /// <summary>
@@ -162,8 +116,9 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
     /// <param name="maxHP">最大HP</param>
     /// <param name="previousHP">ダメージ/回復前のHP</param>
     /// <param name="currentHP">ダメージ/回復後の現在のHP</param>
-    public void NotifyHealthChange(float maxHP, float previousHP, float currentHP)
+    public override void NotifyHealthChange(float maxHP, float previousHP, float currentHP)
     {
+        base.NotifyHealthChange(maxHP, previousHP, currentHP);
         if (hpBarController != null)
         {
             // HPバーの表示更新を委譲
@@ -208,25 +163,6 @@ public class MyCharacterController : MonoBehaviour, IDamageNotifier, IDieNotifie
     public virtual void OnIceSlowEnd()
     {
         animator.SetBool(PARAM_IS_SLOWED, false);
-    }
-
-
-    [SerializeField] AudioClip hitSound;
-    [SerializeField] float hitSoundVolume = 1.0f;
-
-    public void PlayHitSound()
-    {
-        if (SoundManager.Instance != null && hitSound != null)
-            SoundManager.Instance.PlaySE(hitSound, hitSoundVolume);
-    }
-
-    [SerializeField] AudioClip healSound;
-    [SerializeField] float healSoundVolume = 1.0f;
-
-    public void PlayHealSound()
-    {
-        if (SoundManager.Instance != null && healSound != null)
-            SoundManager.Instance.PlaySE(healSound, healSoundVolume);
     }
 
     [SerializeField] AudioClip fireStunSound;

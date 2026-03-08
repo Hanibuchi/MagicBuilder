@@ -152,7 +152,7 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         if (animator != null && animator.enabled)
         {
             bool isStunned = _kickbackStunCoroutine != null || (enemyMovement != null && enemyMovement.IsStunned);
-            bool isMoving = enemyMovement != null && enemyMovement.IsMoving && !isStunned && !isDead;
+            bool isMoving = enemyMovement != null && enemyMovement.IsMoving && !enemyMovement.IsStationaryMode && !isStunned && !isDead;
 
             animator.SetBool(PARAM_IS_STUNNED, isStunned);
             animator.SetBool(PARAM_IS_RUNNING, isMoving);

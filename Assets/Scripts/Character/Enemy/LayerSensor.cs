@@ -39,11 +39,12 @@ public class LayerSensor : MonoBehaviour
     // 衝突継続中（毎フレーム）
     private void OnTriggerStay2D(Collider2D other)
     {
-        Debug.Log($"LayerSensor: {other.gameObject.name} がトリガー内に滞在中。");
+        // Debug.Log($"LayerSensor: {other.gameObject.name} がトリガー内に滞在中。");
         // 衝突したオブジェクトのLayerが指定のtargetLayerに含まれているかチェック
         // ※ 毎フレームの呼び出しは負荷になる場合があるため、使用頻度を考慮してください。
         if ((targetLayer.value & (1 << other.gameObject.layer)) > 0)
         {
+            // Debug.Log($"LayerSensor: {other.gameObject.name} がトリガー内に滞在中で、対象Layerに含まれています。");
             // ハンドラーが設定されていれば通知を実行
             handlerInstance?.OnTriggerSensed(triggerID, other.transform.position);
         }

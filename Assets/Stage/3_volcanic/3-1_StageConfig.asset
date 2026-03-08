@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: 3-1_StageConfig
   m_EditorClassIdentifier: 
   stageName: 3-1
-  subStageName: "\u6700\u521D\u306E\u30B9\u30C6\u30FC\u30B8"
-  SceneName: Stage_Template
-  clearCondition: 1
-  enemyPhases:
-  - {fileID: 11400000, guid: 234bfa7c4d6c18c408c4f18b467babf6, type: 2}
-  stageType: 0
+  subStageName: "\u30DE\u30B0\u30DE\u30D6\u30ED\u30C3\u30AF"
+  SceneName: Stage_Volcanic_1
+  clearCondition: 0
+  enemyPhases: []
+  puzzleSpells:
+  - {fileID: 11400000, guid: 7a1e6f21092e19448a9c39c509bc6a22, type: 2}
+  - {fileID: 11400000, guid: 44e790c6019bcec408f158c334e87af3, type: 2}
+  - {fileID: 11400000, guid: 91a88df000abd0746ab7dd76dc0ccb3e, type: 2}
+  stageType: 1

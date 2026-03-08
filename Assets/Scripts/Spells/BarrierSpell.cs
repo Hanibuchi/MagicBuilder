@@ -5,6 +5,9 @@ using System;
 [CreateAssetMenu(fileName = "BarrierSpell", menuName = "Wand System/Barrier Spell")]
 public class BarrierSpell : SpellBase
 {
+    public static int ALLY_BARRIER_LAYER_INDEX = 21;
+    public static int ENEMY_BARRIER_LAYER_INDEX = 22;
+
     [Header("バリア設定")]
     [Tooltip("Strengthに応じて選択されるバリアプレハブ(補助用）の配列")]
     public GameObject[] barrierTrajectoryPrefabs;
@@ -126,8 +129,26 @@ public class BarrierSpell : SpellBase
             rotation
         );
 
-        // SpellContext の Layer 情報に基づいてバリアのレイヤーを設定
-        barrierGO.layer = context.GetUnityLayer(false);
+        // SpellContext の Layer 情報に基づいてバリアのレイヤーを決定
+        int targetLayer;
+        switch (context.layer)
+        {
+            case SpellLayer.Attack_Ally:
+                targetLayer = ALLY_BARRIER_LAYER_INDEX;
+                break;
+            case SpellLayer.Attack_Enemy:
+                targetLayer = ENEMY_BARRIER_LAYER_INDEX;
+                break;
+            default:
+                targetLayer = ALLY_BARRIER_LAYER_INDEX;
+                break;
+        }
+
+        // 自分自身とすべての子オブジェクトのレイヤーを変更
+        foreach (Transform t in barrierGO.GetComponentsInChildren<Transform>(true))
+        {
+            t.gameObject.layer = targetLayer;
+        }
 
         float totalDuration = context.duration + duration;
         context.duration = totalDuration;
