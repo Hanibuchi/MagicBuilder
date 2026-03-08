@@ -17,6 +17,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1129174948802895605, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1129174948802895605, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.8918905
       objectReference: {fileID: 0}
@@ -60,9 +64,21 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1375723898961235931, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: processDamageImmediately
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1580129330808173040, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: isStationaryMode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801315807863467480, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: m_Color.b
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801315807863467480, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: m_Color.g
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_Name

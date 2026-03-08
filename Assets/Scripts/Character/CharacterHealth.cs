@@ -26,6 +26,8 @@ public class CharacterHealth : MonoBehaviour
     public float maxSlowDurationOnIce = 10.0f;
 
     [Header("ダメージ蓄積設定")]
+    [Tooltip("trueの場合、ダメージを受けるたびに即座に処理します。蓄積処理は行われません。")]
+    public bool processDamageImmediately = false;
     [Tooltip("ダメージを適用するまで蓄積するフレーム数。-1の場合はCharacterCommonDataのデフォルト値を使用します。")]
     [SerializeField] private int accumulationFrames = -1;
 
@@ -166,7 +168,7 @@ public class CharacterHealth : MonoBehaviour
     {
         if (currentHealth <= 0) return;
 
-        if (accumulationFrames <= 0)
+        if (processDamageImmediately || accumulationFrames <= 0)
         {
             ApplyDamageImmediate(damage, other);
             return;
