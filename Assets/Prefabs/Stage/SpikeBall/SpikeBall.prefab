@@ -147,6 +147,7 @@ MonoBehaviour:
   iceStopThreshold: 0.3
   iceStopDuration: 20
   maxSlowDurationOnIce: 10
+  processDamageImmediately: 0
   accumulationFrames: -1
 --- !u!114 &2980755947402717953
 MonoBehaviour:
@@ -243,8 +244,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2112428387
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 447856426745747066, guid: e8282099a3327c148a79efa859394801, type: 3}

@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118549587851864268, guid: 694e54372df8dd84fa77b7a6083c3950, type: 3}
       propertyPath: damageData.temperatureDamage
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6603288785417178217, guid: 694e54372df8dd84fa77b7a6083c3950, type: 3}
       propertyPath: m_LocalPosition.x
