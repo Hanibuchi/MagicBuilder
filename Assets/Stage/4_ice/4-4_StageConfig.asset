@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5a650050e8b9af4fb26a39e8f20ffc0, type: 3}
-  m_Name: 4-2_StageConfig
+  m_Name: 4-4_StageConfig
   m_EditorClassIdentifier: 
-  stageName: 4-2
+  stageName: 4-4
   subStageName: "\u6C37\u306E\u5CF6"
   SceneName: Stage_Ice
   clearCondition: 1

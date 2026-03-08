@@ -48,6 +48,11 @@ MonoBehaviour:
     wandToUnlock: 2
     stages:
     - 4-1
+    - 4-2
+    - 4-3
+    - 4-4
+    - 4-5
+    - 4-6
   - islandID: sky
     islandName: "\u5929\u7A7A\u306E\u5BAE\u6BBF"
     wandToUnlock: 5
