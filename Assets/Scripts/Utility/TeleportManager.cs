@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -41,6 +42,7 @@ public class TeleportManager : MonoBehaviour
         public float cameraRelativeSize; // この場面でのカメラの相対サイズ（1.0が標準）
         public Transform cameraLimitA; // この場面クリア後のカメラ制限範囲A
         public Transform cameraLimitB; // この場面クリア後のカメラ制限範囲B
+        public UnityEvent onStageStart; // ステージ開始時に実行されるイベント
     }
 
     [Header("場面ごとのテレポート設定")]
@@ -62,6 +64,15 @@ public class TeleportManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        // 最初のステージの開始イベントを実行
+        if (stageTeleportInfos.Count > 0)
+        {
+            stageTeleportInfos[0].onStageStart?.Invoke();
         }
     }
 
@@ -263,6 +274,9 @@ public class TeleportManager : MonoBehaviour
         {
             yield return StartCoroutine(screenFader.FadeIn(fadeDuration));
         }
+
+        // ステージ開始時のイベントを実行
+        info.onStageStart?.Invoke();
     }
 
     private void OnDrawGizmosSelected()
