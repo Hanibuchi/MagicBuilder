@@ -13,9 +13,16 @@ MonoBehaviour:
   m_Name: 5-3_StageConfig
   m_EditorClassIdentifier: 
   stageName: 5-3
-  subStageName: "\u30B9\u30CA\u30A4\u30D1\u30FC"
+  subStageName: "\u3050\u308B\u3050\u308B"
   SceneName: Stage_Sky_3
   clearCondition: 0
   enemyPhases: []
-  puzzleSpells: []
+  puzzleSpells:
+  - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
+  - {fileID: 11400000, guid: a3a38a67181760f4283b87dbec380a68, type: 2}
+  - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
+  - {fileID: 11400000, guid: 54912ffe69f8a8b4e82946c29c813639, type: 2}
+  - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
+  - {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
+  - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
   stageType: 1
