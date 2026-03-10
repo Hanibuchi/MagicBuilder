@@ -58,6 +58,11 @@ MonoBehaviour:
     wandToUnlock: 5
     stages:
     - 5-1
+    - 5-2
+    - 5-3
+    - 5-4
+    - 5-5
+    - 5-6
   - islandID: magic
     islandName: "\u9B54\u65CF\u306E\u7A7A\u5CF6"
     wandToUnlock: 6

@@ -38,6 +38,24 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Stage/3_volcanic/Scene/Stage_Volcanic_3.unity
     guid: 0e83bc78fb6e61647bd52db288acd93c
+  - enabled: 1
+    path: Assets/Stage/4_ice/Scene/Stage_Ice_1.unity
+    guid: aca7757144d1f3847b2f9e688fd457c8
+  - enabled: 1
+    path: Assets/Stage/4_ice/Scene/Stage_Ice_3.unity
+    guid: b0210568e63c04c479fdd522b77e3a0c
+  - enabled: 1
+    path: Assets/Stage/4_ice/Scene/Stage_Ice_5.unity
+    guid: 80f45850adb6c1f40816d41746193cea
+  - enabled: 1
+    path: Assets/Stage/5_sky/Scene/Stage_Sky_1.unity
+    guid: dd4f73fd8feefa5478ceff3dfe1c73e2
+  - enabled: 1
+    path: Assets/Stage/5_sky/Scene/Stage_Sky_3.unity
+    guid: 7349f3adf97dab14a9fb7dd9fb5d1b64
+  - enabled: 1
+    path: Assets/Stage/5_sky/Scene/Stage_Sky_5.unity
+    guid: 437bb3bb33671e04ebbffea71628c08c
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
