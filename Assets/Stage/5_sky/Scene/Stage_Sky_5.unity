@@ -2505,15 +2505,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1302768636671343804, guid: d536257862de0154989f1cc7b3225881, type: 3}
       propertyPath: m_BackGroundColor.b
-      value: 0.9294118
+      value: 0.84705883
       objectReference: {fileID: 0}
     - target: {fileID: 1302768636671343804, guid: d536257862de0154989f1cc7b3225881, type: 3}
       propertyPath: m_BackGroundColor.g
-      value: 0.8117648
+      value: 0.85490197
       objectReference: {fileID: 0}
     - target: {fileID: 1302768636671343804, guid: d536257862de0154989f1cc7b3225881, type: 3}
       propertyPath: m_BackGroundColor.r
-      value: 0.44705886
+      value: 0.6627451
       objectReference: {fileID: 0}
     - target: {fileID: 3081346920311094154, guid: d536257862de0154989f1cc7b3225881, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2795,7 +2795,7 @@ PrefabInstance:
       objectReference: {fileID: 41223672}
     - target: {fileID: 477924254565741091, guid: 660ff370ec34c3240ab3a7dce9838829, type: 3}
       propertyPath: stageTeleportInfos.Array.data[1].onStageStart.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 477924254565741091, guid: 660ff370ec34c3240ab3a7dce9838829, type: 3}
       propertyPath: stageTeleportInfos.Array.data[1].onStageStart.m_PersistentCalls.m_Calls.Array.data[0].m_Mode

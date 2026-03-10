@@ -17,5 +17,7 @@ MonoBehaviour:
   SceneName: Stage_Sky_1
   clearCondition: 0
   enemyPhases: []
-  puzzleSpells: []
+  puzzleSpells:
+  - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
+  - {fileID: 11400000, guid: 7ec1dcb74d1e1f64cbc082ae8771f40d, type: 2}
   stageType: 1
