@@ -177,6 +177,7 @@ MonoBehaviour:
   iceStopThreshold: 0.3
   iceStopDuration: 20
   maxSlowDurationOnIce: 10
+  processDamageImmediately: 0
   accumulationFrames: -1
 --- !u!114 &2820833147339723855
 MonoBehaviour:
@@ -204,14 +205,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24621f32461004849ad0501da1f9574f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 4994009791406165591}
   hitBoxObject: {fileID: 0}
-  damageTextSpawnPoint: {fileID: 2150039468542698991}
-  playHitSoundOnDead: 0
+  isProjectile: 0
   hitSound: {fileID: 8300000, guid: 6a97574b999754ab88af555cfbc0d8f4, type: 3}
   hitSoundVolume: 1
   healSound: {fileID: 8300000, guid: c48a972d3d024c2408a3331750786a29, type: 3}
   healSoundVolume: 2
+  animator: {fileID: 4994009791406165591}
+  damageTextSpawnPoint: {fileID: 2150039468542698991}
+  playHitSoundOnDead: 0
   fireStunSound: {fileID: 8300000, guid: 495833e05ce0b6448b7c37f5bde71245, type: 3}
   fireStunSoundVolume: 1
   freezeStunSound: {fileID: 8300000, guid: 00125e6b5c4bfbd4ba56065c2a2d899f, type: 3}
@@ -249,7 +251,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: a11c71c87d6505844a928552cb87fba1, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -344,6 +346,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -82.548}
 --- !u!212 &8059396890726897547
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -362,6 +365,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -383,9 +388,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -831012941
   m_SortingLayer: 4
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: -115740529236340053, guid: 2e69467cfff73bc4cb18f1a109d26ca0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -395,7 +402,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &2629354171739049639
 MonoBehaviour:
