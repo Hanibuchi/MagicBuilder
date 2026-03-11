@@ -56,6 +56,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Stage/5_sky/Scene/Stage_Sky_5.unity
     guid: 437bb3bb33671e04ebbffea71628c08c
+  - enabled: 1
+    path: Assets/Stage/6_magic/Scene/Stage_Magic_1.unity
+    guid: b198e0cf4e0d9d741be5f6a0ce70f69f
+  - enabled: 1
+    path: Assets/Stage/6_magic/Scene/Stage_Magic_3.unity
+    guid: af8af2264f63ffe459919266c778d86e
+  - enabled: 1
+    path: Assets/Stage/6_magic/Scene/Stage_Magic_5.unity
+    guid: 1bc0663a9d54f1447af85eb6be5b3bf6
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
