@@ -17,5 +17,15 @@ MonoBehaviour:
   SceneName: Stage_Magic_5
   clearCondition: 0
   enemyPhases: []
-  puzzleSpells: []
+  puzzleSpells:
+  - {fileID: 11400000, guid: 90b80b666522c234fa85ba1e9cfdcc25, type: 2}
+  - {fileID: 11400000, guid: 8c7f17af7ec13c74d836f6078641b135, type: 2}
+  - {fileID: 11400000, guid: 91a88df000abd0746ab7dd76dc0ccb3e, type: 2}
+  - {fileID: 11400000, guid: f31a6adcd28bc2549b7e567465cf6904, type: 2}
+  - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
+  - {fileID: 11400000, guid: 2bac8b88c504f2e4f98e41a5a5ff1b9b, type: 2}
+  - {fileID: 11400000, guid: 9d80b434c3145494fb8e1cd4385d8007, type: 2}
+  - {fileID: 11400000, guid: 43bf6d9cd2bbe1345b07935ed43c6996, type: 2}
+  - {fileID: 11400000, guid: 7a1e6f21092e19448a9c39c509bc6a22, type: 2}
+  - {fileID: 11400000, guid: 55d48327a80491a42a0f7f3b7e6e27b2, type: 2}
   stageType: 1
