@@ -7,7 +7,8 @@ public class InvertSpell : SpellBase
     public enum InvertMode
     {
         Horizontal, // 左右反転
-        Vertical    // 上下反転
+        Vertical,   // 上下反転
+        Backward    // 後方反転（反対向き）
     }
 
     [SerializeField] private InvertMode invertMode = InvertMode.Horizontal;
@@ -20,10 +21,15 @@ public class InvertSpell : SpellBase
             // 角度の正規化等はUnityの回転系で処理されるため、単純な180度反転ロジック
             return 180f - rotationZ;
         }
-        else
+        else if (invertMode == InvertMode.Vertical)
         {
             // 上下反転: 符号を反転（例：30度 -> -30度）
             return -rotationZ;
+        }
+        else
+        {
+            // 後方反転: 180度回転させる
+            return rotationZ + 180f;
         }
     }
 
