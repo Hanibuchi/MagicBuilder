@@ -30,7 +30,7 @@ public class EnemyWandAttackLauncher : AttackLauncher
         if (enemyWand == null || enemyWand.AllSpells.Count == 0)
         {
             Debug.LogWarning($"{gameObject.name}: EnemyWandが設定されていないか、呪文が空です。ベースの攻撃を実行します。");
-            base.LaunchAttack(targetPosition);
+            // base.LaunchAttack(targetPosition);
             return;
         }
 
