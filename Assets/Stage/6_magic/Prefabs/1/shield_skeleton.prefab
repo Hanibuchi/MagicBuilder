@@ -8,6 +8,7 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+<<<<<<< HEAD
     - target: {fileID: 2298322731837112771, guid: 1487768462179aa46b10a7dd92d1612c, type: 3}
       propertyPath: enemyWand.spells.Array.size
       value: 0
@@ -15,6 +16,11 @@ PrefabInstance:
     - target: {fileID: 2485590476015504277, guid: 1487768462179aa46b10a7dd92d1612c, type: 3}
       propertyPath: m_Name
       value: shield_skeleton
+=======
+    - target: {fileID: 2485590476015504277, guid: 1487768462179aa46b10a7dd92d1612c, type: 3}
+      propertyPath: m_Name
+      value: skeleton mage Variant (12) Variant Variant 3
+>>>>>>> 9ff285ba69f19e653420063015209e071723f610
       objectReference: {fileID: 0}
     - target: {fileID: 5923569030253617557, guid: 1487768462179aa46b10a7dd92d1612c, type: 3}
       propertyPath: m_AnchorMax.x

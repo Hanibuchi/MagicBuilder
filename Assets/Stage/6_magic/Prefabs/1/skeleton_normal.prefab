@@ -82,13 +82,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5046662643123802713, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: m_Name
+<<<<<<< HEAD
       value: skeleton_normal
+=======
+      value: skeleton mage Variant (12) Variant
+>>>>>>> 9ff285ba69f19e653420063015209e071723f610
       objectReference: {fileID: 0}
     - target: {fileID: 8904328848481720335, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: baseFireStrength
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8904328848481720335, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
+<<<<<<< HEAD
       propertyPath: enemyWand.spells.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -120,6 +125,11 @@ PrefabInstance:
       propertyPath: 'enemyWand.spells.Array.data[6]'
       value: 
       objectReference: {fileID: 11400000, guid: 6f106bb0c829b614dbf4d7f863cad4ef, type: 2}
+=======
+      propertyPath: 'enemyWand.spells.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: ca748ee532558a04db48184ac5b52399, type: 2}
+>>>>>>> 9ff285ba69f19e653420063015209e071723f610
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
