@@ -3021,7 +3021,7 @@ PrefabInstance:
     - target: {fileID: 2950603546146285152, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
       propertyPath: stageConfig
       value: 
-      objectReference: {fileID: 11400000, guid: faa667da5b17a124ebfd5337ac5c7563, type: 2}
+      objectReference: {fileID: 11400000, guid: dce1e194c717420449bdca6f78751fc2, type: 2}
     - target: {fileID: 2950603546146285152, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
       propertyPath: enemySpawnPoint
       value: 

@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: 6-3_StageConfig
   m_EditorClassIdentifier: 
   stageName: 6-3
-  subStageName: "\u6B7B\u306E\u9B54\u6CD5"
+  subStageName: "\u5F15\u529B\u3068\u65A5\u529B"
   SceneName: Stage_Magic_3
   clearCondition: 0
   enemyPhases: []
-  puzzleSpells: []
+  puzzleSpells:
+  - {fileID: 11400000, guid: 5c8a7351f36c0ac4999d4762af8f1ab6, type: 2}
+  - {fileID: 11400000, guid: ea9f4c99089de3240be7907a604867e7, type: 2}
+  - {fileID: 11400000, guid: 202c2a40c82b5d746b2718eee9958c9c, type: 2}
   stageType: 1

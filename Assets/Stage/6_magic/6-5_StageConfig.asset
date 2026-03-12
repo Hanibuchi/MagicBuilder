@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 6-5_StageConfig
   m_EditorClassIdentifier: 
   stageName: 6-5
-  subStageName: "\u6B7B\u306E\u9B54\u6CD5"
+  subStageName: "\u81EA\u50B7\u3068\u4ED8\u4E0E"
   SceneName: Stage_Magic_5
   clearCondition: 0
   enemyPhases: []
