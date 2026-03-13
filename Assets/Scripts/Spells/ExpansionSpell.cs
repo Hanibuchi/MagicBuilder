@@ -75,6 +75,10 @@ public class ExpansionSpell : SpellBase
                 modifier = projectile.AddComponent<ExpansionModifier>();
                 modifier.Initialize(scaleMultiplier, effectDuration);
             }
+            if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+            {
+                listeners[currentSpellIndex]?.PlayCastAnimation();
+            }
         };
 
         // 2. 次の呪文に対して、新しいコンテキストで FireSpell を呼び出す

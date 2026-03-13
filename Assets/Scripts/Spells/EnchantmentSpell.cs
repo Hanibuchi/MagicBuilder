@@ -16,4 +16,17 @@ public class EnchantmentSpell : ExampleSpell
         }
         return gravityMagnitude;
     }
+
+    public override void FireSpell(System.Collections.Generic.List<SpellBase> wandSpells, System.Collections.Generic.List<ISpellCastListener> listeners, int currentSpellIndex, float rotationZ, float strength, SpellContext context)
+    {
+        context.ProjectileModifier += (projectile) =>
+        {
+            if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+            {
+                listeners[currentSpellIndex]?.PlayCastAnimation();
+            }
+        };
+
+        base.FireSpell(wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
+    }
 }

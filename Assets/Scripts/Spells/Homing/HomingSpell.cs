@@ -67,6 +67,10 @@ public class HomingSpell : SpellBase
                 homing = projectile.AddComponent<HomingMover>();
                 homing.Initialize(mask, searchRange, targetSpringConstant, effectDuration);
             }
+            if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+            {
+                listeners[currentSpellIndex]?.PlayCastAnimation();
+            }
         };
         FireSpellForNextSpells(
             GetNextSpellOffsets(wandSpells, currentSpellIndex),

@@ -171,6 +171,11 @@ public class ExampleSpell : SpellBase
 
         projectileGO.GetComponent<SpellProjectileDamageSource>().Initialize(strength, context);// initialize()でcontext.ProjectileModifierがInvokeされるため、最後に実行。
 
+        if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+        {
+            listeners[currentSpellIndex]?.PlayCastAnimation();
+        }
+
         Debug.Log($"[{spellName}]を発射！角度:{finalRotationZ}°、強さ:{strength}");
     }
 

@@ -84,6 +84,10 @@ public class FollowingSpell : SpellBase
                             amplitude,
                             frequency
                         );
+                        if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+                        {
+                            listeners[currentSpellIndex]?.PlayCastAnimation();
+                        }
                     }
                 };
             }

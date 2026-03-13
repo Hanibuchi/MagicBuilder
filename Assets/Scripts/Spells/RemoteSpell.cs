@@ -27,6 +27,10 @@ public class RemoteSpell : SpellBase
             {
                 projectile.transform.position += (Vector3)offset;
             }
+            if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+            {
+                listeners[currentSpellIndex]?.PlayCastAnimation();
+            }
         };
 
         if (SpellScheduler.Instance != null && magicCircleDelay > 0)
@@ -63,6 +67,12 @@ public class RemoteSpell : SpellBase
                 // 💡 modifierColorを使用して魔法陣を表示
                 Color color = SpellCommonData.Instance.modifierColor;
                 magicCircle.Show(magicCircleDelay, color: color);
+
+                if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+                {
+                    listeners[currentSpellIndex]?.PlayCastAnimation();
+                }
+
                 // 魔法陣が出てから少し待ってから発射
                 yield return new WaitForSeconds(magicCircleDelay);
             }

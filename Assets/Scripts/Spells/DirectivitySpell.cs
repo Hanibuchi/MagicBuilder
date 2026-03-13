@@ -54,6 +54,10 @@ public class DirectivitySpell : SpellBase
                         rb.linearVelocity = dir * speed;
                     }
                 }
+                if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+                {
+                    listeners[currentSpellIndex]?.PlayCastAnimation();
+                }
             };
         }
 

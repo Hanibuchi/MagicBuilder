@@ -34,10 +34,20 @@ public class AccelerationSpell : SpellBase
                     modifier = projectile.AddComponent<EnemySpeedModifier>();
                     modifier.Initialize(strengthMultiplier, effectDuration);
                 }
+
+                if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+                {
+                    listeners[currentSpellIndex]?.PlayCastAnimation();
+                }
             }
         };
 
         FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, listeners, currentSpellIndex, rotationZ, strength * strengthMultiplier, context);
+
+        if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+        {
+            listeners[currentSpellIndex]?.PlayCastAnimation();
+        }
     }
 
     readonly int[] nextSpellOffsets = { 1 };

@@ -141,6 +141,11 @@ public class ClickTriggerAddSpell : SpellBase
         {
             if (obj == null) return;
 
+            if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+            {
+                listeners[currentSpellIndex]?.PlayCastAnimation();
+            }
+
             if (currentSpellIndex >= 0 && currentSpellIndex < wandSpells.Count)
             {
                 var spell = wandSpells[currentSpellIndex];

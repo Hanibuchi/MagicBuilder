@@ -110,6 +110,10 @@ public class TriggerAddSpell : SpellBase
                                 var modifier = obj.AddComponent<TriggerProjectileModifier>();
                                 // トリガーされる呪文へのコンテキストは新規作成（または必要に応じてクローン）
                                 modifier.Init(triggerSpell, wandSpells, listeners, triggerSpellIndex, new SpellContext(context.layer), magicCircleDelay);
+                                if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+                                {
+                                    listeners[currentSpellIndex]?.PlayCastAnimation();
+                                }
                             }
                         };
                     }

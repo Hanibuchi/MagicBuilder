@@ -10,7 +10,7 @@ public class PenetrationSpell : SpellBase
         List<ISpellCastListener> listeners,
         int currentSpellIndex, float rotationZ, float strength, SpellContext context)
     {
-        AddPenetrationModifier(context);
+        AddPenetrationModifier(context, listeners, currentSpellIndex);
         FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
     }
 
@@ -19,7 +19,7 @@ public class PenetrationSpell : SpellBase
         DisplayAimingLineForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, currentSpellIndex, rotationZ, strength, context, clearLine);
     }
 
-    private void AddPenetrationModifier(SpellContext context)
+    private void AddPenetrationModifier(SpellContext context, List<ISpellCastListener> listeners, int currentSpellIndex)
     {
         context.ProjectileModifier += (GameObject obj) =>
         {
@@ -33,6 +33,10 @@ public class PenetrationSpell : SpellBase
                 {
                     modifier = obj.AddComponent<PenetrationModifier>();
                     modifier.Initialize(effectDuration);
+                }
+                if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+                {
+                    listeners[currentSpellIndex]?.PlayCastAnimation();
                 }
             }
         };

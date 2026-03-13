@@ -20,6 +20,11 @@ public class SelfHarmSpell : SpellBase
             context.layer = SpellLayer.Attack_Ally;
         }
 
+        if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+        {
+            listeners[currentSpellIndex]?.PlayCastAnimation();
+        }
+
         FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
     }
 

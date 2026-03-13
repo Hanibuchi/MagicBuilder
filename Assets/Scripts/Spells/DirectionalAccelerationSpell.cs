@@ -56,6 +56,10 @@ public class DirectionalAccelerationSpell : SpellBase
                 // Unity 2023以降の Rigidbody2D.linearVelocity を使用
                 rb.linearVelocity += force;
             }
+            if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+            {
+                listeners[currentSpellIndex]?.PlayCastAnimation();
+            }
         };
 
         FireSpellForNextSpells(

@@ -37,6 +37,10 @@ public class DownwardSpell : SpellBase
         int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
+        if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+        {
+            listeners[currentSpellIndex]?.PlayCastAnimation();
+        }
         FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, listeners, currentSpellIndex, GetRotation(), strength, context);
     }
 

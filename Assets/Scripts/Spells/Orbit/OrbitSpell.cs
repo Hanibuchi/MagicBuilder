@@ -120,6 +120,10 @@ public class OrbitSpell : SpellBase
                             radius,
                             minInitSpeed
                         );
+                        if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+                        {
+                            listeners[currentSpellIndex]?.PlayCastAnimation();
+                        }
                     }
                 };
 

@@ -166,7 +166,10 @@ public class BarrierSpell : SpellBase
 
         // 5. 投射物修正ロジックの実行
         ModifyProjectile(context, barrierGO);
-
+        if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+        {
+            listeners[currentSpellIndex]?.PlayCastAnimation();
+        }
         // CharacterHealth がない場合のみ従来の Destroy を使用（寿命管理）
         if (health == null && !context.IsPermanent())
         {

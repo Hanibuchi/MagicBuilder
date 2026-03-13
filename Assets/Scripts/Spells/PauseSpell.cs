@@ -73,6 +73,10 @@ public class PauseSpell : SpellBase
         yield return new WaitForSeconds(Mathf.Min(pauseDuration, magicCircleDisplayTime));
 
         // 次の呪文を発射
+        if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+        {
+            listeners[currentSpellIndex]?.PlayCastAnimation();
+        }
         FireSpellForNextSpells(
             GetNextSpellOffsets(wandSpells, currentSpellIndex),
             wandSpells, listeners, currentSpellIndex, rotationZ, strength, context

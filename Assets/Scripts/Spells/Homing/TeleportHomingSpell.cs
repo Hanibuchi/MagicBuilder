@@ -62,6 +62,10 @@ public class TeleportHomingSpell : SpellBase
                 mover = projectile.AddComponent<TeleportHomingMover>();
                 mover.Initialize(mask, searchRange, teleportInterval, rangeVisualPrefab, animationDuration, effectDuration);
             }
+            if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+            {
+                listeners[currentSpellIndex]?.PlayCastAnimation();
+            }
         };
 
         FireSpellForNextSpells(

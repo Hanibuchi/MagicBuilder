@@ -36,6 +36,10 @@ public class AttractionSpell : SpellBase
                 mover = obj.AddComponent<AttractionMover>();
                 mover.AddAttractionData(range, force, attractionEffectPrefab, repulsionEffectPrefab, targetLayer, effectDuration);
             }
+            if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+            {
+                listeners[currentSpellIndex]?.PlayCastAnimation();
+            }
         };
 
         // 次の呪文を実行

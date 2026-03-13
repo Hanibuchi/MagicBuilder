@@ -82,6 +82,11 @@ public class LowGravitySpell : SpellBase
                     modifier = projectile.AddComponent<LowGravityModifier>();
                     modifier.Initialize(gravityChange, effectDuration, prefabToUse, randomOffset);
                 }
+
+                if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+                {
+                    listeners[currentSpellIndex]?.PlayCastAnimation();
+                }
             }
         };
 

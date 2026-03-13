@@ -17,6 +17,11 @@ public class ExtensionSpell : SpellBase
         // duration を増加させる
         context.duration += additionalDuration;
 
+        if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+        {
+            listeners[currentSpellIndex]?.PlayCastAnimation();
+        }
+
         // 次の呪文へ処理を移行
         FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
     }

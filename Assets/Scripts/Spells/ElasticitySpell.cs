@@ -13,6 +13,10 @@ public class ElasticitySpell : SpellBase
         float rotationZ, float strength, SpellContext context)
     {
         context.bounceCount += additionalBounceCount;
+        if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+        {
+            listeners[currentSpellIndex]?.PlayCastAnimation();
+        }
         FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
     }
 
