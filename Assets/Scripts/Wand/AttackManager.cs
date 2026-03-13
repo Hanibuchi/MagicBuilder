@@ -204,6 +204,40 @@ public class AttackManager : MonoBehaviour
         return processedSpells;
     }
 
+    /// <summary>
+    /// 杖の発射前に、リスナーリストのプリプロセス（例: Modifiersによるリスナー配列の操作）を実行します。
+    /// </summary>
+    /// <param name="spells">処理対象の呪文の配列（Preprocessメソッドの呼び出し元として使用します）</param>
+    /// <param name="listeners">処理対象のリスナーの配列</param>
+    public List<ISpellCastListener> ProcessWandSpellsBeforeFire(List<SpellBase> spells, List<ISpellCastListener> listeners)
+    {
+        // リスナーリストをクローンし、元のリストに影響を与えないようにする
+        List<ISpellCastListener> processedListeners = new List<ISpellCastListener>(listeners);
+
+        // 現在のインデックスを保持
+        int currentProcessedIndex = 0;
+
+        // リストの末尾まで処理を続ける
+        while (currentProcessedIndex < spells.Count)
+        {
+            SpellBase currentSpell = spells[currentProcessedIndex];
+
+            // 呪文が存在すればリスナー用のPreprocessを実行
+            if (currentSpell != null)
+            {
+                // Preprocessが新しいインデックスを返す
+                currentProcessedIndex = currentSpell.Preprocess(processedListeners, currentProcessedIndex);
+            }
+            else
+            {
+                // 呪文がnullの場合は、単純に次のインデックスへ
+                currentProcessedIndex++;
+            }
+        }
+
+        return processedListeners;
+    }
+
     [SerializeField] private int currentWandIndex = 0;
     public void SetCurrentWandIndex(int index)
     {

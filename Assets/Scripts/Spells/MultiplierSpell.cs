@@ -53,6 +53,41 @@ public class MultiplierSpell : SpellBase
         return currentSpellIndex + multiplierCount;
     }
 
+    /// <summary>
+    /// 呪文の発射前に行うリスナー配列の前処理。
+    /// 自身の位置の次のリスナーを、指定された回数分だけ複製して配列に挿入します。
+    /// </summary>
+    /// <param name="listeners">呪文のリスナー配列。</param>
+    /// <param name="currentSpellIndex">現在処理中の呪文が配列内で何番目かを示すインデックス。</param>
+    /// <returns>次の呪文のインデックス。リスト編集後インデックスが変わってる場合があるため。</returns>
+    public override int Preprocess(List<ISpellCastListener> listeners, int currentSpellIndex)
+    {
+        // 複製回数が0以下の場合、何もしない
+        if (multiplierCount <= 1) return currentSpellIndex + 1;
+
+        // 複製対象となるリスナーのインデックスは、自身の次の位置
+        int targetIndex = currentSpellIndex + 1;
+
+        // 次のリスナーが存在するかチェック
+        if (targetIndex >= 0 && targetIndex < listeners.Count)
+        {
+            ISpellCastListener listenerToCopy = listeners[targetIndex];
+            if (listenerToCopy == null) return currentSpellIndex + 1;
+
+            // 複製するリスナーのリストを作成（複製回数分）
+            var copies = new List<ISpellCastListener>();
+            for (int i = 1; i < multiplierCount; i++)
+            {
+                copies.Add(listenerToCopy);
+            }
+
+            // 複製されたリスナーのリストを、元のリスナー（targetIndex）の直後に挿入
+            // 挿入開始位置は targetIndex + 1
+            listeners.InsertRange(targetIndex + 1, copies);
+        }
+        return currentSpellIndex + multiplierCount;
+    }
+
 
     // ----------------------------------------------------------------------------------
     // 発動チェーン

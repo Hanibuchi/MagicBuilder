@@ -303,6 +303,18 @@ public abstract class SpellBase : ScriptableObject
     }
 
     /// <summary>
+    /// 呪文の発射前に行うリスナー配列の前処理。
+    /// 特定の呪文（例：〇倍呪文）はここで配列を編集する。
+    /// </summary>
+    /// <param name="listeners">呪文のリスナー配列。</param>
+    /// <param name="currentSpellIndex">現在処理中の呪文が配列内で何番目かを示すインデックス。</param>
+    /// <returns>次の呪文のインデックス。リスト編集後インデックスが変わってる場合があるため。</returns>
+    public virtual int Preprocess(List<ISpellCastListener> listeners, int currentSpellIndex)
+    {
+        return currentSpellIndex + 1;
+    }
+
+    /// <summary>
     /// クールダウン時間を計算する際に、この呪文による修正を適用します。
     /// </summary>
     /// <param name="currentCooldown">修正前のクールダウン合計値</param>
