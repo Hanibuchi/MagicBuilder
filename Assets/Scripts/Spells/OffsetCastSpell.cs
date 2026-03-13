@@ -8,6 +8,10 @@ public class OffsetCastSpell : SpellBase
     [Header("オフセット設定")]
     [Tooltip("呼び出す呪文の相対位置（オフセット）の配列。1は次のスロット。")]
     [SerializeField] private int[] nextSpellOffsets = { 1 };
+    
+    [Header("魔法陣演出設定")]
+    [Tooltip("魔法陣を表示してから発射するまでの待ち時間")]
+    public float magicCircleDelay = 0.1f;
 
     /// <summary>
     /// この呪文から呼び出される次の呪文の相対オフセットを返します。
@@ -38,6 +42,6 @@ public class OffsetCastSpell : SpellBase
         SpellContext context)
     {
         // 指定されたオフセット位置にある呪文を発射します。
-        FireSpellForNextSpells(nextSpellOffsets, wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
+        FireSpellForNextSpells(nextSpellOffsets, wandSpells, listeners, currentSpellIndex, rotationZ, strength, context, magicCircleDelay);
     }
 }
