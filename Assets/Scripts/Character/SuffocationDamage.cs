@@ -16,8 +16,8 @@ public class SuffocationDamage : MonoBehaviour
     [Tooltip("判定に使用するレイヤー")]
     [SerializeField] private LayerMask groundLayer;
 
-    [Tooltip("埋まり判定を行うポイントのオフセット（キャラクターの胸のあたりを推奨）")]
-    [SerializeField] private Vector2 checkOffset = new Vector2(0, 0.5f);
+    [Tooltip("埋まり判定を行うTransformの座標（キャラクターの胸のあたりを推奨）")]
+    [SerializeField] private Transform checkPoint;
 
     private CharacterHealth _characterHealth;
     private float _buriedTimer = 0f;
@@ -42,8 +42,10 @@ public class SuffocationDamage : MonoBehaviour
             return;
         }
 
+        if (checkPoint == null) return;
+
         // キャラクターの判定ポイントが地形に重なっているかをチェック
-        Vector2 checkPosition = (Vector2)transform.position + checkOffset;
+        Vector2 checkPosition = checkPoint.position;
         bool isBuried = Physics2D.OverlapPoint(checkPosition, groundLayer);
 
         if (isBuried)
@@ -89,8 +91,10 @@ public class SuffocationDamage : MonoBehaviour
     /// </summary>
     private void OnDrawGizmosSelected()
     {
+        if (checkPoint == null) return;
+
         Gizmos.color = Color.red;
-        Vector2 checkPosition = (Vector2)transform.position + checkOffset;
+        Vector2 checkPosition = checkPoint.position;
         Gizmos.DrawWireSphere(checkPosition, 0.1f);
     }
 }

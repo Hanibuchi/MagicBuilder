@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 2483446191815341962}
   - component: {fileID: 47901438995778229}
   - component: {fileID: 5340801348210051992}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: wizard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,6 +156,7 @@ Transform:
   m_Children:
   - {fileID: 6031651102980179225}
   - {fileID: 2150039468542698991}
+  - {fileID: 3863623284373289095}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3866074084139050403
@@ -279,7 +280,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 16384
-  checkOffset: {x: 0, y: 0.5}
+  checkPoint: {fileID: 3863623284373289095}
 --- !u!1 &5348217663573171723
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,6 +307,37 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.8330002, y: 1.218, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5770063065768691625}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6001359253367097610
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3863623284373289095}
+  m_Layer: 0
+  m_Name: SuffocationCheckPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3863623284373289095
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6001359253367097610}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
