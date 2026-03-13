@@ -8,7 +8,7 @@ using System.Collections;
 /// <summary>
 /// 杖に組み込まれている呪文のUI。ドラッグによる削除と並び替えの起点となる。
 /// </summary>
-public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler
+public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler, ISpellCastListener
 {
     public int index;
     public ISpellContainer spellContainerUI;
@@ -22,6 +22,15 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     [SerializeField] private Animator animator;
 
     private static readonly int IsHighlightedHash = Animator.StringToHash("IsHighlighted");
+    private static readonly int InvokeHash = Animator.StringToHash("Invoke");
+
+    public void PlayCastAnimation()
+    {
+        if (animator != null)
+        {
+            animator.SetTrigger(InvokeHash);
+        }
+    }
 
     public void Initialize(ISpellContainer parentWandUI)
     {

@@ -412,3 +412,11 @@ public abstract class SpellBase : ScriptableObject
         return detailItems;
     }
 }
+
+/// <summary>
+/// 呪文が実行されたことを通知し、対応するUIでアニメーションなどを再生するためのインターフェース。
+/// </summary>
+public interface ISpellCastListener
+{
+    void PlayCastAnimation();
+}
