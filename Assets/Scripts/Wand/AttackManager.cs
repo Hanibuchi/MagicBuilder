@@ -115,7 +115,18 @@ public class AttackManager : MonoBehaviour
 
         Wand wandToUse = playerWands[wandIndex];
         Vector2 casterPos = casterPositionTransform != null ? (Vector2)casterPositionTransform.position : Vector2.zero;
-        FireWand(wandToUse, casterPos, rotationZ, strength, layer);
+        
+        List<ISpellCastListener> listeners = null;
+        if (WandUIManager.Instance != null)
+        {
+            var wandUI = WandUIManager.Instance.GetWandUI(wandIndex);
+            if (wandUI != null)
+            {
+                listeners = wandUI.GetSpellCastListeners();
+            }
+        }
+        
+        FireWand(wandToUse, casterPos, rotationZ, strength, layer, listeners);
     }
 
     /// <summary>
@@ -126,7 +137,8 @@ public class AttackManager : MonoBehaviour
     /// <param name="rotationZ">発射角度 (Z軸回転、float)。</param>
     /// <param name="strength">発射の強さ（大きさ、float）。</param>
     /// <param name="layer">呪文のレイヤー</param>
-    public void FireWand(Wand wandToUse, Vector2 casterPosition, float rotationZ, float strength, SpellLayer layer)
+    /// <param name="listeners">呪文のリスナー</param>
+    public void FireWand(Wand wandToUse, Vector2 casterPosition, float rotationZ, float strength, SpellLayer layer, List<ISpellCastListener> listeners = null)
     {
         if (wandToUse.AllSpells.Count == 0) return;
         if (wandToUse == null)
@@ -136,6 +148,9 @@ public class AttackManager : MonoBehaviour
         }
 
         List<SpellBase> processedSpells = ProcessWandSpellsBeforeFire(wandToUse.AllSpells);
+        List<ISpellCastListener> processedListeners = listeners != null 
+            ? ProcessWandSpellsBeforeFire(wandToUse.AllSpells, listeners) 
+            : new List<ISpellCastListener>();
 
         int[] targetIndices = SpellBase.GetAbsoluteIndicesFromSpellGroupArray(
             processedSpells,
@@ -156,13 +171,10 @@ public class AttackManager : MonoBehaviour
                     CasterPosition = casterPosition
                 };
                 SpellBase spell = processedSpells[targetIndex];
-                
-                // とりあえずnullまたは空リストを渡しておく
-                List<ISpellCastListener> listeners = new List<ISpellCastListener>();
 
                 spell?.FireSpell(
                     processedSpells,
-                    listeners, targetIndex,
+                    processedListeners, targetIndex,
                     rotationZ,
                     strength,
                     context

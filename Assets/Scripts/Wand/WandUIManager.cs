@@ -66,6 +66,20 @@ public class WandUIManager : MonoBehaviour
     }
 
     /// <summary>
+    /// 指定されたインデックスのWandUIを取得します。
+    /// </summary>
+    /// <param name="index">取得するWandUIのインデックス。</param>
+    /// <returns>指定されたインデックスのWandUI。範囲外の場合はnullを返します。</returns>
+    public WandUI GetWandUI(int index)
+    {
+        if (index >= 0 && index < activeWandUIs.Count)
+        {
+            return activeWandUIs[index];
+        }
+        return null;
+    }
+
+    /// <summary>
     /// WandUIのコンテナとWandUIのインスタンスを生成し、WandUIを返します。
     /// </summary>
     /// <returns>生成されたWandUIコンポーネント。失敗した場合はnull。</returns>

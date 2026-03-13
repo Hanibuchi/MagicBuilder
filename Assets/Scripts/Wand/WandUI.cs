@@ -158,6 +158,24 @@ public class WandUI : MonoBehaviour, ISpellContainer
     }
 
     /// <summary>
+    /// UIに登録されている全呪文のISpellCastListenerのリストを取得します。
+    /// 固定呪文が先頭に配置され、その後にスロット内の通常呪文が順番に並びます。
+    /// </summary>
+    /// <returns>ISpellCastListenerのリスト</returns>
+    public List<ISpellCastListener> GetSpellCastListeners()
+    {
+        List<ISpellCastListener> listeners = new List<ISpellCastListener>();
+        foreach (var element in uiElements)
+        {
+            if (element != null && element.TryGetComponent<ISpellCastListener>(out var listener))
+            {
+                listeners.Add(listener);
+            }
+        }
+        return listeners;
+    }
+
+    /// <summary>
     /// SpacingUIがPointerEnterイベントを受け取ったことを通知する。
     /// この通知を受け取ったWandUIは、他のSpacingUIのハイライトを解除し、
     /// 挿入時に連鎖する呪文をハイライトする。
