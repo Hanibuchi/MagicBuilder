@@ -101,7 +101,9 @@ public class BarrierSpell : SpellBase
     /// Strengthに応じて選択されたバリアを、軌道表示と同じ位置に生成します。
     /// </summary>
     public override void FireSpell(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
         // 1. Strengthに基づくPrefabの選択

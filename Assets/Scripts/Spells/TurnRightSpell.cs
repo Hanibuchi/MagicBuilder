@@ -32,10 +32,12 @@ public class TurnRightSpell : SpellBase
     }
 
     public override void FireSpell(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
-        FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, currentSpellIndex, rotationZ + GetRotation(), strength, context);
+        FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, listeners, currentSpellIndex, rotationZ + GetRotation(), strength, context);
     }
 
     readonly int[] nextSpellOffsets = { 1 };

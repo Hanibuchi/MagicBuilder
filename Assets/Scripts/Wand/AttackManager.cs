@@ -156,9 +156,13 @@ public class AttackManager : MonoBehaviour
                     CasterPosition = casterPosition
                 };
                 SpellBase spell = processedSpells[targetIndex];
+                
+                // とりあえずnullまたは空リストを渡しておく
+                List<ISpellCastListener> listeners = new List<ISpellCastListener>();
+
                 spell?.FireSpell(
                     processedSpells,
-                    targetIndex,
+                    listeners, targetIndex,
                     rotationZ,
                     strength,
                     context

@@ -49,7 +49,9 @@ public class LowGravitySpell : SpellBase
     }
 
     public override void FireSpell(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
         // 念のためコンテキストも更新（後続の呪文が参照する場合のため）
@@ -85,7 +87,7 @@ public class LowGravitySpell : SpellBase
 
         FireSpellForNextSpells(
             GetNextSpellOffsets(wandSpells, currentSpellIndex),
-            wandSpells, currentSpellIndex, rotationZ, strength, context
+            wandSpells, listeners, currentSpellIndex, rotationZ, strength, context
         );
     }
 

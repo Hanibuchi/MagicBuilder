@@ -53,7 +53,9 @@ public class FollowingSpell : SpellBase
         }
     }
 
-    public override void FireSpell(List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ, float strength, SpellContext context)
+    public override void FireSpell(List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex, float rotationZ, float strength, SpellContext context)
     {
         int[] targetIndices = GetTargetIndices(wandSpells, currentSpellIndex);
         if (targetIndices.Length < 1) return;
@@ -75,6 +77,7 @@ public class FollowingSpell : SpellBase
                         center.Init(
                             followerIndices.Select(idx => wandSpells[idx]).ToList(),
                             wandSpells,
+                            listeners,
                             followerIndices.ToList(),
                             new(context.layer),
                             magicCircleDelay,
@@ -85,7 +88,7 @@ public class FollowingSpell : SpellBase
                 };
             }
 
-            mainSpell.FireSpell(wandSpells, mainIndex, rotationZ, strength, context);
+            mainSpell.FireSpell(wandSpells, listeners, mainIndex, rotationZ, strength, context);
         }
     }
 

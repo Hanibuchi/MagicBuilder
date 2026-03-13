@@ -7,11 +7,13 @@ public class DamageChangeSpell : SpellBase
     [SerializeField] Damage additionalDamage;
 
     public override void FireSpell(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
         context.damage += additionalDamage;
-        FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, currentSpellIndex, rotationZ, strength, context);
+        FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
     }
 
     int[] nextSpellOffsets = { 1 };

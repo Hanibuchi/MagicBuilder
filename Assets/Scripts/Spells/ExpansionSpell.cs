@@ -57,7 +57,9 @@ public class ExpansionSpell : SpellBase
     /// ここでは、発射体のスケールを変更する修飾子を SpellContext に追加します。
     /// </summary>
     public override void FireSpell(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
         AddAimingModifier(context);
@@ -78,7 +80,7 @@ public class ExpansionSpell : SpellBase
         // 2. 次の呪文に対して、新しいコンテキストで FireSpell を呼び出す
         FireSpellForNextSpells(
             GetNextSpellOffsets(wandSpells, currentSpellIndex),
-            wandSpells, currentSpellIndex, rotationZ, strength, context
+            wandSpells, listeners, currentSpellIndex, rotationZ, strength, context
         );
     }
 

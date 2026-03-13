@@ -5,7 +5,9 @@ using System.Collections.Generic;
 public class SelfHarmSpell : SpellBase
 {
     public override void FireSpell(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
         // 詠唱者自身にあたるようにレイヤーを入れ替える
@@ -18,7 +20,7 @@ public class SelfHarmSpell : SpellBase
             context.layer = SpellLayer.Attack_Ally;
         }
 
-        FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, currentSpellIndex, rotationZ, strength, context);
+        FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
     }
 
     public override void DisplayAimingLine(

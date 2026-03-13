@@ -110,6 +110,7 @@ public abstract class SpellBase : ScriptableObject
     /// <param name="context">発射時の環境情報を持つインスタンス</param>
     public virtual void FireSpell(
         List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
         int currentSpellIndex,
         float rotationZ,
         float strength,
@@ -119,7 +120,7 @@ public abstract class SpellBase : ScriptableObject
         // GetNextSpellOffsetsで得られた次の呪文に対して、同じ引数でFireSpellを呼び出す
         FireSpellForNextSpells(
             GetNextSpellOffsets(wandSpells, currentSpellIndex),
-            wandSpells, currentSpellIndex, rotationZ, strength, context
+            wandSpells, listeners, currentSpellIndex, rotationZ, strength, context
         );
     }
 
@@ -136,6 +137,7 @@ public abstract class SpellBase : ScriptableObject
     protected void FireSpellForNextSpells(
         int[] nextSpelloffsets,
         List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
         int currentSpellIndex,
         float rotationZ,
         float strength,
@@ -158,7 +160,7 @@ public abstract class SpellBase : ScriptableObject
                 // 対象の呪文のDisplayAimingLineを呼び出し
                 spellToDisplay?.FireSpell(
                     wandSpells,
-                    targetIndex,        // 新しい開始インデックス
+                    listeners, targetIndex,        // 新しい開始インデックス
                     rotationZ,
                     strength,
                     context

@@ -16,23 +16,25 @@ public class InfernoSpell : ExampleSpell
     [SerializeField] private float magicCircleLingerTime = 0.5f;
 
     public override void FireSpell(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
         if (SpellScheduler.Instance != null && magicCirclePrefab != null)
         {
             SpellScheduler.Instance.StartCoroutine(FireWithMagicCircle(
-                wandSpells, currentSpellIndex, rotationZ, strength, context));
+                wandSpells, listeners, currentSpellIndex, rotationZ, strength, context));
         }
         else
         {
             // 魔法陣がない、あるいはSchedulerがない場合は即座に発射
-            base.FireSpell(wandSpells, currentSpellIndex, rotationZ, strength, context);
+            base.FireSpell(wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
         }
     }
 
     private IEnumerator FireWithMagicCircle(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells, List<ISpellCastListener> listeners, int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
         // 発射方向を計算
@@ -58,7 +60,7 @@ public class InfernoSpell : ExampleSpell
         }
 
         // 親クラス（ExampleSpell）のFireSpellを呼び出して、実際に弾（隕石）を発射
-        base.FireSpell(wandSpells, currentSpellIndex, rotationZ, strength, context);
+        base.FireSpell(wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
 
         if (magicCircle != null)
         {

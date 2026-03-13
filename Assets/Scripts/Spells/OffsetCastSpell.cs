@@ -31,12 +31,13 @@ public class OffsetCastSpell : SpellBase
 
     public override void FireSpell(
         List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
         int currentSpellIndex,
         float rotationZ,
         float strength,
         SpellContext context)
     {
         // 指定されたオフセット位置にある呪文を発射します。
-        FireSpellForNextSpells(nextSpellOffsets, wandSpells, currentSpellIndex, rotationZ, strength, context);
+        FireSpellForNextSpells(nextSpellOffsets, wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
     }
 }

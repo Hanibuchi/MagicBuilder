@@ -77,6 +77,7 @@ public class MultiSplit : SpellBase
 
     public override void FireSpell(
         List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
         int currentSpellIndex,
         float rotationZ,
         float strength,
@@ -115,6 +116,7 @@ public class MultiSplit : SpellBase
                     FireSingleSpellDelayed(
                         spellToFire,
                         wandSpells,
+                        listeners,
                         targetIndex,
                         rotationZ,
                         strength,
@@ -133,6 +135,7 @@ public class MultiSplit : SpellBase
     private IEnumerator FireSingleSpellDelayed(
         SpellBase spellToFire,
         List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
         int targetIndex,
         float rotationZ,
         float strength,
@@ -160,7 +163,7 @@ public class MultiSplit : SpellBase
 
         spellToFire.FireSpell(
             wandSpells,
-            targetIndex,
+            listeners, targetIndex,
             rotationZ,
             strength,
             newContext

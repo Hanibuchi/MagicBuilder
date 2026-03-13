@@ -6,10 +6,12 @@ public class PenetrationSpell : SpellBase
 {
     [SerializeField] private float effectDuration = 30f;
 
-    public override void FireSpell(List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ, float strength, SpellContext context)
+    public override void FireSpell(List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex, float rotationZ, float strength, SpellContext context)
     {
         AddPenetrationModifier(context);
-        FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, currentSpellIndex, rotationZ, strength, context);
+        FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
     }
 
     public override void DisplayAimingLine(List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ, float strength, SpellContext context, bool clearLine = false)

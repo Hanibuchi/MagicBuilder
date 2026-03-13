@@ -6,16 +6,18 @@ public class ClickTriggerProjectileModifier : MonoBehaviour, ISpellProjectileDes
 {
     public SpellBase nextSpell;
     public List<SpellBase> wandSpells;
+    public List<ISpellCastListener> listeners;
     public int nextSpellIndex;
     public SpellContext context;
     public float magicCircleDelay;
 
     private bool _hasFired = false;
 
-    public void Init(SpellBase nextSpell, List<SpellBase> wandSpells, int nextSpellIndex, SpellContext context, float magicCircleDelay)
+    public void Init(SpellBase nextSpell, List<SpellBase> wandSpells, List<ISpellCastListener> listeners, int nextSpellIndex, SpellContext context, float magicCircleDelay)
     {
         this.nextSpell = nextSpell;
         this.wandSpells = wandSpells;
+        this.listeners = listeners;
         this.nextSpellIndex = nextSpellIndex;
         this.context = context;
         this.magicCircleDelay = magicCircleDelay;
@@ -84,7 +86,7 @@ public class ClickTriggerProjectileModifier : MonoBehaviour, ISpellProjectileDes
             }
         }
 
-        nextSpell.FireSpell(wandSpells, nextSpellIndex, rotationZ, 1, context);
+        nextSpell.FireSpell(wandSpells, listeners, nextSpellIndex, rotationZ, 1, context);
 
         // 消滅演出の開始 (表示と同じ時間をかけて消える)
         if (magicCircle != null)

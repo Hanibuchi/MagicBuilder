@@ -18,23 +18,25 @@ public class BigBowSpell : ExampleSpell
     [SerializeField] private bool useConstantScale = true;
 
     public override void FireSpell(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
         if (SpellScheduler.Instance != null && bowPrefab != null)
         {
             SpellScheduler.Instance.StartCoroutine(FireWithBow(
-                wandSpells, currentSpellIndex, rotationZ, strength, context));
+                wandSpells, listeners, currentSpellIndex, rotationZ, strength, context));
         }
         else
         {
             // プレハブがない、あるいはSchedulerがない場合は即座に矢を発射
-            base.FireSpell(wandSpells, currentSpellIndex, rotationZ, strength, context);
+            base.FireSpell(wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
         }
     }
 
     private IEnumerator FireWithBow(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells, List<ISpellCastListener> listeners, int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
         // 発射方向を計算
@@ -60,7 +62,7 @@ public class BigBowSpell : ExampleSpell
         }
 
         // 親クラス（ExampleSpell）のFireSpellを呼び出して、実際に巨大な矢（Projectile）を発射
-        base.FireSpell(wandSpells, currentSpellIndex, rotationZ, strength, context);
+        base.FireSpell(wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
 
         if (magicCircle != null)
         {

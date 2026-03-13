@@ -85,6 +85,7 @@ public class OrbitSpell : SpellBase
 
     public override void FireSpell(
         List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
         int currentSpellIndex,
         float rotationZ,
         float strength,
@@ -111,6 +112,7 @@ public class OrbitSpell : SpellBase
                         var orbitCenter = obj.AddComponent<OrbitCenter>();
                         orbitCenter.Init(
                             satelliteIndices.Select(idx => wandSpells[idx]).ToList(),
+                            listeners,
                             wandSpells,
                             satelliteIndices.ToList(),
                             new(context.layer),
@@ -123,7 +125,7 @@ public class OrbitSpell : SpellBase
 
                 mainSpell.FireSpell(
                     wandSpells,
-                    mainSpellIndex,
+                    listeners, mainSpellIndex,
                     rotationZ,
                     strength,
                     context
@@ -133,7 +135,7 @@ public class OrbitSpell : SpellBase
             {
                 mainSpell.FireSpell(
                     wandSpells,
-                    mainSpellIndex,
+                    listeners, mainSpellIndex,
                     rotationZ,
                     strength,
                     context

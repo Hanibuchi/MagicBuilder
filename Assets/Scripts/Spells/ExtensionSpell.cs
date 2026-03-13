@@ -9,14 +9,16 @@ public class ExtensionSpell : SpellBase
     [SerializeField] private float additionalDuration = 2.0f;
 
     public override void FireSpell(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
         // duration を増加させる
         context.duration += additionalDuration;
 
         // 次の呪文へ処理を移行
-        FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, currentSpellIndex, rotationZ, strength, context);
+        FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
     }
 
     public override void DisplayAimingLine(

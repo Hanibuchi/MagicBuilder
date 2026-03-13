@@ -29,7 +29,9 @@ public class DirectivitySpell : SpellBase
     }
 
     public override void FireSpell(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
         float targetRotationZ = rotationZ;
@@ -57,7 +59,7 @@ public class DirectivitySpell : SpellBase
 
         FireSpellForNextSpells(
             GetNextSpellOffsets(wandSpells, currentSpellIndex),
-            wandSpells, currentSpellIndex, targetRotationZ, strength, context
+            wandSpells, listeners, currentSpellIndex, targetRotationZ, strength, context
         );
     }
 

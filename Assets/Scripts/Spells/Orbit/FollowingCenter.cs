@@ -9,6 +9,7 @@ public class FollowingCenter : MonoBehaviour, ISpellProjectileDestroyListener
 {
     private List<SpellBase> _followerSpells;
     private List<SpellBase> _wandSpells;
+    List<ISpellCastListener> listeners;
     private List<int> _followerIndices;
     private SpellContext _context;
     private float _magicCircleDelay;
@@ -18,10 +19,11 @@ public class FollowingCenter : MonoBehaviour, ISpellProjectileDestroyListener
     private Rigidbody2D _rb;
     private bool _hasFired = false;
 
-    public void Init(List<SpellBase> followerSpells, List<SpellBase> wandSpells, List<int> followerIndices, SpellContext context, float magicCircleDelay, float amplitude, float frequency)
+    public void Init(List<SpellBase> followerSpells, List<SpellBase> wandSpells, List<ISpellCastListener> listeners, List<int> followerIndices, SpellContext context, float magicCircleDelay, float amplitude, float frequency)
     {
         _followerSpells = followerSpells;
         _wandSpells = wandSpells;
+        this.listeners = listeners;
         _followerIndices = followerIndices;
         _context = context;
         _magicCircleDelay = magicCircleDelay;
@@ -102,7 +104,7 @@ public class FollowingCenter : MonoBehaviour, ISpellProjectileDestroyListener
             };
 
             // 進行方向と同じ向きで発射
-            spell.FireSpell(_wandSpells, _followerIndices[i], centerRotationZ, 1.0f, folContext);
+            spell.FireSpell(_wandSpells, listeners, _followerIndices[i], centerRotationZ, 1.0f, folContext);
         }
     }
 

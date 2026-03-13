@@ -115,7 +115,9 @@ public class ExampleSpell : SpellBase
     [SerializeField] DamageSourceType damageType;
 
     public override void FireSpell(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
         if (projectilePrefab == null)
@@ -164,7 +166,7 @@ public class ExampleSpell : SpellBase
 
         if (isClickTrigger)
         {
-            context.ProjectileModifier += ClickTriggerAddSpell.CreateClickTriggerAction(wandSpells, currentSpellIndex, context);
+            context.ProjectileModifier += ClickTriggerAddSpell.CreateClickTriggerAction(wandSpells, listeners, currentSpellIndex, context);
         }
 
         projectileGO.GetComponent<SpellProjectileDamageSource>().Initialize(strength, context);// initialize()でcontext.ProjectileModifierがInvokeされるため、最後に実行。

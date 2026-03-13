@@ -82,6 +82,7 @@ public class TriggerAddSpell : SpellBase
 
     public override void FireSpell(
         List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
         int currentSpellIndex,
         float rotationZ,
         float strength,
@@ -108,7 +109,7 @@ public class TriggerAddSpell : SpellBase
                             {
                                 var modifier = obj.AddComponent<TriggerProjectileModifier>();
                                 // トリガーされる呪文へのコンテキストは新規作成（または必要に応じてクローン）
-                                modifier.Init(triggerSpell, wandSpells, triggerSpellIndex, new SpellContext(context.layer), magicCircleDelay);
+                                modifier.Init(triggerSpell, wandSpells, listeners, triggerSpellIndex, new SpellContext(context.layer), magicCircleDelay);
                             }
                         };
                     }
@@ -116,7 +117,7 @@ public class TriggerAddSpell : SpellBase
 
                 projectileSpell.FireSpell(
                     wandSpells,
-                    projectileSpellIndex,
+                    listeners, projectileSpellIndex,
                     rotationZ,
                     strength,
                     context

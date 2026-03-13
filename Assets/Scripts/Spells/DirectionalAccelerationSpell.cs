@@ -42,7 +42,9 @@ public class DirectionalAccelerationSpell : SpellBase
     }
 
     public override void FireSpell(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
         // ProjectileModifierに速度追加の処理を登録
@@ -58,7 +60,7 @@ public class DirectionalAccelerationSpell : SpellBase
 
         FireSpellForNextSpells(
             GetNextSpellOffsets(wandSpells, currentSpellIndex),
-            wandSpells, currentSpellIndex, rotationZ, strength, context
+            wandSpells, listeners, currentSpellIndex, rotationZ, strength, context
         );
     }
 

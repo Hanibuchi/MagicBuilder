@@ -26,13 +26,15 @@ public class PauseSpell : SpellBase
     }
 
     public override void FireSpell(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
         if (SpellScheduler.Instance != null)
         {
             SpellScheduler.Instance.StartCoroutine(
-                FireNextDelayedCoroutine(wandSpells, currentSpellIndex, rotationZ, strength, context)
+                FireNextDelayedCoroutine(wandSpells, listeners, currentSpellIndex, rotationZ, strength, context)
             );
         }
         else
@@ -42,7 +44,7 @@ public class PauseSpell : SpellBase
     }
 
     private IEnumerator FireNextDelayedCoroutine(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells, List<ISpellCastListener> listeners, int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
         // 魔法陣の表示タイミングを計算
@@ -73,7 +75,7 @@ public class PauseSpell : SpellBase
         // 次の呪文を発射
         FireSpellForNextSpells(
             GetNextSpellOffsets(wandSpells, currentSpellIndex),
-            wandSpells, currentSpellIndex, rotationZ, strength, context
+            wandSpells, listeners, currentSpellIndex, rotationZ, strength, context
         );
 
         // 魔法陣を非表示にする
