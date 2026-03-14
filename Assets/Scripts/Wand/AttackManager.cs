@@ -115,7 +115,7 @@ public class AttackManager : MonoBehaviour
 
         Wand wandToUse = playerWands[wandIndex];
         Vector2 casterPos = casterPositionTransform != null ? (Vector2)casterPositionTransform.position : Vector2.zero;
-        
+
         List<ISpellCastListener> listeners = null;
         if (WandUIManager.Instance != null)
         {
@@ -125,7 +125,7 @@ public class AttackManager : MonoBehaviour
                 listeners = wandUI.GetSpellCastListeners();
             }
         }
-        
+
         FireWand(wandToUse, casterPos, rotationZ, strength, layer, listeners);
     }
 
@@ -147,10 +147,8 @@ public class AttackManager : MonoBehaviour
             return;
         }
 
-        List<SpellBase> processedSpells = ProcessWandSpellsBeforeFire(wandToUse.AllSpells);
-        List<ISpellCastListener> processedListeners = listeners != null 
-            ? ProcessWandSpellsBeforeFire(wandToUse.AllSpells, listeners) 
-            : new List<ISpellCastListener>();
+        List<ISpellCastListener> processedListeners = listeners != null ? ProcessListenersBeforeFire(wandToUse.AllSpells, listeners) : new List<ISpellCastListener>();
+        List<SpellBase> processedSpells = ProcessWandSpellsBeforeFire(wandToUse.AllSpells, processedListeners);
 
         int[] targetIndices = SpellBase.GetAbsoluteIndicesFromSpellGroupArray(
             processedSpells,
@@ -187,7 +185,8 @@ public class AttackManager : MonoBehaviour
     /// 杖の発射前に、呪文リストのプリプロセス（例: Modifiersによる呪文リストの操作）を実行します。
     /// </summary>
     /// <param name="spells">処理対象の呪文の配列</param>
-    public List<SpellBase> ProcessWandSpellsBeforeFire(List<SpellBase> spells)
+    /// <param name="listeners">処理対象のリスナーの配列</param>
+    public List<SpellBase> ProcessWandSpellsBeforeFire(List<SpellBase> spells, List<ISpellCastListener> listeners = null)
     {
         // 杖の呪文リストをクローンし、プリプロセスで変更があっても元のリストに影響を与えないようにする
         List<SpellBase> processedSpells = new List<SpellBase>(spells);
@@ -204,7 +203,7 @@ public class AttackManager : MonoBehaviour
             if (currentSpell != null)
             {
                 // Preprocessが新しいインデックスを返す
-                currentProcessedIndex = currentSpell.Preprocess(processedSpells, currentProcessedIndex);
+                currentProcessedIndex = currentSpell.Preprocess(processedSpells, currentProcessedIndex, listeners);
             }
             else
             {
@@ -221,7 +220,7 @@ public class AttackManager : MonoBehaviour
     /// </summary>
     /// <param name="spells">処理対象の呪文の配列（Preprocessメソッドの呼び出し元として使用します）</param>
     /// <param name="listeners">処理対象のリスナーの配列</param>
-    public List<ISpellCastListener> ProcessWandSpellsBeforeFire(List<SpellBase> spells, List<ISpellCastListener> listeners)
+    public List<ISpellCastListener> ProcessListenersBeforeFire(List<SpellBase> spells, List<ISpellCastListener> listeners)
     {
         // リスナーリストをクローンし、元のリストに影響を与えないようにする
         List<ISpellCastListener> processedListeners = new List<ISpellCastListener>(listeners);

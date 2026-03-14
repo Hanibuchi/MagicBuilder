@@ -25,8 +25,13 @@ public class MultiplierSpell : SpellBase
     /// <param name="wandSpells">杖に格納されている呪文のオリジナルの配列。</param>
     /// <param name="currentSpellIndex">現在処理中の呪文が杖の配列内で何番目かを示すインデックス。</param>
     /// <returns>次の呪文のインデックス。リスト編集後インデックスが変わってる場合があるため。</returns>
-    public override int Preprocess(List<SpellBase> wandSpells, int currentSpellIndex)
+    public override int Preprocess(List<SpellBase> wandSpells, int currentSpellIndex, List<ISpellCastListener> listeners = null)
     {
+        if (listeners != null && currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+        {
+            listeners[currentSpellIndex]?.PlayCastAnimation();
+        }
+
         // 複製回数が0以下の場合、何もしない
         if (multiplierCount <= 1) return currentSpellIndex + 1;
 
