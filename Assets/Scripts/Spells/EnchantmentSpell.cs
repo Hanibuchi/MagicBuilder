@@ -29,4 +29,9 @@ public class EnchantmentSpell : ExampleSpell
 
         base.FireSpell(wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
     }
+    
+    protected override void ApplyTrajectoryModifier(GameObject trajectoryObj, SpellContext context)
+    {
+        // 補助線（軌道プレハブ）には修飾子を適用しない
+    }
 }
