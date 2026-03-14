@@ -350,17 +350,18 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
 
             // 非アクティブ化対象の SpellBase であり、かつまだ非アクティブ化すべき残数があるかチェック
             if (spellData != null)
-                if (countsToDeactivate.TryGetValue(spellData, out int count))
+            {
+                if (countsToDeactivate.TryGetValue(spellData, out int count) && count > 0)
                 {
-                    if (count > 0)
-                    {
-                        currentUI.SetActive(false); // SpellUI の SetActive(false) を呼び出し
-                        countsToDeactivate[spellData] = count - 1; // 残数を減らす
-                        Debug.Log($"インベントリ内の呪文 {spellData.spellName} (index: {i}) を非アクティブ化しました。");
-                    }
+                    currentUI.SetActive(false); // SpellUI の SetActive(false) を呼び出し
+                    countsToDeactivate[spellData] = count - 1; // 残数を減らす
+                    Debug.Log($"インベントリ内の呪文 {spellData.spellName} (index: {i}) を非アクティブ化しました。");
                 }
                 else
-                    currentUI.SetActive(true);
+                {
+                    currentUI.SetActive(true); // 杖にセットされていない余剰分は必ずアクティブに戻す
+                }
+            }
         }
 
         // 全てのカウントが0になったか確認（デバッグ用）
