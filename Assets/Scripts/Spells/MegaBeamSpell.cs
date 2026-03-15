@@ -50,20 +50,22 @@ public class MegaBeamSpell : ExampleSpell
         }
     }
 
-    public override void FireSpell(List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ, float strength, SpellContext context)
+    public override void FireSpell(List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex, float rotationZ, float strength, SpellContext context)
     {
         // 演出がない、または時間が0以下の場合は即座に発射
         if (chargeEffectPrefab == null || chargeTime <= 0f)
         {
-            base.FireSpell(wandSpells, currentSpellIndex, rotationZ, strength, context);
+            base.FireSpell(wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
             return;
         }
 
         // 演出用のコルーチンを開始 (SpellScheduler経由)
-        SpellScheduler.Instance.StartSpellCoroutine(ChargeAndFire(wandSpells, currentSpellIndex, rotationZ, strength, context));
+        SpellScheduler.Instance.StartSpellCoroutine(ChargeAndFire(wandSpells, listeners, currentSpellIndex, rotationZ, strength, context));
     }
 
-    private System.Collections.IEnumerator ChargeAndFire(List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ, float strength, SpellContext context)
+    private System.Collections.IEnumerator ChargeAndFire(List<SpellBase> wandSpells, List<ISpellCastListener> listeners, int currentSpellIndex, float rotationZ, float strength, SpellContext context)
     {
         // 1. 演出用プレハブを生成
         GameObject chargeEffect = Instantiate(chargeEffectPrefab, context.CasterPosition, Quaternion.Euler(0, 0, rotationZ));
@@ -75,6 +77,6 @@ public class MegaBeamSpell : ExampleSpell
         yield return new WaitForSeconds(chargeTime);
 
         // 5. 実際のFireSpellを実行
-        base.FireSpell(wandSpells, currentSpellIndex, rotationZ, strength, context);
+        base.FireSpell(wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
     }
 }

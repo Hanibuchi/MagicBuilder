@@ -9,6 +9,7 @@ public class OrbitCenter : MonoBehaviour, ISpellProjectileDestroyListener
 {
     private List<SpellBase> _satelliteSpells;
     private List<SpellBase> _wandSpells;
+    List<ISpellCastListener> listeners;
     private List<int> _satelliteIndices;
     private SpellContext _context;
     private float _magicCircleDelay;
@@ -18,7 +19,7 @@ public class OrbitCenter : MonoBehaviour, ISpellProjectileDestroyListener
     private Rigidbody2D _rb;
     private bool _hasFired = false;
 
-    public void Init(List<SpellBase> satelliteSpells, List<SpellBase> wandSpells, List<int> satelliteIndices, SpellContext context, float magicCircleDelay, float radius, float minInitSpeed)
+    public void Init(List<SpellBase> satelliteSpells, List<ISpellCastListener> listeners, List<SpellBase> wandSpells, List<int> satelliteIndices, SpellContext context, float magicCircleDelay, float radius, float minInitSpeed)
     {
         _satelliteSpells = satelliteSpells;
         _wandSpells = wandSpells;
@@ -27,6 +28,7 @@ public class OrbitCenter : MonoBehaviour, ISpellProjectileDestroyListener
         _magicCircleDelay = magicCircleDelay;
         _radius = radius;
         _minInitSpeed = minInitSpeed;
+        this.listeners = listeners;
 
         _rb = GetComponent<Rigidbody2D>();
 
@@ -139,7 +141,7 @@ public class OrbitCenter : MonoBehaviour, ISpellProjectileDestroyListener
 
             // 発射（反時計回りに合わせて：上側は後ろ向き、下側は前向きに発射）
             float rotationZ = i % 2 == 0 ? centerRotationZ + 180f : centerRotationZ;
-            spell.FireSpell(_wandSpells, _satelliteIndices[i], rotationZ, 1.0f, satContext);
+            spell.FireSpell(_wandSpells, listeners, _satelliteIndices[i], rotationZ, 1.0f, satContext);
         }
     }
 

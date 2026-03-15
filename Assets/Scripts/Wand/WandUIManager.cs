@@ -66,6 +66,20 @@ public class WandUIManager : MonoBehaviour
     }
 
     /// <summary>
+    /// 指定されたインデックスのWandUIを取得します。
+    /// </summary>
+    /// <param name="index">取得するWandUIのインデックス。</param>
+    /// <returns>指定されたインデックスのWandUI。範囲外の場合はnullを返します。</returns>
+    public WandUI GetWandUI(int index)
+    {
+        if (index >= 0 && index < activeWandUIs.Count)
+        {
+            return activeWandUIs[index];
+        }
+        return null;
+    }
+
+    /// <summary>
     /// WandUIのコンテナとWandUIのインスタンスを生成し、WandUIを返します。
     /// </summary>
     /// <returns>生成されたWandUIコンポーネント。失敗した場合はnull。</returns>
@@ -129,11 +143,11 @@ public class WandUIManager : MonoBehaviour
     /// <summary>
     /// 全てのWandUIに、SpellUIのドラッグが開始されたことを通知します。
     /// </summary>
-    public void NotifySpellDragBeganToAll()
+    public void NotifySpellDragBeganToAll(SpellUI draggedSpellUI)
     {
         foreach (var wandUI in activeWandUIs)
         {
-            wandUI.NotifySpellDragBegan();
+            wandUI.NotifySpellDragBegan(draggedSpellUI);
         }
         // ★ 追加: 登録された全てのハンドラにも通知
         foreach (var handler in dragHandlers)

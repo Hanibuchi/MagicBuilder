@@ -44,7 +44,9 @@ public class HomingSpell : SpellBase
     /// 呪文の主要な効果を実行します。
     /// </summary>
     public override void FireSpell(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
         // context.ProjectileModifier にホーミングコンポーネントの付与と初期化を登録
@@ -65,10 +67,14 @@ public class HomingSpell : SpellBase
                 homing = projectile.AddComponent<HomingMover>();
                 homing.Initialize(mask, searchRange, targetSpringConstant, effectDuration);
             }
+            if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+            {
+                listeners[currentSpellIndex]?.PlayCastAnimation();
+            }
         };
         FireSpellForNextSpells(
             GetNextSpellOffsets(wandSpells, currentSpellIndex),
-            wandSpells, currentSpellIndex, rotationZ, strength, context
+            wandSpells, listeners, currentSpellIndex, rotationZ, strength, context
         );
     }
 }

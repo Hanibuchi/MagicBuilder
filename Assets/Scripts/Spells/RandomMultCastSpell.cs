@@ -32,6 +32,7 @@ public class RandomMultCastSpell : MultCastSpell
 
     public override void FireSpell(
         List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
         int currentSpellIndex,
         float rotationZ,
         float strength,
@@ -49,6 +50,6 @@ public class RandomMultCastSpell : MultCastSpell
             selected[i] = allTargetIndices[Random.Range(0, allTargetIndices.Length)];
         }
 
-        FireSelectedSpells(selected, wandSpells, currentSpellIndex, rotationZ, strength, context);
+        FireSelectedSpells(selected, wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
     }
 }

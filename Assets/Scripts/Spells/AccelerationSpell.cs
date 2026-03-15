@@ -16,7 +16,9 @@ public class AccelerationSpell : SpellBase
     }
 
     public override void FireSpell(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
         context.ProjectileModifier += (projectile) =>
@@ -32,10 +34,20 @@ public class AccelerationSpell : SpellBase
                     modifier = projectile.AddComponent<EnemySpeedModifier>();
                     modifier.Initialize(strengthMultiplier, effectDuration);
                 }
+
+                if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+                {
+                    listeners[currentSpellIndex]?.PlayCastAnimation();
+                }
             }
         };
 
-        FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, currentSpellIndex, rotationZ, strength * strengthMultiplier, context);
+        FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, listeners, currentSpellIndex, rotationZ, strength * strengthMultiplier, context);
+
+        if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+        {
+            listeners[currentSpellIndex]?.PlayCastAnimation();
+        }
     }
 
     readonly int[] nextSpellOffsets = { 1 };

@@ -43,7 +43,9 @@ public class TeleportHomingSpell : SpellBase
     }
 
     public override void FireSpell(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
         // ProjectileModifierに転位コンポーネントの付与と初期化を登録
@@ -60,11 +62,15 @@ public class TeleportHomingSpell : SpellBase
                 mover = projectile.AddComponent<TeleportHomingMover>();
                 mover.Initialize(mask, searchRange, teleportInterval, rangeVisualPrefab, animationDuration, effectDuration);
             }
+            if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+            {
+                listeners[currentSpellIndex]?.PlayCastAnimation();
+            }
         };
 
         FireSpellForNextSpells(
             GetNextSpellOffsets(wandSpells, currentSpellIndex),
-            wandSpells, currentSpellIndex, rotationZ, strength, context
+            wandSpells, listeners, currentSpellIndex, rotationZ, strength, context
         );
     }
 }

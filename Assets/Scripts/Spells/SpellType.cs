@@ -63,6 +63,7 @@ public enum SpellType
     Following,       // 追従
     TurnRight,
     TurnLeft,
+    Invert,          // 反転
     InvertHorizontal, // 左右反転
     InvertVertical,   // 上下反転
     Upward,         // 上方

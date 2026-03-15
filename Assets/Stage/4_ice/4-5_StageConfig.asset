@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5a650050e8b9af4fb26a39e8f20ffc0, type: 3}
+  m_Name: 4-5_StageConfig
+  m_EditorClassIdentifier: 
+  stageName: 4-5
+  subStageName: "\u516C\u8EE2"
+  SceneName: Stage_Ice_5
+  clearCondition: 0
+  enemyPhases: []
+  puzzleSpells:
+  - {fileID: 11400000, guid: 1eb400a9e1b4a1a40ac990b73b153323, type: 2}
+  - {fileID: 11400000, guid: 5c8a7351f36c0ac4999d4762af8f1ab6, type: 2}
+  - {fileID: 11400000, guid: 5c8a7351f36c0ac4999d4762af8f1ab6, type: 2}
+  - {fileID: 11400000, guid: 2c072333fd6e8cf4aabb4f5b74d5e7e7, type: 2}
+  stageType: 1

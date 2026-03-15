@@ -9,7 +9,9 @@ public class RemoteSpell : SpellBase
     [SerializeField] float magicCircleDelay = 0.3f;
 
     public override void FireSpell(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
         // 発射方向（rotationZ）に向かって一定距離離れた位置を新しいCasterPositionにする
@@ -25,26 +27,30 @@ public class RemoteSpell : SpellBase
             {
                 projectile.transform.position += (Vector3)offset;
             }
+            if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+            {
+                listeners[currentSpellIndex]?.PlayCastAnimation();
+            }
         };
 
         if (SpellScheduler.Instance != null && magicCircleDelay > 0)
         {
             SpellScheduler.Instance.StartCoroutine(FireNextSpellsDelayed(
-                wandSpells, currentSpellIndex, rotationZ, strength, context));
+                wandSpells, listeners, currentSpellIndex, rotationZ, strength, context));
         }
         else
         {
-            FireNextSpells(wandSpells, currentSpellIndex, rotationZ, strength, context);
+            FireNextSpells(wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
         }
     }
 
-    private void FireNextSpells(List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ, float strength, SpellContext context)
+    private void FireNextSpells(List<SpellBase> wandSpells, List<ISpellCastListener> listeners, int currentSpellIndex, float rotationZ, float strength, SpellContext context)
     {
-        FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, currentSpellIndex, rotationZ, strength, context);
+        FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
     }
 
     private IEnumerator FireNextSpellsDelayed(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells, List<ISpellCastListener> listeners, int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
         MagicCircle magicCircle = null;
@@ -61,12 +67,18 @@ public class RemoteSpell : SpellBase
                 // 💡 modifierColorを使用して魔法陣を表示
                 Color color = SpellCommonData.Instance.modifierColor;
                 magicCircle.Show(magicCircleDelay, color: color);
+
+                if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+                {
+                    listeners[currentSpellIndex]?.PlayCastAnimation();
+                }
+
                 // 魔法陣が出てから少し待ってから発射
                 yield return new WaitForSeconds(magicCircleDelay);
             }
         }
 
-        FireNextSpells(wandSpells, currentSpellIndex, rotationZ, strength, context);
+        FireNextSpells(wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
 
         // 消滅演出の開始
         if (magicCircle != null)

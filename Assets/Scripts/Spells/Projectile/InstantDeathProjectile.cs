@@ -41,6 +41,11 @@ public class InstantDeathProjectile : SpellProjectileDamageSource
             health = target.GetComponentInChildren<CharacterHealth>();
         }
 
+        if (health is ReflectiveBarrierHealth)
+        {
+            return;
+        }
+
         if (health != null && !health.IsDead)
         {
             health.Kill();

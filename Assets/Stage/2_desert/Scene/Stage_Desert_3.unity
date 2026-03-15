@@ -2702,7 +2702,7 @@ PrefabInstance:
     - target: {fileID: 551951246347731591, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: droppableSpells.Array.data[1].spellData
       value: 
-      objectReference: {fileID: 11400000, guid: b8a079991beeb2c4aa1f6171af327e46, type: 2}
+      objectReference: {fileID: 11400000, guid: 8c7f17af7ec13c74d836f6078641b135, type: 2}
     - target: {fileID: 551951246347731591, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: droppableSpells.Array.data[0].dropChance
       value: 1
@@ -3240,7 +3240,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6298660276808778034, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
       propertyPath: droppableSpells.Array.size
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6298660276808778034, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
       propertyPath: droppableSpells.Array.data[0].spellData
@@ -3255,6 +3255,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: f2f2f2f2f2f2f2f2f2f2f2f2f2f2f2f2, type: 2}
     - target: {fileID: 6298660276808778034, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
+      propertyPath: droppableSpells.Array.data[3].spellData
+      value: 
+      objectReference: {fileID: 11400000, guid: 202c2a40c82b5d746b2718eee9958c9c, type: 2}
+    - target: {fileID: 6298660276808778034, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
+      propertyPath: droppableSpells.Array.data[4].spellData
+      value: 
+      objectReference: {fileID: 11400000, guid: 202c2a40c82b5d746b2718eee9958c9c, type: 2}
+    - target: {fileID: 6298660276808778034, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
       propertyPath: droppableSpells.Array.data[0].dropChance
       value: 1
       objectReference: {fileID: 0}
@@ -3264,6 +3272,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6298660276808778034, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
       propertyPath: droppableSpells.Array.data[2].dropChance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6298660276808778034, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
+      propertyPath: droppableSpells.Array.data[3].dropChance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6298660276808778034, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
+      propertyPath: droppableSpells.Array.data[4].dropChance
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6613511817745206429, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}

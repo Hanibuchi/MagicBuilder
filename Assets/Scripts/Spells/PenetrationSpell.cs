@@ -6,10 +6,12 @@ public class PenetrationSpell : SpellBase
 {
     [SerializeField] private float effectDuration = 30f;
 
-    public override void FireSpell(List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ, float strength, SpellContext context)
+    public override void FireSpell(List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex, float rotationZ, float strength, SpellContext context)
     {
-        AddPenetrationModifier(context);
-        FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, currentSpellIndex, rotationZ, strength, context);
+        AddPenetrationModifier(context, listeners, currentSpellIndex);
+        FireSpellForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
     }
 
     public override void DisplayAimingLine(List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ, float strength, SpellContext context, bool clearLine = false)
@@ -17,7 +19,7 @@ public class PenetrationSpell : SpellBase
         DisplayAimingLineForNextSpells(GetNextSpellOffsets(wandSpells, currentSpellIndex), wandSpells, currentSpellIndex, rotationZ, strength, context, clearLine);
     }
 
-    private void AddPenetrationModifier(SpellContext context)
+    private void AddPenetrationModifier(SpellContext context, List<ISpellCastListener> listeners, int currentSpellIndex)
     {
         context.ProjectileModifier += (GameObject obj) =>
         {
@@ -31,6 +33,10 @@ public class PenetrationSpell : SpellBase
                 {
                     modifier = obj.AddComponent<PenetrationModifier>();
                     modifier.Initialize(effectDuration);
+                }
+                if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+                {
+                    listeners[currentSpellIndex]?.PlayCastAnimation();
                 }
             }
         };

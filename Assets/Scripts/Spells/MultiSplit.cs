@@ -77,6 +77,7 @@ public class MultiSplit : SpellBase
 
     public override void FireSpell(
         List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
         int currentSpellIndex,
         float rotationZ,
         float strength,
@@ -115,7 +116,9 @@ public class MultiSplit : SpellBase
                     FireSingleSpellDelayed(
                         spellToFire,
                         wandSpells,
+                        listeners,
                         targetIndex,
+                        currentSpellIndex,
                         rotationZ,
                         strength,
                         newContext,
@@ -133,7 +136,9 @@ public class MultiSplit : SpellBase
     private IEnumerator FireSingleSpellDelayed(
         SpellBase spellToFire,
         List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
         int targetIndex,
+        int currentSpellIndex,
         float rotationZ,
         float strength,
         SpellContext newContext,
@@ -146,6 +151,11 @@ public class MultiSplit : SpellBase
 
         if (prefab != null)
         {
+            if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+            {
+                listeners[currentSpellIndex]?.PlayCastAnimation();
+            }
+
             GameObject circleGo = Instantiate(prefab, newContext.CasterPosition, Quaternion.Euler(0, 0, rotationZ));
             magicCircle = circleGo.GetComponent<MagicCircle>();
 
@@ -160,7 +170,7 @@ public class MultiSplit : SpellBase
 
         spellToFire.FireSpell(
             wandSpells,
-            targetIndex,
+            listeners, targetIndex,
             rotationZ,
             strength,
             newContext

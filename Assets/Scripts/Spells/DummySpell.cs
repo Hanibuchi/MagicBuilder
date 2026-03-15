@@ -22,5 +22,7 @@ public class DummySpell : SpellBase
 
     // 抽象メソッドのダミー実装
     public override void DisplayAimingLine(List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ, float strength, SpellContext context, bool clearLine = false) { }
-    public override void FireSpell(List<SpellBase> wandSpells, int currentSpellIndex, float rotationZ, float strength, SpellContext context) { }
+    public override void FireSpell(List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex, float rotationZ, float strength, SpellContext context) { }
 }

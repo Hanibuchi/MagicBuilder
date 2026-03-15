@@ -7,6 +7,15 @@ public class ShortenSpell : SpellBase
     [SerializeField] float coolDownMultiplier = 1f;
     [SerializeField] float coolDownReduction = 0f;
 
+    public override int Preprocess(List<SpellBase> wandSpells, int currentSpellIndex, List<ISpellCastListener> listeners = null)
+    {
+        if (listeners != null && currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+        {
+            listeners[currentSpellIndex]?.PlayCastAnimation();
+        }
+        return base.Preprocess(wandSpells, currentSpellIndex, listeners);
+    }
+
     public override float ModifyCooldown(float currentCooldown)
     {
         return currentCooldown * coolDownMultiplier - coolDownReduction;

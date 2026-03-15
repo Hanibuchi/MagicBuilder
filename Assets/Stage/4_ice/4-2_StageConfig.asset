@@ -13,12 +13,314 @@ MonoBehaviour:
   m_Name: 4-2_StageConfig
   m_EditorClassIdentifier: 
   stageName: 4-2
-  subStageName: New SubStage
-  SceneName: Stage_Ice_2
-  clearCondition: 0
-  enemyPhases: []
-  puzzleSpells:
-  - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
-  - {fileID: 11400000, guid: ca748ee532558a04db48184ac5b52399, type: 2}
-  - {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
-  stageType: 1
+  subStageName: "\u6C37\u306E\u5CF6"
+  SceneName: Stage_Ice
+  clearCondition: 1
+  enemyPhases:
+  - conditionType: 0
+    conditionValue: 0
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 7333475907507572004, guid: 0874894bc718f7d4ab2c05dd46df722e, type: 3}
+      isBoss: 0
+      customDroppableSpells:
+      - spellData: {fileID: 11400000, guid: 5c8a7351f36c0ac4999d4762af8f1ab6, type: 2}
+        dropChance: 1
+  - conditionType: 1
+    conditionValue: 24
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 4
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 7333475907507572004, guid: 0874894bc718f7d4ab2c05dd46df722e, type: 3}
+      isBoss: 0
+      customDroppableSpells:
+      - spellData: {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
+        dropChance: 1
+  - conditionType: 0
+    conditionValue: 24
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 7333475907507572004, guid: 0874894bc718f7d4ab2c05dd46df722e, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 2
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 2
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 2
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 7333475907507572004, guid: 0874894bc718f7d4ab2c05dd46df722e, type: 3}
+      isBoss: 0
+      customDroppableSpells:
+      - spellData: {fileID: 11400000, guid: 6abafd8e81b8866468c46b473fdd1073, type: 2}
+        dropChance: 1
+  - conditionType: 0
+    conditionValue: 2
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      isBoss: 0
+      customDroppableSpells:
+      - spellData: {fileID: 11400000, guid: 1ae5b79ace718244a92dfb03c51f91d4, type: 2}
+        dropChance: 1
+  - conditionType: 0
+    conditionValue: 24
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 9207851854287913248, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 16
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 5046662643123802713, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
+      isBoss: 0
+      customDroppableSpells:
+      - spellData: {fileID: 11400000, guid: ca748ee532558a04db48184ac5b52399, type: 2}
+        dropChance: 1
+  - conditionType: 0
+    conditionValue: 24
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 7333475907507572004, guid: 0874894bc718f7d4ab2c05dd46df722e, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 2
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 7333475907507572004, guid: 0874894bc718f7d4ab2c05dd46df722e, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 2
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 7333475907507572004, guid: 0874894bc718f7d4ab2c05dd46df722e, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 2
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 7333475907507572004, guid: 0874894bc718f7d4ab2c05dd46df722e, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 2
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 7333475907507572004, guid: 0874894bc718f7d4ab2c05dd46df722e, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 2
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 7333475907507572004, guid: 0874894bc718f7d4ab2c05dd46df722e, type: 3}
+      isBoss: 0
+      customDroppableSpells:
+      - spellData: {fileID: 11400000, guid: 2c072333fd6e8cf4aabb4f5b74d5e7e7, type: 2}
+        dropChance: 1
+  - conditionType: 0
+    conditionValue: 24
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 1
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 1
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 1
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 1
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 1
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 1
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      isBoss: 0
+      customDroppableSpells:
+      - spellData: {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
+        dropChance: 1
+  - conditionType: 0
+    conditionValue: 24
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 9207851854287913248, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 1
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 9207851854287913248, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 1
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 9207851854287913248, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 1
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 9207851854287913248, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 1
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 9207851854287913248, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 1
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 9207851854287913248, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
+      isBoss: 0
+      customDroppableSpells:
+      - spellData: {fileID: 11400000, guid: 7e3feae1173e04644a83b7a29c6a72bd, type: 2}
+        dropChance: 1
+  - conditionType: 0
+    conditionValue: 24
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 24
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 1
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 1
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 16
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 1
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 1
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 1
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 1
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells:
+      - spellData: {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
+        dropChance: 1
+  - conditionType: 0
+    conditionValue: 1
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 1
+    conditionValue: 16
+    isBossPhase: 1
+    spawnerConfig:
+      enemyPrefab: {fileID: 7981699022232761973, guid: 97d64d8723cc2414ab250a3d6ff89bb6, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 1
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 5046662643123802713, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
+      isBoss: 1
+      customDroppableSpells: []
+  puzzleSpells: []
+  stageType: 0

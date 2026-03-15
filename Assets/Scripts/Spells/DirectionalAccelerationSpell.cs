@@ -42,7 +42,9 @@ public class DirectionalAccelerationSpell : SpellBase
     }
 
     public override void FireSpell(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
         // ProjectileModifierに速度追加の処理を登録
@@ -54,11 +56,15 @@ public class DirectionalAccelerationSpell : SpellBase
                 // Unity 2023以降の Rigidbody2D.linearVelocity を使用
                 rb.linearVelocity += force;
             }
+            if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+            {
+                listeners[currentSpellIndex]?.PlayCastAnimation();
+            }
         };
 
         FireSpellForNextSpells(
             GetNextSpellOffsets(wandSpells, currentSpellIndex),
-            wandSpells, currentSpellIndex, rotationZ, strength, context
+            wandSpells, listeners, currentSpellIndex, rotationZ, strength, context
         );
     }
 

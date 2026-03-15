@@ -105,7 +105,7 @@ public class MyCharacterController : MyObjectController, IStatusEffectReceiver
 
     public override void NotifyDieSilent()
     {
-        base.NotifyDieSilent();
+        SetHitBoxesEnabled(false);
         if (animator == null || !animator.enabled) return;
         animator.SetBool(PARAM_IS_DEAD, true);
     }

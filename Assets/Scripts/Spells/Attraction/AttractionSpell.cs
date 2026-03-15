@@ -20,7 +20,9 @@ public class AttractionSpell : SpellBase
     [SerializeField] private float effectDuration = 30f;
 
     public override void FireSpell(
-        List<SpellBase> wandSpells, int currentSpellIndex,
+        List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int currentSpellIndex,
         float rotationZ, float strength, SpellContext context)
     {
         context.ProjectileModifier += (GameObject obj) =>
@@ -34,12 +36,16 @@ public class AttractionSpell : SpellBase
                 mover = obj.AddComponent<AttractionMover>();
                 mover.AddAttractionData(range, force, attractionEffectPrefab, repulsionEffectPrefab, targetLayer, effectDuration);
             }
+            if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+            {
+                listeners[currentSpellIndex]?.PlayCastAnimation();
+            }
         };
 
         // 次の呪文を実行
         FireSpellForNextSpells(
             GetNextSpellOffsets(wandSpells, currentSpellIndex),
-            wandSpells, currentSpellIndex, rotationZ, strength, context);
+            wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
     }
 
     private readonly int[] _nextSpellOffsets = { 1 };

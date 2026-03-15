@@ -15,7 +15,7 @@ MonoBehaviour:
   category: 1
   spellType: Expansion
   cooldown: 0.5
-  spellName: "\u81A8\u5F35\u546A\u6587"
+  spellName: "\u81A8\u5F35"
   purchaseCosts: 64000000c80000009001000020030000
   icon: {fileID: 3268053152027995096, guid: 4097139315edc2e42beab8c65644c0c6, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}

@@ -110,6 +110,7 @@ public abstract class SpellBase : ScriptableObject
     /// <param name="context">発射時の環境情報を持つインスタンス</param>
     public virtual void FireSpell(
         List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
         int currentSpellIndex,
         float rotationZ,
         float strength,
@@ -119,7 +120,7 @@ public abstract class SpellBase : ScriptableObject
         // GetNextSpellOffsetsで得られた次の呪文に対して、同じ引数でFireSpellを呼び出す
         FireSpellForNextSpells(
             GetNextSpellOffsets(wandSpells, currentSpellIndex),
-            wandSpells, currentSpellIndex, rotationZ, strength, context
+            wandSpells, listeners, currentSpellIndex, rotationZ, strength, context
         );
     }
 
@@ -133,13 +134,16 @@ public abstract class SpellBase : ScriptableObject
     /// <param name="rotationZ">発射角度（Z軸回転）</param>
     /// <param name="strength">発射の強さ</param>
     /// <param name="context">発射時の環境情報を持つインスタンス</param>
+    /// <param name="magicCircleDelay">魔法陣を表示するまでの時間（秒）。0以下の場合は即時発動。</param>
     protected void FireSpellForNextSpells(
         int[] nextSpelloffsets,
         List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
         int currentSpellIndex,
         float rotationZ,
         float strength,
-        SpellContext context
+        SpellContext context,
+        float magicCircleDelay = 0f
     )
     {
         int count = 0;
@@ -151,20 +155,74 @@ public abstract class SpellBase : ScriptableObject
             // インデックスが杖リストの範囲内にあるかチェック
             if (targetIndex >= 0 && targetIndex < wandSpells.Count)
             {
-                SpellBase spellToDisplay = wandSpells[targetIndex];
+                SpellBase spellToFire = wandSpells[targetIndex];
                 if (nextSpelloffsets.Length >= 2 && count > 0)
                     context = context.Clone();
 
-                // 対象の呪文のDisplayAimingLineを呼び出し
-                spellToDisplay?.FireSpell(
-                    wandSpells,
-                    targetIndex,        // 新しい開始インデックス
-                    rotationZ,
-                    strength,
-                    context
-                );
+                if (magicCircleDelay > 0f && SpellScheduler.Instance != null)
+                {
+                    SpellScheduler.Instance.StartCoroutine(FireSingleSpellWithMagicCircleCoroutine(
+                        spellToFire, wandSpells, listeners, targetIndex, currentSpellIndex, rotationZ, strength, context, magicCircleDelay));
+                }
+                else
+                {
+                    // 対象の呪文のFireSpellを呼び出し
+                    spellToFire?.FireSpell(
+                        wandSpells,
+                        listeners, targetIndex,
+                        rotationZ,
+                        strength,
+                        context
+                    );
+                }
                 count++;
             }
+        }
+    }
+
+    private System.Collections.IEnumerator FireSingleSpellWithMagicCircleCoroutine(
+        SpellBase spellToFire,
+        List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
+        int targetIndex,
+        int currentSpellIndex,
+        float rotationZ,
+        float strength,
+        SpellContext context,
+        float magicCircleDelay
+    )
+    {
+        MagicCircle magicCircle = null;
+        GameObject prefab = SpellCommonData.Instance?.magicCirclePrefab;
+
+        if (prefab != null)
+        {
+            if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+            {
+                listeners[currentSpellIndex]?.PlayCastAnimation();
+            }
+
+            GameObject circleGo = Instantiate(prefab, context.CasterPosition, Quaternion.Euler(0, 0, rotationZ));
+            magicCircle = circleGo.GetComponent<MagicCircle>();
+
+            if (magicCircle != null)
+            {
+                magicCircle.Show(magicCircleDelay, color: SpellCommonData.Instance?.branchColor);
+                yield return new WaitForSeconds(magicCircleDelay);
+            }
+        }
+
+        spellToFire?.FireSpell(
+            wandSpells,
+            listeners, targetIndex,
+            rotationZ,
+            strength,
+            context
+        );
+
+        if (magicCircle != null)
+        {
+            magicCircle.Hide(magicCircleDelay);
         }
     }
 
@@ -294,8 +352,21 @@ public abstract class SpellBase : ScriptableObject
     /// </summary>
     /// <param name="wandSpells">杖に格納されている呪文のオリジナルの配列。</param>
     /// <param name="currentSpellIndex">現在処理中の呪文が杖の配列内で何番目かを示すインデックス。</param>
+    /// <param name="listeners">呪文のリスナー配列。</param>
     /// <returns>次の呪文のインデックス。リスト編集後インデックスが変わってる場合があるため。</returns>
-    public virtual int Preprocess(List<SpellBase> wandSpells, int currentSpellIndex)
+    public virtual int Preprocess(List<SpellBase> wandSpells, int currentSpellIndex, List<ISpellCastListener> listeners = null)
+    {
+        return currentSpellIndex + 1;
+    }
+
+    /// <summary>
+    /// 呪文の発射前に行うリスナー配列の前処理。
+    /// 特定の呪文（例：〇倍呪文）はここで配列を編集する。
+    /// </summary>
+    /// <param name="listeners">呪文のリスナー配列。</param>
+    /// <param name="currentSpellIndex">現在処理中の呪文が配列内で何番目かを示すインデックス。</param>
+    /// <returns>次の呪文のインデックス。リスト編集後インデックスが変わってる場合があるため。</returns>
+    public virtual int Preprocess(List<ISpellCastListener> listeners, int currentSpellIndex)
     {
         return currentSpellIndex + 1;
     }
@@ -411,4 +482,12 @@ public abstract class SpellBase : ScriptableObject
 
         return detailItems;
     }
+}
+
+/// <summary>
+/// 呪文が実行されたことを通知し、対応するUIでアニメーションなどを再生するためのインターフェース。
+/// </summary>
+public interface ISpellCastListener
+{
+    void PlayCastAnimation();
 }

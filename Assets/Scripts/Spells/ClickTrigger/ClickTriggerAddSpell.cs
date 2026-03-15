@@ -95,6 +95,7 @@ public class ClickTriggerAddSpell : SpellBase
 
     public override void FireSpell(
         List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
         int currentSpellIndex,
         float rotationZ,
         float strength,
@@ -115,13 +116,13 @@ public class ClickTriggerAddSpell : SpellBase
                     SpellBase triggerSpell = wandSpells[triggerSpellIndex];
                     if (triggerSpell != null)
                     {
-                        context.ProjectileModifier += CreateClickTriggerAction(wandSpells, currentSpellIndex, context);
+                        context.ProjectileModifier += CreateClickTriggerAction(wandSpells, listeners, currentSpellIndex, context);
                     }
                 }
 
                 projectileSpell.FireSpell(
                     wandSpells,
-                    projectileSpellIndex,
+                    listeners, projectileSpellIndex,
                     rotationZ,
                     strength,
                     context
@@ -132,12 +133,18 @@ public class ClickTriggerAddSpell : SpellBase
 
     public static Action<GameObject> CreateClickTriggerAction(
         List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
         int currentSpellIndex,
         SpellContext context)
     {
         return (GameObject obj) =>
         {
             if (obj == null) return;
+
+            if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+            {
+                listeners[currentSpellIndex]?.PlayCastAnimation();
+            }
 
             if (currentSpellIndex >= 0 && currentSpellIndex < wandSpells.Count)
             {
@@ -164,7 +171,7 @@ public class ClickTriggerAddSpell : SpellBase
                 if (triggerSpellIndex >= 0 && triggerSpellIndex < wandSpells.Count)
                     triggerSpell = wandSpells[triggerSpellIndex];
                 var modifier = obj.AddComponent<ClickTriggerProjectileModifier>();
-                modifier.Init(triggerSpell, wandSpells, triggerSpellIndex, new SpellContext(context.layer), delay);
+                modifier.Init(triggerSpell, wandSpells, listeners, triggerSpellIndex, new SpellContext(context.layer), delay);
             }
         };
     }

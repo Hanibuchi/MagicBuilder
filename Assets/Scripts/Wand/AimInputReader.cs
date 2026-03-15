@@ -63,6 +63,10 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
         if (isAiming && aimController != null)
         {
+            Vector2 dragDelta = currentDragPoint - (Vector2)Camera.main.WorldToScreenPoint(startPointTransform.position);
+
+            // 2. 角度と強さを更新（UpdateメソッドでUpdateAimLineが呼ばれる）
+            CalculateAimParameters(dragDelta, out currentAngle, out currentPower);
             aimController.UpdateAimLine(currentAngle, currentPower);
         }
     }
@@ -87,6 +91,8 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         }
     }
 
+    Vector2 currentDragPoint;
+
     /// <summary>
     /// ドラッグ開始時の処理
     /// </summary>
@@ -100,9 +106,10 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         }
 
         isAiming = true;
-        
+
+        currentDragPoint = eventData.position;
         // 開始時の角度と強さを初期化
-        Vector2 dragDelta = eventData.position - (Vector2)Camera.main.WorldToScreenPoint(startPointTransform.position);
+        Vector2 dragDelta = currentDragPoint - (Vector2)Camera.main.WorldToScreenPoint(startPointTransform.position);
         CalculateAimParameters(dragDelta, out currentAngle, out currentPower);
     }
 
@@ -115,7 +122,9 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
         // 1. ドラッグの変位（画面座標）を計算
         // 現在のドラッグ位置から、発射開始地点のスクリーン座標を引く
-        Vector2 dragDelta = eventData.position - (Vector2)Camera.main.WorldToScreenPoint(startPointTransform.position);
+
+        currentDragPoint = eventData.position;
+        Vector2 dragDelta = currentDragPoint - (Vector2)Camera.main.WorldToScreenPoint(startPointTransform.position);
 
         // 2. 角度と強さを更新（UpdateメソッドでUpdateAimLineが呼ばれる）
         CalculateAimParameters(dragDelta, out currentAngle, out currentPower);
@@ -130,7 +139,8 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
         // 1. ドラッグの変位（画面座標）を計算
         // 現在のドラッグ位置から、発射開始地点のスクリーン座標を引く
-        Vector2 dragDelta = eventData.position - (Vector2)Camera.main.WorldToScreenPoint(startPointTransform.position);
+        currentDragPoint = eventData.position;
+        Vector2 dragDelta = currentDragPoint - (Vector2)Camera.main.WorldToScreenPoint(startPointTransform.position);
 
         // 2. 角度と強さを計算
         CalculateAimParameters(dragDelta, out float angle, out float power);

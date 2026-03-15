@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5a650050e8b9af4fb26a39e8f20ffc0, type: 3}
+  m_Name: 5-3_StageConfig
+  m_EditorClassIdentifier: 
+  stageName: 5-3
+  subStageName: "\u3050\u308B\u3050\u308B"
+  SceneName: Stage_Sky_3
+  clearCondition: 0
+  enemyPhases: []
+  puzzleSpells:
+  - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
+  - {fileID: 11400000, guid: a3a38a67181760f4283b87dbec380a68, type: 2}
+  - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
+  - {fileID: 11400000, guid: 54912ffe69f8a8b4e82946c29c813639, type: 2}
+  - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
+  - {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
+  - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
+  stageType: 1

@@ -53,6 +53,14 @@ PrefabInstance:
       value: MegaBeamTrajectory Variant
       objectReference: {fileID: 0}
     - target: {fileID: 7284797887803299245, guid: 809763920d4bb744cbf38dcbd428d9d5, type: 3}
+      propertyPath: m_SortingLayer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7284797887803299245, guid: 809763920d4bb744cbf38dcbd428d9d5, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1165936911
+      objectReference: {fileID: 0}
+    - target: {fileID: 7284797887803299245, guid: 809763920d4bb744cbf38dcbd428d9d5, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: e98806878fae16d4e82bf3028a9e9beb, type: 2}
@@ -60,6 +68,14 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: cf9e8c84c594828419139224058d8b75, type: 2}
+    - target: {fileID: 9181428684227890148, guid: 809763920d4bb744cbf38dcbd428d9d5, type: 3}
+      propertyPath: m_SortingLayer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9181428684227890148, guid: 809763920d4bb744cbf38dcbd428d9d5, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1165936911
+      objectReference: {fileID: 0}
     - target: {fileID: 9181428684227890148, guid: 809763920d4bb744cbf38dcbd428d9d5, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 

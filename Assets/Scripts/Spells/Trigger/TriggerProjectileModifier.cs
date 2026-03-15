@@ -9,14 +9,16 @@ public class TriggerProjectileModifier : MonoBehaviour, ISpellProjectileTriggerL
 {
     private SpellBase _nextSpell;
     private List<SpellBase> _wandSpells;
+    List<ISpellCastListener> listeners;
     private int _nextSpellIndex;
     private SpellContext _context;
     private float _magicCircleDelay;
 
-    public void Init(SpellBase nextSpell, List<SpellBase> wandSpells, int nextSpellIndex, SpellContext context, float magicCircleDelay)
+    public void Init(SpellBase nextSpell, List<SpellBase> wandSpells, List<ISpellCastListener> listeners, int nextSpellIndex, SpellContext context, float magicCircleDelay)
     {
         _nextSpell = nextSpell;
         _wandSpells = wandSpells;
+        this.listeners = listeners;
         _nextSpellIndex = nextSpellIndex;
         _context = context;
         _magicCircleDelay = magicCircleDelay;
@@ -69,7 +71,7 @@ public class TriggerProjectileModifier : MonoBehaviour, ISpellProjectileTriggerL
             }
         }
 
-        _nextSpell.FireSpell(_wandSpells, _nextSpellIndex, rotationZ, 1, newContext);
+        _nextSpell.FireSpell(_wandSpells, listeners, _nextSpellIndex, rotationZ, 1, newContext);
 
         if (magicCircle != null)
         {

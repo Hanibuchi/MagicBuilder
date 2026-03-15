@@ -83,6 +83,7 @@ public class MyObjectController : MonoBehaviour, IDamageNotifier, IDieNotifier, 
     public virtual void NotifyDieSilent()
     {
         SetHitBoxesEnabled(false);
+        Destroy(transform.root.gameObject);
     }
 
     /// <summary>

@@ -143,19 +143,20 @@ public class MultCastSpell : SpellBase
     /// </summary>
     public override void FireSpell(
         List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
         int currentSpellIndex,
         float rotationZ,
         float strength,
         SpellContext context)
     {
         int[] targetIndices = GetTargetIndices(wandSpells, currentSpellIndex);
-        FireSelectedSpells(targetIndices, wandSpells, currentSpellIndex, rotationZ, strength, context);
+        FireSelectedSpells(targetIndices, wandSpells, listeners, currentSpellIndex, rotationZ, strength, context);
     }
 
     protected void FireSelectedSpells(
         int[] targetIndices,
         List<SpellBase> wandSpells,
-        int currentSpellIndex,
+        List<ISpellCastListener> listeners, int currentSpellIndex,
         float rotationZ,
         float strength,
         SpellContext context)
@@ -185,8 +186,7 @@ public class MultCastSpell : SpellBase
                 SpellContext newContext = (i == 0) ? context : context.Clone();
 
                 // 同じインデックスが指定されている場合、callIdをインクリメントして区別できるようにする
-                int currentCallCount = 0;
-                callCountPerIndex.TryGetValue(targetIndex, out currentCallCount);
+                callCountPerIndex.TryGetValue(targetIndex, out int currentCallCount);
                 newContext.callId = currentCallCount;
                 callCountPerIndex[targetIndex] = currentCallCount + 1;
 
@@ -201,7 +201,9 @@ public class MultCastSpell : SpellBase
                             FireSingleSpellDelayed(
                                 spellToFire,
                                 wandSpells,
+                                listeners,
                                 targetIndex,
+                                currentSpellIndex,
                                 rotationZ,
                                 strength,
                                 newContext,
@@ -223,7 +225,9 @@ public class MultCastSpell : SpellBase
     protected IEnumerator FireSingleSpellDelayed(
         SpellBase spellToFire,
         List<SpellBase> wandSpells,
+        List<ISpellCastListener> listeners,
         int targetIndex,
+        int currentSpellIndex,
         float rotationZ,
         float strength,
         SpellContext newContext,
@@ -238,6 +242,11 @@ public class MultCastSpell : SpellBase
         // 💡 魔法陣の表示演出を追加
         if (prefab != null)
         {
+            if (currentSpellIndex >= 0 && currentSpellIndex < listeners.Count)
+            {
+                listeners[currentSpellIndex]?.PlayCastAnimation();
+            }
+
             GameObject circleGo = Instantiate(prefab, newContext.CasterPosition, Quaternion.Euler(0, 0, rotationZ));
             magicCircle = circleGo.GetComponent<MagicCircle>();
 
@@ -253,7 +262,7 @@ public class MultCastSpell : SpellBase
         // 待機後、呪文を発射
         spellToFire?.FireSpell(
             wandSpells,
-            targetIndex,
+            listeners, targetIndex,
             rotationZ,
             strength,
             newContext
