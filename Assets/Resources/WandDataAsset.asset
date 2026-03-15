@@ -31,7 +31,9 @@ MonoBehaviour:
       presentationSprite: {fileID: 2765907212958160120, guid: 00680ef11faee9b4c95610e8fbc6a97a, type: 3}
       wandSprite: {fileID: -5265215603963773043, guid: c4314b1012e639747bfb82bc1ebbcdd5, type: 3}
       maxSpellCount: 12
-      fixedSpells: []
+      fixedSpells:
+      - {fileID: 11400000, guid: 2565fe416e8d26d4f992ab07f62f23c9, type: 2}
+      - {fileID: 11400000, guid: 1ae5b79ace718244a92dfb03c51f91d4, type: 2}
       spells: []
   - type: 2
     wand:
@@ -41,7 +43,9 @@ MonoBehaviour:
       presentationSprite: {fileID: -2710494934234146192, guid: 00680ef11faee9b4c95610e8fbc6a97a, type: 3}
       wandSprite: {fileID: 3282382071364735620, guid: c4314b1012e639747bfb82bc1ebbcdd5, type: 3}
       maxSpellCount: 12
-      fixedSpells: []
+      fixedSpells:
+      - {fileID: 11400000, guid: 329d540d91f6b9c4dad938eeb8292538, type: 2}
+      - {fileID: 11400000, guid: 2b6bc10d96ece2a40927537c38623997, type: 2}
       spells: []
   - type: 3
     wand:
@@ -51,7 +55,9 @@ MonoBehaviour:
       presentationSprite: {fileID: -2323450122718096178, guid: 00680ef11faee9b4c95610e8fbc6a97a, type: 3}
       wandSprite: {fileID: 6492906738683769071, guid: c4314b1012e639747bfb82bc1ebbcdd5, type: 3}
       maxSpellCount: 12
-      fixedSpells: []
+      fixedSpells:
+      - {fileID: 11400000, guid: b59115d9b81783642b62fe10fc97b17b, type: 2}
+      - {fileID: 11400000, guid: 0d95613ceee16444aa8e41b156d25c40, type: 2}
       spells: []
   - type: 4
     wand:
@@ -61,7 +67,8 @@ MonoBehaviour:
       presentationSprite: {fileID: -4587206180212381754, guid: 00680ef11faee9b4c95610e8fbc6a97a, type: 3}
       wandSprite: {fileID: 6096887357460432995, guid: c4314b1012e639747bfb82bc1ebbcdd5, type: 3}
       maxSpellCount: 12
-      fixedSpells: []
+      fixedSpells:
+      - {fileID: 11400000, guid: d055bc26edd0bf34b8409aca1a6135ef, type: 2}
       spells: []
   - type: 5
     wand:
@@ -72,7 +79,8 @@ MonoBehaviour:
       wandSprite: {fileID: 1012713627532921925, guid: 2e69467cfff73bc4cb18f1a109d26ca0, type: 3}
       maxSpellCount: 12
       fixedSpells:
-      - {fileID: 11400000, guid: a3a38a67181760f4283b87dbec380a68, type: 2}
+      - {fileID: 11400000, guid: 202c2a40c82b5d746b2718eee9958c9c, type: 2}
+      - {fileID: 11400000, guid: 31b4d3e9e3f2e3043845c8a39a0daa4e, type: 2}
       spells: []
   - type: 6
     wand:
@@ -82,5 +90,8 @@ MonoBehaviour:
       presentationSprite: {fileID: -5837143296029263757, guid: 00680ef11faee9b4c95610e8fbc6a97a, type: 3}
       wandSprite: {fileID: 7978161678107738536, guid: 2e69467cfff73bc4cb18f1a109d26ca0, type: 3}
       maxSpellCount: 12
-      fixedSpells: []
+      fixedSpells:
+      - {fileID: 11400000, guid: 6b7a139abf2ffb24d9586ef6afe5485c, type: 2}
+      - {fileID: 11400000, guid: f734f0ddd7237494d8570619eed029af, type: 2}
+      - {fileID: 11400000, guid: 90b80b666522c234fa85ba1e9cfdcc25, type: 2}
       spells: []
