@@ -3321,7 +3321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChainBuilder
   chainPrefab: {fileID: 6707619393240409228, guid: 253fbab4d689d3f48a2085906564a110, type: 3}
-  chainLength: 11
+  chainLength: 12
   startBody: {fileID: 1055601949}
   endHinge: {fileID: 117328778}
 --- !u!1001 &1058639816

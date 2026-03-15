@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageName: 4-4
   subStageName: "\u6C37\u306E\u5CF6"
-  SceneName: Stage_Ice
+  SceneName: Stage_Template
   clearCondition: 1
   enemyPhases:
   - conditionType: 0
@@ -323,4 +323,5 @@ MonoBehaviour:
       isBoss: 1
       customDroppableSpells: []
   puzzleSpells: []
+  puzzleWands: 
   stageType: 0
