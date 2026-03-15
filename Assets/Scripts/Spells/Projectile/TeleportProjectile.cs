@@ -59,6 +59,11 @@ public class TeleportProjectile : SpellProjectileDamageSource
 
             // プレイヤーを指定した座標に移動
             PlayerController.Instance.TeleportTo(destination);
+            
+            if (PlayerController.Instance.TryGetComponent<Rigidbody2D>(out var rb))
+            {
+                rb.linearVelocity = Vector2.zero;
+            }
 
             // 放射物を破棄してテレポートを完了
             Destroy();
