@@ -22,4 +22,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b8a079991beeb2c4aa1f6171af327e46, type: 2}
   - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
   - {fileID: 11400000, guid: 7ec1dcb74d1e1f64cbc082ae8771f40d, type: 2}
+  puzzleWands: 00000000
   stageType: 1

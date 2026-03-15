@@ -19,4 +19,5 @@ MonoBehaviour:
   enemyPhases: []
   puzzleSpells:
   - {fileID: 11400000, guid: 8ce3a351f7d98fb4fa75564c564cf499, type: 2}
+  puzzleWands: 00000000
   stageType: 1
