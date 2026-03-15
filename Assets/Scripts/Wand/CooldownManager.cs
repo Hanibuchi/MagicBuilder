@@ -62,8 +62,12 @@ public class CooldownManager : MonoBehaviour
             {
                 currentCoolTime = 0f;
                 Debug.Log("🧙 プレイヤーのクールタイムが終了しました。攻撃可能！");
-                // ここでターン終了やUI更新などのイベントを発行できます
-                // 例: GameManager.Instance.EndPlayerTurn();
+                
+                // オーバーライド（ドラッグ等）中でなければUIを非表示
+                if (!isDisplayOverridden)
+                {
+                    HideUI();
+                }
             }
         }
     }
@@ -82,6 +86,7 @@ public class CooldownManager : MonoBehaviour
 
         currentCoolTime += totalCooldownDuration;
         NotifyCooldownChanged();
+        ShowUI();
 
         Debug.Log($"⏳ クールタイムを追加しました: +{totalCooldownDuration:F2}秒。合計クールタイム: {currentCoolTime:F2}秒");
     }
@@ -194,6 +199,22 @@ public class CooldownManager : MonoBehaviour
         float valueToDisplay = isDisplayOverridden ? currentDisplayValue : currentCoolTime;
         this.listener?.OnCooldownChanged(valueToDisplay);
     }
+
+    /// <summary>
+    /// UIの非表示を通知します。
+    /// </summary>
+    public void HideUI()
+    {
+        this.listener?.HideUI();
+    }
+
+    /// <summary>
+    /// UIの表示を通知します。
+    /// </summary>
+    public void ShowUI()
+    {
+        this.listener?.ShowUI();
+    }
 }
 
 /// <summary>
@@ -206,4 +227,14 @@ public interface ICooldownChangeListener
     /// </summary>
     /// <param name="remainingCooldown">現在のクールタイムの残り時間（秒）。</param>
     void OnCooldownChanged(float remainingCooldown);
+
+    /// <summary>
+    /// UIを非表示にします。
+    /// </summary>
+    void HideUI();
+
+    /// <summary>
+    /// UIを表示します。
+    /// </summary>
+    void ShowUI();
 }
