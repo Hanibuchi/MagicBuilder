@@ -102,10 +102,7 @@ public class StageSelectController : MonoBehaviour, IStageStartListener
         Wand currentWand = wands[index];
         wandAcquisitionEffect.gameObject.SetActive(true);
         wandAcquisitionEffect.Setup(
-            currentWand.wandSprite,
-            currentWand.presentationSprite,
-            currentWand.wandName,
-            currentWand.description,
+            currentWand,
             () =>
             {
                 // 演出した杖のみを完了として記録

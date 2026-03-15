@@ -18,6 +18,10 @@ public class WandAcquisitionEffect : MonoBehaviour
     private TextMeshProUGUI descriptionText;
     [SerializeField, Tooltip("取得ボタン")]
     private Button getButton;
+    [SerializeField, Tooltip("固定呪文アイコンを配置する親要素")]
+    private Transform fixedSpellsContainer;
+    [SerializeField, Tooltip("固定呪文の表示に使用するアイコンプレハブ")]
+    private SimpleSpellUI simpleSpellUIPrefab;
 
     [Header("Effect References")]
     [SerializeField, Tooltip("演出用のパーティクルシステム")]
@@ -70,12 +74,9 @@ public class WandAcquisitionEffect : MonoBehaviour
     /// <summary>
     /// 演出の初期設定を行う
     /// </summary>
-    /// <param name="sprite">表示する杖の画像</param>
-    /// <param name="particleSprite">演出用パーティクルに使用する画像</param>
-    /// <param name="name">表示する名前</param>
-    /// <param name="description">表示する説明</param>
+    /// <param name="wand">表示する杖のデータ</param>
     /// <param name="callback">ボタンが押された際のコールバック</param>
-    public void Setup(Sprite sprite, Sprite particleSprite, string name, string description, UnityAction callback)
+    public void Setup(Wand wand, UnityAction callback)
     {
         if (CameraManager.Instance != null && rootObject != null)
         {
@@ -84,16 +85,18 @@ public class WandAcquisitionEffect : MonoBehaviour
             rootObject.transform.position = new Vector3(camPos.x, camPos.y, rootObject.transform.position.z);
         }
 
-        if (wandImage != null && sprite != null)
+        if (wand == null) return;
+
+        if (wandImage != null && wand.wandSprite != null)
         {
-            wandImage.sprite = sprite;
+            wandImage.sprite = wand.wandSprite;
             wandImage.SetNativeSize();
         }
-        if (nameText != null) nameText.text = name;
-        if (descriptionText != null) descriptionText.text = description;
+        if (nameText != null) nameText.text = wand.wandName;
+        if (descriptionText != null) descriptionText.text = wand.description;
         onGetCallback = callback;
 
-        if (effectParticle != null && particleSprite != null)
+        if (effectParticle != null && wand.presentationSprite != null)
         {
             var tsa = effectParticle.textureSheetAnimation;
             tsa.enabled = true;
@@ -101,11 +104,31 @@ public class WandAcquisitionEffect : MonoBehaviour
             // 最初のスロットにSpriteを設定
             if (tsa.spriteCount > 0)
             {
-                tsa.SetSprite(0, particleSprite);
+                tsa.SetSprite(0, wand.presentationSprite);
             }
             else
             {
-                tsa.AddSprite(particleSprite);
+                tsa.AddSprite(wand.presentationSprite);
+            }
+        }
+
+        // 固定呪文アイコンの生成
+        if (fixedSpellsContainer != null && simpleSpellUIPrefab != null)
+        {
+            // 古いアイコンがあれば削除
+            foreach (Transform child in fixedSpellsContainer)
+            {
+                Destroy(child.gameObject);
+            }
+
+            if (wand.fixedSpells != null)
+            {
+                foreach (var fixedSpell in wand.fixedSpells)
+                {
+                    if (fixedSpell == null) continue;
+                    SimpleSpellUI spellUI = Instantiate(simpleSpellUIPrefab, fixedSpellsContainer);
+                    spellUI.SetData(fixedSpell);
+                }
             }
         }
     }
@@ -232,7 +255,12 @@ public class WandAcquisitionEffect : MonoBehaviour
 
     public void Test()
     {
-        Setup(null, null, "普通の杖", "何の変哲もないどこにでもある杖。特に効果はない。", () => Debug.Log("普通の杖が取得されました"));
+        Wand dummyWand = new Wand
+        {
+            wandName = "普通の杖",
+            description = "何の変哲もないどこにでもある杖。特に効果はない。"
+        };
+        Setup(dummyWand, () => Debug.Log("普通の杖が取得されました"));
         StartEffect();
     }
 }
