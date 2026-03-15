@@ -217,11 +217,30 @@ public class StageManager : MonoBehaviour
     /// </summary>
     private void StartGameImmediately()
     {
-        // 解放されている杖を取得して追加
-        var unlockedWands = WandUnlockManager.Instance.GetUnlockedWands();
-        if (unlockedWands != null && unlockedWands.Length > 0)
+        // 杖を取得して追加
+        Wand[] wandsToEquip = null;
+        if (stageConfig != null && stageConfig.stageType == StageType.Puzzle && stageConfig.puzzleWands != null && stageConfig.puzzleWands.Length > 0)
         {
-            foreach (var wand in unlockedWands)
+            var wandData = Resources.Load<WandDataAsset>("WandDataAsset");
+            if (wandData != null)
+            {
+                var puzzleWandList = new List<Wand>();
+                foreach (var puzzleWandType in stageConfig.puzzleWands)
+                {
+                    var wand = wandData.GetWand(puzzleWandType);
+                    if (wand != null) puzzleWandList.Add(wand);
+                }
+                wandsToEquip = puzzleWandList.ToArray();
+            }
+        }
+        else
+        {
+            wandsToEquip = WandUnlockManager.Instance.GetUnlockedWands();
+        }
+
+        if (wandsToEquip != null && wandsToEquip.Length > 0)
+        {
+            foreach (var wand in wandsToEquip)
             {
                 wand.Reset();
                 WandsController.Instance.GenerateNewWand(wand);

@@ -24,6 +24,8 @@ public class StageConfig : ScriptableObject
     [Header("パスルステージ設定")]
     [Tooltip("パズルステージで使用する固定呪文のリスト。")]
     public SpellBase[] puzzleSpells;
+    [Tooltip("パズルステージで使用できる杖の種類。")]
+    public WandType[] puzzleWands;
 
     [Header("ステージの種類")]
     [Tooltip("ステージのプレイスタイルを指定。")]
