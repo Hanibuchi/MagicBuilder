@@ -115,7 +115,7 @@ public class SpellUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
             // 現在の親から切り離し、ルートCanvasの子にする
             transform.SetParent(root, true);
         }
-        WandUIManager.Instance?.NotifySpellDragBeganToAll();
+        WandUIManager.Instance?.NotifySpellDragBeganToAll(this);
     }
 
     public void OnDrag(PointerEventData eventData)

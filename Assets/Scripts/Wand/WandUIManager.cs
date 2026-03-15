@@ -143,11 +143,11 @@ public class WandUIManager : MonoBehaviour
     /// <summary>
     /// 全てのWandUIに、SpellUIのドラッグが開始されたことを通知します。
     /// </summary>
-    public void NotifySpellDragBeganToAll()
+    public void NotifySpellDragBeganToAll(SpellUI draggedSpellUI)
     {
         foreach (var wandUI in activeWandUIs)
         {
-            wandUI.NotifySpellDragBegan();
+            wandUI.NotifySpellDragBegan(draggedSpellUI);
         }
         // ★ 追加: 登録された全てのハンドラにも通知
         foreach (var handler in dragHandlers)

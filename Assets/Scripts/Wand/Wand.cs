@@ -102,9 +102,19 @@ public class Wand
 
     public float GetTotalCooldown()
     {
+        return CalculateTotalCooldown(AllSpells);
+    }
+
+    /// <summary>
+    /// 指定された呪文リストの合計クールタイムを計算します。
+    /// </summary>
+    /// <param name="spellList">計算対象の呪文リスト</param>
+    /// <returns>合計クールタイム（0以上）</returns>
+    public static float CalculateTotalCooldown(List<SpellBase> spellList)
+    {
         float totalCooldown = 0f;
         // まず全呪文の基本クールタイムを合計する
-        foreach (var spell in AllSpells)
+        foreach (var spell in spellList)
         {
             if (spell != null)
             {
@@ -113,7 +123,7 @@ public class Wand
         }
 
         // 次に各呪文の修正（倍率や加減算）を適用する
-        foreach (var spell in AllSpells)
+        foreach (var spell in spellList)
         {
             if (spell != null)
             {

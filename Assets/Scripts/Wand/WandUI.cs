@@ -18,6 +18,7 @@ public class WandUI : MonoBehaviour, ISpellContainer
 
     private List<SpellBase> fixedSpellBasesCashe = new List<SpellBase>();
     private List<SpellBase> spellBasesCashe = new List<SpellBase>();
+    private SpellUI currentlyDraggedSpellUI = null;
 
     public void SetWandEditor(IWandEditor wandEditor)
     {
@@ -207,6 +208,22 @@ public class WandUI : MonoBehaviour, ISpellContainer
     public void NotifySpellExited()
     {
         ResetAllSpellHighlights();
+
+        // ホバー解除時は現在の総クールタイム表示に戻す
+        List<SpellBase> currentSpells = new List<SpellBase>(fixedSpellBasesCashe);
+        currentSpells.AddRange(spellBasesCashe);
+        
+        // ドラッグ中の呪文がこの杖から移動している場合は総クールタイムから除外
+        if (currentlyDraggedSpellUI != null && currentlyDraggedSpellUI.spellContainerUI as WandUI == this)
+        {
+            currentSpells.Remove(currentlyDraggedSpellUI.GetSpellData());
+        }
+
+        float totalCooldown = Wand.CalculateTotalCooldown(currentSpells);
+        if (CooldownManager.Instance != null)
+        {
+            CooldownManager.Instance.SetDisplayCooldownGradual(totalCooldown);
+        }
     }
 
     /// <summary>
@@ -325,6 +342,13 @@ public class WandUI : MonoBehaviour, ISpellContainer
                 processedMockList[targetIndex].UI?.SetHighlight(true);
             }
         }
+
+        // 9. シミュレーション構成による総クールタイムをUIに表示
+        if (CooldownManager.Instance != null && simulatedSequence != null)
+        {
+            float simulatedTotalCooldown = Wand.CalculateTotalCooldown(simulatedSequence);
+            CooldownManager.Instance.SetDisplayCooldownGradual(simulatedTotalCooldown);
+        }
     }
 
     // --- SpellUIのドラッグ開始/終了を管理する機能の追加 ---
@@ -332,8 +356,28 @@ public class WandUI : MonoBehaviour, ISpellContainer
     /// <summary>
     /// SpellUIがドラッグを開始したことを通知する。
     /// </summary>
-    public void NotifySpellDragBegan()
+    public void NotifySpellDragBegan(SpellUI draggedSpellUI)
     {
+        this.currentlyDraggedSpellUI = draggedSpellUI;
+
+        // 現在の構成による総クールタイムを計算し、一瞬で表示する
+        if (CooldownManager.Instance != null && AttackManager.Instance != null)
+        {
+            var wand = AttackManager.Instance.GetCurrentWand();
+            if (wand != null)
+            {
+                List<SpellBase> simulatedSequence = new List<SpellBase>(wand.AllSpells);
+                if (draggedSpellUI != null && draggedSpellUI.spellContainerUI as WandUI == this)
+                {
+                    simulatedSequence.Remove(draggedSpellUI.GetSpellData());
+                }
+                float totalCooldown = Wand.CalculateTotalCooldown(simulatedSequence);
+
+                // ドラッグ開始直前までの実際のクールタイムから、総クールタイムの表示に向かって徐々に変化（あるいはInstant）
+                CooldownManager.Instance.SetDisplayCooldownInstant(totalCooldown);
+            }
+        }
+
         // 全てのSpacingUIの拡張トリガーをアクティブ化
         foreach (var element in uiElements)
         {
@@ -364,6 +408,8 @@ public class WandUI : MonoBehaviour, ISpellContainer
     /// </summary>
     public void NotifySpellDragEnded()
     {
+        this.currentlyDraggedSpellUI = null;
+
         // 全てのSpacingUIの拡張トリガーを非アクティブ化し、ハイライトを強制解除
         foreach (var element in uiElements)
         {
@@ -375,6 +421,12 @@ public class WandUI : MonoBehaviour, ISpellContainer
             }
         }
         ResetAllSpellHighlights(); // 追加
+
+        // ドラッグ終了時は内部的な元のクールタイム表示に戻す
+        if (CooldownManager.Instance != null)
+        {
+            CooldownManager.Instance.ResetDisplayToActualCooldown();
+        }
     }
 
 

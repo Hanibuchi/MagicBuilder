@@ -133,13 +133,6 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (isAlwaysHighlighted) return; // 常にハイライトなら何もしない
-
-        if (animator != null)
-        {
-            StopHighlight();
-        }
-
         // ドラッグ中のオブジェクトがある場合はWandUIに通知して呪文ハイライトを消す
         if (eventData.pointerDrag != null)
         {
@@ -147,6 +140,13 @@ public class SpacingUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
             {
                 wandUI.NotifySpellExited();
             }
+        }
+
+        if (isAlwaysHighlighted) return; // 常にハイライトなら何もしない
+
+        if (animator != null)
+        {
+            StopHighlight();
         }
     }
 
