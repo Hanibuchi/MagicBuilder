@@ -31,7 +31,7 @@ public class WandUI : MonoBehaviour, ISpellContainer
         SpellUI spellUI = spell.CreateUI();
         if (spellUI != null)
         {
-            spellUI.transform.SetParent(spellFrame);
+            spellUI.transform.SetParent(spellFrame, false);
             spellUI.SetIndex(index);
             spellUI.Initialize(this); // このWandUI自身への参照を渡す
         }
@@ -46,7 +46,7 @@ public class WandUI : MonoBehaviour, ISpellContainer
         SpellUI spellUI = spell.CreateUI();
         if (spellUI != null)
         {
-            spellUI.transform.SetParent(spellFrame);
+            spellUI.transform.SetParent(spellFrame, false);
             spellUI.Initialize(this);
             spellUI.SetActive(false); // 固定呪文は移動・削除不可
         }
