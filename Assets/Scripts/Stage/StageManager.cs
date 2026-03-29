@@ -330,8 +330,25 @@ public class StageManager : MonoBehaviour
             return;
         }
 
+        List<EnemyPhaseConfig> finalPhases = new List<EnemyPhaseConfig>();
+        
+        // 既存の固定フェーズを追加
+        if (stageConfig.enemyPhases != null)
+        {
+            finalPhases.AddRange(stageConfig.enemyPhases);
+        }
+
+        // 設定用ジェネレータクラスを通してフェーズを動的生成・追加
+        if (stageConfig.phaseGenerators != null)
+        {
+            foreach (var generator in stageConfig.phaseGenerators)
+            {
+                generator?.GeneratePhases(finalPhases);
+            }
+        }
+
         EnemyPhaseExecutor.Instance.SetSpawnPoint(enemySpawnPoint.position);
-        EnemyPhaseExecutor.Instance.StartPhase(stageConfig.enemyPhases, () => { spawnComplete = true; });
+        EnemyPhaseExecutor.Instance.StartPhase(finalPhases.ToArray(), () => { spawnComplete = true; });
     }
 
     /// <summary>

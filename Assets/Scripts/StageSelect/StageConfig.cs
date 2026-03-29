@@ -1,5 +1,6 @@
 // StageConfig.cs
 using UnityEngine;
+using System.Collections.Generic;
 
 /// <summary>
 /// 一つのステージに関する情報をまとめたScriptableObject。
@@ -18,8 +19,18 @@ public class StageConfig : ScriptableObject
     public StageClearCondition clearCondition = StageClearCondition.SpecificBossDefeated;
 
     [Header("敵の出現フェーズ")]
-    [Tooltip("このステージで出現する敵のフェーズ設定リスト。")]
+    [Tooltip("このステージで出現する敵のフェーズ設定リスト。先頭につけられる。")]
     public EnemyPhaseConfig[] enemyPhases;
+
+    [Header("動的フェーズ生成設定")]
+    [Tooltip("敵の出現フェーズを動的に生成するジェネレータのリスト。enemyPhasesの後に追加される。")]
+    [SerializeReference] public List<PhaseGeneratorBase> phaseGenerators = new List<PhaseGeneratorBase>();
+
+    [ContextMenu("Add Simple Phase Generator")]
+    void AddSimplePhaseGenerator() => phaseGenerators.Add(new SimplePhaseGenerator());
+
+    [ContextMenu("Add Random Spawns Phase Generator")]
+    void AddRandomSpawnsPhaseGenerator() => phaseGenerators.Add(new RandomSpawnsPhaseGenerator());
 
     [Header("パスルステージ設定")]
     [Tooltip("パズルステージで使用する固定呪文のリスト。")]
