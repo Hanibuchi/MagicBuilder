@@ -188,5 +188,21 @@ public class MultiSplit : SpellBase
         // 常に一つ右の呪文を指す（複雑なグループ計算は行わない）
         return new int[] { 1 };
     }
+
+    public override List<SpellDescriptionItem> GetDescriptionDetails()
+    {
+        base.GetDescriptionDetails();
+
+        if (additionalErrorDegree != 0f)
+        {
+            detailItems.Add(new SpellDescriptionItem
+            {
+                icon = SpellCommonData.Instance.errorDegreeIcon,
+                descriptionText = $"誤差 : +{additionalErrorDegree:F1}度",
+            });
+        }
+
+        return detailItems;
+    }
 }
 

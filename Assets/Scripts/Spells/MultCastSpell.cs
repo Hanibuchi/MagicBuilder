@@ -294,4 +294,20 @@ public class MultCastSpell : SpellBase
             .Select(index => index - currentSpellIndex)
             .ToArray();
     }
+
+    public override List<SpellDescriptionItem> GetDescriptionDetails()
+    {
+        base.GetDescriptionDetails();
+
+        if (additionalErrorDegree != 0f)
+        {
+            detailItems.Add(new SpellDescriptionItem
+            {
+                icon = SpellCommonData.Instance.errorDegreeIcon,
+                descriptionText = $"誤差 : +{additionalErrorDegree:F1}度",
+            });
+        }
+
+        return detailItems;
+    }
 }
