@@ -6,7 +6,7 @@ using TMPro;
 /// 装備中の杖の情報を表示するUI。
 /// 杖の画像、名称、説明、および固定呪文を表示します。
 /// </summary>
-public class EquippedWandUI : MonoBehaviour
+public class EquippedWandDescriptionUI : MonoBehaviour
 {
     [Header("UI References")]
     [SerializeField, Tooltip("杖の見た目を表示するImage")]
