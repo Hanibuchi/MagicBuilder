@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 978337219834025314}
   - component: {fileID: 8021579551577435778}
   - component: {fileID: 1029945866736788961}
+  - component: {fileID: 5827355071093916403}
   m_Layer: 5
   m_Name: SimpleWandUI
   m_TagString: Untagged
@@ -76,6 +77,28 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1.5
+--- !u!114 &5827355071093916403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2425902676803554446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8357826cbf840324ebe9f30522078645, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EquippedWandIconUI
+  wandImage: {fileID: 5944059863230704628}
+  testWand:
+    wandName: 
+    description: 
+    type: 0
+    presentationSprite: {fileID: 0}
+    wandSprite: {fileID: 0}
+    maxSpellCount: 12
+    fixedSpells: []
+    spells: []
 --- !u!1 &6962930397959579258
 GameObject:
   m_ObjectHideFlags: 0
