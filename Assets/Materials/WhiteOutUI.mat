@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GrayScaleUI
+  m_Name: WhiteOutUI
   m_Shader: {fileID: -6465566751694194690, guid: c3dc8885574cbc444aea55ccfdeec93f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -67,7 +67,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Brightness: 0.5
+    - _Brightness: 1
     - _ColorMask: 15
     - _EnableExternalAlpha: 0
     - _QueueControl: 0
