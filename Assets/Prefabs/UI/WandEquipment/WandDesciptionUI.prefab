@@ -363,6 +363,7 @@ GameObject:
   - component: {fileID: 5768515000290277900}
   - component: {fileID: 2003166512628736639}
   - component: {fileID: 2821125651170958896}
+  - component: {fileID: 539754832231276853}
   m_Layer: 5
   m_Name: WandDesciptionUI
   m_TagString: Untagged
@@ -446,6 +447,23 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 5, y: -5}
   m_UseGraphicAlpha: 1
+--- !u!114 &539754832231276853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3924263810438659384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a791647cb32a82e4fa43f3932eba2aab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EquippedWandUI
+  wandImage: {fileID: 5825373183671921170}
+  nameText: {fileID: 6094952058087083087}
+  descriptionText: {fileID: 4543853874260900199}
+  fixedSpellsContainer: {fileID: 8076525493268093697}
+  simpleSpellUIPrefab: {fileID: 9010884041948823182, guid: df4a317d045c0f94da614f521c39ef6b, type: 3}
 --- !u!1 &4042562015687030206
 GameObject:
   m_ObjectHideFlags: 0
