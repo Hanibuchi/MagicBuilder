@@ -20,6 +20,13 @@ public class SpellDestroyController : MonoBehaviour
         }
     }
 
+    [Header("サウンド設定")]
+    [Tooltip("呪文を破棄したときに再生するSE")]
+    [SerializeField] private AudioClip throwSound;
+    [Tooltip("呪文を破棄したときのSEの音量 (0.0 から 1.0)")]
+    [Range(0f, 1f)]
+    [SerializeField] private float throwSoundVolume = 1.0f;
+
     /// <summary>
     /// 呪文の破棄確認UIを表示します。
     /// </summary>
@@ -32,7 +39,7 @@ public class SpellDestroyController : MonoBehaviour
         TimeStopManager.Instance.RequestTimeStop(this, 0f);
 
         currentUI = Instantiate(confirmationUIPrefab);
-        
+
         string message = $"以下の呪文を破棄しますか？";
 
         currentUI.Initialize(
@@ -44,6 +51,12 @@ public class SpellDestroyController : MonoBehaviour
                 if (SpellInventory.Instance != null)
                 {
                     SpellInventory.Instance.RemoveSpellFromInventory(spell);
+                }
+
+                // 「はい」が押されたときにSEを鳴らす
+                if (SoundManager.Instance != null && throwSound != null)
+                {
+                    SoundManager.Instance.PlaySE(throwSound, throwSoundVolume);
                 }
             },
             onNo: () =>

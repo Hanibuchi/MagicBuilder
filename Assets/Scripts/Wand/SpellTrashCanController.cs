@@ -8,8 +8,36 @@ using UnityEngine;
 /// </summary>
 public class SpellTrashCanController : MonoBehaviour, ISpellDragHandler
 {
+    public static SpellTrashCanController Instance { get; private set; }
+
     [Tooltip("表示/非表示を制御するSpellTrashCanUIのコンポーネント")]
     [SerializeField] private SpellTrashCanUI trashCanUI;
+    
+    [Tooltip("呪文を完全に削除するためのUI")]
+    [SerializeField] private SpellDestroyDropUI spellDestroyDropUI;
+
+    private bool isDestroyDropUIEnabled = true;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    /// <summary>
+    /// SpellDestroyDropUIの有効/無効を設定します。
+    /// </summary>
+    /// <param name="isEnabled">有効にするかどうか</param>
+    public void SetDestroyDropUIEnabled(bool isEnabled)
+    {
+        isDestroyDropUIEnabled = isEnabled;
+    }
 
     void Start()
     {
@@ -54,6 +82,17 @@ public class SpellTrashCanController : MonoBehaviour, ISpellDragHandler
         if (trashCanUI != null)
         {
             trashCanUI.SetActive(true);
+            
+            // フラグが立っていれば削除UIオブジェクトを表示する
+            if (isDestroyDropUIEnabled && spellDestroyDropUI != null)
+            {
+                spellDestroyDropUI.gameObject.SetActive(true);
+            }
+            else if (spellDestroyDropUI != null)
+            {
+                spellDestroyDropUI.gameObject.SetActive(false);
+            }
+            
             Debug.Log("SpellTrashCanを表示しました。");
         }
     }
@@ -67,6 +106,12 @@ public class SpellTrashCanController : MonoBehaviour, ISpellDragHandler
         {
             // ドロップ成功/失敗にかかわらずドラッグ終了時に非表示に戻す
             trashCanUI.SetActive(false);
+            
+            if (spellDestroyDropUI != null)
+            {
+                spellDestroyDropUI.gameObject.SetActive(false);
+            }
+            
             Debug.Log("SpellTrashCanを非表示にしました。");
         }
     }

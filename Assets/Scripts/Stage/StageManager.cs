@@ -50,6 +50,9 @@ public class StageManager : MonoBehaviour
 
         // 3. プレイヤーのInstantiate
         InstantiatePlayer();
+
+        // 4. InstantiateされたオブジェクトのAwake等を待つため、1フレーム後に初期化処理を実行
+        StartCoroutine(DelayedInitializationRoutine());
     }
 
     /// <summary>
@@ -95,6 +98,26 @@ public class StageManager : MonoBehaviour
                 Debug.Log($"Prefab: {prefab.name} をInstantiateしました。");
             }
         }
+    }
+
+    /// <summary>
+    /// 各種PrefabがInstantiateされ、Awakeが呼ばれた後に1フレーム遅れて実行される初期化処理群
+    /// </summary>
+    private IEnumerator DelayedInitializationRoutine()
+    {
+        // オブジェクトが生成されたフレームの終端まで待機し、確実にそれぞれのAwake等が終わるのを待つ
+        yield return null;
+
+        // SpellDestroyDropUI の表示設定を StageType 等によって切り替える
+        if (SpellTrashCanController.Instance != null && stageConfig != null)
+        {
+            // パズルステージ以外はデフォルトで表示する
+            bool shouldEnableDestroyDropUI = stageConfig.stageType != StageType.Puzzle;
+            SpellTrashCanController.Instance.SetDestroyDropUIEnabled(shouldEnableDestroyDropUI);
+            Debug.Log($"ステージタイプ判定: {stageConfig.stageType} に伴い、SpellDestroyDropUI の有効化状態を {shouldEnableDestroyDropUI} に設定しました。");
+        }
+        
+        // （他に1フレーム遅らせたい初期設定オブジェクトがあれば、この下に追加可能）
     }
 
     /// <summary>

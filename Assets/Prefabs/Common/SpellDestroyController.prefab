@@ -45,4 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpellDestroyController
   confirmationUIPrefab: {fileID: 2867183087870108654, guid: d18dec27cf1cb6f4bb4adab0442f8c3f, type: 3}
+  throwSound: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
+  throwSoundVolume: 0.8
   testSpell: {fileID: 11400000, guid: 7a8ac019137267d41ad395a8cb1fefcf, type: 2}
