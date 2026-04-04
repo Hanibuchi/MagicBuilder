@@ -17,6 +17,7 @@ public class StageInfoDisplayUI : MonoBehaviour
     [SerializeField] private Button openSpellSelectButton; // 持ち込み呪文選択ボタン
     [SerializeField] private Button openWandSelectButton;  // 持ち込み杖選択ボタン
     [SerializeField] private GameObject spellBadge;        // 新規呪文通知バッジ
+    [SerializeField] private GameObject wandBadge;         // 新規杖通知バッジ
     [SerializeField] private Button closeButton;           // 閉じるボタン
 
     [Header("アニメーター設定")]
@@ -69,6 +70,7 @@ public class StageInfoDisplayUI : MonoBehaviour
         gameObject.SetActive(true);
 
         UpdateSpellBadge();
+        UpdateWandBadge();
 
         if (rootAnimator != null)
         {
@@ -86,6 +88,18 @@ public class StageInfoDisplayUI : MonoBehaviour
         {
             bool hasNew = SpellHoldInfoManager.Instance.HasAnyNewlyUnlockedSpells();
             spellBadge.SetActive(hasNew);
+        }
+    }
+
+    /// <summary>
+    /// 新規取得杖がある場合、バッジを表示します。
+    /// </summary>
+    private void UpdateWandBadge()
+    {
+        if (wandBadge != null && WandUnlockManager.Instance != null)
+        {
+            bool hasNew = WandUnlockManager.Instance.HasAnyNewlyUnlockedWands();
+            wandBadge.SetActive(hasNew);
         }
     }
 
@@ -194,7 +208,7 @@ public class StageInfoDisplayUI : MonoBehaviour
 
         if (EquippedWandController.Instance != null)
         {
-            EquippedWandController.Instance.OpenWandSelectionUI(() => { wandSelectClicked = false; });
+            EquippedWandController.Instance.OpenWandSelectionUI(() => { wandSelectClicked = false; UpdateWandBadge(); });
         }
         else
         {

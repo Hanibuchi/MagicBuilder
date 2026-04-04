@@ -199,6 +199,7 @@ MonoBehaviour:
   openSpellSelectButton: {fileID: 1467836883041164449}
   openWandSelectButton: {fileID: 82580035406899208}
   spellBadge: {fileID: 7543925075579354253}
+  wandBadge: {fileID: 4604008896016153550}
   closeButton: {fileID: 5466263651754037645}
   rootAnimator: {fileID: 6706056585655284100}
   frameAnimator: {fileID: 8395374544800800362}
@@ -673,7 +674,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7650786188066357521
 RectTransform:
   m_ObjectHideFlags: 0

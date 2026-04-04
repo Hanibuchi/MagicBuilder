@@ -86,6 +86,16 @@ public class WandUnlockManager : MonoBehaviour
     }
 
     /// <summary>
+    /// 新しく開放された（Newバッジが付いている）杖が一つでもあるかを確認します。
+    /// </summary>
+    public bool HasAnyNewlyUnlockedWands()
+    {
+        if (_wandDataAsset == null) return false;
+
+        return _wandDataAsset.wands.Any(w => w.type != WandType.Default && IsWandNewlyUnlocked(w.type));
+    }
+
+    /// <summary>
     /// 解放されている全てのWandの配列を返します。
     /// </summary>
     /// <returns>解放済みWandの配列</returns>
