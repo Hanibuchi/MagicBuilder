@@ -93,6 +93,24 @@ public class EquippedWandManager : MonoBehaviour
         return WandUnlockManager.Instance.IsWandUnlocked(wand.type);
     }
 
+    public bool IsWandNewlyUnlocked(Wand wand)
+    {
+        if (wand == null || WandUnlockManager.Instance == null)
+        {
+            return false;
+        }
+
+        return WandUnlockManager.Instance.IsWandNewlyUnlocked(wand.type);
+    }
+
+    public void ClearWandNewBadge(Wand wand)
+    {
+        if (wand != null && WandUnlockManager.Instance != null)
+        {
+            WandUnlockManager.Instance.ClearWandNewBadge(wand.type);
+        }
+    }
+
     public bool IsWandEquipped(Wand wand)
     {
         if (wand == null)

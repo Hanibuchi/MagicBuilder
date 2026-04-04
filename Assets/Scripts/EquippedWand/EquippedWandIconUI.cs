@@ -17,6 +17,9 @@ public class EquippedWandIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHand
     [SerializeField] Image dragSourceImage;
     [SerializeField, Tooltip("ドラッグ開始時の効果音")]
     private AudioClip dragStartClip;
+    
+    [Header("バッジUI")]
+    [SerializeField] private GameObject newBadge;
 
     private Wand _wand;
     private bool _canDrag = true;
@@ -72,6 +75,14 @@ public class EquippedWandIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHand
         }
     }
 
+    public void SetNewBadgeActive(bool active)
+    {
+        if (newBadge != null)
+        {
+            newBadge.SetActive(active);
+        }
+    }
+
     public Wand GetWandData()
     {
         return _wand;
@@ -119,6 +130,8 @@ public class EquippedWandIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHand
         {
             dragSourceImage.raycastTarget = false;
         }
+
+        SetNewBadgeActive(false);
 
         RectTransform root = DraggingSpellRootProvider.Instance != null
             ? DraggingSpellRootProvider.Instance.GetRootTransform()

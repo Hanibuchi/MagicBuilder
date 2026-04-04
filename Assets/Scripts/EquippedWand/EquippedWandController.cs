@@ -109,6 +109,16 @@ public class EquippedWandController : MonoBehaviour,
         return EquippedWandManager.Instance.IsWandEquipped(wand);
     }
 
+    public bool IsWandNewlyUnlocked(Wand wand)
+    {
+        return EquippedWandManager.Instance.IsWandNewlyUnlocked(wand);
+    }
+
+    public void ClearWandNewBadge(Wand wand)
+    {
+        EquippedWandManager.Instance.ClearWandNewBadge(wand);
+    }
+
     public void SetWand(int slotIndex, Wand wand)
     {
         EquippedWandManager.Instance.SetWand(slotIndex, wand);
@@ -126,6 +136,8 @@ public interface IEquippedWandUIProvider
     IReadOnlyList<Wand> GetEquippedWands();
     bool IsWandUnlocked(Wand wand);
     bool IsWandEquipped(Wand wand);
+    bool IsWandNewlyUnlocked(Wand wand);
+    void ClearWandNewBadge(Wand wand);
     void SetWand(int slotIndex, Wand wand);
     void RemoveWand(int slotIndex);
 }

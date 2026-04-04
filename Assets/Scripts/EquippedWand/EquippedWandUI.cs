@@ -231,6 +231,10 @@ public class EquippedWandUI : MonoBehaviour,
             wandIcon.SetObserver(this);
             wandIcon.SetSlotIndex(-1);
             wandIcon.SetDragAndVisualState(!equipped, equipped);
+
+            bool isNew = _provider != null && _provider.IsWandNewlyUnlocked(wand);
+            wandIcon.SetNewBadgeActive(isNew && !equipped);
+
             _holdWandUIs.Add(wandIcon);
         }
     }
@@ -300,6 +304,11 @@ public class EquippedWandUI : MonoBehaviour,
         }
         else
         {
+            if (_provider != null && draggedWand != null)
+            {
+                _provider.ClearWandNewBadge(draggedWand);
+            }
+
             if (equippedWandIconPrefab != null && holdWandsParent != null)
             {
                 EquippedWandIconUI placeholder = Instantiate(equippedWandIconPrefab, holdWandsParent);
