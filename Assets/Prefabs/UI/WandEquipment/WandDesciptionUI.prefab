@@ -465,6 +465,9 @@ MonoBehaviour:
   fixedSpellsContainer: {fileID: 8076525493268093697}
   simpleSpellUIPrefab: {fileID: 9010884041948823182, guid: df4a317d045c0f94da614f521c39ef6b, type: 3}
   dragSourceImage: {fileID: 2003166512628736639}
+  frameImage: {fileID: 2003166512628736639}
+  defaultMaterial: {fileID: 0}
+  hoverMaterial: {fileID: 2100000, guid: e863f9f69a9bfea4aa116fdda34d476f, type: 2}
   testWand:
     wandName: 
     description: 

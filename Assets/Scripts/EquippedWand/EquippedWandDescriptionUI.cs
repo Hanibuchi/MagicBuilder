@@ -8,7 +8,7 @@ using System.Collections;
 /// 装備中の杖の情報を表示するUI。
 /// 杖の画像、名称、説明、および固定呪文を表示します。
 /// </summary>
-public class EquippedWandDescriptionUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler, IEquippedWandDraggable
+public class EquippedWandDescriptionUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler, IEquippedWandDraggable, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("UI References")]
     [SerializeField, Tooltip("杖の見た目を表示するImage")]
@@ -23,6 +23,12 @@ public class EquippedWandDescriptionUI : MonoBehaviour, IBeginDragHandler, IEndD
     private SimpleSpellUI simpleSpellUIPrefab;
     [SerializeField]
     Image dragSourceImage;
+    [SerializeField]
+    private Image frameImage;
+    [SerializeField]
+    private Material defaultMaterial;
+    [SerializeField]
+    private Material hoverMaterial;
 
     private Wand _wand;
     private int _slotIndex = -1;
@@ -156,6 +162,8 @@ public class EquippedWandDescriptionUI : MonoBehaviour, IBeginDragHandler, IEndD
             return;
         }
 
+        ResetMaterial();
+
         if (!eventData.pointerDrag.TryGetComponent(out IEquippedWandDraggable dragged))
         {
             return;
@@ -169,6 +177,30 @@ public class EquippedWandDescriptionUI : MonoBehaviour, IBeginDragHandler, IEndD
 
         dragged.NotifyDropSucceeded();
         _observer?.NotifyDroppedOnEquippedSlot(droppedWand, _slotIndex);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (eventData.pointerDrag != null && eventData.pointerDrag.TryGetComponent(out IEquippedWandDraggable _))
+        {
+            if (frameImage != null)
+            {
+                frameImage.material = hoverMaterial;
+            }
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        ResetMaterial();
+    }
+
+    private void ResetMaterial()
+    {
+        if (frameImage != null)
+        {
+            frameImage.material = defaultMaterial;
+        }
     }
 
     private IEnumerator HandleDropResult()

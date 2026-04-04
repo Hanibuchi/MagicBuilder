@@ -4,8 +4,12 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// 装備スロットが空の時に表示されるUI。
 /// </summary>
-public class EmptyWandUI : MonoBehaviour, IDropHandler
+public class EmptyWandUI : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] private UnityEngine.UI.Image frameImage;
+    [SerializeField] private Material defaultMaterial;
+    [SerializeField] private Material hoverMaterial;
+
     private int _slotIndex = -1;
     private IEmptyWandUIObserver _observer;
 
@@ -38,8 +42,34 @@ public class EmptyWandUI : MonoBehaviour, IDropHandler
             return;
         }
 
+        ResetMaterial();
+
         dragged.NotifyDropSucceeded();
         _observer?.NotifyWandDroppedOnEmptySlot(wand, _slotIndex);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (eventData.pointerDrag != null && eventData.pointerDrag.TryGetComponent(out IEquippedWandDraggable _))
+        {
+            if (frameImage != null)
+            {
+                frameImage.material = hoverMaterial;
+            }
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        ResetMaterial();
+    }
+
+    private void ResetMaterial()
+    {
+        if (frameImage != null)
+        {
+            frameImage.material = defaultMaterial;
+        }
     }
 }
 
