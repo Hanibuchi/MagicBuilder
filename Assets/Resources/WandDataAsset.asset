@@ -45,7 +45,8 @@ MonoBehaviour:
       fixedSpells:
       - {fileID: 11400000, guid: 2565fe416e8d26d4f992ab07f62f23c9, type: 2}
       - {fileID: 11400000, guid: 1ae5b79ace718244a92dfb03c51f91d4, type: 2}
-      spells: []
+      spells:
+      - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
   - type: 3
     wand:
       wandName: "\u707C\u71B1\u306E\u6756"
@@ -81,7 +82,8 @@ MonoBehaviour:
       fixedSpells:
       - {fileID: 11400000, guid: 202c2a40c82b5d746b2718eee9958c9c, type: 2}
       - {fileID: 11400000, guid: 31b4d3e9e3f2e3043845c8a39a0daa4e, type: 2}
-      spells: []
+      spells:
+      - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
   - type: 6
     wand:
       wandName: "\u546A\u3044\u306E\u6756"
@@ -92,6 +94,7 @@ MonoBehaviour:
       maxSpellCount: 12
       fixedSpells:
       - {fileID: 11400000, guid: 6b7a139abf2ffb24d9586ef6afe5485c, type: 2}
-      - {fileID: 11400000, guid: f734f0ddd7237494d8570619eed029af, type: 2}
+      - {fileID: 11400000, guid: 3331bedc78cabe7459c9401c16507f5c, type: 2}
       - {fileID: 11400000, guid: 90b80b666522c234fa85ba1e9cfdcc25, type: 2}
-      spells: []
+      spells:
+      - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
