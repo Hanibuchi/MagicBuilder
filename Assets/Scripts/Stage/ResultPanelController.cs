@@ -39,7 +39,9 @@ public class ResultPanelController : MonoBehaviour
     [SerializeField] private Button retryButton;
     [SerializeField] private Button nextStageButton;
     [SerializeField] private Button spellChangeButton;
+    [SerializeField] private Button wandChangeButton;
     [SerializeField] private GameObject spellBadge;
+    [SerializeField] private GameObject wandBadge;
 
     // --- 外部から設定するデータ（例：StageManagerから取得を想定） ---
 
@@ -56,6 +58,7 @@ public class ResultPanelController : MonoBehaviour
     private Action onRetry;
     private Action onNextStage;
     private Action onSpellChange;
+    private Action onWandChange;
 
     // --- 定数 ---
     private const string VICTORY_MESSAGE = "魔法の呪文で世界を救った！"; // 勝利時のメッセージ
@@ -66,18 +69,20 @@ public class ResultPanelController : MonoBehaviour
     /// <summary>
     /// ボタンに対応する外部メソッドを登録します。
     /// </summary>
-    public void SetupActions(Action stageSelect, Action retry, Action nextStage, Action spellChange)
+    public void SetupActions(Action stageSelect, Action retry, Action nextStage, Action spellChange, Action wandChange)
     {
         onStageSelect = stageSelect;
         onRetry = retry;
         onNextStage = nextStage;
         onSpellChange = spellChange;
+        onWandChange = wandChange;
 
         // 2. ボタンにメソッドを登録（クリック遅延付き）
         stageSelectButton?.onClick.AddListener(() => StartCoroutine(DelayExecuteAction(onStageSelect)));
         retryButton?.onClick.AddListener(() => StartCoroutine(DelayExecuteAction(onRetry)));
         nextStageButton?.onClick.AddListener(() => StartCoroutine(DelayExecuteAction(onNextStage)));
         spellChangeButton?.onClick.AddListener(() => onSpellChange?.Invoke());
+        wandChangeButton?.onClick.AddListener(() => onWandChange?.Invoke());
     }
 
     /// <summary>
@@ -100,6 +105,7 @@ public class ResultPanelController : MonoBehaviour
         Debug.Log("ResultPanelController: 勝利表示");
         SetResultData(data);
         UpdateSpellBadge();
+        UpdateWandBadge();
 
         // UIアクティブ制御
         if (victoryObject != null) victoryObject.SetActive(true);
@@ -124,6 +130,7 @@ public class ResultPanelController : MonoBehaviour
         Debug.Log("ResultPanelController: 敗北表示");
         SetResultData(data);
         UpdateSpellBadge();
+        UpdateWandBadge();
 
         // UIアクティブ制御
         if (victoryObject != null) victoryObject.SetActive(false);
@@ -153,6 +160,18 @@ public class ResultPanelController : MonoBehaviour
     }
 
     /// <summary>
+    /// 新規取得杖がある場合、バッジを表示します。
+    /// </summary>
+    public void UpdateWandBadge()
+    {
+        if (wandBadge != null && WandUnlockManager.Instance != null)
+        {
+            bool hasNew = WandUnlockManager.Instance.HasAnyNewlyUnlockedWands();
+            wandBadge.SetActive(hasNew);
+        }
+    }
+
+    /// <summary>
     /// 呪文変更ボタンを非表示にします。
     /// </summary>
     public void HideSpellChangeButton()
@@ -160,6 +179,17 @@ public class ResultPanelController : MonoBehaviour
         if (spellChangeButton != null)
         {
             spellChangeButton.gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// 杖変更ボタンを非表示にします。
+    /// </summary>
+    public void HideWandChangeButton()
+    {
+        if (wandChangeButton != null)
+        {
+            wandChangeButton.gameObject.SetActive(false);
         }
     }
 

@@ -639,8 +639,15 @@ public class StageManager : MonoBehaviour
             Debug.Log("呪文変更へ");
             EquippedSpellController.Instance?.OpenSpellSelectionUI(() => { clicked = false; controller.UpdateSpellBadge(); });
         };
+        Action onWandChange = () =>
+        {
+            if (clicked) return;
+            clicked = true;
+            Debug.Log("杖変更へ");
+            EquippedWandController.Instance?.OpenWandSelectionUI(() => { clicked = false; controller.UpdateWandBadge(); });
+        };
 
-        controller.SetupActions(onStageSelect, onRetry, onNextStage, onSpellChange);
+        controller.SetupActions(onStageSelect, onRetry, onNextStage, onSpellChange, onWandChange);
         Debug.Log($"リザルトパネルをInstantiateし、{(isVictory ? "勝利" : "敗北")}結果を設定しました。");
     }
 }
