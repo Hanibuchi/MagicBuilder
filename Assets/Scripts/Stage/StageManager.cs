@@ -331,7 +331,7 @@ public class StageManager : MonoBehaviour
         }
 
         List<EnemyPhaseConfig> finalPhases = new List<EnemyPhaseConfig>();
-        
+
         // 既存の固定フェーズを追加
         if (stageConfig.enemyPhases != null)
         {
@@ -588,6 +588,7 @@ public class StageManager : MonoBehaviour
             if (stageConfig != null && stageConfig.stageType == StageType.Puzzle)
             {
                 controller.HideSpellChangeButton();
+                controller.HideWandChangeButton();
             }
         }
 

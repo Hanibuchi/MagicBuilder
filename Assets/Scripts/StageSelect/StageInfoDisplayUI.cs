@@ -11,6 +11,7 @@ public class StageInfoDisplayUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI islandNameText;      // 島名
     [SerializeField] private TextMeshProUGUI stageNameText;       // ステージ名
     [SerializeField] private TextMeshProUGUI stageSubNameText; // ステージ識別子 (デバッグや内部ID表示用)
+    [SerializeField] private TextMeshProUGUI stageTypeText;       // ステージタイプ表示用
 
     [Header("UI要素 - ボタン")]
     [SerializeField] private Button startButton;           // ステージ開始ボタン
@@ -50,7 +51,7 @@ public class StageInfoDisplayUI : MonoBehaviour
     /// <summary>
     /// ステージ情報をセットして表示を更新します。
     /// </summary>
-    public void SetStageInfo(StageSelectUI stageSelectUI, string islandName, string stageSubName, string identifier)
+    public void SetStageInfo(StageSelectUI stageSelectUI, string islandName, string stageSubName, string identifier, StageType stageType)
     {
         this.stageSelectUI = stageSelectUI;
         currentStageIdentifier = identifier;
@@ -58,6 +59,10 @@ public class StageInfoDisplayUI : MonoBehaviour
         if (islandNameText != null) islandNameText.text = islandName;
         if (stageNameText != null) stageNameText.text = identifier;
         if (stageSubNameText != null) stageSubNameText.text = stageSubName;
+        if (stageTypeText != null)
+        {
+            stageTypeText.text = stageType == StageType.Rush ? "ラッシュ" : "パズル";
+        }
     }
 
     /// <summary>
