@@ -15,6 +15,8 @@ public class EquippedWandIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHand
     [SerializeField] Material grayMaterial;
 
     [SerializeField] Image dragSourceImage;
+    [SerializeField, Tooltip("ドラッグ開始時の効果音")]
+    private AudioClip dragStartClip;
 
     private Wand _wand;
     private bool _canDrag = true;
@@ -107,6 +109,11 @@ public class EquippedWandIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHand
 
         _originalParent = transform.parent;
         _originalSiblingIndex = transform.GetSiblingIndex();
+
+        if (SoundManager.Instance != null && dragStartClip != null)
+        {
+            SoundManager.Instance.PlaySE(dragStartClip);
+        }
 
         if (dragSourceImage != null)
         {

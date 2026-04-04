@@ -468,6 +468,7 @@ MonoBehaviour:
   frameImage: {fileID: 2003166512628736639}
   defaultMaterial: {fileID: 0}
   hoverMaterial: {fileID: 2100000, guid: e863f9f69a9bfea4aa116fdda34d476f, type: 2}
+  dragStartClip: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
   testWand:
     wandName: 
     description: 

@@ -6,6 +6,9 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class EquippedWandTrashUI : MonoBehaviour, IDropHandler
 {
+    [SerializeField, Tooltip("ゴミ箱にドロップしたときの効果音")]
+    private AudioClip dropSound;
+
     private IEquippedWandDragObserver _observer;
 
     public void SetObserver(IEquippedWandDragObserver observer)
@@ -28,6 +31,11 @@ public class EquippedWandTrashUI : MonoBehaviour, IDropHandler
         if (!dragged.IsFromEquippedSlot())
         {
             return;
+        }
+
+        if (SoundManager.Instance != null && dropSound != null)
+        {
+            SoundManager.Instance.PlaySE(dropSound);
         }
 
         dragged.NotifyDropSucceeded();

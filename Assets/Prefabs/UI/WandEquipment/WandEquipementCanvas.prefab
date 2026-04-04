@@ -416,6 +416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c6b64d4ae6179344b4bec66deddfdc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EquippedWandTrashUI
+  dropSound: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
 --- !u!1 &4443556354651426067
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,6 +648,9 @@ MonoBehaviour:
   animator: {fileID: 6365079142798774931}
   openTrigger: Open
   closeTrigger: Close
+  openClip: {fileID: 8300000, guid: df729d213c4be44a9b55cd109f5cd4f9, type: 3}
+  closeClip: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
+  dropClip: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
 --- !u!1 &4712261395484142233
 GameObject:
   m_ObjectHideFlags: 0

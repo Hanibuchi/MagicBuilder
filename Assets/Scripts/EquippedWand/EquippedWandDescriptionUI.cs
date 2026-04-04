@@ -29,6 +29,8 @@ public class EquippedWandDescriptionUI : MonoBehaviour, IBeginDragHandler, IEndD
     private Material defaultMaterial;
     [SerializeField]
     private Material hoverMaterial;
+    [SerializeField, Tooltip("ドラッグ開始時の効果音")]
+    private AudioClip dragStartClip;
 
     private Wand _wand;
     private int _slotIndex = -1;
@@ -128,6 +130,11 @@ public class EquippedWandDescriptionUI : MonoBehaviour, IBeginDragHandler, IEndD
 
         _originalParent = transform.parent;
         _originalSiblingIndex = transform.GetSiblingIndex();
+
+        if (SoundManager.Instance != null && dragStartClip != null)
+        {
+            SoundManager.Instance.PlaySE(dragStartClip);
+        }
 
         if (dragSourceImage != null)
         {

@@ -31,6 +31,11 @@ public class EquippedWandUI : MonoBehaviour,
     [SerializeField] private string openTrigger = "Open";
     [SerializeField] private string closeTrigger = "Close";
 
+    [Header("サウンド")]
+    [SerializeField] private AudioClip openClip;
+    [SerializeField] private AudioClip closeClip;
+    [SerializeField] private AudioClip dropClip;
+
     private IEquippedWandUIProvider _provider;
     private IReadOnlyList<Wand> _allWands = new List<Wand>();
     private IReadOnlyList<Wand> _equippedWands = new List<Wand>();
@@ -77,6 +82,11 @@ public class EquippedWandUI : MonoBehaviour,
         _closeCallback = onCloseCallback;
         IsVisible = true;
 
+        if (SoundManager.Instance != null && openClip != null)
+        {
+            SoundManager.Instance.PlaySE(openClip);
+        }
+
         gameObject.SetActive(true);
 
         if (_provider != null)
@@ -104,6 +114,11 @@ public class EquippedWandUI : MonoBehaviour,
 
         IsVisible = false;
         SetTrashArea(false);
+
+        if (SoundManager.Instance != null && closeClip != null)
+        {
+            SoundManager.Instance.PlaySE(closeClip);
+        }
 
         if (animator != null)
         {
@@ -260,6 +275,11 @@ public class EquippedWandUI : MonoBehaviour,
             return;
         }
 
+        if (SoundManager.Instance != null && dropClip != null)
+        {
+            SoundManager.Instance.PlaySE(dropClip);
+        }
+
         _provider?.SetWand(targetSlotIndex, droppedWand);
         SetTrashArea(false);
     }
@@ -299,6 +319,11 @@ public class EquippedWandUI : MonoBehaviour,
         if (droppedWand == null)
         {
             return;
+        }
+
+        if (SoundManager.Instance != null && dropClip != null)
+        {
+            SoundManager.Instance.PlaySE(dropClip);
         }
 
         _provider?.SetWand(targetSlotIndex, droppedWand);
