@@ -76,6 +76,7 @@ MonoBehaviour:
   - {fileID: 8265746948549302011, guid: f31d39e5fdeb07742b378c16367ff5e5, type: 3}
   - {fileID: 5502956878851705949, guid: a5664fbaad2060f4fbf877672343f862, type: 3}
   - {fileID: 7652652732867426339, guid: 47cb7fe9d6f695e44aca4a213300e837, type: 3}
+  - {fileID: 616104736074144785, guid: 1a1b32e111f8dbb4397e45518a121e90, type: 3}
   playerPrefab: {fileID: 5255534377115560913, guid: 864d69398cbad294a89daf01f91bb0a9, type: 3}
   playerSpawnPoint: {fileID: 0}
   debugDisableEnemySpawning: 0

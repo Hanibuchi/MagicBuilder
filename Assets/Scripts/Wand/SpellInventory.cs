@@ -451,6 +451,27 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
         UpdateScroll();
     }
 
+    /// <summary>
+    /// インベントリから指定された呪文を1つ削除します。
+    /// </summary>
+    /// <param name="spellToRemove">削除するSpellBaseデータ。</param>
+    public void RemoveSpellFromInventory(SpellBase spellToRemove)
+    {
+        if (spellToRemove == null) return;
+
+        if (availableSpells.Contains(spellToRemove))
+        {
+            availableSpells.Remove(spellToRemove);
+            
+            if (newSpells.Contains(spellToRemove))
+            {
+                newSpells.Remove(spellToRemove);
+            }
+
+            RebuildUI();
+        }
+    }
+
     [Header("Sound Settings")]
     [SerializeField] AudioClip inventoryFullSound; // インベントリ満杯時のSE
     [SerializeField] float inventoryFullSoundVolume = 1.0f;
