@@ -14,7 +14,7 @@ public interface IEquippedWandDraggable
 /// </summary>
 public interface IEquippedWandDragObserver
 {
-    void NotifyDragStarted(Wand draggedWand, int fromSlotIndex, bool fromEquippedSlot);
+    void NotifyDragStarted(Wand draggedWand, int fromSlotIndex, bool fromEquippedSlot, int originalSiblingIndex);
     void NotifyDroppedOnEquippedSlot(Wand droppedWand, int targetSlotIndex);
     void NotifyDroppedOutside(Wand draggedWand, int fromSlotIndex, bool fromEquippedSlot);
     void NotifyDroppedOnTrash(Wand draggedWand, int fromSlotIndex, bool fromEquippedSlot);

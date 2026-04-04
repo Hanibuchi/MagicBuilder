@@ -241,8 +241,20 @@ public class EquippedWandUI : MonoBehaviour,
         }
     }
 
+    private Component _dragPlaceholder;
+
+    private void ClearDragPlaceholder()
+    {
+        if (_dragPlaceholder != null)
+        {
+            Destroy(_dragPlaceholder.gameObject);
+            _dragPlaceholder = null;
+        }
+    }
+
     public void NotifyWandDroppedOnEmptySlot(Wand droppedWand, int targetSlotIndex)
     {
+        ClearDragPlaceholder();
         if (droppedWand == null)
         {
             return;
@@ -252,16 +264,38 @@ public class EquippedWandUI : MonoBehaviour,
         SetTrashArea(false);
     }
 
-    public void NotifyDragStarted(Wand draggedWand, int fromSlotIndex, bool fromEquippedSlot)
+    public void NotifyDragStarted(Wand draggedWand, int fromSlotIndex, bool fromEquippedSlot, int originalSiblingIndex)
     {
         if (fromEquippedSlot)
         {
             SetTrashArea(true);
+            if (emptyWandPrefab != null && equippedSlotsParent != null)
+            {
+                EmptyWandUI placeholder = Instantiate(emptyWandPrefab, equippedSlotsParent);
+                placeholder.Initialize(fromSlotIndex);
+                placeholder.SetObserver(this);
+                placeholder.transform.SetSiblingIndex(originalSiblingIndex);
+                _dragPlaceholder = placeholder;
+            }
+        }
+        else
+        {
+            if (equippedWandIconPrefab != null && holdWandsParent != null)
+            {
+                EquippedWandIconUI placeholder = Instantiate(equippedWandIconPrefab, holdWandsParent);
+                placeholder.SetData(draggedWand);
+                placeholder.SetObserver(this);
+                placeholder.SetSlotIndex(-1);
+                placeholder.SetDragAndVisualState(false, true); 
+                placeholder.transform.SetSiblingIndex(originalSiblingIndex);
+                _dragPlaceholder = placeholder;
+            }
         }
     }
 
     public void NotifyDroppedOnEquippedSlot(Wand droppedWand, int targetSlotIndex)
     {
+        ClearDragPlaceholder();
         if (droppedWand == null)
         {
             return;
@@ -273,6 +307,7 @@ public class EquippedWandUI : MonoBehaviour,
 
     public void NotifyDroppedOutside(Wand draggedWand, int fromSlotIndex, bool fromEquippedSlot)
     {
+        ClearDragPlaceholder();
         if (!fromEquippedSlot)
         {
             return;
@@ -284,6 +319,7 @@ public class EquippedWandUI : MonoBehaviour,
 
     public void NotifyDroppedOnTrash(Wand draggedWand, int fromSlotIndex, bool fromEquippedSlot)
     {
+        ClearDragPlaceholder();
         if (!fromEquippedSlot)
         {
             return;
@@ -295,6 +331,7 @@ public class EquippedWandUI : MonoBehaviour,
 
     public void NotifyDropCompleted(Wand draggedWand, int fromSlotIndex, bool fromEquippedSlot)
     {
+        ClearDragPlaceholder();
         if (fromEquippedSlot)
         {
             SetTrashArea(false);

@@ -119,7 +119,6 @@ public class EquippedWandDescriptionUI : MonoBehaviour, IBeginDragHandler, IEndD
         }
 
         _dropSucceeded = false;
-        _observer?.NotifyDragStarted(_wand, _slotIndex, true);
 
         _originalParent = transform.parent;
         _originalSiblingIndex = transform.GetSiblingIndex();
@@ -136,6 +135,8 @@ public class EquippedWandDescriptionUI : MonoBehaviour, IBeginDragHandler, IEndD
         {
             transform.SetParent(root, true);
         }
+
+        _observer?.NotifyDragStarted(_wand, _slotIndex, true, _originalSiblingIndex);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -192,6 +193,10 @@ public class EquippedWandDescriptionUI : MonoBehaviour, IBeginDragHandler, IEndD
         {
             transform.SetParent(_originalParent, true);
             transform.SetSiblingIndex(_originalSiblingIndex);
+        }
+        else if (_dropSucceeded)
+        {
+            Destroy(gameObject);
         }
     }
 

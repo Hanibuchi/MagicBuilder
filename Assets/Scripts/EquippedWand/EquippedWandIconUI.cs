@@ -104,7 +104,6 @@ public class EquippedWandIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHand
         }
 
         _dropSucceeded = false;
-        _observer?.NotifyDragStarted(_wand, _slotIndex, IsFromEquippedSlot());
 
         _originalParent = transform.parent;
         _originalSiblingIndex = transform.GetSiblingIndex();
@@ -121,6 +120,8 @@ public class EquippedWandIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHand
         {
             transform.SetParent(root, true);
         }
+
+        _observer?.NotifyDragStarted(_wand, _slotIndex, IsFromEquippedSlot(), _originalSiblingIndex);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -155,6 +156,16 @@ public class EquippedWandIconUI : MonoBehaviour, IBeginDragHandler, IEndDragHand
         else
         {
             _observer?.NotifyDropCompleted(_wand, _slotIndex, IsFromEquippedSlot());
+        }
+
+        if (!_dropSucceeded && _originalParent != null)
+        {
+            transform.SetParent(_originalParent, true);
+            transform.SetSiblingIndex(_originalSiblingIndex);
+        }
+        else if (_dropSucceeded)
+        {
+            Destroy(gameObject);
         }
     }
 
