@@ -321,7 +321,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7008176665490839045}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ConfirmationUI, Assembly-CSharp
         m_MethodName: Close
         m_Mode: 1
@@ -955,8 +955,8 @@ GameObject:
   - component: {fileID: 4944517569661382853}
   - component: {fileID: 4324699442354531418}
   - component: {fileID: 8237710843781903050}
-  - component: {fileID: 7008176665490839045}
   - component: {fileID: 4512641129586306190}
+  - component: {fileID: 2867183087870108654}
   m_Layer: 5
   m_Name: SpellDestroyConfirmationUI
   m_TagString: Untagged
@@ -1047,23 +1047,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &7008176665490839045
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7074452931907775325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dde0215f221261b44b441d1d53e83513, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvasGroup: {fileID: 4512641129586306190}
-  fadeDuration: 0.25
-  messageText: {fileID: 7489228698621607295}
-  yesButton: {fileID: 3768098886333020540}
-  noButton: {fileID: 6882514237176197856}
 --- !u!225 &4512641129586306190
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1076,3 +1059,22 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &2867183087870108654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7074452931907775325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f5e9fa02a342e44c92ca092d94478e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpellDestroyConfirmationUI
+  canvasGroup: {fileID: 4512641129586306190}
+  fadeDuration: 0.2
+  messageText: {fileID: 7489228698621607295}
+  yesButton: {fileID: 3768098886333020540}
+  noButton: {fileID: 6882514237176197856}
+  spellIconContainer: {fileID: 5085169250153615445}
+  simpleSpellUIPrefab: {fileID: 9010884041948823182, guid: df4a317d045c0f94da614f521c39ef6b, type: 3}
