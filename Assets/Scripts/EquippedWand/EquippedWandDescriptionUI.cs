@@ -8,7 +8,7 @@ using System.Collections;
 /// 装備中の杖の情報を表示するUI。
 /// 杖の画像、名称、説明、および固定呪文を表示します。
 /// </summary>
-public class EquippedWandDescriptionUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IEquippedWandDraggable
+public class EquippedWandDescriptionUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler, IEquippedWandDraggable
 {
     [Header("UI References")]
     [SerializeField, Tooltip("杖の見た目を表示するImage")]
@@ -146,6 +146,28 @@ public class EquippedWandDescriptionUI : MonoBehaviour, IBeginDragHandler, IEndD
     public void OnEndDrag(PointerEventData eventData)
     {
         StartCoroutine(HandleDropResult());
+    }
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        if (eventData.pointerDrag == null)
+        {
+            return;
+        }
+
+        if (!eventData.pointerDrag.TryGetComponent(out IEquippedWandDraggable dragged))
+        {
+            return;
+        }
+
+        Wand droppedWand = dragged.GetWandData();
+        if (droppedWand == null)
+        {
+            return;
+        }
+
+        dragged.NotifyDropSucceeded();
+        _observer?.NotifyDroppedOnEquippedSlot(droppedWand, _slotIndex);
     }
 
     private IEnumerator HandleDropResult()

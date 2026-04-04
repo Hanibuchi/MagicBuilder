@@ -260,6 +260,17 @@ public class EquippedWandUI : MonoBehaviour,
         }
     }
 
+    public void NotifyDroppedOnEquippedSlot(Wand droppedWand, int targetSlotIndex)
+    {
+        if (droppedWand == null)
+        {
+            return;
+        }
+
+        _provider?.SetWand(targetSlotIndex, droppedWand);
+        SetTrashArea(false);
+    }
+
     public void NotifyDroppedOutside(Wand draggedWand, int fromSlotIndex, bool fromEquippedSlot)
     {
         if (!fromEquippedSlot)
