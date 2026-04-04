@@ -235,7 +235,7 @@ public class StageManager : MonoBehaviour
         }
         else
         {
-            wandsToEquip = WandUnlockManager.Instance.GetUnlockedWands();
+            wandsToEquip = EquippedWandManager.Instance.GetWandsForStage();
         }
 
         if (wandsToEquip != null && wandsToEquip.Length > 0)

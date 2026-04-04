@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
+using System.Collections;
 
 /// <summary>
 /// 装備中の杖の情報を表示するUI。
 /// 杖の画像、名称、説明、および固定呪文を表示します。
 /// </summary>
-public class EquippedWandDescriptionUI : MonoBehaviour
+public class EquippedWandDescriptionUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IEquippedWandDraggable
 {
     [Header("UI References")]
     [SerializeField, Tooltip("杖の見た目を表示するImage")]
@@ -19,12 +21,24 @@ public class EquippedWandDescriptionUI : MonoBehaviour
     private Transform fixedSpellsContainer;
     [SerializeField, Tooltip("固定呪文の表示に使用するアイコンプレハブ")]
     private SimpleSpellUI simpleSpellUIPrefab;
+    [SerializeField]
+    Image dragSourceImage;
+
+    private Wand _wand;
+    private int _slotIndex = -1;
+    private bool _dropSucceeded;
+    private bool _canDrag = true;
+    private Transform _originalParent;
+    private int _originalSiblingIndex;
+    private IEquippedWandDragObserver _observer;
 
     /// <summary>
     /// 杖の表示内容を更新します。
     /// </summary>
     public void SetData(Wand wand)
     {
+        _wand = wand;
+
         if (wand == null)
         {
             ClearFixedSpellIcons();
@@ -59,6 +73,104 @@ public class EquippedWandDescriptionUI : MonoBehaviour
         }
 
         UpdateFixedSpellIcons(wand.fixedSpells);
+    }
+
+    public void SetSlotIndex(int slotIndex)
+    {
+        _slotIndex = slotIndex;
+    }
+
+    public void SetObserver(IEquippedWandDragObserver observer)
+    {
+        _observer = observer;
+    }
+
+    public Wand GetWandData()
+    {
+        return _wand;
+    }
+
+    public int GetSlotIndex()
+    {
+        return _slotIndex;
+    }
+
+    public bool IsFromEquippedSlot()
+    {
+        return true;
+    }
+
+    public void NotifyDropSucceeded()
+    {
+        _dropSucceeded = true;
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        if (_wand == null)
+        {
+            return;
+        }
+
+        if (!_canDrag)
+        {
+            eventData.pointerDrag = null;
+            return;
+        }
+
+        _dropSucceeded = false;
+        _observer?.NotifyDragStarted(_wand, _slotIndex, true);
+
+        _originalParent = transform.parent;
+        _originalSiblingIndex = transform.GetSiblingIndex();
+
+        if (dragSourceImage != null)
+        {
+            dragSourceImage.raycastTarget = false;
+        }
+
+        RectTransform root = DraggingSpellRootProvider.Instance != null
+            ? DraggingSpellRootProvider.Instance.GetRootTransform()
+            : null;
+        if (root != null)
+        {
+            transform.SetParent(root, true);
+        }
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        transform.position = eventData.position;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        StartCoroutine(HandleDropResult());
+    }
+
+    private IEnumerator HandleDropResult()
+    {
+        yield return null;
+
+        if (dragSourceImage != null)
+        {
+            dragSourceImage.raycastTarget = true;
+        }
+
+        if (!_dropSucceeded)
+        {
+            _observer?.NotifyDroppedOutside(_wand, _slotIndex, true);
+        }
+        else
+        {
+            _observer?.NotifyDropCompleted(_wand, _slotIndex, true);
+        }
+
+        if (!_dropSucceeded && _originalParent != null)
+        {
+            transform.SetParent(_originalParent, true);
+            transform.SetSiblingIndex(_originalSiblingIndex);
+        }
     }
 
     private void UpdateFixedSpellIcons(System.Collections.Generic.List<SpellBase> fixedSpells)

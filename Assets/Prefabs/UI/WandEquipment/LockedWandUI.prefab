@@ -223,6 +223,7 @@ GameObject:
   - component: {fileID: 3519275766491342665}
   - component: {fileID: 3686195986807798933}
   - component: {fileID: 4117005059977429768}
+  - component: {fileID: 6652504792057757396}
   m_Layer: 5
   m_Name: LockedWandUI
   m_TagString: Untagged
@@ -288,3 +289,17 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1.5
+--- !u!114 &6652504792057757396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8085476838983653648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6563d3d89d0f9384abdda7bb938153ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LockedWandIconUI
+  wandImage: {fileID: 0}
+  lockedTint: {r: 0.4, g: 0.4, b: 0.4, a: 1}

@@ -464,6 +464,16 @@ MonoBehaviour:
   descriptionText: {fileID: 4543853874260900199}
   fixedSpellsContainer: {fileID: 8076525493268093697}
   simpleSpellUIPrefab: {fileID: 9010884041948823182, guid: df4a317d045c0f94da614f521c39ef6b, type: 3}
+  dragSourceImage: {fileID: 2003166512628736639}
+  testWand:
+    wandName: 
+    description: 
+    type: 0
+    presentationSprite: {fileID: 0}
+    wandSprite: {fileID: 0}
+    maxSpellCount: 12
+    fixedSpells: []
+    spells: []
 --- !u!1 &4042562015687030206
 GameObject:
   m_ObjectHideFlags: 0

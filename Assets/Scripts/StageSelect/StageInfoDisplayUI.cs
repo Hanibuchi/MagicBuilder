@@ -15,6 +15,7 @@ public class StageInfoDisplayUI : MonoBehaviour
     [Header("UI要素 - ボタン")]
     [SerializeField] private Button startButton;           // ステージ開始ボタン
     [SerializeField] private Button openSpellSelectButton; // 持ち込み呪文選択ボタン
+    [SerializeField] private Button openWandSelectButton;  // 持ち込み杖選択ボタン
     [SerializeField] private GameObject spellBadge;        // 新規呪文通知バッジ
     [SerializeField] private Button closeButton;           // 閉じるボタン
 
@@ -34,6 +35,9 @@ public class StageInfoDisplayUI : MonoBehaviour
 
         if (openSpellSelectButton != null)
             openSpellSelectButton.onClick.AddListener(OnOpenSpellSelectButtonClicked);
+
+        if (openWandSelectButton != null)
+            openWandSelectButton.onClick.AddListener(OnOpenWandSelectButtonClicked);
 
         if (closeButton != null)
             closeButton.onClick.AddListener(Close);
@@ -176,6 +180,26 @@ public class StageInfoDisplayUI : MonoBehaviour
         else
         {
             Debug.LogError("StageInfoDisplayUI: EquippedSpellController.Instance が見つかりません。");
+        }
+    }
+
+    bool wandSelectClicked = false;
+    /// <summary>
+    /// 持ち込み杖選択ボタンが押された時の処理
+    /// </summary>
+    private void OnOpenWandSelectButtonClicked()
+    {
+        if (wandSelectClicked) return;
+        wandSelectClicked = true;
+
+        if (EquippedWandController.Instance != null)
+        {
+            EquippedWandController.Instance.OpenWandSelectionUI(() => { wandSelectClicked = false; });
+        }
+        else
+        {
+            wandSelectClicked = false;
+            Debug.LogError("StageInfoDisplayUI: EquippedWandController.Instance が見つかりません。");
         }
     }
 }
