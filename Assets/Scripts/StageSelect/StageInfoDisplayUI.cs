@@ -63,6 +63,10 @@ public class StageInfoDisplayUI : MonoBehaviour
         {
             stageTypeText.text = stageType == StageType.Rush ? "ラッシュ" : "パズル";
         }
+
+        bool isRush = stageType == StageType.Rush;
+        if (openSpellSelectButton != null) openSpellSelectButton.gameObject.SetActive(isRush);
+        if (openWandSelectButton != null) openWandSelectButton.gameObject.SetActive(isRush);
     }
 
     /// <summary>
