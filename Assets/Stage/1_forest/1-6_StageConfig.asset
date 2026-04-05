@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageName: 1-6
   subStageName: Test Sub Name
-  SceneName: Stage_Template
+  SceneName: Stage_Forest
   clearCondition: 1
   enemyPhases:
   - conditionType: 0
@@ -24,5 +24,10 @@ MonoBehaviour:
       enemyPrefab: {fileID: 5046662643123802713, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       isBoss: 0
       customDroppableSpells: []
+  phaseGenerators: []
   puzzleSpells: []
+  puzzleWands: 
   stageType: 0
+  references:
+    version: 2
+    RefIds: []

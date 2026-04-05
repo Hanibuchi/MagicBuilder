@@ -14,15 +14,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageName: 1-2
   subStageName: Test Sub Name
-  SceneName: Stage_Template
+  SceneName: Stage_Forest
   clearCondition: 1
-  enemyPhases:
-  - conditionType: 0
-    conditionValue: 0
-    isBossPhase: 0
-    spawnerConfig:
-      enemyPrefab: {fileID: 5046662643123802713, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
-      isBoss: 0
-      customDroppableSpells: []
+  enemyPhases: []
+  phaseGenerators:
+  - rid: 1486059349146861568
+  - rid: 1486059349146861661
   puzzleSpells: []
+  puzzleWands: 
   stageType: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 1486059349146861568
+      type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
+      data:
+        enemies:
+        - enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+          weight: 1
+        spawnInterval: 3
+        duration: 30
+        maxSpawnCount: 0
+        droppableSpells:
+        - {fileID: 11400000, guid: 7f8f52737442d1140a3afef439419438, type: 2}
+        rarityDropRates:
+        - rarity: 0
+          dropRate: 1
+    - rid: 1486059349146861661
+      type: {class: SimplePhaseGenerator, ns: , asm: Assembly-CSharp}
+      data:
+        phaseConfig:
+          conditionType: 1
+          conditionValue: 0
+          isBossPhase: 1
+          spawnerConfig:
+            enemyPrefab: {fileID: 461776121605967279, guid: ebe1af1900a19b84fbcbe13c4ac05017, type: 3}
+            isBoss: 1
+            customDroppableSpells: []
