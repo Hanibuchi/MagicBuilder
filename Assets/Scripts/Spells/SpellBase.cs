@@ -505,5 +505,4 @@ public enum SpellRarity
     Uncommon,
     Rare,
     Epic,
-    Legendary
 }
