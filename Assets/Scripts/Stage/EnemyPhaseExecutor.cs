@@ -14,6 +14,9 @@ public class EnemyPhaseExecutor : MonoBehaviour
     [Tooltip("敵をスポーンさせる座標")]
     Vector3 spawnPosition = Vector3.zero;
 
+    [SerializeField, Tooltip("ボス出現演出開始から実際にスポーンするまでの待機時間")]
+    private float bossSpawnDelay = 3.0f;
+
     /// <summary>
     /// シングルトンの初期化処理
     /// </summary>
@@ -69,6 +72,9 @@ public class EnemyPhaseExecutor : MonoBehaviour
             if (currentPhase.isBossPhase)
             {
                 PerformBossAppearance();
+                
+                // ボス出現演出から一定時間待機する
+                yield return new WaitForSeconds(bossSpawnDelay);
             }
 
             // 2. 敵の生成を実行
