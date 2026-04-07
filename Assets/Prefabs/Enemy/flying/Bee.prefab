@@ -41,7 +41,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 133917716359229411, guid: a85e5e272b9727a4db18153d0132e4f4, type: 3}
       propertyPath: m_Name
-      value: bee Variant
+      value: Bee
       objectReference: {fileID: 0}
     - target: {fileID: 2182001598212875601, guid: a85e5e272b9727a4db18153d0132e4f4, type: 3}
       propertyPath: m_Sprite
@@ -109,6 +109,7 @@ PrefabInstance:
       objectReference: {fileID: 2215804239896678097}
     m_RemovedComponents:
     - {fileID: 8032733596606806843, guid: a85e5e272b9727a4db18153d0132e4f4, type: 3}
+    - {fileID: 5368953452318704675, guid: a85e5e272b9727a4db18153d0132e4f4, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8447659190147454014, guid: a85e5e272b9727a4db18153d0132e4f4, type: 3}
@@ -136,7 +137,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dea9108ca2f7400429096cc8fd386354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
+  defaultMoveSpeed: 1
+  movementForceGain: 10
+  isStationaryMode: 0
   centerTransform: {fileID: 5814496505779298050}
   moveRadius: 4
   moveDuration: 0.5

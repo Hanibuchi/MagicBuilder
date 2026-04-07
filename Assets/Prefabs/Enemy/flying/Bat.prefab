@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 74969639956603153, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: enemyMovement
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 379072239273853010, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.42
@@ -154,14 +158,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_Name
-      value: bat Variant
+      value: Bat
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7809496392863742821, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
     - {fileID: 3054214445999646573, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+    - {fileID: 1580129330808173040, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5368953452318704675}
     - targetCorrespondingSourceObject: {fileID: 8286987012176087518, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6074570251318819988}
@@ -172,6 +180,30 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 6311625765833875013}
   m_SourcePrefab: {fileID: 100100000, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+--- !u!1 &133917716359229411 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+  m_PrefabInstance: {fileID: 8833740183253224139}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5368953452318704675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 133917716359229411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8c363f76c695b24095c3fa817576b23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BatMovement
+  defaultMoveSpeed: 1
+  movementForceGain: 10
+  isStationaryMode: 0
+  enableVerticalMovement: 0
+  verticalAmplitude: 3
+  verticalFrequency: 2
+  modelTransform: {fileID: 7673209830089841859}
 --- !u!1 &691009124660347669 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8286987012176087518, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
@@ -280,6 +312,11 @@ PolygonCollider2D:
       - {x: -0.6769531, y: 1.5079985}
       - {x: 0.63218224, y: 3.27565}
   m_UseDelaunayMesh: 0
+--- !u!4 &7673209830089841859 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1219077242843125256, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+  m_PrefabInstance: {fileID: 8833740183253224139}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8749584313590984312 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 286958755840304307, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
