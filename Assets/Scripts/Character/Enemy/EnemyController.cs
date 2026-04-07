@@ -208,6 +208,7 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         _attackModel.RequestAttack(triggerID);
 
         enemyMovement?.StopMovement();
+        enemyMovement?.OnTargetSensed(triggerID, target);
     }
 
     /// <summary>

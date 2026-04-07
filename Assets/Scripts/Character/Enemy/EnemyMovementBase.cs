@@ -154,6 +154,14 @@ public class EnemyMovementBase : MonoBehaviour
         isMoving = true;
     }
 
+    /// <summary>
+    /// LayerSensor等から対象を感知した際に呼ばれるイベント。
+    /// 継承先でオーバーライドして、特定のセンサーに反応した際の動きを追加する。
+    /// </summary>
+    public virtual void OnTargetSensed(string triggerID, Vector2 targetPos)
+    {
+    }
+
     public void ApplyStun()
     {
         isStunned++;
