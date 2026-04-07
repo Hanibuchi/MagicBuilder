@@ -16,71 +16,23 @@ MonoBehaviour:
   subStageName: "\u6700\u521D\u306E\u30B9\u30C6\u30FC\u30B8"
   SceneName: Stage_Template
   clearCondition: 2
-  enemyPhases:
-  - conditionType: 0
-    conditionValue: 0
-    isBossPhase: 0
-    spawnerConfig:
-      enemyPrefab: {fileID: 7981699022232761973, guid: 97d64d8723cc2414ab250a3d6ff89bb6, type: 3}
-      isBoss: 0
-      customDroppableSpells: []
-  - conditionType: 0
-    conditionValue: 10
-    isBossPhase: 0
-    spawnerConfig:
-      enemyPrefab: {fileID: 133917716359229411, guid: a85e5e272b9727a4db18153d0132e4f4, type: 3}
-      isBoss: 0
-      customDroppableSpells: []
+  enemyPhases: []
   phaseGenerators:
-  - rid: 8537812878234222684
-  - rid: 8537812878234222685
-  - rid: 8537812878234222686
+  - rid: 1486059392694747261
   puzzleSpells: []
   puzzleWands: 
   stageType: 0
   references:
     version: 2
     RefIds:
-    - rid: 8537812878234222684
+    - rid: 1486059392694747261
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         enemies:
-        - enemyPrefab: {fileID: 3738908839911435214, guid: 541b412a452207d45909e95a7ee45512, type: 3}
-          weight: 1
         - enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
           weight: 1
-        spawnInterval: 1
-        duration: 0
-        maxSpawnCount: 5
-        droppableSpells:
-        - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
-        - {fileID: 11400000, guid: e2562c0a276a62e4fbadbc412c4a6415, type: 2}
-        rarityDropRates:
-        - rarity: 0
-          dropRate: 0.5
-        - rarity: 1
-          dropRate: 0.25
-    - rid: 8537812878234222685
-      type: {class: SimplePhaseGenerator, ns: , asm: Assembly-CSharp}
-      data:
-        phaseConfig:
-          conditionType: 0
-          conditionValue: 5
-          isBossPhase: 0
-          spawnerConfig:
-            enemyPrefab: {fileID: 7333475907507572004, guid: 0874894bc718f7d4ab2c05dd46df722e, type: 3}
-            isBoss: 0
-            customDroppableSpells:
-            - spellData: {fileID: 11400000, guid: 8f637262ee480304689f7206945793e5, type: 2}
-              dropChance: 1
-    - rid: 8537812878234222686
-      type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
-      data:
-        enemies:
-        - enemyPrefab: {fileID: 3138375678483179165, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
-          weight: 1
-        - enemyPrefab: {fileID: 5966934852996824328, guid: c21f327d8a7a3da4f83dd63e5d6f80d0, type: 3}
-          weight: 1
+        - enemyPrefab: {fileID: 1119729045916579427, guid: e2d76f83094901f4bbf8ea97b9d0d0a9, type: 3}
+          weight: 0.5
         spawnInterval: 1
         duration: 60
         maxSpawnCount: 0

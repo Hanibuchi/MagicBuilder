@@ -129,7 +129,7 @@ public class SpellProjectileDamageSource : DamageSourceBase
             SpawnCollisionPrefab(transform.position);
     }
 
-    private void SpawnCollisionPrefab(Vector2 spawnPos)
+    protected virtual void SpawnCollisionPrefab(Vector2 spawnPos)
     {
         if (spawnOnCollisionPrefab == null) return;
 

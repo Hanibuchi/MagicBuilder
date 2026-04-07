@@ -12,6 +12,15 @@ public class AttackEventBridge : MonoBehaviour
     [SerializeField]
     private EnemyController targetController;
 
+    [Header("実行設定")]
+    [Tooltip("各攻撃メソッド（Attack1, 2, 3）を一度しか呼ばないようにするかどうか。デフォルトはオフ。")]
+    [SerializeField]
+    private bool executeOnlyOnce = false;
+
+    private bool hasExecutedAttack1 = false;
+    private bool hasExecutedAttack2 = false;
+    private bool hasExecutedAttack3 = false;
+
     private void Awake()
     {
         if (targetController == null)
@@ -27,6 +36,9 @@ public class AttackEventBridge : MonoBehaviour
     /// </summary>
     public void OnAttack1()
     {
+        if (executeOnlyOnce && hasExecutedAttack1) return;
+        hasExecutedAttack1 = true;
+
         if (targetController != null)
         {
             // EnemyControllerのAttack1メソッドを呼び出す
@@ -39,6 +51,9 @@ public class AttackEventBridge : MonoBehaviour
     /// </summary>
     public void OnAttack2()
     {
+        if (executeOnlyOnce && hasExecutedAttack2) return;
+        hasExecutedAttack2 = true;
+
         if (targetController != null)
         {
             // EnemyControllerのAttack2メソッドを呼び出す
@@ -51,6 +66,9 @@ public class AttackEventBridge : MonoBehaviour
     /// </summary>
     public void OnAttack3()
     {
+        if (executeOnlyOnce && hasExecutedAttack3) return;
+        hasExecutedAttack3 = true;
+
         if (targetController != null)
         {
             // EnemyControllerのAttack3メソッドを呼び出す

@@ -78,7 +78,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4220702161970759551, guid: cd13fb568cccd5f4ab11a9a59ee12418, type: 3}
       propertyPath: damageData.baseDamage
-      value: 40
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4626849947649445235, guid: cd13fb568cccd5f4ab11a9a59ee12418, type: 3}
       propertyPath: moveSpeed
@@ -90,7 +90,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 6ded96998c728c1489c300eef42d44b5, type: 3}
     - target: {fileID: 8444714878226010074, guid: cd13fb568cccd5f4ab11a9a59ee12418, type: 3}
       propertyPath: m_Name
-      value: bat_stone_attack Variant
+      value: BatStoneAttack
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
