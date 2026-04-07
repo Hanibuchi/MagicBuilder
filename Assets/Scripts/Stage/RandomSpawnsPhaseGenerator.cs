@@ -80,10 +80,8 @@ public class RandomSpawnsPhaseGenerator : PhaseGeneratorBase
             // 2. カスタムドロップを生成
             DroppableSpell[] customDrops = GenerateCustomDrops();
 
-            // 指数分布に従うランダムな間隔を計算（平均値: spawnInterval）
-            // Random.value は 0.0f〜1.0f の値を返すため、(0, 1] の範囲になるように調整しつつ、Log(0) を防ぎます
-            float u = 1.0f - Random.value;
-            float randomInterval = -spawnInterval * Mathf.Log(Mathf.Max(u, 0.00001f));
+            // 一様分布に従うランダムな間隔を計算（範囲: 0 ～ 2*spawnInterval、平均値: spawnInterval）
+            float randomInterval = Random.Range(0f, spawnInterval * 2f);
 
             // 3. EnemyPhaseConfigを生成して追加
             EnemyPhaseConfig config = new EnemyPhaseConfig
