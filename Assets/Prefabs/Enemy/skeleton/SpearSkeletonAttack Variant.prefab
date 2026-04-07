@@ -12,17 +12,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpearSkeletonAttack Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4987693051548529957, guid: d08d85676f491d342afddad4897663e5, type: 3}
+      propertyPath: m_Size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987693051548529957, guid: d08d85676f491d342afddad4897663e5, type: 3}
+      propertyPath: m_Offset.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6080699392637713746, guid: d08d85676f491d342afddad4897663e5, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6080699392637713746, guid: d08d85676f491d342afddad4897663e5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.19188
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6080699392637713746, guid: d08d85676f491d342afddad4897663e5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.61983
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6080699392637713746, guid: d08d85676f491d342afddad4897663e5, type: 3}
       propertyPath: m_LocalPosition.z
