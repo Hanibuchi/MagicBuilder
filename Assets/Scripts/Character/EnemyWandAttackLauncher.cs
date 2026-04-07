@@ -8,7 +8,10 @@ using System.Linq;
 public class EnemyWandAttackLauncher : AttackLauncher
 {
     [Header("敵の杖設定")]
-    [Tooltip("発射に使用する杖")]
+    [Tooltip("プレイヤーの現在の杖をコピーして発射するか")]
+    [SerializeField] private bool usePlayerCurrentWand = false;
+
+    [Tooltip("発射に使用する杖(usePlayerCurrentWandがfalseの場合)")]
     [SerializeField] private Wand enemyWand;
 
     [Tooltip("発射の強さの基本値 (0.0f ～ 1.0f)。計算結果がこれを超える場合は調整されます。")]
@@ -27,9 +30,11 @@ public class EnemyWandAttackLauncher : AttackLauncher
     /// <param name="targetPosition">狙う地点のワールド座標</param>
     public override void LaunchAttack(Vector2 targetPosition)
     {
-        if (enemyWand == null || enemyWand.AllSpells.Count == 0)
+        Wand targetWand = usePlayerCurrentWand ? AttackManager.Instance.GetCurrentWand() : enemyWand;
+
+        if (targetWand == null || targetWand.AllSpells.Count == 0)
         {
-            Debug.LogWarning($"{gameObject.name}: EnemyWandが設定されていないか、呪文が空です。ベースの攻撃を実行します。");
+            Debug.LogWarning($"{gameObject.name}: targetWandが設定されていないか、呪文が空です。ベースの攻撃を実行します。");
             // base.LaunchAttack(targetPosition);
             return;
         }
@@ -41,7 +46,7 @@ public class EnemyWandAttackLauncher : AttackLauncher
         }
 
         // 杖に入っている最初の ExampleSpell を探し、その倍率を自動取得する
-        var exampleSpell = enemyWand.AllSpells.OfType<ExampleSpell>().FirstOrDefault();
+        var exampleSpell = targetWand.AllSpells.OfType<ExampleSpell>().FirstOrDefault();
         if (exampleSpell != null)
         {
             expectedStrengthMultiplier = exampleSpell.StrengthMultiplier;
@@ -56,14 +61,14 @@ public class EnemyWandAttackLauncher : AttackLauncher
         // 3. AttackManagerを通じて杖を発射
         // 敵の魔術師による攻撃なので、レイヤーは Attack_Enemy (味方=プレイヤーをターゲット) を指定します。
         AttackManager.Instance.FireWand(
-            enemyWand,
+            targetWand,
             launchPosition,
             angle,
             strength,
             SpellLayer.Attack_Enemy
         );
 
-        Debug.Log($"{gameObject.name} が '{enemyWand.wandName}' を発射。ターゲット={targetPosition}, 角度={angle:F1}, 強度={strength:F2}");
+        Debug.Log($"{gameObject.name} が '{targetWand.wandName}' を発射。ターゲット={targetPosition}, 角度={angle:F1}, 強度={strength:F2}");
     }
 
     /// <summary>
