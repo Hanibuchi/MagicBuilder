@@ -78,7 +78,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1375723898961235931, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: maxHealth
-      value: 100
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 2426319430043351137, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_Points.Array.data[0].x
