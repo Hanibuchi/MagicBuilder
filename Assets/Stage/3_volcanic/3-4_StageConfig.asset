@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageName: 3-4
   subStageName: "\u30E9\u30C3\u30B7\u30E52"
-  SceneName: Stage_Template
+  SceneName: Stage_Volcanic
   clearCondition: 1
   enemyPhases: []
   phaseGenerators:
