@@ -105,11 +105,8 @@ public class StageInfoDisplayUI : MonoBehaviour
     /// </summary>
     private void UpdateWandBadge()
     {
-        if (wandBadge != null && WandUnlockManager.Instance != null)
-        {
-            bool hasNew = WandUnlockManager.Instance.HasAnyNewlyUnlockedWands();
-            wandBadge.SetActive(hasNew);
-        }
+        bool hasNew = wandBadge != null && WandUnlockManager.Instance != null ? WandUnlockManager.Instance.HasAnyNewlyUnlockedWands() : false;
+        wandBadge.SetActive(hasNew);
     }
 
     bool close = true;
