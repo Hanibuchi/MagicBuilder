@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 427356011830783050, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: attackDamage.temperatureDamage
-      value: -10
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 794414093865062184, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_AnchorMax.x
@@ -78,7 +78,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_Name
-      value: ice_slime Variant
+      value: IceSlime
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

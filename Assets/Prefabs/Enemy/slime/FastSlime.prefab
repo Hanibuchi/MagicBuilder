@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 427356011830783050, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: attackDamage.baseDamage
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 794414093865062184, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_AnchorMax.x
@@ -66,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1580129330808173040, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: defaultMoveSpeed
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3054214445999646573, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_Size.x

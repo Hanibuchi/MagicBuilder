@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 427356011830783050, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: attackDamage.waterDamage
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 794414093865062184, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_AnchorMax.x

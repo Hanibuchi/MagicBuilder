@@ -878,7 +878,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 15
+  maxHealth: 10
   characterElement: 0
   maxStopDurationOnFire: 20
   iceStopThreshold: 0.3
@@ -986,7 +986,7 @@ MonoBehaviour:
   launchPoint: {fileID: 379072239273853010}
   attackPrefab: {fileID: 461336670524401298, guid: d08d85676f491d342afddad4897663e5, type: 3}
   attackDamage:
-    baseDamage: 10
+    baseDamage: 5
     woodDamage: 0
     waterDamage: 0
     temperatureDamage: 0

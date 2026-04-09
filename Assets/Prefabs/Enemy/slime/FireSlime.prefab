@@ -8,6 +8,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 427356011830783050, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: attackDamage.baseDamage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 427356011830783050, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: attackDamage.temperatureDamage
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 794414093865062184, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -66,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 2480098952a43a74992e333552f3257f, type: 2}
     - target: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_Name
-      value: FireSlime Variant
+      value: FireSlime
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

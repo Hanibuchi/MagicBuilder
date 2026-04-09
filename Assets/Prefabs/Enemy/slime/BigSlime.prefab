@@ -99,6 +99,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 74969639956603153, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: attackDatas.Array.data[0].CoolDownTime
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 427356011830783050, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: attackDamage.baseDamage
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 794414093865062184, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -165,7 +173,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1375723898961235931, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: maxHealth
-      value: 150
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1580129330808173040, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: defaultMoveSpeed
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 3075220080243641135, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_IsActive

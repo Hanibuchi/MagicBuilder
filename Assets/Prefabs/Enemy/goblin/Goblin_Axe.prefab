@@ -143,6 +143,10 @@ PrefabInstance:
       propertyPath: attackPrefab
       value: 
       objectReference: {fileID: 1361161245417219142, guid: 77cff9cdc79286640b24ae198839aec9, type: 3}
+    - target: {fileID: 427356011830783050, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: attackDamage.baseDamage
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 609205194427362876, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0.18
@@ -201,7 +205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1375723898961235931, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: maxHealth
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2426319430043351137, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_Points.Array.data[0].x
