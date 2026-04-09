@@ -18,17 +18,17 @@ MonoBehaviour:
   clearCondition: 1
   enemyPhases: []
   phaseGenerators:
-  - rid: 1486059440161161720
-  - rid: 1486059440161161721
-  - rid: 1486059440161161722
-  - rid: 1486059440161161723
+  - rid: 1486059449687998621
+  - rid: 1486059449687998622
+  - rid: 1486059449687998623
+  - rid: 1486059449687998624
   puzzleSpells: []
   puzzleWands: 
   stageType: 0
   references:
     version: 2
     RefIds:
-    - rid: 1486059440161161720
+    - rid: 1486059449687998621
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -47,9 +47,40 @@ MonoBehaviour:
         spawnInterval: 7.647059
         duration: 21
         maxSpawnCount: 0
-        droppableSpells: []
-        rarityDropRates: []
-    - rid: 1486059440161161721
+        droppableSpells:
+        - {fileID: 11400000, guid: 549312c49a7774442afe5862ef809e48, type: 2}
+        - {fileID: 11400000, guid: 348a49ff6b101e44b8f00dd2345dcc55, type: 2}
+        - {fileID: 11400000, guid: 91a88df000abd0746ab7dd76dc0ccb3e, type: 2}
+        - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
+        - {fileID: 11400000, guid: ca748ee532558a04db48184ac5b52399, type: 2}
+        - {fileID: 11400000, guid: 7edd6365fb1744f4ab3bd644b14bfed9, type: 2}
+        - {fileID: 11400000, guid: bad6a1de036f9d54a9d77b56b69ca745, type: 2}
+        - {fileID: 11400000, guid: 7a1e6f21092e19448a9c39c509bc6a22, type: 2}
+        - {fileID: 11400000, guid: 9d80b434c3145494fb8e1cd4385d8007, type: 2}
+        - {fileID: 11400000, guid: 7a8ac019137267d41ad395a8cb1fefcf, type: 2}
+        - {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
+        - {fileID: 11400000, guid: cd4b1eff96d849342bdda04938fc9a11, type: 2}
+        - {fileID: 11400000, guid: b59115d9b81783642b62fe10fc97b17b, type: 2}
+        - {fileID: 11400000, guid: 329d540d91f6b9c4dad938eeb8292538, type: 2}
+        - {fileID: 11400000, guid: 8c7f17af7ec13c74d836f6078641b135, type: 2}
+        - {fileID: 11400000, guid: 9bf564854106f3c459ea01f86f4cea5b, type: 2}
+        - {fileID: 11400000, guid: 54fdeaf1e456d8843845f8b704afde19, type: 2}
+        - {fileID: 11400000, guid: 0d95613ceee16444aa8e41b156d25c40, type: 2}
+        - {fileID: 11400000, guid: 1ae5b79ace718244a92dfb03c51f91d4, type: 2}
+        - {fileID: 11400000, guid: 769c69207198d5e409c2dfd81c845102, type: 2}
+        - {fileID: 11400000, guid: dd8d82e802947664db3bd58352a5f544, type: 2}
+        - {fileID: 11400000, guid: 28ccbd075847d8740bfae4910880bad8, type: 2}
+        - {fileID: 11400000, guid: 31b4d3e9e3f2e3043845c8a39a0daa4e, type: 2}
+        rarityDropRates:
+        - rarity: 0
+          dropRate: 0.2
+        - rarity: 1
+          dropRate: 0.15
+        - rarity: 2
+          dropRate: 0.1
+        - rarity: 3
+          dropRate: 0.05
+    - rid: 1486059449687998622
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -68,9 +99,40 @@ MonoBehaviour:
         spawnInterval: 5.7352943
         duration: 21
         maxSpawnCount: 0
-        droppableSpells: []
-        rarityDropRates: []
-    - rid: 1486059440161161722
+        droppableSpells:
+        - {fileID: 11400000, guid: 549312c49a7774442afe5862ef809e48, type: 2}
+        - {fileID: 11400000, guid: 348a49ff6b101e44b8f00dd2345dcc55, type: 2}
+        - {fileID: 11400000, guid: 91a88df000abd0746ab7dd76dc0ccb3e, type: 2}
+        - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
+        - {fileID: 11400000, guid: ca748ee532558a04db48184ac5b52399, type: 2}
+        - {fileID: 11400000, guid: 7edd6365fb1744f4ab3bd644b14bfed9, type: 2}
+        - {fileID: 11400000, guid: bad6a1de036f9d54a9d77b56b69ca745, type: 2}
+        - {fileID: 11400000, guid: 7a1e6f21092e19448a9c39c509bc6a22, type: 2}
+        - {fileID: 11400000, guid: 9d80b434c3145494fb8e1cd4385d8007, type: 2}
+        - {fileID: 11400000, guid: 7a8ac019137267d41ad395a8cb1fefcf, type: 2}
+        - {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
+        - {fileID: 11400000, guid: cd4b1eff96d849342bdda04938fc9a11, type: 2}
+        - {fileID: 11400000, guid: b59115d9b81783642b62fe10fc97b17b, type: 2}
+        - {fileID: 11400000, guid: 329d540d91f6b9c4dad938eeb8292538, type: 2}
+        - {fileID: 11400000, guid: 8c7f17af7ec13c74d836f6078641b135, type: 2}
+        - {fileID: 11400000, guid: 9bf564854106f3c459ea01f86f4cea5b, type: 2}
+        - {fileID: 11400000, guid: 54fdeaf1e456d8843845f8b704afde19, type: 2}
+        - {fileID: 11400000, guid: 0d95613ceee16444aa8e41b156d25c40, type: 2}
+        - {fileID: 11400000, guid: 1ae5b79ace718244a92dfb03c51f91d4, type: 2}
+        - {fileID: 11400000, guid: 769c69207198d5e409c2dfd81c845102, type: 2}
+        - {fileID: 11400000, guid: dd8d82e802947664db3bd58352a5f544, type: 2}
+        - {fileID: 11400000, guid: 28ccbd075847d8740bfae4910880bad8, type: 2}
+        - {fileID: 11400000, guid: 31b4d3e9e3f2e3043845c8a39a0daa4e, type: 2}
+        rarityDropRates:
+        - rarity: 0
+          dropRate: 0.2
+        - rarity: 1
+          dropRate: 0.15
+        - rarity: 2
+          dropRate: 0.1
+        - rarity: 3
+          dropRate: 0.05
+    - rid: 1486059449687998623
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -89,14 +151,45 @@ MonoBehaviour:
         spawnInterval: 3.8235295
         duration: 21
         maxSpawnCount: 0
-        droppableSpells: []
-        rarityDropRates: []
-    - rid: 1486059440161161723
+        droppableSpells:
+        - {fileID: 11400000, guid: 549312c49a7774442afe5862ef809e48, type: 2}
+        - {fileID: 11400000, guid: 348a49ff6b101e44b8f00dd2345dcc55, type: 2}
+        - {fileID: 11400000, guid: 91a88df000abd0746ab7dd76dc0ccb3e, type: 2}
+        - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
+        - {fileID: 11400000, guid: ca748ee532558a04db48184ac5b52399, type: 2}
+        - {fileID: 11400000, guid: 7edd6365fb1744f4ab3bd644b14bfed9, type: 2}
+        - {fileID: 11400000, guid: bad6a1de036f9d54a9d77b56b69ca745, type: 2}
+        - {fileID: 11400000, guid: 7a1e6f21092e19448a9c39c509bc6a22, type: 2}
+        - {fileID: 11400000, guid: 9d80b434c3145494fb8e1cd4385d8007, type: 2}
+        - {fileID: 11400000, guid: 7a8ac019137267d41ad395a8cb1fefcf, type: 2}
+        - {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
+        - {fileID: 11400000, guid: cd4b1eff96d849342bdda04938fc9a11, type: 2}
+        - {fileID: 11400000, guid: b59115d9b81783642b62fe10fc97b17b, type: 2}
+        - {fileID: 11400000, guid: 329d540d91f6b9c4dad938eeb8292538, type: 2}
+        - {fileID: 11400000, guid: 8c7f17af7ec13c74d836f6078641b135, type: 2}
+        - {fileID: 11400000, guid: 9bf564854106f3c459ea01f86f4cea5b, type: 2}
+        - {fileID: 11400000, guid: 54fdeaf1e456d8843845f8b704afde19, type: 2}
+        - {fileID: 11400000, guid: 0d95613ceee16444aa8e41b156d25c40, type: 2}
+        - {fileID: 11400000, guid: 1ae5b79ace718244a92dfb03c51f91d4, type: 2}
+        - {fileID: 11400000, guid: 769c69207198d5e409c2dfd81c845102, type: 2}
+        - {fileID: 11400000, guid: dd8d82e802947664db3bd58352a5f544, type: 2}
+        - {fileID: 11400000, guid: 28ccbd075847d8740bfae4910880bad8, type: 2}
+        - {fileID: 11400000, guid: 31b4d3e9e3f2e3043845c8a39a0daa4e, type: 2}
+        rarityDropRates:
+        - rarity: 0
+          dropRate: 0.2
+        - rarity: 1
+          dropRate: 0.15
+        - rarity: 2
+          dropRate: 0.1
+        - rarity: 3
+          dropRate: 0.05
+    - rid: 1486059449687998624
       type: {class: SimplePhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         phaseConfig:
           conditionType: 0
-          conditionValue: 5
+          conditionValue: 3
           isBossPhase: 1
           spawnerConfig:
             enemyPrefab: {fileID: 6981057647434173266, guid: 52b67520ffe77bf499c2dbbfac1439b8, type: 3}

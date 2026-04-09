@@ -20,12 +20,69 @@ public class ConfigUpdater : EditorWindow
     {
         string enemyCsvPath = "Assets/EnemyPrefabList.csv";
         string spawnCsvPath = "Assets/SpawnConfig.csv";
+        string dropSpellsCsvPath = "Assets/stage_drop_spells.csv";
 
         if (!File.Exists(enemyCsvPath) || !File.Exists(spawnCsvPath))
         {
             Debug.LogError("CSV files not found.");
             return;
         }
+
+        if (!File.Exists(dropSpellsCsvPath))
+        {
+            Debug.LogError("stage_drop_spells.csv not found.");
+            return;
+        }
+
+        // 0. Load Spells Map (to match with Drop Config)
+        Dictionary<string, SpellBase> spellDict = new Dictionary<string, SpellBase>();
+        string[] spellGuids = AssetDatabase.FindAssets("t:SpellBase");
+        foreach (var guid in spellGuids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            SpellBase spell = AssetDatabase.LoadAssetAtPath<SpellBase>(path);
+            if (spell != null && !string.IsNullOrEmpty(spell.spellType))
+            {
+                // To avoid duplicate key exceptions just in case
+                if (!spellDict.ContainsKey(spell.spellType))
+                {
+                    spellDict[spell.spellType] = spell;
+                }
+            }
+        }
+
+        // Load stage_drop_spells.csv
+        var dropLines = File.ReadAllLines(dropSpellsCsvPath);
+        Dictionary<string, List<string>> stageDropMap = new Dictionary<string, List<string>>();
+        for (int i = 1; i < dropLines.Length; i++)
+        {
+            if (string.IsNullOrWhiteSpace(dropLines[i])) continue;
+            string[] split = dropLines[i].Split(',');
+            if (split.Length >= 5)
+            {
+                string stageName = split[0].Trim();
+                List<string> types = new List<string>();
+                // index 1 to 4 contains Attack, Modifier, Branch, Other
+                for (int c = 1; c <= 4; c++)
+                {
+                    string[] tArray = split[c].Split(new string[] { " / " }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var t in tArray)
+                    {
+                        types.Add(t.Trim());
+                    }
+                }
+                stageDropMap[stageName] = types;
+            }
+        }
+
+        // Create universal drop rates
+        var defaultDropRates = new List<RandomSpawnsPhaseGenerator.RarityDropRate>
+        {
+            new RandomSpawnsPhaseGenerator.RarityDropRate { rarity = SpellRarity.Common, dropRate = 0.20f },
+            new RandomSpawnsPhaseGenerator.RarityDropRate { rarity = SpellRarity.Uncommon, dropRate = 0.15f },
+            new RandomSpawnsPhaseGenerator.RarityDropRate { rarity = SpellRarity.Rare, dropRate = 0.10f },
+            new RandomSpawnsPhaseGenerator.RarityDropRate { rarity = SpellRarity.Epic, dropRate = 0.05f }
+        };
 
         // 1. Load EnemyPrefabs
         var enemyLines = File.ReadAllLines(enemyCsvPath);
@@ -124,6 +181,25 @@ public class ConfigUpdater : EditorWindow
                                 enemyPrefab = prefab,
                                 weight = weights[i]
                             });
+                        }
+                    }
+
+                    // ドロップ呪文の設定
+                    randomPhase.droppableSpells = new List<SpellBase>();
+                    randomPhase.rarityDropRates = new List<RandomSpawnsPhaseGenerator.RarityDropRate>(defaultDropRates);
+
+                    if (stageDropMap.TryGetValue(stageName, out List<string> dropTypes))
+                    {
+                        foreach (string sType in dropTypes)
+                        {
+                            if (spellDict.TryGetValue(sType, out SpellBase sb))
+                            {
+                                randomPhase.droppableSpells.Add(sb);
+                            }
+                            else
+                            {
+                                Debug.LogWarning($"SpellType not found in assets: {sType} for stage {stageName}");
+                            }
                         }
                     }
 
