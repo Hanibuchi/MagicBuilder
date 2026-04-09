@@ -18,17 +18,17 @@ MonoBehaviour:
   clearCondition: 1
   enemyPhases: []
   phaseGenerators:
-  - rid: 1486059449687998570
-  - rid: 1486059449687998571
-  - rid: 1486059449687998572
-  - rid: 1486059449687998573
+  - rid: 1486059457537638507
+  - rid: 1486059457537638508
+  - rid: 1486059457537638509
+  - rid: 1486059457537638510
   puzzleSpells: []
   puzzleWands: 
   stageType: 0
   references:
     version: 2
     RefIds:
-    - rid: 1486059449687998570
+    - rid: 1486059457537638507
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -122,11 +122,11 @@ MonoBehaviour:
           dropRate: 0.1
         - rarity: 3
           dropRate: 0.05
-    - rid: 1486059449687998571
+    - rid: 1486059457537638508
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
-        startConditionValue: 5
+        startConditionValue: 10
         enemies:
         - enemyPrefab: {fileID: 7981699022232761973, guid: 97d64d8723cc2414ab250a3d6ff89bb6, type: 3}
           weight: 4
@@ -216,11 +216,11 @@ MonoBehaviour:
           dropRate: 0.1
         - rarity: 3
           dropRate: 0.05
-    - rid: 1486059449687998572
+    - rid: 1486059457537638509
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
-        startConditionValue: 5
+        startConditionValue: 10
         enemies:
         - enemyPrefab: {fileID: 5612610729702643881, guid: 1a287a19b24217b45b42d4a69a6ef893, type: 3}
           weight: 4
@@ -310,12 +310,12 @@ MonoBehaviour:
           dropRate: 0.1
         - rarity: 3
           dropRate: 0.05
-    - rid: 1486059449687998573
+    - rid: 1486059457537638510
       type: {class: SimplePhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         phaseConfig:
           conditionType: 0
-          conditionValue: 3
+          conditionValue: 10
           isBossPhase: 1
           spawnerConfig:
             enemyPrefab: {fileID: 310864327797576380, guid: 42656010a7e4e1b42bcf5cc44b5d0470, type: 3}

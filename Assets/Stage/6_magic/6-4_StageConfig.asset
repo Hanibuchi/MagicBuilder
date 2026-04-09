@@ -18,19 +18,19 @@ MonoBehaviour:
   clearCondition: 1
   enemyPhases: []
   phaseGenerators:
-  - rid: 1486059449687998578
-  - rid: 1486059449687998579
-  - rid: 1486059449687998580
-  - rid: 1486059449687998581
-  - rid: 1486059449687998582
-  - rid: 1486059449687998583
+  - rid: 1486059457537638515
+  - rid: 1486059457537638516
+  - rid: 1486059457537638517
+  - rid: 1486059457537638518
+  - rid: 1486059457537638519
+  - rid: 1486059457537638520
   puzzleSpells: []
   puzzleWands: 
   stageType: 0
   references:
     version: 2
     RefIds:
-    - rid: 1486059449687998578
+    - rid: 1486059457537638515
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -127,11 +127,11 @@ MonoBehaviour:
           dropRate: 0.1
         - rarity: 3
           dropRate: 0.05
-    - rid: 1486059449687998579
+    - rid: 1486059457537638516
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
-        startConditionValue: 5
+        startConditionValue: 10
         enemies:
         - enemyPrefab: {fileID: 5612610729702643881, guid: 1a287a19b24217b45b42d4a69a6ef893, type: 3}
           weight: 4
@@ -224,11 +224,11 @@ MonoBehaviour:
           dropRate: 0.1
         - rarity: 3
           dropRate: 0.05
-    - rid: 1486059449687998580
+    - rid: 1486059457537638517
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
-        startConditionValue: 5
+        startConditionValue: 10
         enemies:
         - enemyPrefab: {fileID: 5046662643123802713, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
           weight: 4
@@ -321,18 +321,18 @@ MonoBehaviour:
           dropRate: 0.1
         - rarity: 3
           dropRate: 0.05
-    - rid: 1486059449687998581
+    - rid: 1486059457537638518
       type: {class: SimplePhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         phaseConfig:
           conditionType: 0
-          conditionValue: 3
+          conditionValue: 10
           isBossPhase: 1
           spawnerConfig:
             enemyPrefab: {fileID: 2525134202597692273, guid: 4121302df1a4f564db0eb5b6271c332b, type: 3}
             isBoss: 0
             customDroppableSpells: []
-    - rid: 1486059449687998582
+    - rid: 1486059457537638519
       type: {class: SimplePhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         phaseConfig:
@@ -343,7 +343,7 @@ MonoBehaviour:
             enemyPrefab: {fileID: 2525134202597692273, guid: 4121302df1a4f564db0eb5b6271c332b, type: 3}
             isBoss: 0
             customDroppableSpells: []
-    - rid: 1486059449687998583
+    - rid: 1486059457537638520
       type: {class: SimplePhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         phaseConfig:

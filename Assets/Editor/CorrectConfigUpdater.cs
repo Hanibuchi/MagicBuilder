@@ -105,7 +105,7 @@ public class ConfigUpdater : EditorWindow
         // 2. Load SpawnConfig
         var spawnLines = File.ReadAllLines(spawnCsvPath);
         Dictionary<string, Dictionary<string, string>> spawnConfig = new Dictionary<string, Dictionary<string, string>>();
-        
+
         for (int i = 1; i < spawnLines.Length; i++)
         {
             if (string.IsNullOrWhiteSpace(spawnLines[i])) continue;
@@ -117,7 +117,7 @@ public class ConfigUpdater : EditorWindow
                 string composition = split[2].Trim();
 
                 string stageName = stageRaw.Split(' ')[0].Trim(); // e.g., "1-2"
-                
+
                 if (!spawnConfig.ContainsKey(stageName))
                 {
                     spawnConfig[stageName] = new Dictionary<string, string>();
@@ -136,7 +136,7 @@ public class ConfigUpdater : EditorWindow
                 int L = (w - 1) * 3 + s / 2; // 1 to 18
                 string stageName = $"{w}-{s}";
                 string targetPath = $"Assets/Stage/{w}_{worldDirs[w - 1].Substring(2)}/{stageName}_StageConfig.asset";
-                
+
                 var stageConfigObj = AssetDatabase.LoadAssetAtPath<StageConfig>(targetPath);
                 if (stageConfigObj == null)
                 {
@@ -164,12 +164,12 @@ public class ConfigUpdater : EditorWindow
 
                     var randomPhase = new RandomSpawnsPhaseGenerator();
                     randomPhase.startConditionType = EnemyPhaseConfig.PhaseConditionType.TimeElapsed;
-                    randomPhase.startConditionValue = (p == 0) ? 0f : 5f;
+                    randomPhase.startConditionValue = (p == 0) ? 0f : 10f;
                     randomPhase.duration = 20f + (L - 1);
                     randomPhase.spawnInterval = (8f - 6f * (L - 1) / 17f) * (1f - 0.25f * p);
-                    
+
                     randomPhase.enemies = new List<RandomSpawnsPhaseGenerator.EnemySpawnWeight>();
-                    
+
                     string[] enemiesStr = stageData[phaseKey].Split(new string[] { " / " }, StringSplitOptions.RemoveEmptyEntries);
                     for (int i = 0; i < enemiesStr.Length && i < weights.Length; i++)
                     {
@@ -210,7 +210,7 @@ public class ConfigUpdater : EditorWindow
                 if (stageData.TryGetValue("ボス", out string bossStr))
                 {
                     string[] bossParts = bossStr.Split(new string[] { "+" }, StringSplitOptions.RemoveEmptyEntries);
-                    
+
                     List<string> bossSequence = new List<string>();
                     foreach (var part in bossParts)
                     {
@@ -247,7 +247,7 @@ public class ConfigUpdater : EditorWindow
                             bossPhase.phaseConfig = new EnemyPhaseConfig
                             {
                                 conditionType = EnemyPhaseConfig.PhaseConditionType.TimeElapsed,
-                                conditionValue = 3f,
+                                conditionValue = isFirst ? 10f : 3f,
                                 isBossPhase = isFirst,
                                 spawnerConfig = new EnemySpawnerConfig
                                 {
@@ -256,7 +256,7 @@ public class ConfigUpdater : EditorWindow
                                     customDroppableSpells = new DroppableSpell[0]
                                 }
                             };
-                            
+
                             stageConfigObj.phaseGenerators.Add(bossPhase);
                         }
                         else
