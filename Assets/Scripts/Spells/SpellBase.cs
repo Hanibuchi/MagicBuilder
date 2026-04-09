@@ -22,8 +22,24 @@ public abstract class SpellBase : ScriptableObject
     public string spellName = "未定義の呪文";
 
     [Header("購入設定")]
-    [Tooltip("保有数ごとの購入コスト。インデックスが保有数に対応します。")]
-    public int[] purchaseCosts = new int[] { 100, 200, 400, 800 };
+    [Tooltip("個別に購入コストを設定するかどうか。falseの場合はSpellCommonDataのレア度別コストが使用されます。")]
+    public bool useCustomPurchaseCosts = false;
+
+    [Tooltip("個別に設定する場合の保有数ごとの購入コスト。インデックスが保有数に対応します。")]
+    public int[] customPurchaseCosts = new int[] { 1600, 1920, 2240, 2560 };
+
+    /// <summary>
+    /// 現在の購入コスト配列を取得します。
+    /// </summary>
+    public int[] PurchaseCosts
+    {
+        get
+        {
+            if (useCustomPurchaseCosts)
+                return customPurchaseCosts;
+            return SpellCommonData.Instance.GetCostsByRarity(rarity);
+        }
+    }
 
     [Header("ドロップ設定")]
     [Tooltip("この呪文のレア度")]

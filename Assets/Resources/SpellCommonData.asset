@@ -27,6 +27,10 @@ MonoBehaviour:
   modifierColor: {r: 0.32156864, g: 0.3705305, b: 0.8, a: 1}
   branchColor: {r: 0.32, g: 0.8, b: 0.32383993, a: 1}
   otherColor: {r: 0.8, g: 0.7697902, b: 0.32, a: 1}
+  commonPurchaseCosts: 64000000780000008c000000a0000000
+  uncommonPurchaseCosts: c8000000f00000001801000040010000
+  rarePurchaseCosts: 90010000e00100003002000080020000
+  epicPurchaseCosts: 20030000c00300006004000000050000
   spellUIPrefab: {fileID: 5499559984272135055, guid: a8aa928887aa65d429d07a9b1f220163, type: 3}
   dropUIPrefab: {fileID: 1104287654635820185, guid: af09b9e47e48e2b4593b9a8e28d2e8f0, type: 3}
   equippedSpellIconUIPrefab: {fileID: 4605705667940410137, guid: b0e9178e9a980024f9b844179ff255a5, type: 3}

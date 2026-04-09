@@ -521,12 +521,12 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
     /// </summary>
     private bool CheckIfPurchasable(SpellBase spell, int ownedCount)
     {
-        if (spell == null || spell.purchaseCosts == null || spell.purchaseCosts.Length == 0) return false;
+        if (spell == null || spell.PurchaseCosts == null || spell.PurchaseCosts.Length == 0) return false;
         if (CurrencyManager.Instance == null) return false;
 
         // 次の購入に必要なコストを取得
-        int index = Mathf.Clamp(ownedCount, 0, spell.purchaseCosts.Length - 1);
-        int cost = spell.purchaseCosts[index];
+        int index = Mathf.Clamp(ownedCount, 0, spell.PurchaseCosts.Length - 1);
+        int cost = spell.PurchaseCosts[index];
 
         return CurrencyManager.Instance.CurrentCurrency >= cost;
     }
