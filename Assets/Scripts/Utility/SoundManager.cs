@@ -44,11 +44,11 @@ public class SoundManager : MonoBehaviour
     /// </summary>
     private void LoadVolumes()
     {
-        // BGM音量のロード (デフォルトは1.0)
+        // BGM音量のロード (デフォルトは0.8)
         float loadedBGMVolume = GetBGMVolume0to1();
         SetBGMVolume0to1(loadedBGMVolume);
 
-        // SE音量のロード (デフォルトは1.0)
+        // SE音量のロード (デフォルトは0.8)
         float loadedSEVolume = GetSEVolume0to1();
         SetSEVolume0to1(loadedSEVolume);
     }
@@ -113,12 +113,12 @@ public class SoundManager : MonoBehaviour
     // --- 音量取得メソッド (Audio Mixer経由) ---
     public float GetBGMVolume0to1()
     {
-        return PlayerPrefs.GetFloat(BGM_VOLUME_SAVE_KEY, 1.0f);
+        return PlayerPrefs.GetFloat(BGM_VOLUME_SAVE_KEY, 0.8f);
     }
 
     public float GetSEVolume0to1()
     {
-        return PlayerPrefs.GetFloat(SE_VOLUME_SAVE_KEY, 1.0f);
+        return PlayerPrefs.GetFloat(SE_VOLUME_SAVE_KEY, 0.8f);
     }
 
     public void StopBGMWithFade(float duration = 1.0f)
