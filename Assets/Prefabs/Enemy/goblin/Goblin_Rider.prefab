@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 716890805783517081, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.25
+      objectReference: {fileID: 0}
     - target: {fileID: 880766118045565639, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.25
@@ -16,10 +20,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 961eeb77a033f554398cf1098adf6349, type: 3}
+    - target: {fileID: 1702649860707905822, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3138375678483179165, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
       propertyPath: m_Name
       value: Goblin_Rider
       objectReference: {fileID: 0}
+    - target: {fileID: 3755443115203111983, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 961eeb77a033f554398cf1098adf6349, type: 3}
     - target: {fileID: 3783809344963067914, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
       propertyPath: m_Controller
       value: 
