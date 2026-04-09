@@ -120,6 +120,30 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: d106d45e34516e045bb8c5ed0fd22916, type: 3}
+    - target: {fileID: 5143319249614664363, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6427572344710059052, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6427572344710059052, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6427572344710059052, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6427572344710059052, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.125
+      objectReference: {fileID: 0}
+    - target: {fileID: 6427572344710059052, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6699287530365731186, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.5
@@ -148,6 +172,14 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 22100000, guid: 22136f5134dfac64c85e05d7c0d763d7, type: 2}
+    - target: {fileID: 7268731733992222618, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7268731733992222618, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d106d45e34516e045bb8c5ed0fd22916, type: 3}
     - target: {fileID: 7809496392863742821, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_Radius
       value: 0.88781184

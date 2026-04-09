@@ -167,6 +167,14 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 150
       objectReference: {fileID: 0}
+    - target: {fileID: 3075220080243641135, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5143319249614664363, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6875321328670521665, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_Mass
       value: 40

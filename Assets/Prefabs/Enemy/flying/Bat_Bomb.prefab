@@ -103,6 +103,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bat_Bomb
       objectReference: {fileID: 0}
+    - target: {fileID: 3946942996104016905, guid: 0eb7581ed8eda5f43b8ab276b1449224, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4087461165641265166, guid: 0eb7581ed8eda5f43b8ab276b1449224, type: 3}
       propertyPath: executeOnlyOnce
       value: 1

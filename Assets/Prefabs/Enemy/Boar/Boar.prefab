@@ -228,7 +228,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: m_Name
-      value: boar Variant
+      value: Boar
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7809496392863742821, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
