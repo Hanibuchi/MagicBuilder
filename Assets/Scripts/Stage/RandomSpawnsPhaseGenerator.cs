@@ -25,6 +25,13 @@ public class RandomSpawnsPhaseGenerator : PhaseGeneratorBase
         public float dropRate;
     }
 
+    [Header("開始条件")]
+    [Tooltip("このフェーズ群の最初のスポーンが開始される条件タイプ")]
+    public EnemyPhaseConfig.PhaseConditionType startConditionType = EnemyPhaseConfig.PhaseConditionType.TimeElapsed;
+
+    [Tooltip("最初のスポーンが開始される条件の値")]
+    public float startConditionValue = 0f;
+
     [Header("敵のスポーン設定")]
     [Tooltip("スポーン候補の敵と、その確率重み")]
     public List<EnemySpawnWeight> enemies = new List<EnemySpawnWeight>();
@@ -83,11 +90,20 @@ public class RandomSpawnsPhaseGenerator : PhaseGeneratorBase
             // 一様分布に従うランダムな間隔を計算（範囲: 0 ～ 2*spawnInterval、平均値: spawnInterval）
             float randomInterval = Random.Range(0f, spawnInterval * 2f);
 
+            EnemyPhaseConfig.PhaseConditionType type = EnemyPhaseConfig.PhaseConditionType.TimeElapsed;
+            float value = randomInterval;
+
+            if (i == 0)
+            {
+                type = startConditionType;
+                value = startConditionValue;
+            }
+
             // 3. EnemyPhaseConfigを生成して追加
             EnemyPhaseConfig config = new EnemyPhaseConfig
             {
-                conditionType = EnemyPhaseConfig.PhaseConditionType.TimeElapsed,
-                conditionValue = randomInterval,
+                conditionType = type,
+                conditionValue = value,
                 spawnerConfig = new EnemySpawnerConfig
                 {
                     enemyPrefab = selectedEnemy.enemyPrefab,
