@@ -139,11 +139,26 @@ public class RandomSpawnsPhaseGenerator : PhaseGeneratorBase
 
         List<DroppableSpell> drops = new List<DroppableSpell>();
 
+        // レア度ごとに該当するスペルの数をカウント
+        Dictionary<SpellRarity, int> rarityCounts = new Dictionary<SpellRarity, int>();
+        foreach (var spell in droppableSpells)
+        {
+            if (spell != null)
+            {
+                if (rarityCounts.ContainsKey(spell.rarity))
+                    rarityCounts[spell.rarity]++;
+                else
+                    rarityCounts[spell.rarity] = 1;
+            }
+        }
+
         foreach (var spell in droppableSpells)
         {
             if (spell == null) continue;
 
-            float prob = GetDropRateForRarity(spell.rarity);
+            float baseRate = GetDropRateForRarity(spell.rarity);
+            int count = rarityCounts.TryGetValue(spell.rarity, out int c) ? c : 1;
+            float prob = baseRate / count;
 
             // ★ TODO: DroppableSpell 構造体の実際のフィールド名に合わせて以下のコードを修正・有効化してください。
             // （例として「spell」および「dropRate」フィールドが存在すると仮定しています）

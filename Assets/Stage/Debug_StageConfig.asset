@@ -36,5 +36,21 @@ MonoBehaviour:
         spawnInterval: 2
         duration: 60
         maxSpawnCount: 0
-        droppableSpells: []
-        rarityDropRates: []
+        droppableSpells:
+        - {fileID: 11400000, guid: 7abf0850d48fdf9428700611ba2f99ba, type: 2}
+        - {fileID: 11400000, guid: af7dcd61f85a1f54ba774f721dad12f4, type: 2}
+        - {fileID: 11400000, guid: 54fdeaf1e456d8843845f8b704afde19, type: 2}
+        - {fileID: 11400000, guid: 28ccbd075847d8740bfae4910880bad8, type: 2}
+        - {fileID: 11400000, guid: 6b7a139abf2ffb24d9586ef6afe5485c, type: 2}
+        - {fileID: 11400000, guid: 348a49ff6b101e44b8f00dd2345dcc55, type: 2}
+        - {fileID: 11400000, guid: 7889960835c569e489391bc36cd6dc39, type: 2}
+        - {fileID: 11400000, guid: 202c2a40c82b5d746b2718eee9958c9c, type: 2}
+        rarityDropRates:
+        - rarity: 0
+          dropRate: 0.2
+        - rarity: 1
+          dropRate: 0.15
+        - rarity: 2
+          dropRate: 0.1
+        - rarity: 3
+          dropRate: 0.05
