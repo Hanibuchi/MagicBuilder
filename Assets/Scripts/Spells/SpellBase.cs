@@ -476,6 +476,22 @@ public abstract class SpellBase : ScriptableObject
     {
         detailItems.Clear();
 
+        string rarityText = rarity switch
+        {
+            SpellRarity.Common => "コモン",
+            SpellRarity.Uncommon => "アンコモン",
+            SpellRarity.Rare => "レア",
+            SpellRarity.Epic => "エピック",
+            _ => rarity.ToString()
+        };
+
+        // レア度項目を生成
+        detailItems.Add(new SpellDescriptionItem
+        {
+            icon = null,
+            descriptionText = $"レア度 : {rarityText}"
+        });
+
         // クールタイム項目を動的に生成
         if (cooldown != 0)
             detailItems.Add(new SpellDescriptionItem
