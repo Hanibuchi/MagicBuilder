@@ -6,6 +6,15 @@ using UnityEngine;
 
 public class ConfigUpdater : EditorWindow
 {
+    private static string NormalizeEnemyName(string name)
+    {
+        if (name == "ゴブリン") return "斧ゴブリン";
+        if (name == "いのしし") return "イノシシ";
+        if (name == "でかいのしし") return "でかイノシシ";
+        if (name == "デカスライム") return "でかスライム";
+        return name;
+    }
+
     [MenuItem("Tools/Update Even Stage Configs")]
     public static void UpdateConfigs()
     {
@@ -107,7 +116,7 @@ public class ConfigUpdater : EditorWindow
                     string[] enemiesStr = stageData[phaseKey].Split(new string[] { " / " }, StringSplitOptions.RemoveEmptyEntries);
                     for (int i = 0; i < enemiesStr.Length && i < weights.Length; i++)
                     {
-                        string eName = enemiesStr[i].Trim();
+                        string eName = NormalizeEnemyName(enemiesStr[i].Trim());
                         if (enemyPrefabs.TryGetValue(eName, out GameObject prefab))
                         {
                             randomPhase.enemies.Add(new RandomSpawnsPhaseGenerator.EnemySpawnWeight
@@ -124,10 +133,9 @@ public class ConfigUpdater : EditorWindow
                 // SimplePhaseGenerator for ボス
                 if (stageData.TryGetValue("ボス", out string bossStr))
                 {
-                    // e.g., "ゴブリン*3+デカスライム"
                     string[] bossParts = bossStr.Split(new string[] { "+" }, StringSplitOptions.RemoveEmptyEntries);
-                    bool isFirstBossOfPhase = true;
-
+                    
+                    List<string> bossSequence = new List<string>();
                     foreach (var part in bossParts)
                     {
                         string bName = part.Trim();
@@ -143,27 +151,37 @@ public class ConfigUpdater : EditorWindow
                             }
                         }
 
+                        bName = NormalizeEnemyName(bName);
+
+                        for (int c = 0; c < count; c++)
+                        {
+                            bossSequence.Add(bName);
+                        }
+                    }
+
+                    for (int i = 0; i < bossSequence.Count; i++)
+                    {
+                        string bName = bossSequence[i];
                         if (enemyPrefabs.TryGetValue(bName, out GameObject bossPrefab))
                         {
-                            for (int c = 0; c < count; c++)
+                            bool isFirst = (i == 0);
+                            bool isLast = (i == bossSequence.Count - 1);
+
+                            var bossPhase = new SimplePhaseGenerator();
+                            bossPhase.phaseConfig = new EnemyPhaseConfig
                             {
-                                var bossPhase = new SimplePhaseGenerator();
-                                bossPhase.phaseConfig = new EnemyPhaseConfig
+                                conditionType = EnemyPhaseConfig.PhaseConditionType.TimeElapsed,
+                                conditionValue = 3f,
+                                isBossPhase = isFirst,
+                                spawnerConfig = new EnemySpawnerConfig
                                 {
-                                    conditionType = EnemyPhaseConfig.PhaseConditionType.TimeElapsed,
-                                    conditionValue = isFirstBossOfPhase ? 5f : 0f,
-                                    isBossPhase = true,
-                                    spawnerConfig = new EnemySpawnerConfig
-                                    {
-                                        enemyPrefab = bossPrefab,
-                                        isBoss = true,
-                                        customDroppableSpells = new DroppableSpell[0]
-                                    }
-                                };
-                                
-                                stageConfigObj.phaseGenerators.Add(bossPhase);
-                                isFirstBossOfPhase = false; // Next ones (if any) spawn at same time
-                            }
+                                    enemyPrefab = bossPrefab,
+                                    isBoss = isLast,
+                                    customDroppableSpells = new DroppableSpell[0]
+                                }
+                            };
+                            
+                            stageConfigObj.phaseGenerators.Add(bossPhase);
                         }
                         else
                         {
