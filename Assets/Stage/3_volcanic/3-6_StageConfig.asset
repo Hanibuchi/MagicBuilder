@@ -16,13 +16,89 @@ MonoBehaviour:
   subStageName: Test Sub Name
   SceneName: Stage_Template
   clearCondition: 1
-  enemyPhases:
-  - conditionType: 0
-    conditionValue: 0
-    isBossPhase: 0
-    spawnerConfig:
-      enemyPrefab: {fileID: 5046662643123802713, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
-      isBoss: 0
-      customDroppableSpells: []
+  enemyPhases: []
+  phaseGenerators:
+  - rid: 1486059440161161554
+  - rid: 1486059440161161555
+  - rid: 1486059440161161556
+  - rid: 1486059440161161557
   puzzleSpells: []
+  puzzleWands: 
   stageType: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 1486059440161161554
+      type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
+      data:
+        startConditionType: 0
+        startConditionValue: 0
+        enemies:
+        - enemyPrefab: {fileID: 5966934852996824328, guid: c21f327d8a7a3da4f83dd63e5d6f80d0, type: 3}
+          weight: 4
+        - enemyPrefab: {fileID: 786613390370218890, guid: 0eb7581ed8eda5f43b8ab276b1449224, type: 3}
+          weight: 3
+        - enemyPrefab: {fileID: 9207851854287913248, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
+          weight: 2
+        - enemyPrefab: {fileID: 7981699022232761973, guid: 97d64d8723cc2414ab250a3d6ff89bb6, type: 3}
+          weight: 0.8
+        - enemyPrefab: {fileID: 5612610729702643881, guid: 1a287a19b24217b45b42d4a69a6ef893, type: 3}
+          weight: 0.2
+        spawnInterval: 5.1764708
+        duration: 28
+        maxSpawnCount: 0
+        droppableSpells: []
+        rarityDropRates: []
+    - rid: 1486059440161161555
+      type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
+      data:
+        startConditionType: 0
+        startConditionValue: 5
+        enemies:
+        - enemyPrefab: {fileID: 1119729045916579427, guid: e2d76f83094901f4bbf8ea97b9d0d0a9, type: 3}
+          weight: 4
+        - enemyPrefab: {fileID: 9207851854287913248, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
+          weight: 3
+        - enemyPrefab: {fileID: 7981699022232761973, guid: 97d64d8723cc2414ab250a3d6ff89bb6, type: 3}
+          weight: 2
+        - enemyPrefab: {fileID: 5612610729702643881, guid: 1a287a19b24217b45b42d4a69a6ef893, type: 3}
+          weight: 0.8
+        - enemyPrefab: {fileID: 5046662643123802713, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
+          weight: 0.2
+        spawnInterval: 3.8823528
+        duration: 28
+        maxSpawnCount: 0
+        droppableSpells: []
+        rarityDropRates: []
+    - rid: 1486059440161161556
+      type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
+      data:
+        startConditionType: 0
+        startConditionValue: 5
+        enemies:
+        - enemyPrefab: {fileID: 3348157412275093380, guid: 1121a8e607cfc824cb0838e8a813e2cc, type: 3}
+          weight: 4
+        - enemyPrefab: {fileID: 7981699022232761973, guid: 97d64d8723cc2414ab250a3d6ff89bb6, type: 3}
+          weight: 3
+        - enemyPrefab: {fileID: 5612610729702643881, guid: 1a287a19b24217b45b42d4a69a6ef893, type: 3}
+          weight: 2
+        - enemyPrefab: {fileID: 5046662643123802713, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
+          weight: 0.8
+        - enemyPrefab: {fileID: 6267641395171949454, guid: 3600c99e935bcb846820d8a0a0b877f1, type: 3}
+          weight: 0.2
+        spawnInterval: 2.5882354
+        duration: 28
+        maxSpawnCount: 0
+        droppableSpells: []
+        rarityDropRates: []
+    - rid: 1486059440161161557
+      type: {class: SimplePhaseGenerator, ns: , asm: Assembly-CSharp}
+      data:
+        phaseConfig:
+          conditionType: 0
+          conditionValue: 5
+          isBossPhase: 1
+          spawnerConfig:
+            enemyPrefab: {fileID: 310864327797576380, guid: 42656010a7e4e1b42bcf5cc44b5d0470, type: 3}
+            isBoss: 1
+            customDroppableSpells: []
