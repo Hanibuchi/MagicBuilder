@@ -17,8 +17,12 @@ MonoBehaviour:
   SceneName: Stage_Ice_1
   clearCondition: 0
   enemyPhases: []
+  phaseGenerators: []
   puzzleSpells:
-  - {fileID: 11400000, guid: 91a88df000abd0746ab7dd76dc0ccb3e, type: 2}
   - {fileID: 11400000, guid: 7a1e6f21092e19448a9c39c509bc6a22, type: 2}
+  - {fileID: 11400000, guid: 91a88df000abd0746ab7dd76dc0ccb3e, type: 2}
   puzzleWands: 00000000
   stageType: 1
+  references:
+    version: 2
+    RefIds: []

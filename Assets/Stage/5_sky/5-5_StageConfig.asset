@@ -17,10 +17,14 @@ MonoBehaviour:
   SceneName: Stage_Sky_5
   clearCondition: 0
   enemyPhases: []
+  phaseGenerators: []
   puzzleSpells:
+  - {fileID: 11400000, guid: 7ec1dcb74d1e1f64cbc082ae8771f40d, type: 2}
   - {fileID: 11400000, guid: f31a6adcd28bc2549b7e567465cf6904, type: 2}
   - {fileID: 11400000, guid: b8a079991beeb2c4aa1f6171af327e46, type: 2}
   - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
-  - {fileID: 11400000, guid: 7ec1dcb74d1e1f64cbc082ae8771f40d, type: 2}
   puzzleWands: 0000000004000000
   stageType: 1
+  references:
+    version: 2
+    RefIds: []

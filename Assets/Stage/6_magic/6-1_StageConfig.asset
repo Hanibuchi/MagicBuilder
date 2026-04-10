@@ -17,9 +17,13 @@ MonoBehaviour:
   SceneName: Stage_Magic_1
   clearCondition: 0
   enemyPhases: []
+  phaseGenerators: []
   puzzleSpells:
+  - {fileID: 11400000, guid: 202c2a40c82b5d746b2718eee9958c9c, type: 2}
+  - {fileID: 11400000, guid: 202c2a40c82b5d746b2718eee9958c9c, type: 2}
   - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
-  - {fileID: 11400000, guid: 202c2a40c82b5d746b2718eee9958c9c, type: 2}
-  - {fileID: 11400000, guid: 202c2a40c82b5d746b2718eee9958c9c, type: 2}
   puzzleWands: 00000000
   stageType: 1
+  references:
+    version: 2
+    RefIds: []

@@ -2118,7 +2118,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 551951246347731591, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: droppableSpells.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 551951246347731591, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
       propertyPath: droppableSpells.Array.data[0].spellData
