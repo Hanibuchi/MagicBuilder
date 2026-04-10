@@ -33,7 +33,7 @@ public class CharacterHealth : MonoBehaviour
 
     private Damage _accumulatedDamage;
     private int _remainingAccumulationFrames = -1;
-    private GameObject _lastAccumulatedOther;
+    private Vector2 _lastAccumulatedSourcePosition;
 
     // ノックバック処理を委譲するためのインターフェース（ノックバック処理を行うコンポーネントが実装）
     private IKickbackHandler knockbackHandler;
@@ -66,7 +66,7 @@ public class CharacterHealth : MonoBehaviour
             _remainingAccumulationFrames--;
             if (_remainingAccumulationFrames == 0)
             {
-                ApplyDamageImmediate(_accumulatedDamage, _lastAccumulatedOther);
+                ApplyDamageImmediate(_accumulatedDamage, _lastAccumulatedSourcePosition);
                 _remainingAccumulationFrames = -1;
             }
         }
@@ -170,7 +170,7 @@ public class CharacterHealth : MonoBehaviour
 
         if (processDamageImmediately || accumulationFrames <= 0)
         {
-            ApplyDamageImmediate(damage, other);
+            ApplyDamageImmediate(damage, other != null ? (Vector2)other.transform.position : (Vector2)transform.position);
             return;
         }
 
@@ -183,15 +183,18 @@ public class CharacterHealth : MonoBehaviour
         {
             _accumulatedDamage += damage;
         }
-        _lastAccumulatedOther = other;
+        if (other != null)
+        {
+            _lastAccumulatedSourcePosition = other.transform.position;
+        }
     }
 
     /// <summary>
     /// ダメージを計算し、即座に適用する内部メソッド。
     /// </summary>
     /// <param name="damage">受けた生のダメージデータ</param>
-    /// <param name="other">ぶつかってきたオブジェクト</param>
-    private void ApplyDamageImmediate(Damage damage, GameObject other)
+    /// <param name="sourcePosition">ぶつかってきたオブジェクトの座標</param>
+    private void ApplyDamageImmediate(Damage damage, Vector2 sourcePosition)
     {
         if (currentHealth <= 0) return; // 既に死んでいる場合は処理しない
         float previousHealth = currentHealth;
@@ -227,7 +230,7 @@ public class CharacterHealth : MonoBehaviour
         Debug.Log($"{gameObject.name}は{finalDamage}のダメージを受けました。残り体力: {currentHealth}");
 
         // 4. ノックバック処理の委譲
-        HandleKnockback(modifiedDamage.knockback, other);
+        HandleKnockback(modifiedDamage.knockback, sourcePosition);
 
         healthNotifier?.NotifyHealthChange(maxHealth, previousHealth, currentHealth);
 
@@ -384,13 +387,13 @@ public class CharacterHealth : MonoBehaviour
     /// ノックバック処理をIKickbackHandlerに委譲します。
     /// </summary>
     /// <param name="knockbackValue">ノックバック量</param>
-    /// <param name="other">ノックバック方向の参考にできる情報</param>
-    private void HandleKnockback(float knockbackValue, GameObject other)
+    /// <param name="sourcePosition">ノックバック方向の参考にできる情報(ダメージ源の座標等)</param>
+    private void HandleKnockback(float knockbackValue, Vector2 sourcePosition)
     {
         if (knockbackValue > 0f && knockbackHandler != null)
         {
             // ノックバック処理を実装コンポーネントに任せる
-            knockbackHandler.ApplyKickback(knockbackValue, other);
+            knockbackHandler.ApplyKickback(knockbackValue, sourcePosition);
         }
     }
     /// <summary>
@@ -452,8 +455,8 @@ public interface IKickbackHandler
     /// ノックバックを適用します。
     /// </summary>
     /// <param name="knockbackValue">ノックバックの強さ</param>
-    /// <param name="other">ぶつかってきた放射物</param>
-    void ApplyKickback(float knockbackValue, GameObject other);
+    /// <param name="sourcePosition">ぶつかってきた放射物等の座標</param>
+    void ApplyKickback(float knockbackValue, Vector2 sourcePosition);
 }
 
 /// <summary>

@@ -384,14 +384,14 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
     /// ぶつかってきたオブジェクトからこの敵が受けるノックバック処理をKnockbackEffectorに委譲します。
     /// </summary>
     /// <param name="knockbackValue">ノックバックの強さ</param>
-    /// <param name="other">ぶつかってきた放射物（ダメージ源）</param>
-    public void ApplyKickback(float knockbackValue, GameObject other)
+    /// <param name="sourcePosition">ぶつかってきた放射物等の座標</param>
+    public void ApplyKickback(float knockbackValue, Vector2 sourcePosition)
     {
-        if (_knockbackEffector == null || _rb2d == null || knockbackValue <= 0f || _kickbackStunCoroutine != null || other == null) return;
+        if (_knockbackEffector == null || _rb2d == null || knockbackValue <= 0f || _kickbackStunCoroutine != null) return;
 
-        // 放射物(other)との位置関係を確認
+        // 放射物(sourcePosition)との位置関係を確認
         // 敵のX座標 - 放射物のX座標
-        float diffX = transform.position.x - other.transform.position.x;
+        float diffX = transform.position.x - sourcePosition.x;
         
         // 放射物が右側(diffX < 0)なら左上(-1, 1)、左側(diffX >= 0)なら右上(1, 1)へ飛ばす
         Vector2 direction = new Vector2(diffX < 0 ? -1f : 1f, 1f).normalized;
