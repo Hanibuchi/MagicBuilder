@@ -36,7 +36,7 @@ MonoBehaviour:
     waterDamage: 0
     temperatureDamage: 0
     healing: 0
-    knockback: 0
+    knockback: 30
   isTargetBoth: 0
   damageType: 0
   isClickTrigger: 0
