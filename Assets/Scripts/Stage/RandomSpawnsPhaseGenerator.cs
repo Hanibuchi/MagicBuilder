@@ -135,47 +135,39 @@ public class RandomSpawnsPhaseGenerator : PhaseGeneratorBase
 
     private DroppableSpell[] GenerateCustomDrops()
     {
-        if (droppableSpells == null || droppableSpells.Count == 0) return null;
+        if (droppableSpells == null || droppableSpells.Count == 0) return new DroppableSpell[0];
 
-        List<DroppableSpell> drops = new List<DroppableSpell>();
+        float randomValue = Random.value;
+        float currentProb = 0f;
+        SpellRarity? selectedRarity = null;
 
-        // レア度ごとに該当するスペルの数をカウント
-        Dictionary<SpellRarity, int> rarityCounts = new Dictionary<SpellRarity, int>();
-        foreach (var spell in droppableSpells)
+        foreach (var rate in rarityDropRates)
         {
-            if (spell != null)
+            currentProb += rate.dropRate;
+            if (randomValue <= currentProb)
             {
-                if (rarityCounts.ContainsKey(spell.rarity))
-                    rarityCounts[spell.rarity]++;
-                else
-                    rarityCounts[spell.rarity] = 1;
+                selectedRarity = rate.rarity;
+                break;
             }
         }
 
-        foreach (var spell in droppableSpells)
+        if (selectedRarity.HasValue)
         {
-            if (spell == null) continue;
-
-            float baseRate = GetDropRateForRarity(spell.rarity);
-            int count = rarityCounts.TryGetValue(spell.rarity, out int c) ? c : 1;
-            float prob = baseRate / count;
-
-            // ★ TODO: DroppableSpell 構造体の実際のフィールド名に合わせて以下のコードを修正・有効化してください。
-            // （例として「spell」および「dropRate」フィールドが存在すると仮定しています）
-            DroppableSpell drop = new DroppableSpell
+            var candidates = droppableSpells.Where(s => s != null && s.rarity == selectedRarity.Value).ToList();
+            if (candidates.Count > 0)
             {
-                spellData = spell,            // SpellBase を設定するフィールド
-                dropChance = prob          // ドロップ確率を設定するフィールド
-            };
-            drops.Add(drop);
+                SpellBase selectedSpell = candidates[Random.Range(0, candidates.Count)];
+                return new DroppableSpell[]
+                {
+                    new DroppableSpell
+                    {
+                        spellData = selectedSpell,
+                        dropChance = 1.0f
+                    }
+                };
+            }
         }
 
-        return drops.ToArray();
-    }
-
-    private float GetDropRateForRarity(SpellRarity rarity)
-    {
-        var rateEntry = rarityDropRates.FirstOrDefault(r => r.rarity == rarity);
-        return rateEntry.dropRate; // 未設定のレア度はデフォルトの0になります
+        return new DroppableSpell[0];
     }
 }
