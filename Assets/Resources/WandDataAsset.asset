@@ -93,7 +93,7 @@ MonoBehaviour:
       wandSprite: {fileID: -6846142101468779254, guid: 4cba0d38d1cdcec4c9c48afa478f41ef, type: 3}
       maxSpellCount: 12
       fixedSpells:
-      - {fileID: 11400000, guid: 6b7a139abf2ffb24d9586ef6afe5485c, type: 2}
+      - {fileID: 11400000, guid: 7889960835c569e489391bc36cd6dc39, type: 2}
       - {fileID: 11400000, guid: 3331bedc78cabe7459c9401c16507f5c, type: 2}
       - {fileID: 11400000, guid: 90b80b666522c234fa85ba1e9cfdcc25, type: 2}
       spells:
