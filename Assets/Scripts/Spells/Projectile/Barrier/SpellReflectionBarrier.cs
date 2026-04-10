@@ -59,20 +59,56 @@ public class SpellReflectionBarrier : MonoBehaviour
     private bool Reflect(DamageSourceBase ds)
     {
         SpellLayer currentLayer = ds.GetSpellLayer();
+        bool reflected = false;
         
         if (currentLayer == SpellLayer.Attack_Ally)
         {
             ds.SetLayer(SpellLayer.Attack_Enemy);
-            // Debug.Log($"[SpellReflectionBarrier] {ds.gameObject.name} を敵の攻撃に変更しました。");
-            return true;
+            reflected = true;
         }
         else if (currentLayer == SpellLayer.Attack_Enemy)
         {
             ds.SetLayer(SpellLayer.Attack_Ally);
-            // Debug.Log($"[SpellReflectionBarrier] {ds.gameObject.name} を味方の攻撃に変更しました。");
-            return true;
+            reflected = true;
         }
 
-        return false;
+        if (reflected)
+        {
+            // クリックトリガーなど、遅延発射用に内部でコンテキストを保持しているコンポーネントのレイヤーも反転する
+            var clickModifiers = ds.GetComponentsInChildren<ClickTriggerProjectileModifier>();
+            foreach (var mod in clickModifiers)
+            {
+                if (mod.context != null)
+                {
+                    if (mod.context.layer == SpellLayer.Attack_Ally)
+                    {
+                        mod.context.layer = SpellLayer.Attack_Enemy;
+                    }
+                    else if (mod.context.layer == SpellLayer.Attack_Enemy)
+                    {
+                        mod.context.layer = SpellLayer.Attack_Ally;
+                    }
+                }
+            }
+
+            // 何かにヒットした際に発動するトリガー呪文も同様に反転する
+            var triggerModifiers = ds.GetComponentsInChildren<TriggerProjectileModifier>();
+            foreach (var mod in triggerModifiers)
+            {
+                if (mod.context != null)
+                {
+                    if (mod.context.layer == SpellLayer.Attack_Ally)
+                    {
+                        mod.context.layer = SpellLayer.Attack_Enemy;
+                    }
+                    else if (mod.context.layer == SpellLayer.Attack_Enemy)
+                    {
+                        mod.context.layer = SpellLayer.Attack_Ally;
+                    }
+                }
+            }
+        }
+
+        return reflected;
     }
 }

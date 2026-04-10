@@ -46,8 +46,8 @@ public class ClickTriggerProjectileModifier : MonoBehaviour, ISpellProjectileDes
         }
 
         // 発射時に通知を送る
-        var listeners = GetComponents<IClickTriggerFireListener>();
-        foreach (var listener in listeners)
+        var _listeners = GetComponents<IClickTriggerFireListener>();
+        foreach (var listener in _listeners)
         {
             listener.OnFire();
         }

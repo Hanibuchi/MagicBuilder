@@ -11,7 +11,7 @@ public class TriggerProjectileModifier : MonoBehaviour, ISpellProjectileTriggerL
     private List<SpellBase> _wandSpells;
     List<ISpellCastListener> listeners;
     private int _nextSpellIndex;
-    private SpellContext _context;
+    public SpellContext context;
     private float _magicCircleDelay;
 
     public void Init(SpellBase nextSpell, List<SpellBase> wandSpells, List<ISpellCastListener> listeners, int nextSpellIndex, SpellContext context, float magicCircleDelay)
@@ -20,7 +20,7 @@ public class TriggerProjectileModifier : MonoBehaviour, ISpellProjectileTriggerL
         _wandSpells = wandSpells;
         this.listeners = listeners;
         _nextSpellIndex = nextSpellIndex;
-        _context = context;
+        this.context = context;
         _magicCircleDelay = magicCircleDelay;
     }
 
@@ -53,7 +53,7 @@ public class TriggerProjectileModifier : MonoBehaviour, ISpellProjectileTriggerL
         MagicCircle magicCircle = null;
         GameObject prefab = SpellCommonData.Instance?.magicCirclePrefab;
 
-        var newContext = _context.Clone();
+        var newContext = context.Clone();
 
         newContext.CasterPosition = spawnPosition;
 
