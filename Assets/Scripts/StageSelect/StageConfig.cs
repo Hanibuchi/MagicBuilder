@@ -41,6 +41,12 @@ public class StageConfig : ScriptableObject
     [Header("ステージの種類")]
     [Tooltip("ステージのプレイスタイルを指定。")]
     public StageType stageType = StageType.Rush;
+
+    [Header("報酬設定")]
+    [Tooltip("未クリアステージをクリアした時の報酬額")]
+    public int firstClearReward = 100;
+    [Tooltip("既クリアステージをクリアした時の報酬額")]
+    public int repeatClearReward = 50;
 }
 
 public enum StageType

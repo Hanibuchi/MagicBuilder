@@ -460,12 +460,6 @@ public class StageManager : MonoBehaviour
     [Tooltip("クリア後の演出時間（秒）。この時間後にゲームが停止します。")]
     [SerializeField] private float clearDelaySeconds = 2f; // 例として3.0秒
 
-    [Header("報酬設定")]
-    [SerializeField, Tooltip("未クリアステージをクリアした時の報酬額")]
-    private int firstClearReward = 100;
-    [SerializeField, Tooltip("既クリアステージをクリアした時の報酬額")]
-    private int repeatClearReward = 10;
-
     [SerializeField] AudioClip bossDestroySound;
     [SerializeField] AudioClip clearSound;
     /// <summary>
@@ -598,7 +592,7 @@ public class StageManager : MonoBehaviour
         {
             controller.DisplayVictory(data);
 
-            int reward = isFirstClear ? firstClearReward : repeatClearReward;
+            int reward = isFirstClear ? stageConfig.firstClearReward : stageConfig.repeatClearReward;
             if (CurrencyController.Instance != null)
             {
                 CurrencyController.Instance.AddCurrency(reward);
