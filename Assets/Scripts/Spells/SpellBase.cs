@@ -538,3 +538,25 @@ public enum SpellRarity
     Rare,
     Epic,
 }
+
+#if UNITY_EDITOR
+[UnityEditor.CustomEditor(typeof(SpellBase), true)]
+public class SpellBaseEditor : UnityEditor.Editor
+{
+    public override Texture2D RenderStaticPreview(string assetPath, UnityEngine.Object[] subAssets, int width, int height)
+    {
+        var spell = target as SpellBase;
+        if (spell != null && spell.icon != null)
+        {
+            Texture2D preview = UnityEditor.AssetPreview.GetAssetPreview(spell.icon);
+            if (preview != null)
+            {
+                Texture2D result = new Texture2D(width, height);
+                UnityEditor.EditorUtility.CopySerialized(preview, result);
+                return result;
+            }
+        }
+        return base.RenderStaticPreview(assetPath, subAssets, width, height);
+    }
+}
+#endif
