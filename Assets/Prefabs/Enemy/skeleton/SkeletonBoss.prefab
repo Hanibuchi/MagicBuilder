@@ -84,6 +84,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1254562182270670328, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
+      propertyPath: defaultMoveSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1698749251490114515, guid: 1e1360c73aeb09c4aa4509c5d08ff370, type: 3}
       propertyPath: maxHealth
       value: 400

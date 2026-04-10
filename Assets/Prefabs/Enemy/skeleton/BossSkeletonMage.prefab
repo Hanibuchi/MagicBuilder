@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2929764447234934401, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
+      propertyPath: defaultMoveSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3337923683835934890, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: maxHealth
       value: 300
