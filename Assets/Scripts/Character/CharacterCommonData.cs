@@ -41,4 +41,10 @@ public class CharacterCommonData : ScriptableObject
     public float hitStopDurationOnDie = 0.15f;
     [Tooltip("死亡時のヒットストップ中のタイムスケール（0で完全停止）")]
     public float hitStopTimeScaleOnDie = 0f;
+
+    [Header("窒息ダメージ設定")]
+    [Tooltip("地形に埋まってからダメージを受け始めるまでの猶予時間（秒）")]
+    public float suffocationDelay = 0.5f;
+    [Tooltip("地形に埋まった際の1フレームあたりのダメージ量")]
+    public float suffocationDamagePerFrame = 0.5f;
 }

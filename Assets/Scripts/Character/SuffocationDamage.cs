@@ -7,12 +7,6 @@ using UnityEngine;
 public class SuffocationDamage : MonoBehaviour
 {
     [Header("設定")]
-    [Tooltip("埋まってからダメージを受け始めるまでの猶予時間（秒）")]
-    [SerializeField] private float suffocationDelay = 0.5f;
-
-    [Tooltip("1フレームあたりのダメージ量")]
-    [SerializeField] private float damagePerFrame = 0.5f;
-
     [Tooltip("判定に使用するレイヤー")]
     [SerializeField] private LayerMask groundLayer;
 
@@ -53,7 +47,7 @@ public class SuffocationDamage : MonoBehaviour
             _buriedTimer += Time.deltaTime;
 
             // 一定時間（猶予時間）が経過したらダメージを適用
-            if (_buriedTimer >= suffocationDelay)
+            if (_buriedTimer >= CharacterCommonData.Instance.suffocationDelay)
             {
                 ApplySuffocationDamage();
             }
@@ -70,10 +64,10 @@ public class SuffocationDamage : MonoBehaviour
     /// </summary>
     private void ApplySuffocationDamage()
     {
-        // 窒息ダメージのデータを作成
+        // 窒息ダメージのデータを作成 // CharacterCommonDataから取得
         Damage damage = new Damage
         {
-            baseDamage = damagePerFrame,
+            baseDamage = CharacterCommonData.Instance.suffocationDamagePerFrame,
             woodDamage = 0f,
             waterDamage = 0f,
             temperatureDamage = 0f,
