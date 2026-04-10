@@ -32,6 +32,10 @@ public class CharacterCommonData : ScriptableObject
     [Tooltip("ダメージを適用するまで蓄積するフレーム数のデフォルト値")]
     public int defaultAccumulationFrames = 10;
 
+    [Header("多段ヒット設定")]
+    [Tooltip("多段ヒット（MultiHit）でダメージを受ける間隔（呼び出し回数）")]
+    public int multiHitIntervalCount = 5;
+
     [Header("死亡時ヒットストップ設定")]
     [Tooltip("死亡した際のヒットストップ時間（秒）")]
     public float hitStopDurationOnDie = 0.15f;

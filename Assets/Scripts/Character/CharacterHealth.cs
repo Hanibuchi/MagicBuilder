@@ -35,6 +35,9 @@ public class CharacterHealth : MonoBehaviour
     private int _remainingAccumulationFrames = -1;
     private Vector2 _lastAccumulatedSourcePosition;
 
+    // 多段ヒット処理の呼び出し回数カウンター
+    private int _multiHitStayCount = 0;
+
     // ノックバック処理を委譲するためのインターフェース（ノックバック処理を行うコンポーネントが実装）
     private IKickbackHandler knockbackHandler;
 
@@ -153,10 +156,15 @@ public class CharacterHealth : MonoBehaviour
 
             if (sourceType == DamageSourceType.MultiHit)
             {
-                // 多段ヒット: Stay時のみダメージ適用（一定時間ごとにダメージを与える処理は、IDamageSourceの実装側で管理する必要がある）
-                // 注意: 多段ヒットのダメージ頻度（クールタイム）は、IDamageSourceを実装するコンポーネント側で制御することが一般的です。
-                // ここでは衝突が継続していることのみを判定しています。
-                ApplyDamage(damageSource.GetDamage(), obj);
+                // 多段ヒット: Stay時のみダメージ適用（一定呼び出し回数ごとにダメージを受ける）
+                _multiHitStayCount++;
+                int interval = CharacterCommonData.Instance != null ? CharacterCommonData.Instance.multiHitIntervalCount : 5;
+
+                if (_multiHitStayCount >= interval)
+                {
+                    ApplyDamage(damageSource.GetDamage(), obj);
+                    _multiHitStayCount = 0;
+                }
             }
         }
     }

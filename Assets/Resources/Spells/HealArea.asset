@@ -16,7 +16,8 @@ MonoBehaviour:
   spellType: AreaHeal
   cooldown: 10
   spellName: "\u30D2\u30FC\u30EB\u30A8\u30EA\u30A2"
-  purchaseCosts: 64000000c80000009001000020030000
+  useCustomPurchaseCosts: 0
+  customPurchaseCosts: 4006000080070000c0080000000a0000
   rarity: 3
   icon: {fileID: 7837233560208939015, guid: 1be93c3254b864446b90f85818118949, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
@@ -34,7 +35,7 @@ MonoBehaviour:
     woodDamage: 0
     waterDamage: 0
     temperatureDamage: 0
-    healing: 1
+    healing: 5
     knockback: 0
   isTargetBoth: 1
   damageType: 2
