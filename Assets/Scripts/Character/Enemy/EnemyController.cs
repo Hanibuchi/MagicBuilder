@@ -44,6 +44,14 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
     [SerializeField]
     private SpriteRenderer statusEffectSpriteRenderer;
 
+    [Header("ヒットストップ設定")]
+    [Tooltip("ダメージを受けた時のヒットストップ時間")]
+    [SerializeField]
+    private float hitStopDuration = 0.05f;
+    [Tooltip("ダメージを受けた時のヒットストップ中のタイムスケール")]
+    [SerializeField]
+    private float hitStopTimeScale = 0.05f;
+
     // --- 内部メンバー ---
 
     private EnemyAttackModel _attackModel;
@@ -467,6 +475,20 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
         GetComponent<BossClearNotifier>()?.NotifyDefeated();
         EnemyCounter.Instance?.RemoveEnemy();
         OnDie?.Invoke();
+    }
+
+    public override void NotifyDamage(DamageType damageType, float damageValue)
+    {
+        base.NotifyDamage(damageType, damageValue);
+
+        // ダメージ時にヒットストップ（時間停止）を発生させる
+        if (damageType != DamageType.Heal && hitStopDuration > 0f)
+        {
+            if (TimeStopManager.Instance != null)
+            {
+                TimeStopManager.Instance.PlayHitStop(hitStopDuration, hitStopTimeScale);
+            }
+        }
     }
 
     private void OnDestroy()
