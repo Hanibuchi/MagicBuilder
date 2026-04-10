@@ -16,7 +16,8 @@ MonoBehaviour:
   spellType: Teleport
   cooldown: 3
   spellName: "\u30C6\u30EC\u30DD\u30FC\u30C8"
-  purchaseCosts: 64000000c80000009001000020030000
+  useCustomPurchaseCosts: 0
+  customPurchaseCosts: 4006000080070000c0080000000a0000
   rarity: 2
   icon: {fileID: -4034597643228481169, guid: 3a51fd2f03ae4e0459588aac11ce109b, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
