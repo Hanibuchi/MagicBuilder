@@ -24,6 +24,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ca748ee532558a04db48184ac5b52399, type: 2}
   puzzleWands: 00000000
   stageType: 1
+  firstClearReward: 300
+  repeatClearReward: 150
   references:
     version: 2
     RefIds: []

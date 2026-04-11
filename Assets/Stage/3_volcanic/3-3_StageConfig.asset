@@ -17,7 +17,13 @@ MonoBehaviour:
   SceneName: Stage_Volcanic_3
   clearCondition: 0
   enemyPhases: []
+  phaseGenerators: []
   puzzleSpells:
   - {fileID: 11400000, guid: 2c072333fd6e8cf4aabb4f5b74d5e7e7, type: 2}
   puzzleWands: 00000000
   stageType: 1
+  firstClearReward: 270
+  repeatClearReward: 135
+  references:
+    version: 2
+    RefIds: []

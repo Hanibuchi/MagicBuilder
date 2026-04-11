@@ -18,17 +18,19 @@ MonoBehaviour:
   clearCondition: 1
   enemyPhases: []
   phaseGenerators:
-  - rid: 1486059457537638507
-  - rid: 1486059457537638508
-  - rid: 1486059457537638509
-  - rid: 1486059457537638510
+  - rid: 1486059483264188518
+  - rid: 1486059483264188519
+  - rid: 1486059483264188520
+  - rid: 1486059483264188521
   puzzleSpells: []
   puzzleWands: 
   stageType: 0
+  firstClearReward: 650
+  repeatClearReward: 325
   references:
     version: 2
     RefIds:
-    - rid: 1486059457537638507
+    - rid: 1486059483264188518
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -122,7 +124,7 @@ MonoBehaviour:
           dropRate: 0.1
         - rarity: 3
           dropRate: 0.05
-    - rid: 1486059457537638508
+    - rid: 1486059483264188519
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -216,7 +218,7 @@ MonoBehaviour:
           dropRate: 0.1
         - rarity: 3
           dropRate: 0.05
-    - rid: 1486059457537638509
+    - rid: 1486059483264188520
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -310,7 +312,7 @@ MonoBehaviour:
           dropRate: 0.1
         - rarity: 3
           dropRate: 0.05
-    - rid: 1486059457537638510
+    - rid: 1486059483264188521
       type: {class: SimplePhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         phaseConfig:

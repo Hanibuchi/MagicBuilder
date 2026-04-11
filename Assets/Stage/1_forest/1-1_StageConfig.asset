@@ -17,7 +17,13 @@ MonoBehaviour:
   SceneName: Stage_Forest_1
   clearCondition: 0
   enemyPhases: []
+  phaseGenerators: []
   puzzleSpells:
   - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
   puzzleWands: 00000000
   stageType: 1
+  firstClearReward: 200
+  repeatClearReward: 100
+  references:
+    version: 2
+    RefIds: []

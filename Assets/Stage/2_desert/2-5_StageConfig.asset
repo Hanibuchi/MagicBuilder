@@ -17,7 +17,13 @@ MonoBehaviour:
   SceneName: Stage_Desert_5
   clearCondition: 0
   enemyPhases: []
+  phaseGenerators: []
   puzzleSpells:
   - {fileID: 11400000, guid: 8ce3a351f7d98fb4fa75564c564cf499, type: 2}
   puzzleWands: 00000000
   stageType: 1
+  firstClearReward: 250
+  repeatClearReward: 125
+  references:
+    version: 2
+    RefIds: []
