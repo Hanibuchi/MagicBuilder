@@ -131,11 +131,6 @@ public class StageSelectController : MonoBehaviour, IStageStartListener
     {
         AutomaticallySelectIsland();
 
-        if (CurrencyUI.Instance != null)
-        {
-            CurrencyUI.Instance.Show();
-        }
-
         if (SoundManager.Instance != null && bGM != null)
         {
             SoundManager.Instance.PlayBGM(bGM);
