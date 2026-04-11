@@ -246,7 +246,7 @@ MonoBehaviour:
   movementForceGain: 10
   isStationaryMode: 0
   dashSpeedMultiplier: 3
-  bounceForce: 200
+  bounceForce: 400
   stunDurationAfterHit: 2
   chargeDurationBeforeDash: 1
   targetTriggerID: attack1
