@@ -124,7 +124,10 @@ public class SpellCommonData : ScriptableObject
     [Tooltip("EquippedSpellIconUIコンポーネントがアタッチされたUIプレハブ")]
     public GameObject equippedSpellIconUIPrefab;
 
-    [Header("エフェクトプレハブ")]
+    [Header("エフェクト・共通設定")]
+    [Tooltip("多重詠唱などの発射間隔の最大値(秒)")]
+    public float maxDelayInterval = 1.0f;
+
     [Tooltip("呪文発射時に表示する魔法陣のプレハブ")]
     public GameObject magicCirclePrefab;
 

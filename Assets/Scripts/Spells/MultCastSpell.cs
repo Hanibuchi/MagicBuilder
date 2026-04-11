@@ -163,6 +163,10 @@ public class MultCastSpell : SpellBase
     {
         context.errorDegree += additionalErrorDegree;
         float interval = delayMultiplier * context.errorDegree;
+        if (SpellCommonData.Instance != null)
+        {
+            interval = Mathf.Min(interval, SpellCommonData.Instance.maxDelayInterval);
+        }
 
         Vector2 baseCasterPoint = context.CasterPosition;
         Dictionary<int, int> callCountPerIndex = new Dictionary<int, int>();
