@@ -22,7 +22,7 @@ public class CooldownManager : MonoBehaviour
     [Header("UI表示用オーバーライド")]
     [Tooltip("UIのクールタイム表示が目標値に到達するまでの時間（秒）")]
     [SerializeField]
-    private float transitionDuration = .5f;
+    private float transitionDuration = .2f;
     private bool isDisplayOverridden = false;
     private float currentDisplayValue = 0f;
     private Coroutine transitionCoroutine = null;
