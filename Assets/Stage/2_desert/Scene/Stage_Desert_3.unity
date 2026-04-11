@@ -3232,7 +3232,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4888154942209035374, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
       propertyPath: maxHealth
-      value: 60
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4984365333232366149, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
       propertyPath: m_Enabled
