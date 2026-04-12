@@ -18,10 +18,10 @@ MonoBehaviour:
   clearCondition: 1
   enemyPhases: []
   phaseGenerators:
-  - rid: 1486059510931128422
-  - rid: 1486059510931128423
-  - rid: 1486059510931128424
-  - rid: 1486059510931128425
+  - rid: 1486059510931128513
+  - rid: 1486059510931128514
+  - rid: 1486059510931128515
+  - rid: 1486059510931128516
   puzzleSpells: []
   puzzleWands: 
   stageType: 0
@@ -30,7 +30,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 1486059510931128422
+    - rid: 1486059510931128513
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
           dropRate: 0.1
         - rarity: 3
           dropRate: 0.05
-    - rid: 1486059510931128423
+    - rid: 1486059510931128514
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -224,7 +224,7 @@ MonoBehaviour:
           dropRate: 0.1
         - rarity: 3
           dropRate: 0.05
-    - rid: 1486059510931128424
+    - rid: 1486059510931128515
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -236,9 +236,9 @@ MonoBehaviour:
           weight: 3
         - enemyPrefab: {fileID: 5286037976515306731, guid: 3bc9bb8707ed5cf488e34515fb223893, type: 3}
           weight: 2
-        - enemyPrefab: {fileID: 6267641395171949454, guid: 3600c99e935bcb846820d8a0a0b877f1, type: 3}
-          weight: 0.8
         - enemyPrefab: {fileID: 5058404603738225183, guid: 0994e63822bd5924db5973ab74dae415, type: 3}
+          weight: 0.8
+        - enemyPrefab: {fileID: 2525134202597692273, guid: 4121302df1a4f564db0eb5b6271c332b, type: 3}
           weight: 0.2
         spawnInterval: 1.3529412
         duration: 35
@@ -321,7 +321,7 @@ MonoBehaviour:
           dropRate: 0.1
         - rarity: 3
           dropRate: 0.05
-    - rid: 1486059510931128425
+    - rid: 1486059510931128516
       type: {class: SimplePhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         phaseConfig:
