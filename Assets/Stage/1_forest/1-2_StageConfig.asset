@@ -18,10 +18,10 @@ MonoBehaviour:
   clearCondition: 1
   enemyPhases: []
   phaseGenerators:
-  - rid: 1486059483264188565
-  - rid: 1486059483264188566
-  - rid: 1486059483264188567
-  - rid: 1486059483264188568
+  - rid: 1486059510931128459
+  - rid: 1486059510931128460
+  - rid: 1486059510931128461
+  - rid: 1486059510931128462
   puzzleSpells: []
   puzzleWands: 
   stageType: 0
@@ -30,7 +30,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 1486059483264188565
+    - rid: 1486059510931128459
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -54,9 +54,11 @@ MonoBehaviour:
         - {fileID: 11400000, guid: 91a88df000abd0746ab7dd76dc0ccb3e, type: 2}
         - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
         - {fileID: 11400000, guid: ca748ee532558a04db48184ac5b52399, type: 2}
+        - {fileID: 11400000, guid: 66563a23f4349414ab7e8891cc9fe82d, type: 2}
         - {fileID: 11400000, guid: 8f637262ee480304689f7206945793e5, type: 2}
         - {fileID: 11400000, guid: 2c072333fd6e8cf4aabb4f5b74d5e7e7, type: 2}
         - {fileID: 11400000, guid: 401dbde70b469d345bc93eb154e28e8e, type: 2}
+        - {fileID: 11400000, guid: 058ec8a28c019b847a02db47b10468dd, type: 2}
         - {fileID: 11400000, guid: 7abf0850d48fdf9428700611ba2f99ba, type: 2}
         - {fileID: 11400000, guid: 44e790c6019bcec408f158c334e87af3, type: 2}
         - {fileID: 11400000, guid: ad8e74fa500ae0042b0b1c7b08292297, type: 2}
@@ -79,7 +81,7 @@ MonoBehaviour:
           dropRate: 0.1
         - rarity: 3
           dropRate: 0.05
-    - rid: 1486059483264188566
+    - rid: 1486059510931128460
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -103,9 +105,11 @@ MonoBehaviour:
         - {fileID: 11400000, guid: 91a88df000abd0746ab7dd76dc0ccb3e, type: 2}
         - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
         - {fileID: 11400000, guid: ca748ee532558a04db48184ac5b52399, type: 2}
+        - {fileID: 11400000, guid: 66563a23f4349414ab7e8891cc9fe82d, type: 2}
         - {fileID: 11400000, guid: 8f637262ee480304689f7206945793e5, type: 2}
         - {fileID: 11400000, guid: 2c072333fd6e8cf4aabb4f5b74d5e7e7, type: 2}
         - {fileID: 11400000, guid: 401dbde70b469d345bc93eb154e28e8e, type: 2}
+        - {fileID: 11400000, guid: 058ec8a28c019b847a02db47b10468dd, type: 2}
         - {fileID: 11400000, guid: 7abf0850d48fdf9428700611ba2f99ba, type: 2}
         - {fileID: 11400000, guid: 44e790c6019bcec408f158c334e87af3, type: 2}
         - {fileID: 11400000, guid: ad8e74fa500ae0042b0b1c7b08292297, type: 2}
@@ -128,7 +132,7 @@ MonoBehaviour:
           dropRate: 0.1
         - rarity: 3
           dropRate: 0.05
-    - rid: 1486059483264188567
+    - rid: 1486059510931128461
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -152,9 +156,11 @@ MonoBehaviour:
         - {fileID: 11400000, guid: 91a88df000abd0746ab7dd76dc0ccb3e, type: 2}
         - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
         - {fileID: 11400000, guid: ca748ee532558a04db48184ac5b52399, type: 2}
+        - {fileID: 11400000, guid: 66563a23f4349414ab7e8891cc9fe82d, type: 2}
         - {fileID: 11400000, guid: 8f637262ee480304689f7206945793e5, type: 2}
         - {fileID: 11400000, guid: 2c072333fd6e8cf4aabb4f5b74d5e7e7, type: 2}
         - {fileID: 11400000, guid: 401dbde70b469d345bc93eb154e28e8e, type: 2}
+        - {fileID: 11400000, guid: 058ec8a28c019b847a02db47b10468dd, type: 2}
         - {fileID: 11400000, guid: 7abf0850d48fdf9428700611ba2f99ba, type: 2}
         - {fileID: 11400000, guid: 44e790c6019bcec408f158c334e87af3, type: 2}
         - {fileID: 11400000, guid: ad8e74fa500ae0042b0b1c7b08292297, type: 2}
@@ -177,7 +183,7 @@ MonoBehaviour:
           dropRate: 0.1
         - rarity: 3
           dropRate: 0.05
-    - rid: 1486059483264188568
+    - rid: 1486059510931128462
       type: {class: SimplePhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         phaseConfig:

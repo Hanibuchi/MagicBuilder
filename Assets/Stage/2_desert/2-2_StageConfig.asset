@@ -18,13 +18,13 @@ MonoBehaviour:
   clearCondition: 1
   enemyPhases: []
   phaseGenerators:
-  - rid: 1486059483264188543
-  - rid: 1486059483264188544
-  - rid: 1486059483264188545
-  - rid: 1486059483264188546
-  - rid: 1486059483264188547
-  - rid: 1486059483264188548
-  - rid: 1486059483264188549
+  - rid: 1486059510931128447
+  - rid: 1486059510931128448
+  - rid: 1486059510931128449
+  - rid: 1486059510931128450
+  - rid: 1486059510931128451
+  - rid: 1486059510931128452
+  - rid: 1486059510931128453
   puzzleSpells: []
   puzzleWands: 
   stageType: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 1486059483264188543
+    - rid: 1486059510931128447
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -57,9 +57,12 @@ MonoBehaviour:
         - {fileID: 11400000, guid: d01b125e34b6968459c46f40f2db332c, type: 2}
         - {fileID: 11400000, guid: 8f637262ee480304689f7206945793e5, type: 2}
         - {fileID: 11400000, guid: 5c8a7351f36c0ac4999d4762af8f1ab6, type: 2}
+        - {fileID: 11400000, guid: 96bedfe39ca055e49b4c9ce0bcad969c, type: 2}
         - {fileID: 11400000, guid: 8ce3a351f7d98fb4fa75564c564cf499, type: 2}
         - {fileID: 11400000, guid: 401dbde70b469d345bc93eb154e28e8e, type: 2}
+        - {fileID: 11400000, guid: 058ec8a28c019b847a02db47b10468dd, type: 2}
         - {fileID: 11400000, guid: 71ebce604e03a79438249ccc8d04f45a, type: 2}
+        - {fileID: 11400000, guid: 4a9dbf56b76364e44949bfabe6c37771, type: 2}
         - {fileID: 11400000, guid: 7abf0850d48fdf9428700611ba2f99ba, type: 2}
         - {fileID: 11400000, guid: 08f3639c14bb5b14e8bdb47157ecd491, type: 2}
         - {fileID: 11400000, guid: 43bf6d9cd2bbe1345b07935ed43c6996, type: 2}
@@ -91,7 +94,7 @@ MonoBehaviour:
           dropRate: 0.1
         - rarity: 3
           dropRate: 0.05
-    - rid: 1486059483264188544
+    - rid: 1486059510931128448
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -115,9 +118,12 @@ MonoBehaviour:
         - {fileID: 11400000, guid: d01b125e34b6968459c46f40f2db332c, type: 2}
         - {fileID: 11400000, guid: 8f637262ee480304689f7206945793e5, type: 2}
         - {fileID: 11400000, guid: 5c8a7351f36c0ac4999d4762af8f1ab6, type: 2}
+        - {fileID: 11400000, guid: 96bedfe39ca055e49b4c9ce0bcad969c, type: 2}
         - {fileID: 11400000, guid: 8ce3a351f7d98fb4fa75564c564cf499, type: 2}
         - {fileID: 11400000, guid: 401dbde70b469d345bc93eb154e28e8e, type: 2}
+        - {fileID: 11400000, guid: 058ec8a28c019b847a02db47b10468dd, type: 2}
         - {fileID: 11400000, guid: 71ebce604e03a79438249ccc8d04f45a, type: 2}
+        - {fileID: 11400000, guid: 4a9dbf56b76364e44949bfabe6c37771, type: 2}
         - {fileID: 11400000, guid: 7abf0850d48fdf9428700611ba2f99ba, type: 2}
         - {fileID: 11400000, guid: 08f3639c14bb5b14e8bdb47157ecd491, type: 2}
         - {fileID: 11400000, guid: 43bf6d9cd2bbe1345b07935ed43c6996, type: 2}
@@ -149,7 +155,7 @@ MonoBehaviour:
           dropRate: 0.1
         - rarity: 3
           dropRate: 0.05
-    - rid: 1486059483264188545
+    - rid: 1486059510931128449
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -173,9 +179,12 @@ MonoBehaviour:
         - {fileID: 11400000, guid: d01b125e34b6968459c46f40f2db332c, type: 2}
         - {fileID: 11400000, guid: 8f637262ee480304689f7206945793e5, type: 2}
         - {fileID: 11400000, guid: 5c8a7351f36c0ac4999d4762af8f1ab6, type: 2}
+        - {fileID: 11400000, guid: 96bedfe39ca055e49b4c9ce0bcad969c, type: 2}
         - {fileID: 11400000, guid: 8ce3a351f7d98fb4fa75564c564cf499, type: 2}
         - {fileID: 11400000, guid: 401dbde70b469d345bc93eb154e28e8e, type: 2}
+        - {fileID: 11400000, guid: 058ec8a28c019b847a02db47b10468dd, type: 2}
         - {fileID: 11400000, guid: 71ebce604e03a79438249ccc8d04f45a, type: 2}
+        - {fileID: 11400000, guid: 4a9dbf56b76364e44949bfabe6c37771, type: 2}
         - {fileID: 11400000, guid: 7abf0850d48fdf9428700611ba2f99ba, type: 2}
         - {fileID: 11400000, guid: 08f3639c14bb5b14e8bdb47157ecd491, type: 2}
         - {fileID: 11400000, guid: 43bf6d9cd2bbe1345b07935ed43c6996, type: 2}
@@ -207,7 +216,7 @@ MonoBehaviour:
           dropRate: 0.1
         - rarity: 3
           dropRate: 0.05
-    - rid: 1486059483264188546
+    - rid: 1486059510931128450
       type: {class: SimplePhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         phaseConfig:
@@ -218,7 +227,7 @@ MonoBehaviour:
             enemyPrefab: {fileID: 3138375678483179165, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
             isBoss: 0
             customDroppableSpells: []
-    - rid: 1486059483264188547
+    - rid: 1486059510931128451
       type: {class: SimplePhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         phaseConfig:
@@ -229,7 +238,7 @@ MonoBehaviour:
             enemyPrefab: {fileID: 3138375678483179165, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
             isBoss: 0
             customDroppableSpells: []
-    - rid: 1486059483264188548
+    - rid: 1486059510931128452
       type: {class: SimplePhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         phaseConfig:
@@ -240,7 +249,7 @@ MonoBehaviour:
             enemyPrefab: {fileID: 3138375678483179165, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
             isBoss: 0
             customDroppableSpells: []
-    - rid: 1486059483264188549
+    - rid: 1486059510931128453
       type: {class: SimplePhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         phaseConfig:
