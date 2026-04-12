@@ -23,5 +23,5 @@ MonoBehaviour:
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
   spellDescription: "\u30AF\u30FC\u30EB\u30BF\u30A4\u30E0\u3092\u77ED\u7E2E\u3059\u308B\u3002"
-  coolDownMultiplier: 0.6
+  coolDownMultiplier: 0.5
   coolDownReduction: 0
