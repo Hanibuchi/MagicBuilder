@@ -7,85 +7,84 @@ public enum SpellType
     None,
 
     // --- 【攻撃：基本・弾丸系】 ---
+    // 単発ヒット
     ExampleSpell,
-    FireShot,
     IceShot,
-    WaterShot,
+    FireShot,
     WoodShot,
+    WaterShot,
     HealShot,
+    ExampleSpellClickTrigger,
+    Teleport,           // テレポート
+    Enchant,        // 付与
+    InstantDeath,   // 即死
+
+    // トリガー
+    Gumball,        // ガムボール（粘着弾）
+    FireflyTrigger, // 蛍トリガー
+
+    // 範囲ダメージ
     IceBreak,       // アイスブレイク
     Inferno,         // 隕石
-    MegaBeam,       // 極太ビーム
+
+    // 多段ヒット
     Blade,          // ブレイド
     GiantArrow,     // 巨大矢
     VoidGate,      // ヴォイドゲート
-    InstantDeath,   // 即死
-    Gumball,        // ガムボール（粘着弾）
-    ExampleSpellClickTrigger,
-    FireflyTrigger, // 蛍トリガー
     AreaHeal,
-
-    // --- 【攻撃：属性ダメージ・追加効果】 ---
-    AdditionalDamage,
-    FireDamage,
-    IceDamage,
-    WaterDamage,
-    WoodDamage,
-    HealingDamage,  // 回復ダメージ
+    MegaBeam,       // 極太ビーム
 
     // --- 【防御・設置系】 ---
     Barrier,
     ReflectBarrier, // 反射バリア
 
-    // --- 【修飾：パラメータ変化】 ---
-    Expansion,      // 膨張
-    Contraction,    // 収縮
-    Acceleration,   // 加速
-    Deceleration,   // 減速
-    ErrorDegreeReduce,   // 誤差減少
-    ErrorDegreeIncrease, // 誤差増加
-    KnockbackIncrease,   // ノックバック増加
-    KnockbackReduce,     // ノックバック減少
+    // --- 【攻撃：属性ダメージ・追加効果】 ---
+    AdditionalDamage,
+    IceDamage,
+    FireDamage,
+    WoodDamage,
+    WaterDamage,
+    HealingDamage,  // 回復ダメージ
     AdditionalKnockback, // ノックバック付与
-    CoolTimeShorten,        // クールタイム短縮（倍率）
-    CoolTimeShortenFlat,    // クールタイム短縮（固定）
-    Shorten,        // 持続時間短縮
-    Extension,      // 持続時間延長
-    LowGravity,    // 低重力
-    AddGravity,      // 重力追加
-    Penetration,    // 透過性
-    Elasticity,     // 弾性
 
-    // --- 【修飾：軌道・方向変化】 ---
-    Homing,         // 追尾
-    Directivity,    // 指向
-    Orbit,          // 公転
-    Following,       // 追従
-    TurnRight,
-    TurnLeft,
-    Invert,          // 反転
-    InvertHorizontal, // 左右反転
-    InvertVertical,   // 上下反転
+
+    // --- 【修飾：パラメータ変化】 ---
     Upward,         // 上方
     Downward,       // 下方
+    TurnLeft,
+    TurnRight,
     AccelUp,         // 上昇（速度）
     AccelDown,       // 下降（速度）
     AccelLeft,       // 左進
     AccelRight,      // 右進
+    Invert,          // 反転
+    InvertHorizontal, // 左右反転
+    InvertVertical,   // 上下反転
+    Acceleration,   // 加速
+    Deceleration,   // 減速
 
-    // --- 【特殊・挙動変化】 ---
-    Enchant,        // 付与
-    SelfHarm,       // 諸刃（自傷）
-    Remote,         // 遠隔
-    TeleportHoming,       // 転位
+    Expansion,      // 膨張
+    Contraction,    // 収縮
+    ErrorDegreeReduce,   // 誤差減少
+    ErrorDegreeIncrease, // 誤差増加
     Attraction,     // 引力
     Repulsion,      // 斥力
-    Teleport,           // テレポート
+    Extension,      // 持続時間延長
+    Shorten,        // 持続時間短縮
+    LowGravity,    // 低重力
+    AddGravity,      // 重力追加
 
-    // --- 【トリガー】 ---
     Pause,          // 一時停止
-    AddTrigger,     // トリガー追加
-    AddClickTrigger,// クリックトリガー追加
+    Remote,         // 遠隔
+    SelfHarm,       // 諸刃（自傷）
+    Penetration,    // 透過性
+    Elasticity,     // 弾性
+
+    // --- 【修飾：軌道・方向変化】 ---
+    // ホーミング
+    Directivity,    // 指向
+    Homing,         // 追尾
+    TeleportHoming,       // 転位
 
     // --- 【マルチキャスト・フロー制御】 ---
     TwoChainCast,
@@ -95,11 +94,21 @@ public enum SpellType
     TwoRandomChainCast,
     ThreeRandomChainCast,
     FiveRandomChainCast,
+    Skip,           // 1マス飛ばし
+
+    // 軌道変化
+    Orbit,          // 公転
+    Following,       // 追従
+
+    AddTrigger,     // トリガー追加
+    AddClickTrigger,// クリックトリガー追加
+
+    CoolTimeShortenFlat,    // クールタイム短縮（固定）
+    CoolTimeShorten,        // クールタイム短縮（倍率）
 
     TwoMultiplier,  // 2倍複製
     ThreeMultiplier,
     FiveMultiplier,
-    Skip,           // 1マス飛ばし
     TwoSplit, // 多重詠唱
     ThreeSplit,
     FiveSplit,
