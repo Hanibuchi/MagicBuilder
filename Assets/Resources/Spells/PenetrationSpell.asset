@@ -16,8 +16,9 @@ MonoBehaviour:
   spellType: Penetration
   cooldown: 1
   spellName: "\u900F\u904E\u6027"
-  purchaseCosts: 64000000c80000009001000020030000
-  rarity: 1
+  useCustomPurchaseCosts: 0
+  customPurchaseCosts: 4006000080070000c0080000000a0000
+  rarity: 2
   icon: {fileID: 1402902171128163390, guid: 62f55362e24c72d46bda946f4c223552, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}

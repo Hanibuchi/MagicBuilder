@@ -16,8 +16,9 @@ MonoBehaviour:
   spellType: Elasticity
   cooldown: 1
   spellName: "\u5F3E\u6027"
-  purchaseCosts: 64000000c80000009001000020030000
-  rarity: 1
+  useCustomPurchaseCosts: 0
+  customPurchaseCosts: 4006000080070000c0080000000a0000
+  rarity: 2
   icon: {fileID: -8939950432946601015, guid: 29aeaecad74aafb41a8f84385313f0b1, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
