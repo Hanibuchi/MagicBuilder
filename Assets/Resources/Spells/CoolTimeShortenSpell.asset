@@ -18,7 +18,7 @@ MonoBehaviour:
   spellName: "\u500D\u7387\u77ED\u7E2E"
   useCustomPurchaseCosts: 0
   customPurchaseCosts: 4006000080070000c0080000000a0000
-  rarity: 2
+  rarity: 3
   icon: {fileID: -4617658828189747046, guid: ac82641f5c92fb946b7451522d2ee146, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
