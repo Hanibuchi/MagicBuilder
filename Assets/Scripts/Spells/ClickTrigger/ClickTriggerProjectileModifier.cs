@@ -68,7 +68,9 @@ public class ClickTriggerProjectileModifier : MonoBehaviour, ISpellProjectileDes
         // 💡 魔法陣の表示演出を追加
         MagicCircle magicCircle = null;
         GameObject prefab = SpellCommonData.Instance?.magicCirclePrefab;
-        context.CasterPosition = spawnPosition;
+
+        var newContext = context.Clone();
+        newContext.CasterPosition = spawnPosition;
 
         if (prefab != null)
         {
@@ -86,7 +88,7 @@ public class ClickTriggerProjectileModifier : MonoBehaviour, ISpellProjectileDes
             }
         }
 
-        nextSpell.FireSpell(wandSpells, listeners, nextSpellIndex, rotationZ, 1, context);
+        nextSpell.FireSpell(wandSpells, listeners, nextSpellIndex, rotationZ, 1, newContext);
 
         // 消滅演出の開始 (表示と同じ時間をかけて消える)
         if (magicCircle != null)
