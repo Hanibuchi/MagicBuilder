@@ -415,8 +415,8 @@ public class StageManager : MonoBehaviour
         gameEnd = true;
 
         // 初回クリアか判定し、クリアフラグを保存する
-        isFirstClear = !StageUnlockManager.Instance.IsStageCleared(stageConfig.stageName);
-        StageUnlockManager.Instance.MarkStageCleared(stageConfig.stageName);
+        isFirstClear = !(StageUnlockManager.Instance?.IsStageCleared(stageConfig.stageName) ?? false);
+        StageUnlockManager.Instance?.MarkStageCleared(stageConfig.stageName);
 
         Debug.Log("🎉 ステージクリア！");
         OnGameEnd();
@@ -445,8 +445,8 @@ public class StageManager : MonoBehaviour
         // このステージの次のステージを最新のステージとして登録しようと試みる。最新のステージでない場合（つまり再プレイ時）何もせず、最新のステージの場合、ステージ選択画面になったときにそのステージの島が選択されるようにする。
         else
         {
-            StageUnlockManager.Instance.UnlockStage(nextStage.stageName);
-            if (StageUnlockManager.Instance.UpdateLatestReachedStage(nextStage.stageName))
+            StageUnlockManager.Instance?.UnlockStage(nextStage.stageName);
+            if (StageUnlockManager.Instance?.UpdateLatestReachedStage(nextStage.stageName) ?? false)
             {
                 GameManager.Instance.StageSelectTargetStageName = nextStage.stageName;
                 Debug.Log($"最新のステージとして '{nextStage.stageName}' を登録しました。");
