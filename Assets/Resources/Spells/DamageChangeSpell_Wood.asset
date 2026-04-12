@@ -25,7 +25,7 @@ MonoBehaviour:
   spellDescription: "\u6728\u30C0\u30E1\u30FC\u30B8\u3092\u8FFD\u52A0\u3059\u308B\u3002\u6C34\u30BF\u30A4\u30D7\u306E\u6575\u306B\u52B9\u679C\u629C\u7FA4\uFF01"
   additionalDamage:
     baseDamage: 0
-    woodDamage: 8
+    woodDamage: 6
     waterDamage: 0
     temperatureDamage: 0
     healing: 0

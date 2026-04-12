@@ -27,6 +27,6 @@ MonoBehaviour:
     baseDamage: 0
     woodDamage: 0
     waterDamage: 0
-    temperatureDamage: 8
+    temperatureDamage: 6
     healing: 0
     knockback: 0
