@@ -15,6 +15,11 @@ public enum SpellType
     WaterShot,
     HealShot,
     ExampleSpellClickTrigger,
+    IceShotClickTrigger,
+    FireShotClickTrigger,
+    WoodShotClickTrigger,
+    WaterShotClickTrigger,
+    HealShotClickTrigger,
     Teleport,           // テレポート
     Enchant,        // 付与
     InstantDeath,   // 即死
