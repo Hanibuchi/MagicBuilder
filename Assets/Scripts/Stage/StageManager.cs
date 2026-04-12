@@ -413,6 +413,11 @@ public class StageManager : MonoBehaviour
     {
         if (gameEnd) return;
         gameEnd = true;
+
+        // 初回クリアか判定し、クリアフラグを保存する
+        isFirstClear = !StageUnlockManager.Instance.IsStageCleared(stageConfig.stageName);
+        StageUnlockManager.Instance.MarkStageCleared(stageConfig.stageName);
+
         Debug.Log("🎉 ステージクリア！");
         OnGameEnd();
         StartCoroutine(DelayAndPauseGameOnGameClear());
@@ -445,12 +450,10 @@ public class StageManager : MonoBehaviour
             {
                 GameManager.Instance.StageSelectTargetStageName = nextStage.stageName;
                 Debug.Log($"最新のステージとして '{nextStage.stageName}' を登録しました。");
-                isFirstClear = true;
             }
             else
             {
                 Debug.Log($"最新のステージとして '{nextStage.stageName}' を登録しませんでした。");
-                isFirstClear = false;
             }
         }
     }

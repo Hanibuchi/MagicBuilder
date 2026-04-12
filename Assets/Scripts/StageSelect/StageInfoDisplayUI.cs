@@ -12,6 +12,7 @@ public class StageInfoDisplayUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI stageNameText;       // ステージ名
     [SerializeField] private TextMeshProUGUI stageSubNameText; // ステージ識別子 (デバッグや内部ID表示用)
     [SerializeField] private TextMeshProUGUI stageTypeText;       // ステージタイプ表示用
+    [SerializeField] private TextMeshProUGUI rewardText;          // 報酬表示用
 
     [Header("UI要素 - ボタン")]
     [SerializeField] private Button startButton;           // ステージ開始ボタン
@@ -51,20 +52,27 @@ public class StageInfoDisplayUI : MonoBehaviour
     /// <summary>
     /// ステージ情報をセットして表示を更新します。
     /// </summary>
-    public void SetStageInfo(StageSelectUI stageSelectUI, string islandName, string stageSubName, string identifier, StageType stageType)
+    public void SetStageInfo(StageSelectUI stageSelectUI, string islandName, string stageSubName, string identifier, StageConfig stageConfig)
     {
         this.stageSelectUI = stageSelectUI;
         currentStageIdentifier = identifier;
 
         if (islandNameText != null) islandNameText.text = islandName;
-        if (stageNameText != null) stageNameText.text = identifier;
+        if (stageNameText != null) stageNameText.text = $"ステージ{identifier}";
         if (stageSubNameText != null) stageSubNameText.text = stageSubName;
         if (stageTypeText != null)
         {
-            stageTypeText.text = stageType == StageType.Rush ? "ラッシュ" : "パズル";
+            stageTypeText.text = stageConfig.stageType == StageType.Rush ? "ラッシュ" : "パズル";
         }
 
-        bool isRush = stageType == StageType.Rush;
+        if (rewardText != null)
+        {
+            bool isCleared = StageUnlockManager.Instance.IsStageCleared(identifier);
+            int rewardAmt = isCleared ? stageConfig.repeatClearReward : stageConfig.firstClearReward;
+            rewardText.text = $"{rewardAmt}";
+        }
+
+        bool isRush = stageConfig.stageType == StageType.Rush;
         if (openSpellSelectButton != null) openSpellSelectButton.gameObject.SetActive(isRush);
         if (openWandSelectButton != null) openWandSelectButton.gameObject.SetActive(isRush);
     }
