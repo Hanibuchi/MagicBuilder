@@ -16,7 +16,8 @@ MonoBehaviour:
   spellType: FiveSplit
   cooldown: 3
   spellName: "\u591A\u91CD\u8A60\u5531 x5"
-  purchaseCosts: 64000000c80000009001000020030000
+  useCustomPurchaseCosts: 1
+  customPurchaseCosts: 4006000080070000c0080000000a0000
   rarity: 3
   icon: {fileID: 4459817746713722393, guid: 6c1dcb866f2ab9d41b3fd26b344e3736, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
