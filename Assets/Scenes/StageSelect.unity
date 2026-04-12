@@ -6063,7 +6063,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1573669466}
         m_TargetAssemblyTypeName: DebugTools, Assembly-CSharp
-        m_MethodName: UnlockAllStage
+        m_MethodName: MaximizeEquippedSpellCapacity
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14473,6 +14473,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2878483534255734336, guid: 6e8a2af9108b0c142b2fdec0e7023e66, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3016121383328617265, guid: 6e8a2af9108b0c142b2fdec0e7023e66, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -14538,6 +14542,30 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3996243359195803822, guid: 6e8a2af9108b0c142b2fdec0e7023e66, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423677940150426107, guid: 6e8a2af9108b0c142b2fdec0e7023e66, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423677940150426107, guid: 6e8a2af9108b0c142b2fdec0e7023e66, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423677940150426107, guid: 6e8a2af9108b0c142b2fdec0e7023e66, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423677940150426107, guid: 6e8a2af9108b0c142b2fdec0e7023e66, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423677940150426107, guid: 6e8a2af9108b0c142b2fdec0e7023e66, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423677940150426107, guid: 6e8a2af9108b0c142b2fdec0e7023e66, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}

@@ -25,15 +25,14 @@ public class CharacterHealth : MonoBehaviour
     [Tooltip("氷ダメージによる減速の最大時間")]
     public float maxSlowDurationOnIce = 10.0f;
 
-    [Header("ダメージ蓄積設定")]
-    [Tooltip("trueの場合、ダメージを受けるたびに即座に処理します。蓄積処理は行われません。")]
-    public bool processDamageImmediately = false;
-    [Tooltip("ダメージを適用するまで蓄積するフレーム数。-1の場合はCharacterCommonDataのデフォルト値を使用します。")]
-    [SerializeField] private int accumulationFrames = -1;
+    [Header("ダメージテキスト表示蓄積設定")]
+    [Tooltip("trueの場合、ダメージを受けるたびに即座にテキストを表示します。（蓄積しません）")]
+    public bool showDamageTextImmediately = false;
+    [Tooltip("ダメージテキストを蓄積するフレーム数。-1の場合はCharacterCommonDataのデフォルト値を使用します。")]
+    [SerializeField] private int textAccumulationFrames = -1;
 
-    private Damage _accumulatedDamage;
-    private int _remainingAccumulationFrames = -1;
-    private Vector2 _lastAccumulatedSourcePosition;
+    private int _remainingTextAccumulationFrames = -1;
+    private Damage _accumulatedDamageForText;
 
     // 多段ヒット処理の呼び出し回数カウンター
     private int _multiHitStayCount = 0;
@@ -57,20 +56,20 @@ public class CharacterHealth : MonoBehaviour
         dieNotifier = GetComponent<IDieNotifier>();
         healthNotifier = GetComponent<IHealthNotifier>();
 
-        // ダメージ蓄積フレームの設定
-        accumulationFrames = CharacterCommonData.Instance.defaultAccumulationFrames;
-        Debug.Log($"Damage accumulation frames set to: {accumulationFrames}");
+        // ダメージテキスト蓄積フレームの設定
+        textAccumulationFrames = CharacterCommonData.Instance.defaultAccumulationFrames;
+        Debug.Log($"Damage text accumulation frames set to: {textAccumulationFrames}");
     }
 
     private void Update()
     {
-        if (_remainingAccumulationFrames > 0)
+        if (_remainingTextAccumulationFrames > 0)
         {
-            _remainingAccumulationFrames--;
-            if (_remainingAccumulationFrames == 0)
+            _remainingTextAccumulationFrames--;
+            if (_remainingTextAccumulationFrames == 0)
             {
-                ApplyDamageImmediate(_accumulatedDamage, _lastAccumulatedSourcePosition);
-                _remainingAccumulationFrames = -1;
+                FlushDamageText();
+                _remainingTextAccumulationFrames = -1;
             }
         }
     }
@@ -170,31 +169,13 @@ public class CharacterHealth : MonoBehaviour
     }
 
     /// <summary>
-    /// ダメージを受け取り、必要に応じて蓄積または即座に適用します。
+    /// ダメージを受け取り、即座に適用します。（表示用テキストのみ蓄積）
     /// </summary>
     public void ApplyDamage(Damage damage, GameObject other)
     {
         if (currentHealth <= 0) return;
 
-        if (processDamageImmediately || accumulationFrames <= 0)
-        {
-            ApplyDamageImmediate(damage, other != null ? (Vector2)other.transform.position : (Vector2)transform.position);
-            return;
-        }
-
-        if (_remainingAccumulationFrames < 0)
-        {
-            _accumulatedDamage = damage;
-            _remainingAccumulationFrames = accumulationFrames;
-        }
-        else
-        {
-            _accumulatedDamage += damage;
-        }
-        if (other != null)
-        {
-            _lastAccumulatedSourcePosition = other.transform.position;
-        }
+        ApplyDamageImmediate(damage, other != null ? (Vector2)other.transform.position : (Vector2)transform.position);
     }
 
     /// <summary>
@@ -253,37 +234,45 @@ public class CharacterHealth : MonoBehaviour
         // 4. ダメージ表示通知 (単一メソッドで属性ごとに通知)
         if (damageNotifier != null)
         {
-            // 基本ダメージ
-            if (modifiedDamage.baseDamage > 0)
+            if (showDamageTextImmediately)
             {
-                damageNotifier.NotifyDamage(DamageType.Base, modifiedDamage.baseDamage);
+                NotifyDamageImmediate(modifiedDamage);
             }
-            // 火ダメージ
-            if (modifiedDamage.FireDamage > 0)
+            else
             {
-                damageNotifier.NotifyDamage(DamageType.Fire, modifiedDamage.FireDamage);
-            }
-            // 氷ダメージ
-            if (modifiedDamage.IceDamage > 0)
-            {
-                damageNotifier.NotifyDamage(DamageType.Ice, modifiedDamage.IceDamage);
-            }
-            // 木ダメージ
-            if (modifiedDamage.woodDamage > 0)
-            {
-                damageNotifier.NotifyDamage(DamageType.Wood, modifiedDamage.woodDamage);
-            }
-            // 水ダメージ
-            if (modifiedDamage.waterDamage > 0)
-            {
-                damageNotifier.NotifyDamage(DamageType.Water, modifiedDamage.waterDamage);
-            }
-            // 回復
-            if (modifiedDamage.healing > 0)
-            {
-                damageNotifier.NotifyDamage(DamageType.Heal, modifiedDamage.healing);
+                AccumulateDamageText(modifiedDamage);
             }
         }
+    }
+
+    private void NotifyDamageImmediate(Damage modifiedDamage)
+    {
+        if (modifiedDamage.baseDamage > 0) damageNotifier.NotifyDamage(DamageType.Base, modifiedDamage.baseDamage);
+        if (modifiedDamage.FireDamage > 0) damageNotifier.NotifyDamage(DamageType.Fire, modifiedDamage.FireDamage);
+        if (modifiedDamage.IceDamage > 0) damageNotifier.NotifyDamage(DamageType.Ice, modifiedDamage.IceDamage);
+        if (modifiedDamage.woodDamage > 0) damageNotifier.NotifyDamage(DamageType.Wood, modifiedDamage.woodDamage);
+        if (modifiedDamage.waterDamage > 0) damageNotifier.NotifyDamage(DamageType.Water, modifiedDamage.waterDamage);
+        if (modifiedDamage.healing > 0) damageNotifier.NotifyDamage(DamageType.Heal, modifiedDamage.healing);
+    }
+
+    private void AccumulateDamageText(Damage modifiedDamage)
+    {
+        if (_remainingTextAccumulationFrames < 0)
+        {
+            _remainingTextAccumulationFrames = textAccumulationFrames > 0 ? textAccumulationFrames : (CharacterCommonData.Instance != null ? CharacterCommonData.Instance.defaultAccumulationFrames : 5);
+            _accumulatedDamageForText = new Damage();
+        }
+
+        _accumulatedDamageForText += modifiedDamage;
+    }
+
+    private void FlushDamageText()
+    {
+        if (damageNotifier == null) return;
+
+        NotifyDamageImmediate(_accumulatedDamageForText);
+
+        _accumulatedDamageForText = new Damage();
     }
 
     /// <summary>
