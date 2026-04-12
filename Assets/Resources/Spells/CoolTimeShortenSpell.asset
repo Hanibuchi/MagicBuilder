@@ -22,6 +22,6 @@ MonoBehaviour:
   icon: {fileID: -4617658828189747046, guid: ac82641f5c92fb946b7451522d2ee146, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
-  spellDescription: "\u30AF\u30FC\u30EB\u30BF\u30A4\u30E0\u3092\u77ED\u7E2E\u3059\u308B\u3002"
+  spellDescription: "\u30AF\u30FC\u30EB\u30BF\u30A4\u30E0\u3092\u77ED\u7E2E\u3059\u308B\u3002\u8907\u88FD\u306E\u52B9\u679C\u3092\u53D7\u3051\u306A\u3044\u3002"
   coolDownMultiplier: 0.5
   coolDownReduction: 0
