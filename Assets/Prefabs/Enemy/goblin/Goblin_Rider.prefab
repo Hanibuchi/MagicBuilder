@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 1.25
       objectReference: {fileID: 0}
+    - target: {fileID: 1129197135317416692, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
+      propertyPath: m_Mass
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 1324069098560319085, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -54,7 +58,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4984365333232366149, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
       propertyPath: defaultMoveSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 6138402559077134335, guid: 4fdc280cf9254b146aa12080b48c815d, type: 3}
       propertyPath: attackDamage.baseDamage

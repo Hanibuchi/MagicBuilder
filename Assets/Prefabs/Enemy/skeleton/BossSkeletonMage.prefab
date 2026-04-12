@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2929764447234934401, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: defaultMoveSpeed
-      value: 0.5
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 3337923683835934890, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: maxHealth
@@ -87,6 +87,10 @@ PrefabInstance:
     - target: {fileID: 5046662643123802713, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: m_Name
       value: BossSkeletonMage
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074924312258170416, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
+      propertyPath: m_Mass
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8904328848481720335, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: 'enemyWand.spells.Array.data[0]'
