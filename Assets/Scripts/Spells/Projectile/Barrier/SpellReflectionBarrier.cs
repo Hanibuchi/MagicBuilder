@@ -43,7 +43,7 @@ public class SpellReflectionBarrier : MonoBehaviour
                 if (isTrigger)
                 {
                     // 向いている方向を反転
-                    go.transform.root.Rotate(0, 0, 180);
+                    ds.transform.Rotate(0, 0, 180);
 
                     // 速度を反転
                     Rigidbody2D rb = go.GetComponentInParent<Rigidbody2D>();

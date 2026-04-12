@@ -91,9 +91,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68c9ebe4cd0e07345b1d3271c5747b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageSourceType: 0
+  maxPierceCount: 1
+  currentSpellLayer: 1
+  enableImpulse: 0
+  impulseForce: 1
+  autoDestroy: 1
+  destroyTime: 0.1
   damageData:
     baseDamage: 10
     woodDamage: 0
     waterDamage: 0
     temperatureDamage: 0
+    healing: 0
     knockback: 0
+  launchSound: {fileID: 0}
+  launchSoundVolume: 1

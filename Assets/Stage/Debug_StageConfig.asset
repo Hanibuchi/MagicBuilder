@@ -33,7 +33,7 @@ MonoBehaviour:
         startConditionType: 0
         startConditionValue: 5
         enemies:
-        - enemyPrefab: {fileID: 6981057647434173266, guid: 52b67520ffe77bf499c2dbbfac1439b8, type: 3}
+        - enemyPrefab: {fileID: 9157038701547673396, guid: dd19b0e8aa3670b41bbd81cd18cf092f, type: 3}
           weight: 1
         spawnInterval: 2
         duration: 60
