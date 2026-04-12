@@ -187,6 +187,28 @@ public class EquippedWandManager : MonoBehaviour
     }
 
     /// <summary>
+    /// 空きスロットがあれば、指定された杖を自動で装備します。
+    /// </summary>
+    public void AutoEquipIfSpaceAvailable(WandType wandType)
+    {
+        if (_wandDataAsset == null) return;
+
+        Wand wand = _wandDataAsset.GetWand(wandType);
+        if (wand == null) return;
+
+        if (IsWandEquipped(wand)) return;
+
+        for (int i = 0; i < SLOT_COUNT; i++)
+        {
+            if (_equippedWands[i] == null)
+            {
+                SetWand(i, wand);
+                break;
+            }
+        }
+    }
+
+    /// <summary>
     /// ステージ開始時に持ち込む杖を返します。
     /// 未選択時は従来どおり開放済み杖をフォールバックとして返します。
     /// </summary>

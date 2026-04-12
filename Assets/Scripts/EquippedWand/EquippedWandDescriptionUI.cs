@@ -32,6 +32,9 @@ public class EquippedWandDescriptionUI : MonoBehaviour, IBeginDragHandler, IEndD
     [SerializeField, Tooltip("ドラッグ開始時の効果音")]
     private AudioClip dragStartClip;
 
+    [Header("バッジUI")]
+    [SerializeField] private GameObject newBadge;
+
     private Wand _wand;
     private int _slotIndex = -1;
     private bool _dropSucceeded;
@@ -88,6 +91,14 @@ public class EquippedWandDescriptionUI : MonoBehaviour, IBeginDragHandler, IEndD
         _slotIndex = slotIndex;
     }
 
+    public void SetNewBadgeActive(bool active)
+    {
+        if (newBadge != null)
+        {
+            newBadge.SetActive(active);
+        }
+    }
+
     public void SetObserver(IEquippedWandDragObserver observer)
     {
         _observer = observer;
@@ -140,6 +151,8 @@ public class EquippedWandDescriptionUI : MonoBehaviour, IBeginDragHandler, IEndD
         {
             dragSourceImage.raycastTarget = false;
         }
+
+        SetNewBadgeActive(false);
 
         RectTransform root = DraggingSpellRootProvider.Instance != null
             ? DraggingSpellRootProvider.Instance.GetRootTransform()

@@ -169,6 +169,10 @@ public class EquippedWandUI : MonoBehaviour,
                 ui.SetSlotIndex(i);
                 ui.SetObserver(this);
                 ui.SetData(wand);
+                
+                bool isNew = _provider != null && _provider.IsWandNewlyUnlocked(wand);
+                ui.SetNewBadgeActive(isNew);
+                
                 created = ui;
             }
             else
@@ -290,6 +294,11 @@ public class EquippedWandUI : MonoBehaviour,
 
     public void NotifyDragStarted(Wand draggedWand, int fromSlotIndex, bool fromEquippedSlot, int originalSiblingIndex)
     {
+        if (_provider != null && draggedWand != null)
+        {
+            _provider.ClearWandNewBadge(draggedWand);
+        }
+
         if (fromEquippedSlot)
         {
             SetTrashArea(true);
@@ -304,11 +313,6 @@ public class EquippedWandUI : MonoBehaviour,
         }
         else
         {
-            if (_provider != null && draggedWand != null)
-            {
-                _provider.ClearWandNewBadge(draggedWand);
-            }
-
             if (equippedWandIconPrefab != null && holdWandsParent != null)
             {
                 EquippedWandIconUI placeholder = Instantiate(equippedWandIconPrefab, holdWandsParent);

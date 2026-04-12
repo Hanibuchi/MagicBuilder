@@ -55,6 +55,12 @@ public class WandUnlockManager : MonoBehaviour
         PlayerPrefs.SetInt(UnlockKeyPrefix + type.ToString(), 1);
         PlayerPrefs.SetInt(NewBadgeKeyPrefix + type.ToString(), 1);
         PlayerPrefs.Save();
+        
+        // 装備スロットに空きがあれば自動で装備する
+        if (EquippedWandManager.Instance != null)
+        {
+            EquippedWandManager.Instance.AutoEquipIfSpaceAvailable(type);
+        }
         // Debug.Log($"Wand Unlocked: {type}");
     }
 
