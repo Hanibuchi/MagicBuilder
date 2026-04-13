@@ -28,6 +28,18 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     private float currentAngle;
     private float currentPower;
 
+    public Vector2 StartPointScreenPosition
+    {
+        get
+        {
+            if (startPointTransform != null && Camera.main != null)
+            {
+                return Camera.main.WorldToScreenPoint(startPointTransform.position);
+            }
+            return Vector2.zero;
+        }
+    }
+
     private void Awake()
     {
         if (Instance == null)
@@ -150,7 +162,10 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
         // 3. IAimControllerのメソッドを呼び出し、魔法を発射
         aimController.ReleaseMagic(angle, power);
+        OnMagicFired?.Invoke();
     }
+
+    public event System.Action OnMagicFired;
 
     /// <summary>
     /// ドロップされたオブジェクトが SpellUI である場合、杖から削除（破棄）します。

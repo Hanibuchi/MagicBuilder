@@ -416,6 +416,57 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2136152559}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &194924306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 194924308}
+  - component: {fileID: 194924307}
+  m_Layer: 0
+  m_Name: TutorialController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &194924307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194924306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91251d07ec22bca4086c069532cfc414, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StageTutorialController
+  pointerController: {fileID: 1550762125}
+  fireDragDirection: {x: -2, y: -1}
+  fireDragDistance: 300
+  animationLoopTime: 3
+  targetEnemy: {fileID: 850726373}
+  waitTimeAfterEnemyDefeat: 3
+  waitTimeAfterTap: 1
+--- !u!4 &194924308
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194924306}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &231151232
 GameObject:
   m_ObjectHideFlags: 0
@@ -1430,6 +1481,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageId: 0
+--- !u!114 &850726373 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 74969639956603153, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+  m_PrefabInstance: {fileID: 977237739}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 850726367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 140abe618ba40564fa1abe427e036226, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &874336541
 GameObject:
   m_ObjectHideFlags: 0
@@ -2756,6 +2818,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageId: 4
+--- !u!114 &1550762125 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7566190497824272771, guid: 6ffb9ae1c6decba4b8d63b8534475d30, type: 3}
+  m_PrefabInstance: {fileID: 8536460860586059176}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3abcabacc91cd7a4a90a1d4145b51f7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Stage.Tutorial.TutorialPointerController
 --- !u!1 &1695438303
 GameObject:
   m_ObjectHideFlags: 0
@@ -32038,3 +32111,4 @@ SceneRoots:
   - {fileID: 724656427}
   - {fileID: 1026529685}
   - {fileID: 8536460860586059176}
+  - {fileID: 194924308}

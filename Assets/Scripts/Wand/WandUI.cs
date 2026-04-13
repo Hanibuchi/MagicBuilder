@@ -117,6 +117,30 @@ public class WandUI : MonoBehaviour, ISpellContainer
         }
     }
 
+    /// <summary>
+    /// UI要素の最初のRectTransformを取得します。チュートリアル用です。
+    /// </summary>
+    public RectTransform GetFirstUIElementRectTransform()
+    {
+        if (uiElements.Count > 0 && uiElements.First() != null)
+        {
+            return uiElements.First().GetComponent<RectTransform>();
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// UI要素の最後のRectTransformを取得します。チュートリアル用です。
+    /// </summary>
+    public RectTransform GetLastUIElementRectTransform()
+    {
+        if (uiElements.Count > 0 && uiElements.Last() != null)
+        {
+            return uiElements.Last().GetComponent<RectTransform>();
+        }
+        return null;
+    }
+
     // UI要素をクリアし、現在の呪文の並びに基づいて再生成する
     public void RebuildUI(List<SpellBase> fixedSequence, List<SpellBase> newSequence)
     {

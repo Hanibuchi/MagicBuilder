@@ -342,7 +342,11 @@ public class StageManager : MonoBehaviour
         StartPhase();
         if (SoundManager.Instance != null && bGM != null)
             SoundManager.Instance.PlayBGM(bGM);
+            
+        OnEquipSpellsSequenceRoutineFinished?.Invoke();
     }
+
+    public event Action OnEquipSpellsSequenceRoutineFinished;
 
     public void StartPhase()
     {
