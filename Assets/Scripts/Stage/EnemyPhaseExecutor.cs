@@ -54,6 +54,16 @@ public class EnemyPhaseExecutor : MonoBehaviour
     }
 
     /// <summary>
+    /// 現在のフェーズ進行と敵のスポーンを停止します。
+    /// </summary>
+    public void StopPhase()
+    {
+        StopAllCoroutines();
+        phaseStack.Clear();
+        Debug.Log("EnemyPhaseExecutor: フェーズ進行を停止しました。");
+    }
+
+    /// <summary>
     /// フェーズを深さ優先探索で実行するコルーチン。
     /// </summary>
     private IEnumerator ExecutePhases(Action callback)
