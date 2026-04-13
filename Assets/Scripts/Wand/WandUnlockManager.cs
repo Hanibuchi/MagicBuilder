@@ -26,6 +26,7 @@ public class WandUnlockManager : MonoBehaviour
     private WandDataAsset _wandDataAsset;
     private const string UnlockKeyPrefix = "WandUnlocked_";
     private const string PresentationKeyPrefix = "WandPresentation_";
+    private const string NewBadgeKeyPrefix = "WandNewBadge_";
 
     private void Awake()
     {
@@ -52,7 +53,14 @@ public class WandUnlockManager : MonoBehaviour
     public void UnlockWand(WandType type)
     {
         PlayerPrefs.SetInt(UnlockKeyPrefix + type.ToString(), 1);
+        PlayerPrefs.SetInt(NewBadgeKeyPrefix + type.ToString(), 1);
         PlayerPrefs.Save();
+        
+        // 装備スロットに空きがあれば自動で装備する
+        if (EquippedWandManager.Instance != null)
+        {
+            EquippedWandManager.Instance.AutoEquipIfSpaceAvailable(type);
+        }
         // Debug.Log($"Wand Unlocked: {type}");
     }
 
@@ -64,6 +72,33 @@ public class WandUnlockManager : MonoBehaviour
         // デフォルトの杖は常に開放されているものとする
         if (type == WandType.Default) return true;
         return PlayerPrefs.GetInt(UnlockKeyPrefix + type.ToString(), 0) == 1;
+    }
+
+    /// <summary>
+    /// 指定された種類の杖が新しく開放されたばかりか（Newバッジ表示用）を確認します。
+    /// </summary>
+    public bool IsWandNewlyUnlocked(WandType type)
+    {
+        return PlayerPrefs.GetInt(NewBadgeKeyPrefix + type.ToString(), 0) == 1;
+    }
+
+    /// <summary>
+    /// 指定された種類の杖のNewバッジを消去します。
+    /// </summary>
+    public void ClearWandNewBadge(WandType type)
+    {
+        PlayerPrefs.SetInt(NewBadgeKeyPrefix + type.ToString(), 0);
+        PlayerPrefs.Save();
+    }
+
+    /// <summary>
+    /// 新しく開放された（Newバッジが付いている）杖が一つでもあるかを確認します。
+    /// </summary>
+    public bool HasAnyNewlyUnlockedWands()
+    {
+        if (_wandDataAsset == null) return false;
+
+        return _wandDataAsset.wands.Any(w => w.type != WandType.Default && IsWandNewlyUnlocked(w.type));
     }
 
     /// <summary>

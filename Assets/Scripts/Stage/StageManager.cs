@@ -50,6 +50,9 @@ public class StageManager : MonoBehaviour
 
         // 3. プレイヤーのInstantiate
         InstantiatePlayer();
+
+        // 4. InstantiateされたオブジェクトのAwake等を待つため、1フレーム後に初期化処理を実行
+        StartCoroutine(DelayedInitializationRoutine());
     }
 
     /// <summary>
@@ -95,6 +98,26 @@ public class StageManager : MonoBehaviour
                 Debug.Log($"Prefab: {prefab.name} をInstantiateしました。");
             }
         }
+    }
+
+    /// <summary>
+    /// 各種PrefabがInstantiateされ、Awakeが呼ばれた後に1フレーム遅れて実行される初期化処理群
+    /// </summary>
+    private IEnumerator DelayedInitializationRoutine()
+    {
+        // オブジェクトが生成されたフレームの終端まで待機し、確実にそれぞれのAwake等が終わるのを待つ
+        yield return null;
+
+        // SpellDestroyDropUI の表示設定を StageType 等によって切り替える
+        if (SpellTrashCanController.Instance != null && stageConfig != null)
+        {
+            // パズルステージ以外はデフォルトで表示する
+            bool shouldEnableDestroyDropUI = stageConfig.stageType != StageType.Puzzle;
+            SpellTrashCanController.Instance.SetDestroyDropUIEnabled(shouldEnableDestroyDropUI);
+            Debug.Log($"ステージタイプ判定: {stageConfig.stageType} に伴い、SpellDestroyDropUI の有効化状態を {shouldEnableDestroyDropUI} に設定しました。");
+        }
+        
+        // （他に1フレーム遅らせたい初期設定オブジェクトがあれば、この下に追加可能）
     }
 
     /// <summary>
@@ -217,11 +240,30 @@ public class StageManager : MonoBehaviour
     /// </summary>
     private void StartGameImmediately()
     {
-        // 解放されている杖を取得して追加
-        var unlockedWands = WandUnlockManager.Instance.GetUnlockedWands();
-        if (unlockedWands != null && unlockedWands.Length > 0)
+        // 杖を取得して追加
+        Wand[] wandsToEquip = null;
+        if (stageConfig != null && stageConfig.stageType == StageType.Puzzle && stageConfig.puzzleWands != null && stageConfig.puzzleWands.Length > 0)
         {
-            foreach (var wand in unlockedWands)
+            var wandData = Resources.Load<WandDataAsset>("WandDataAsset");
+            if (wandData != null)
+            {
+                var puzzleWandList = new List<Wand>();
+                foreach (var puzzleWandType in stageConfig.puzzleWands)
+                {
+                    var wand = wandData.GetWand(puzzleWandType);
+                    if (wand != null) puzzleWandList.Add(wand);
+                }
+                wandsToEquip = puzzleWandList.ToArray();
+            }
+        }
+        else
+        {
+            wandsToEquip = EquippedWandManager.Instance.GetWandsForStage();
+        }
+
+        if (wandsToEquip != null && wandsToEquip.Length > 0)
+        {
+            foreach (var wand in wandsToEquip)
             {
                 wand.Reset();
                 WandsController.Instance.GenerateNewWand(wand);
@@ -311,8 +353,25 @@ public class StageManager : MonoBehaviour
             return;
         }
 
+        List<EnemyPhaseConfig> finalPhases = new List<EnemyPhaseConfig>();
+
+        // 既存の固定フェーズを追加
+        if (stageConfig.enemyPhases != null)
+        {
+            finalPhases.AddRange(stageConfig.enemyPhases);
+        }
+
+        // 設定用ジェネレータクラスを通してフェーズを動的生成・追加
+        if (stageConfig.phaseGenerators != null)
+        {
+            foreach (var generator in stageConfig.phaseGenerators)
+            {
+                generator?.GeneratePhases(finalPhases);
+            }
+        }
+
         EnemyPhaseExecutor.Instance.SetSpawnPoint(enemySpawnPoint.position);
-        EnemyPhaseExecutor.Instance.StartPhase(stageConfig.enemyPhases, () => { spawnComplete = true; });
+        EnemyPhaseExecutor.Instance.StartPhase(finalPhases.ToArray(), () => { spawnComplete = true; });
     }
 
     /// <summary>
@@ -354,6 +413,23 @@ public class StageManager : MonoBehaviour
     {
         if (gameEnd) return;
         gameEnd = true;
+
+        if (stageConfig != null)
+        {
+            if (stageConfig.stageType == StageType.Rush && EnemyPhaseExecutor.Instance != null)
+            {
+                EnemyPhaseExecutor.Instance.StopPhase();
+            }
+            else if (stageConfig.stageType == StageType.Puzzle && TeleportManager.Instance != null)
+            {
+                TeleportManager.Instance.DisableTeleport();
+            }
+        }
+
+        // 初回クリアか判定し、クリアフラグを保存する
+        isFirstClear = !(StageUnlockManager.Instance?.IsStageCleared(stageConfig.stageName) ?? false);
+        StageUnlockManager.Instance?.MarkStageCleared(stageConfig.stageName);
+
         Debug.Log("🎉 ステージクリア！");
         OnGameEnd();
         StartCoroutine(DelayAndPauseGameOnGameClear());
@@ -381,17 +457,15 @@ public class StageManager : MonoBehaviour
         // このステージの次のステージを最新のステージとして登録しようと試みる。最新のステージでない場合（つまり再プレイ時）何もせず、最新のステージの場合、ステージ選択画面になったときにそのステージの島が選択されるようにする。
         else
         {
-            StageUnlockManager.Instance.UnlockStage(nextStage.stageName);
-            if (StageUnlockManager.Instance.UpdateLatestReachedStage(nextStage.stageName))
+            StageUnlockManager.Instance?.UnlockStage(nextStage.stageName);
+            if (StageUnlockManager.Instance?.UpdateLatestReachedStage(nextStage.stageName) ?? false)
             {
                 GameManager.Instance.StageSelectTargetStageName = nextStage.stageName;
                 Debug.Log($"最新のステージとして '{nextStage.stageName}' を登録しました。");
-                isFirstClear = true;
             }
             else
             {
                 Debug.Log($"最新のステージとして '{nextStage.stageName}' を登録しませんでした。");
-                isFirstClear = false;
             }
         }
     }
@@ -400,12 +474,6 @@ public class StageManager : MonoBehaviour
     [Header("ステージクリア設定")] // 追記
     [Tooltip("クリア後の演出時間（秒）。この時間後にゲームが停止します。")]
     [SerializeField] private float clearDelaySeconds = 2f; // 例として3.0秒
-
-    [Header("報酬設定")]
-    [SerializeField, Tooltip("未クリアステージをクリアした時の報酬額")]
-    private int firstClearReward = 100;
-    [SerializeField, Tooltip("既クリアステージをクリアした時の報酬額")]
-    private int repeatClearReward = 10;
 
     [SerializeField] AudioClip bossDestroySound;
     [SerializeField] AudioClip clearSound;
@@ -539,7 +607,7 @@ public class StageManager : MonoBehaviour
         {
             controller.DisplayVictory(data);
 
-            int reward = isFirstClear ? firstClearReward : repeatClearReward;
+            int reward = isFirstClear ? stageConfig.firstClearReward : stageConfig.repeatClearReward;
             if (CurrencyController.Instance != null)
             {
                 CurrencyController.Instance.AddCurrency(reward);
@@ -548,11 +616,13 @@ public class StageManager : MonoBehaviour
         else
         {
             controller.DisplayDefeat(data);
-            // パズルステージの場合は敗北時に呪文変更ボタンを非表示にする
-            if (stageConfig != null && stageConfig.stageType == StageType.Puzzle)
-            {
-                controller.HideSpellChangeButton();
-            }
+        }
+
+        // パズルステージの場合は勝敗に関わらず呪文・杖変更ボタンを非表示にする
+        if (stageConfig != null && stageConfig.stageType == StageType.Puzzle)
+        {
+            controller.HideSpellChangeButton();
+            controller.HideWandChangeButton();
         }
 
         // ボタンアクションの設定（例：シーン遷移処理を実装）
@@ -603,8 +673,15 @@ public class StageManager : MonoBehaviour
             Debug.Log("呪文変更へ");
             EquippedSpellController.Instance?.OpenSpellSelectionUI(() => { clicked = false; controller.UpdateSpellBadge(); });
         };
+        Action onWandChange = () =>
+        {
+            if (clicked) return;
+            clicked = true;
+            Debug.Log("杖変更へ");
+            EquippedWandController.Instance?.OpenWandSelectionUI(() => { clicked = false; controller.UpdateWandBadge(); });
+        };
 
-        controller.SetupActions(onStageSelect, onRetry, onNextStage, onSpellChange);
+        controller.SetupActions(onStageSelect, onRetry, onNextStage, onSpellChange, onWandChange);
         Debug.Log($"リザルトパネルをInstantiateし、{(isVictory ? "勝利" : "敗北")}結果を設定しました。");
     }
 }

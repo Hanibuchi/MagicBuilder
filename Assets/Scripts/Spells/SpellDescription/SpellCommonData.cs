@@ -90,6 +90,31 @@ public class SpellCommonData : ScriptableObject
         };
     }
 
+    [Header("購入設定 (レア度別コスト)")]
+    [Tooltip("Commonレアリティの保有数ごとのコスト")]
+    public int[] commonPurchaseCosts = { 100, 120, 140, 160 };
+    [Tooltip("Uncommonレアリティの保有数ごとのコスト")]
+    public int[] uncommonPurchaseCosts = { 200, 240, 280, 320 };
+    [Tooltip("Rareレアリティの保有数ごとのコスト")]
+    public int[] rarePurchaseCosts = { 400, 480, 560, 640 };
+    [Tooltip("Epicレアリティの保有数ごとのコスト")]
+    public int[] epicPurchaseCosts = { 800, 960, 1120, 1280 };
+
+    /// <summary>
+    /// レア度に対応した購入コスト配列を取得します。
+    /// </summary>
+    public int[] GetCostsByRarity(SpellRarity rarity)
+    {
+        return rarity switch
+        {
+            SpellRarity.Common => commonPurchaseCosts,
+            SpellRarity.Uncommon => uncommonPurchaseCosts,
+            SpellRarity.Rare => rarePurchaseCosts,
+            SpellRarity.Epic => epicPurchaseCosts,
+            _ => commonPurchaseCosts,
+        };
+    }
+
     [Tooltip("呪文UIプレハブ")] // ランクや種類別でUIを変えるってなったときは、これを複数作ってSpellBaseの子クラスのCreateUIから参照する。
     public GameObject spellUIPrefab;
 
@@ -99,7 +124,10 @@ public class SpellCommonData : ScriptableObject
     [Tooltip("EquippedSpellIconUIコンポーネントがアタッチされたUIプレハブ")]
     public GameObject equippedSpellIconUIPrefab;
 
-    [Header("エフェクトプレハブ")]
+    [Header("エフェクト・共通設定")]
+    [Tooltip("多重詠唱などの発射間隔の最大値(秒)")]
+    public float maxDelayInterval = 1.0f;
+
     [Tooltip("呪文発射時に表示する魔法陣のプレハブ")]
     public GameObject magicCirclePrefab;
 

@@ -127,8 +127,6 @@ public class CooldownUIController : MonoBehaviour, ICooldownChangeListener
                 }
             }
         }
-
-        ControlUIAnimator(totalCooldownValue);
     }
 
     /// <summary>
@@ -181,51 +179,31 @@ public class CooldownUIController : MonoBehaviour, ICooldownChangeListener
     [Tooltip("UIの表示/非表示に使用するAnimator。")]
     public Animator uiAnimator;
 
-    // Animatorの表示トリガー名
-    [Tooltip("AnimatorでUIを表示する際に使用するTrigger名。")]
-    public string showTriggerName = "Show";
-
-    // Animatorの非表示トリガー名
-    [Tooltip("AnimatorでUIを非表示にする際に使用するTrigger名。")]
-    public string hideTriggerName = "Hide";
-    private bool isUIShowing = false; // UIが現在表示状態にあるかを示すフラグ
+    // Animatorの表示切り替え用Bool名
+    [Tooltip("AnimatorでUIの表示/非表示を切り替える際に使用するBoolパラメータ名。")]
+    public string isVisibleBoolName = "IsVisible";
 
     /// <summary>
-    /// Animatorを使用してUIの表示/非表示を切り替える
+    /// UIを表示する
     /// </summary>
-    /// <param name="totalCooldownValue">現在の合計クールタイム</param>
-    private void ControlUIAnimator(float totalCooldownValue)
+    public void ShowUI()
     {
-        if (uiAnimator == null) return;
-
-        // クールタイムが微小な値（または0）の場合
-        if (totalCooldownValue <= 0.01f)
+        if (!string.IsNullOrEmpty(isVisibleBoolName))
         {
-            // 現在表示中の場合にのみHideを実行する
-            if (isUIShowing)
-            {
-                if (!string.IsNullOrEmpty(hideTriggerName))
-                {
-                    uiAnimator.SetTrigger(hideTriggerName);
-                }
-                isUIShowing = false; // 状態を非表示に更新
-            }
-        }
-        else
-        {
-            // 現在非表示中の場合にのみShowを実行する
-            if (!isUIShowing)
-            {
-                if (!string.IsNullOrEmpty(showTriggerName))
-                {
-                    uiAnimator.SetTrigger(showTriggerName);
-                }
-                isUIShowing = true; // 状態を表示中に更新
-            }
+            uiAnimator.SetBool(isVisibleBoolName, true);
         }
     }
 
-
+    /// <summary>
+    /// UIを非表示にする
+    /// </summary>
+    public void HideUI()
+    {
+        if (!string.IsNullOrEmpty(isVisibleBoolName))
+        {
+            uiAnimator.SetBool(isVisibleBoolName, false);
+        }
+    }
 
     // --- デバッグ用 ---
     [ContextMenu("Test Cooldown 50")]

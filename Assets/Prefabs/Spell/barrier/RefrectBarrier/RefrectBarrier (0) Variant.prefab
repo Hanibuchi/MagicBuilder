@@ -104,6 +104,7 @@ MonoBehaviour:
   iceStopThreshold: 0.3
   iceStopDuration: 20
   maxSlowDurationOnIce: 10
+  processDamageImmediately: 0
   accumulationFrames: -1
 --- !u!114 &7615815507074289344
 MonoBehaviour:
@@ -117,3 +118,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2b887c68ef085647801fc60f76563a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reflectSE: {fileID: 8300000, guid: 51943648bc9776e45af694c8dbd849c6, type: 3}

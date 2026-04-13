@@ -22,8 +22,28 @@ public abstract class SpellBase : ScriptableObject
     public string spellName = "未定義の呪文";
 
     [Header("購入設定")]
-    [Tooltip("保有数ごとの購入コスト。インデックスが保有数に対応します。")]
-    public int[] purchaseCosts = new int[] { 100, 200, 400, 800 };
+    [Tooltip("個別に購入コストを設定するかどうか。falseの場合はSpellCommonDataのレア度別コストが使用されます。")]
+    public bool useCustomPurchaseCosts = false;
+
+    [Tooltip("個別に設定する場合の保有数ごとの購入コスト。インデックスが保有数に対応します。")]
+    public int[] customPurchaseCosts = new int[] { 1600, 1920, 2240, 2560 };
+
+    /// <summary>
+    /// 現在の購入コスト配列を取得します。
+    /// </summary>
+    public int[] PurchaseCosts
+    {
+        get
+        {
+            if (useCustomPurchaseCosts)
+                return customPurchaseCosts;
+            return SpellCommonData.Instance.GetCostsByRarity(rarity);
+        }
+    }
+
+    [Header("ドロップ設定")]
+    [Tooltip("この呪文のレア度")]
+    public SpellRarity rarity = SpellRarity.Common;
 
     /// <summary>
     /// 補助線（軌道予測）を表示するためのロジックを定義します。
@@ -472,6 +492,22 @@ public abstract class SpellBase : ScriptableObject
     {
         detailItems.Clear();
 
+        string rarityText = rarity switch
+        {
+            SpellRarity.Common => "コモン",
+            SpellRarity.Uncommon => "アンコモン",
+            SpellRarity.Rare => "レア",
+            SpellRarity.Epic => "エピック",
+            _ => rarity.ToString()
+        };
+
+        // レア度項目を生成
+        detailItems.Add(new SpellDescriptionItem
+        {
+            icon = null,
+            descriptionText = $"レア度 : {rarityText}"
+        });
+
         // クールタイム項目を動的に生成
         if (cooldown != 0)
             detailItems.Add(new SpellDescriptionItem
@@ -491,3 +527,36 @@ public interface ISpellCastListener
 {
     void PlayCastAnimation();
 }
+
+/// <summary>
+/// 呪文のレア度を定義する列挙型。
+/// </summary>
+public enum SpellRarity
+{
+    Common,
+    Uncommon,
+    Rare,
+    Epic,
+}
+
+#if UNITY_EDITOR
+[UnityEditor.CustomEditor(typeof(SpellBase), true)]
+public class SpellBaseEditor : UnityEditor.Editor
+{
+    public override Texture2D RenderStaticPreview(string assetPath, UnityEngine.Object[] subAssets, int width, int height)
+    {
+        var spell = target as SpellBase;
+        if (spell != null && spell.icon != null)
+        {
+            Texture2D preview = UnityEditor.AssetPreview.GetAssetPreview(spell.icon);
+            if (preview != null)
+            {
+                Texture2D result = new Texture2D(width, height);
+                UnityEditor.EditorUtility.CopySerialized(preview, result);
+                return result;
+            }
+        }
+        return base.RenderStaticPreview(assetPath, subAssets, width, height);
+    }
+}
+#endif

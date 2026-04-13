@@ -242,7 +242,7 @@ public class StageSelectUI : MonoBehaviour
         }
         Debug.Log($"HandleStageButtonClick: identifier={identifier}, index={index}");
         // 情報の更新と表示
-        StageInfoDisplayUI.Instance.SetStageInfo(this, islandName, stageInfo.subStageName, identifier);
+        StageInfoDisplayUI.Instance.SetStageInfo(this, islandName, stageInfo.subStageName, identifier, stageInfo);
         StageInfoDisplayUI.Instance.Open();
 
         // 現在の状態を記録

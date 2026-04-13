@@ -163,6 +163,10 @@ public class MultCastSpell : SpellBase
     {
         context.errorDegree += additionalErrorDegree;
         float interval = delayMultiplier * context.errorDegree;
+        if (SpellCommonData.Instance != null)
+        {
+            interval = Mathf.Min(interval, SpellCommonData.Instance.maxDelayInterval);
+        }
 
         Vector2 baseCasterPoint = context.CasterPosition;
         Dictionary<int, int> callCountPerIndex = new Dictionary<int, int>();
@@ -293,5 +297,21 @@ public class MultCastSpell : SpellBase
         return targetIndices
             .Select(index => index - currentSpellIndex)
             .ToArray();
+    }
+
+    public override List<SpellDescriptionItem> GetDescriptionDetails()
+    {
+        base.GetDescriptionDetails();
+
+        if (additionalErrorDegree != 0f)
+        {
+            detailItems.Add(new SpellDescriptionItem
+            {
+                icon = SpellCommonData.Instance.errorDegreeIcon,
+                descriptionText = $"誤差 : +{additionalErrorDegree:F1}度",
+            });
+        }
+
+        return detailItems;
     }
 }

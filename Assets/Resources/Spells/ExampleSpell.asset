@@ -16,7 +16,9 @@ MonoBehaviour:
   spellType: ExampleSpell
   cooldown: 1
   spellName: "\u30DE\u30B8\u30C3\u30AF\u30B7\u30E7\u30C3\u30C8"
-  purchaseCosts: 64000000c80000009001000020030000
+  useCustomPurchaseCosts: 0
+  customPurchaseCosts: 4006000080070000c0080000000a0000
+  rarity: 0
   icon: {fileID: -3674441939286190792, guid: c22aacc41a6edc04a98bfe2f2ff0a803, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
@@ -34,7 +36,7 @@ MonoBehaviour:
     waterDamage: 0
     temperatureDamage: 0
     healing: 0
-    knockback: 0
+    knockback: 30
   isTargetBoth: 0
   damageType: 0
   isClickTrigger: 0

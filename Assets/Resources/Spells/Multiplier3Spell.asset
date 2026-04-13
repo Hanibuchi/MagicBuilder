@@ -16,9 +16,11 @@ MonoBehaviour:
   spellType: ThreeMultiplier
   cooldown: 1.5
   spellName: "\u8907\u88FD x3"
-  purchaseCosts: 64000000c80000009001000020030000
+  useCustomPurchaseCosts: 0
+  customPurchaseCosts: 4006000080070000c0080000000a0000
+  rarity: 2
   icon: {fileID: 7709829495316133606, guid: 92095f358acf0884d93f3cb7ee4dad9f, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
-  spellDescription: "\u53F3\u306E\u546A\u6587\u30923\u3064\u306B\u30B3\u30D4\u30FC\u3057\u3066\u53F3\u306B\u4E26\u3079\u308B\u3002"
+  spellDescription: "\u53F3\u306E\u546A\u6587\u30923\u3064\u306B\u30B3\u30D4\u30FC\u3057\u3066\u53F3\u306B\u4E26\u3079\u308B\u3002\u3053\u306E\u546A\u6587\u3092\u91CD\u306D\u3066\u4F7F\u3046\u3053\u3068\u306F\u3067\u304D\u306A\u3044\u3002"
   multiplierCount: 3

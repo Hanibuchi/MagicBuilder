@@ -16,25 +16,27 @@ MonoBehaviour:
   spellType: MegaBeam
   cooldown: 15
   spellName: "\u30D3\u30FC\u30E0"
-  purchaseCosts: 64000000c80000009001000020030000
+  useCustomPurchaseCosts: 1
+  customPurchaseCosts: 4006000080070000c0080000000a0000
+  rarity: 3
   icon: {fileID: 5026184849517852720, guid: 5f48692d38a36ab458dad28a7fd44383, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
-  spellDescription: "\u3059\u3079\u3066\u3092\u6D88\u3057\u98DB\u3070\u3059\u51F6\u60AA\u30D3\u30FC\u30E0\u3092\u767A\u5C04\u3059\u308B\u3002"
+  spellDescription: "\u3059\u3079\u3066\u3092\u6D88\u3057\u98DB\u3070\u3059\u51F6\u60AA\u30D3\u30FC\u30E0\u3092\u767A\u5C04\u3059\u308B\u3002\u706B\u30BF\u30A4\u30D7\u306E\u6575\u306B\u52B9\u679C\u629C\u7FA4\uFF01"
   trajectoryPrefabInterval: 0.1
   trajectoryMoveSpeed: 0.5
   maxPredictionTime: 5
   projectilePrefab: {fileID: 2858644451755280381, guid: 809763920d4bb744cbf38dcbd428d9d5, type: 3}
   strengthMultiplier: 0
   duration: 2
-  errorDegree: 2
+  errorDegree: 0
   damage:
     baseDamage: 0
     woodDamage: 0
-    waterDamage: 1
+    waterDamage: 3
     temperatureDamage: 0
     healing: 0
-    knockback: 0
+    knockback: 5
   isTargetBoth: 0
   damageType: 2
   isClickTrigger: 0

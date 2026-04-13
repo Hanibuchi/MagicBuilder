@@ -16,7 +16,9 @@ MonoBehaviour:
   spellType: FiveRandomChainCast
   cooldown: 0.5
   spellName: "\u30E9\u30F3\u30C0\u30E0\u540C\u6642\u8A60\u5531 x5"
-  purchaseCosts: 64000000c80000009001000020030000
+  useCustomPurchaseCosts: 0
+  customPurchaseCosts: 4006000080070000c0080000000a0000
+  rarity: 2
   icon: {fileID: -7705038493603543222, guid: ce713ff896a8e75478326c9ea04fe072, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}

@@ -91,6 +91,10 @@ public class MultiSplit : SpellBase
 
         context.errorDegree += additionalErrorDegree;
         float interval = delayMultiplier * context.errorDegree;
+        if (SpellCommonData.Instance != null)
+        {
+            interval = Mathf.Min(interval, SpellCommonData.Instance.maxDelayInterval);
+        }
 
         Vector2 baseCasterPoint = context.CasterPosition;
 
@@ -187,6 +191,22 @@ public class MultiSplit : SpellBase
     {
         // 常に一つ右の呪文を指す（複雑なグループ計算は行わない）
         return new int[] { 1 };
+    }
+
+    public override List<SpellDescriptionItem> GetDescriptionDetails()
+    {
+        base.GetDescriptionDetails();
+
+        if (additionalErrorDegree != 0f)
+        {
+            detailItems.Add(new SpellDescriptionItem
+            {
+                icon = SpellCommonData.Instance.errorDegreeIcon,
+                descriptionText = $"誤差 : +{additionalErrorDegree:F1}度",
+            });
+        }
+
+        return detailItems;
     }
 }
 

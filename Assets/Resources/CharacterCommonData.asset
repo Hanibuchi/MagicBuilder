@@ -13,3 +13,10 @@ MonoBehaviour:
   m_Name: CharacterCommonData
   m_EditorClassIdentifier: 
   defaultAccumulationFrames: 5
+  multiHitIntervalCount: 5
+  hitStopDurationOnDie: 0.15
+  hitStopTimeScaleOnDie: 0
+  hitStopDurationOnDamage: 0.05
+  hitStopTimeScaleOnDamage: 0.05
+  suffocationDelay: 0.5
+  suffocationDamagePerFrame: 3

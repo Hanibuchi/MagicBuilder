@@ -14,7 +14,6 @@ public class EquippedSpellManager : MonoBehaviour
 
     private const string PLAYERPREFS_KEY_SPELLS = "EquippedSpells_Types";
     private const string PLAYERPREFS_KEY_CAPACITY = "EquippedSpells_Capacity";
-    private const int DEFAULT_CAPACITY = 1; // 初期持ち込み可能数
 
     // --- シングルトン実装 ---
 
@@ -50,10 +49,10 @@ public class EquippedSpellManager : MonoBehaviour
 
     // 持ち込み呪文を格納する配列。SpellBaseはScriptableObjectなので直接参照を保持。
     // 固定長（最大スロット数）となり、空きスロットは null で表現します。
-    private SpellBase[] _equippedSpells = new SpellBase[DEFAULT_CAPACITY];
+    private SpellBase[] _equippedSpells = new SpellBase[3]; // 初期容量を3に設定
 
     // 持ち込み可能な最大スロット数
-    private int _maxCapacity = DEFAULT_CAPACITY;
+    private int _maxCapacity = 3;
 
     private EquippedSpellCapacityConfig _config;
     private InitialEquippedSpellsConfig _initialConfig;
@@ -172,6 +171,15 @@ public class EquippedSpellManager : MonoBehaviour
     {
         if (_initialConfig == null || _initialConfig.initialSpells == null) return;
 
+        // 初期呪文の数が現在の最大スロット数を超えている場合、スロット数を拡張する
+        if (_maxCapacity < _initialConfig.initialSpells.Count)
+        {
+            _maxCapacity = _initialConfig.initialSpells.Count;
+            System.Array.Resize(ref _equippedSpells, _maxCapacity);
+            SaveCapacity();
+            NotifyMaxCapacityChanged();
+        }
+
         for (int i = 0; i < _initialConfig.initialSpells.Count; i++)
         {
             if (i >= _maxCapacity) break;
@@ -208,7 +216,10 @@ public class EquippedSpellManager : MonoBehaviour
     /// </summary>
     private void LoadCapacity()
     {
-        _maxCapacity = PlayerPrefs.GetInt(PLAYERPREFS_KEY_CAPACITY, DEFAULT_CAPACITY);
+        int defaultCap = _initialConfig != null
+            ? Mathf.Max(_initialConfig.initialCapacity, _initialConfig.initialSpells.Count)
+            : 3; // 設定がない場合のフォールバック値
+        _maxCapacity = PlayerPrefs.GetInt(PLAYERPREFS_KEY_CAPACITY, defaultCap);
         NotifyMaxCapacityChanged();
     }
 

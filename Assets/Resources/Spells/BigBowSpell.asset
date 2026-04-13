@@ -16,11 +16,13 @@ MonoBehaviour:
   spellType: GiantArrow
   cooldown: 10
   spellName: "\u5DE8\u5927\u77E2"
-  purchaseCosts: 64000000c80000009001000020030000
+  useCustomPurchaseCosts: 0
+  customPurchaseCosts: 4006000080070000c0080000000a0000
+  rarity: 2
   icon: {fileID: 343932831540123903, guid: 6e23ff91565431641bbf48ab71e4369f, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
-  spellDescription: "\u5DE8\u5927\u306A\u77E2\u3092\u5C04\u51FA\u3059\u308B\u3002"
+  spellDescription: "\u5DE8\u5927\u306A\u77E2\u3092\u5C04\u51FA\u3059\u308B\u3002\u6C34\u30BF\u30A4\u30D7\u306E\u6575\u306B\u52B9\u679C\u629C\u7FA4\uFF01"
   trajectoryPrefabInterval: 0.1
   trajectoryMoveSpeed: 0.5
   maxPredictionTime: 5
@@ -30,11 +32,11 @@ MonoBehaviour:
   errorDegree: 2
   damage:
     baseDamage: 0
-    woodDamage: 1
+    woodDamage: 5
     waterDamage: 0
     temperatureDamage: 0
     healing: 0
-    knockback: 0
+    knockback: 10
   isTargetBoth: 0
   damageType: 2
   isClickTrigger: 0

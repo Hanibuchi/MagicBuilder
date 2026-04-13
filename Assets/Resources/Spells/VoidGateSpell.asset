@@ -16,7 +16,9 @@ MonoBehaviour:
   spellType: VoidGate
   cooldown: 6
   spellName: "\u30F4\u30A9\u30A4\u30C9\u30B2\u30FC\u30C8"
-  purchaseCosts: 64000000c80000009001000020030000
+  useCustomPurchaseCosts: 1
+  customPurchaseCosts: 4006000080070000c0080000000a0000
+  rarity: 3
   icon: {fileID: -6430892517223453053, guid: 08337fb14aa7f0d439474a03003a179b, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}

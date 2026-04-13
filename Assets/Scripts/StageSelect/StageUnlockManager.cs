@@ -135,6 +135,48 @@ public class StageUnlockManager : MonoBehaviour
     }
 
     /// <summary>
+    /// ステージをクリア済みに設定します。
+    /// </summary>
+    public void MarkStageCleared(string stageId)
+    {
+        PlayerPrefs.SetInt("Stage_Cleared_" + stageId, 1);
+        PlayerPrefs.Save();
+    }
+
+    /// <summary>
+    /// 指定されたステージがクリア済みかどうかを判定します。
+    /// </summary>
+    public bool IsStageCleared(string stageId)
+    {
+        // 新しいクリアフラグが存在する場合はそれを優先
+        if (PlayerPrefs.GetInt("Stage_Cleared_" + stageId, 0) == 1)
+        {
+            return true;
+        }
+
+        // 後方互換性: 旧仕様のインデックス比較による判定
+        if (stageListConfig == null || stageListConfig.stages == null) return false;
+        
+        string currentLatestId = GetLatestReachedStageID();
+        if (string.IsNullOrEmpty(currentLatestId)) return false;
+
+        List<string> orderedStageNames = stageListConfig.stages
+            .Where(config => config != null)
+            .Select(config => config.stageName)
+            .ToList();
+            
+        int targetIndex = orderedStageNames.IndexOf(stageId);
+        int latestIndex = orderedStageNames.IndexOf(currentLatestId);
+        
+        if (targetIndex >= 0 && latestIndex >= 0)
+        {
+            // 最新到達ステージのインデックスより小さければクリア済み
+            return targetIndex < latestIndex;
+        }
+        return false;
+    }
+
+    /// <summary>
     /// デバッグ用：全てのステージを解放します。
     /// </summary>
     public void UnlockAllStages()
@@ -149,6 +191,7 @@ public class StageUnlockManager : MonoBehaviour
         {
             if (stageConfig == null) continue;
             UnlockStage(stageConfig.stageName);
+            MarkStageCleared(stageConfig.stageName);
         }
         
         // 念のため最新到達ステージも最後のステージにしておくと良いかもしれません
@@ -161,7 +204,7 @@ public class StageUnlockManager : MonoBehaviour
             }
         }
         
-        Debug.Log("全てのステージを解放しました。");
+        Debug.Log("全てのステージを解放・クリア済みにしました。");
     }
 
     /// <summary>

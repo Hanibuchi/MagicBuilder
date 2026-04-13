@@ -16,7 +16,9 @@ MonoBehaviour:
   spellType: Blade
   cooldown: 6
   spellName: "\u30D6\u30EC\u30A4\u30C9"
-  purchaseCosts: 64000000c80000009001000020030000
+  useCustomPurchaseCosts: 0
+  customPurchaseCosts: 4006000080070000c0080000000a0000
+  rarity: 2
   icon: {fileID: -6920231263525051304, guid: a5f84612c56adec4c931847c21fa28ca, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
@@ -29,12 +31,12 @@ MonoBehaviour:
   duration: 1
   errorDegree: 0
   damage:
-    baseDamage: 1
+    baseDamage: 8
     woodDamage: 0
     waterDamage: 0
     temperatureDamage: 0
     healing: 0
-    knockback: 0
+    knockback: 10
   isTargetBoth: 0
   damageType: 2
   isClickTrigger: 0

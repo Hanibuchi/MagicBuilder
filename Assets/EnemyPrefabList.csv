@@ -1,0 +1,36 @@
+敵の種類,プレハブのパス
+こうもり,flying/Bat.prefab
+火こうもり,flying/FireBat.prefab
+氷こうもり,flying/IceBat.prefab
+木こうもり,flying/WoodBat.prefab
+水こうもり,flying/WaterBat.prefab
+ジグザグこうもり,flying/ZigzagBat Variant.prefab
+石落としこうもり,flying/Bat_Stone.prefab
+爆弾落としこうもり,flying/Bat_Bomb.prefab
+はち,flying/Bee.prefab
+イノシシ,Boar/Boar.prefab
+でかイノシシ,Boar/BigBoar.prefab
+スライム,Slime.prefab
+火スライム,slime/FireSlime.prefab
+木スライム,slime/WoodSlime.prefab
+氷スライム,slime/IceSlime.prefab
+水スライム,slime/WaterSlime.prefab
+高速スライム,slime/FastSlime.prefab
+ジャンプスライム,slime/JumpSlime.prefab
+でかスライム,slime/BigSlime.prefab
+斧ゴブリン,goblin/Goblin_Axe.prefab
+火ゴブリン,goblin/FireGoblin.prefab
+木ゴブリン,goblin/WoodGoblin.prefab
+氷ゴブリン,goblin/IceGoblin.prefab
+水ゴブリン,goblin/WaterGoblin.prefab
+騎乗ゴブリン,goblin/Goblin_Rider.prefab
+スケルトン,skeleton/Skeleton.prefab
+槍スケルトン,skeleton/Skeleton_Spear.prefab
+盾スケルトン,skeleton/Skeleton_Shield.prefab
+反射スケルトン,skeleton/SkeletonMage_RefrectionBarrier.prefab
+ボススケルトン,skeleton/SkeletonBoss.prefab
+槍ゴブリン,goblin/Goblin_Spear.prefab
+弓スケルトン,skeleton/Skeleton_Arrow.prefab
+魔術師スケルトン,skeleton/SkeletonMage.prefab
+ボス魔術師,skeleton/BossSkeletonMage.prefab
+真似魔術師,skeleton/SkeletonMage_Copy Variant.prefab

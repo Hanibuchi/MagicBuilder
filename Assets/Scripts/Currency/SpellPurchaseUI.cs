@@ -101,11 +101,11 @@ public class SpellPurchaseUI : SpellDescriptionUI
     /// </summary>
     private int GetCurrentCost(SpellBase spell, int ownedCount)
     {
-        if (spell.purchaseCosts == null || spell.purchaseCosts.Length == 0) return 0;
+        if (spell.PurchaseCosts == null || spell.PurchaseCosts.Length == 0) return 0;
 
         // 保有数が配列の範囲外なら最後の要素を返す
-        int index = Mathf.Clamp(ownedCount, 0, spell.purchaseCosts.Length - 1);
-        return spell.purchaseCosts[index];
+        int index = Mathf.Clamp(ownedCount, 0, spell.PurchaseCosts.Length - 1);
+        return spell.PurchaseCosts[index];
     }
 
     /// <summary>

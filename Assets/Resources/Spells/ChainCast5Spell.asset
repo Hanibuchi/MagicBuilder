@@ -17,6 +17,7 @@ MonoBehaviour:
   cooldown: 0.5
   spellName: "\u540C\u6642\u8A60\u5531 x5"
   purchaseCosts: 64000000c80000009001000020030000
+  rarity: 1
   icon: {fileID: 4323707765852580557, guid: 414f7f3aaac112b42b84cad86d834bc0, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}

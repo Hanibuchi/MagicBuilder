@@ -54,6 +54,7 @@ public class TeleportManager : MonoBehaviour
     private Dictionary<string, List<ITeleportEnemy>> enemyHandlers = new Dictionary<string, List<ITeleportEnemy>>();
 
     private int currentStageIndex = 0;
+    private bool isTeleportDisabled = false;
 
     private void Awake()
     {
@@ -123,8 +124,15 @@ public class TeleportManager : MonoBehaviour
         }
     }
 
+    public void DisableTeleport()
+    {
+        isTeleportDisabled = true;
+    }
+
     private void AdvanceStage()
     {
+        if (isTeleportDisabled) return;
+
         // 最後のステージの設定をクリアし終えた場合（＝全ての敵グループを倒した）
         if (currentStageIndex >= stageTeleportInfos.Count - 1)
         {

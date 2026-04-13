@@ -16,10 +16,12 @@ MonoBehaviour:
   spellType: Remote
   cooldown: 0.5
   spellName: "\u9060\u9694"
-  purchaseCosts: 64000000c80000009001000020030000
+  useCustomPurchaseCosts: 0
+  customPurchaseCosts: 4006000080070000c0080000000a0000
+  rarity: 1
   icon: {fileID: -7500182804150170510, guid: 875b07ab4774cac48a4382789f334c92, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
   spellDescription: "\u96E2\u308C\u305F\u4F4D\u7F6E\u304B\u3089\u767A\u5C04\u3059\u308B\u3002"
-  distance: 2
+  distance: 2.2
   magicCircleDelay: 0.3

@@ -31,7 +31,7 @@ public class WandUI : MonoBehaviour, ISpellContainer
         SpellUI spellUI = spell.CreateUI();
         if (spellUI != null)
         {
-            spellUI.transform.SetParent(spellFrame);
+            spellUI.transform.SetParent(spellFrame, false);
             spellUI.SetIndex(index);
             spellUI.Initialize(this); // このWandUI自身への参照を渡す
         }
@@ -46,7 +46,7 @@ public class WandUI : MonoBehaviour, ISpellContainer
         SpellUI spellUI = spell.CreateUI();
         if (spellUI != null)
         {
-            spellUI.transform.SetParent(spellFrame);
+            spellUI.transform.SetParent(spellFrame, false);
             spellUI.Initialize(this);
             spellUI.SetActive(false); // 固定呪文は移動・削除不可
         }
@@ -212,7 +212,7 @@ public class WandUI : MonoBehaviour, ISpellContainer
         // ホバー解除時は現在の総クールタイム表示に戻す
         List<SpellBase> currentSpells = new List<SpellBase>(fixedSpellBasesCashe);
         currentSpells.AddRange(spellBasesCashe);
-        
+
         // ドラッグ中の呪文がこの杖から移動している場合は総クールタイムから除外
         if (currentlyDraggedSpellUI != null && currentlyDraggedSpellUI.spellContainerUI as WandUI == this)
         {
@@ -363,6 +363,8 @@ public class WandUI : MonoBehaviour, ISpellContainer
         // 現在の構成による総クールタイムを計算し、一瞬で表示する
         if (CooldownManager.Instance != null && AttackManager.Instance != null)
         {
+            CooldownManager.Instance.ShowUI();
+
             var wand = AttackManager.Instance.GetCurrentWand();
             if (wand != null)
             {
@@ -425,7 +427,14 @@ public class WandUI : MonoBehaviour, ISpellContainer
         // ドラッグ終了時は内部的な元のクールタイム表示に戻す
         if (CooldownManager.Instance != null)
         {
-            CooldownManager.Instance.ResetDisplayToActualCooldown();
+            if (CooldownManager.Instance.GetRemainingCooldown() <= 0.0f)
+            {
+                CooldownManager.Instance.HideUI();
+            }
+            else
+            {
+                CooldownManager.Instance.ResetDisplayToActualCooldown();
+            }
         }
     }
 

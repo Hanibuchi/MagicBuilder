@@ -25,15 +25,17 @@ public class CharacterHealth : MonoBehaviour
     [Tooltip("氷ダメージによる減速の最大時間")]
     public float maxSlowDurationOnIce = 10.0f;
 
-    [Header("ダメージ蓄積設定")]
-    [Tooltip("trueの場合、ダメージを受けるたびに即座に処理します。蓄積処理は行われません。")]
-    public bool processDamageImmediately = false;
-    [Tooltip("ダメージを適用するまで蓄積するフレーム数。-1の場合はCharacterCommonDataのデフォルト値を使用します。")]
-    [SerializeField] private int accumulationFrames = -1;
+    [Header("ダメージテキスト表示蓄積設定")]
+    [Tooltip("trueの場合、ダメージを受けるたびに即座にテキストを表示します。（蓄積しません）")]
+    public bool showDamageTextImmediately = false;
+    [Tooltip("ダメージテキストを蓄積するフレーム数。-1の場合はCharacterCommonDataのデフォルト値を使用します。")]
+    [SerializeField] private int textAccumulationFrames = -1;
 
-    private Damage _accumulatedDamage;
-    private int _remainingAccumulationFrames = -1;
-    private GameObject _lastAccumulatedOther;
+    private int _remainingTextAccumulationFrames = -1;
+    private Damage _accumulatedDamageForText;
+
+    // 多段ヒット処理の呼び出し回数カウンター
+    private int _multiHitStayCount = 0;
 
     // ノックバック処理を委譲するためのインターフェース（ノックバック処理を行うコンポーネントが実装）
     private IKickbackHandler knockbackHandler;
@@ -54,20 +56,20 @@ public class CharacterHealth : MonoBehaviour
         dieNotifier = GetComponent<IDieNotifier>();
         healthNotifier = GetComponent<IHealthNotifier>();
 
-        // ダメージ蓄積フレームの設定
-        accumulationFrames = CharacterCommonData.Instance.defaultAccumulationFrames;
-        Debug.Log($"Damage accumulation frames set to: {accumulationFrames}");
+        // ダメージテキスト蓄積フレームの設定
+        textAccumulationFrames = CharacterCommonData.Instance.defaultAccumulationFrames;
+        Debug.Log($"Damage text accumulation frames set to: {textAccumulationFrames}");
     }
 
     private void Update()
     {
-        if (_remainingAccumulationFrames > 0)
+        if (_remainingTextAccumulationFrames > 0)
         {
-            _remainingAccumulationFrames--;
-            if (_remainingAccumulationFrames == 0)
+            _remainingTextAccumulationFrames--;
+            if (_remainingTextAccumulationFrames == 0)
             {
-                ApplyDamageImmediate(_accumulatedDamage, _lastAccumulatedOther);
-                _remainingAccumulationFrames = -1;
+                FlushDamageText();
+                _remainingTextAccumulationFrames = -1;
             }
         }
     }
@@ -153,45 +155,35 @@ public class CharacterHealth : MonoBehaviour
 
             if (sourceType == DamageSourceType.MultiHit)
             {
-                // 多段ヒット: Stay時のみダメージ適用（一定時間ごとにダメージを与える処理は、IDamageSourceの実装側で管理する必要がある）
-                // 注意: 多段ヒットのダメージ頻度（クールタイム）は、IDamageSourceを実装するコンポーネント側で制御することが一般的です。
-                // ここでは衝突が継続していることのみを判定しています。
-                ApplyDamage(damageSource.GetDamage(), obj);
+                // 多段ヒット: Stay時のみダメージ適用（一定呼び出し回数ごとにダメージを受ける）
+                _multiHitStayCount++;
+                int interval = CharacterCommonData.Instance != null ? CharacterCommonData.Instance.multiHitIntervalCount : 5;
+
+                if (_multiHitStayCount >= interval)
+                {
+                    ApplyDamage(damageSource.GetDamage(), obj);
+                    _multiHitStayCount = 0;
+                }
             }
         }
     }
 
     /// <summary>
-    /// ダメージを受け取り、必要に応じて蓄積または即座に適用します。
+    /// ダメージを受け取り、即座に適用します。（表示用テキストのみ蓄積）
     /// </summary>
     public void ApplyDamage(Damage damage, GameObject other)
     {
         if (currentHealth <= 0) return;
 
-        if (processDamageImmediately || accumulationFrames <= 0)
-        {
-            ApplyDamageImmediate(damage, other);
-            return;
-        }
-
-        if (_remainingAccumulationFrames < 0)
-        {
-            _accumulatedDamage = damage;
-            _remainingAccumulationFrames = accumulationFrames;
-        }
-        else
-        {
-            _accumulatedDamage += damage;
-        }
-        _lastAccumulatedOther = other;
+        ApplyDamageImmediate(damage, other != null ? (Vector2)other.transform.position : (Vector2)transform.position);
     }
 
     /// <summary>
     /// ダメージを計算し、即座に適用する内部メソッド。
     /// </summary>
     /// <param name="damage">受けた生のダメージデータ</param>
-    /// <param name="other">ぶつかってきたオブジェクト</param>
-    private void ApplyDamageImmediate(Damage damage, GameObject other)
+    /// <param name="sourcePosition">ぶつかってきたオブジェクトの座標</param>
+    private void ApplyDamageImmediate(Damage damage, Vector2 sourcePosition)
     {
         if (currentHealth <= 0) return; // 既に死んでいる場合は処理しない
         float previousHealth = currentHealth;
@@ -227,7 +219,7 @@ public class CharacterHealth : MonoBehaviour
         Debug.Log($"{gameObject.name}は{finalDamage}のダメージを受けました。残り体力: {currentHealth}");
 
         // 4. ノックバック処理の委譲
-        HandleKnockback(modifiedDamage.knockback, other);
+        HandleKnockback(modifiedDamage.knockback, sourcePosition);
 
         healthNotifier?.NotifyHealthChange(maxHealth, previousHealth, currentHealth);
 
@@ -242,37 +234,45 @@ public class CharacterHealth : MonoBehaviour
         // 4. ダメージ表示通知 (単一メソッドで属性ごとに通知)
         if (damageNotifier != null)
         {
-            // 基本ダメージ
-            if (modifiedDamage.baseDamage > 0)
+            if (showDamageTextImmediately)
             {
-                damageNotifier.NotifyDamage(DamageType.Base, modifiedDamage.baseDamage);
+                NotifyDamageImmediate(modifiedDamage);
             }
-            // 火ダメージ
-            if (modifiedDamage.FireDamage > 0)
+            else
             {
-                damageNotifier.NotifyDamage(DamageType.Fire, modifiedDamage.FireDamage);
-            }
-            // 氷ダメージ
-            if (modifiedDamage.IceDamage > 0)
-            {
-                damageNotifier.NotifyDamage(DamageType.Ice, modifiedDamage.IceDamage);
-            }
-            // 木ダメージ
-            if (modifiedDamage.woodDamage > 0)
-            {
-                damageNotifier.NotifyDamage(DamageType.Wood, modifiedDamage.woodDamage);
-            }
-            // 水ダメージ
-            if (modifiedDamage.waterDamage > 0)
-            {
-                damageNotifier.NotifyDamage(DamageType.Water, modifiedDamage.waterDamage);
-            }
-            // 回復
-            if (modifiedDamage.healing > 0)
-            {
-                damageNotifier.NotifyDamage(DamageType.Heal, modifiedDamage.healing);
+                AccumulateDamageText(modifiedDamage);
             }
         }
+    }
+
+    private void NotifyDamageImmediate(Damage modifiedDamage)
+    {
+        if (modifiedDamage.baseDamage > 0) damageNotifier.NotifyDamage(DamageType.Base, modifiedDamage.baseDamage);
+        if (modifiedDamage.FireDamage > 0) damageNotifier.NotifyDamage(DamageType.Fire, modifiedDamage.FireDamage);
+        if (modifiedDamage.IceDamage > 0) damageNotifier.NotifyDamage(DamageType.Ice, modifiedDamage.IceDamage);
+        if (modifiedDamage.woodDamage > 0) damageNotifier.NotifyDamage(DamageType.Wood, modifiedDamage.woodDamage);
+        if (modifiedDamage.waterDamage > 0) damageNotifier.NotifyDamage(DamageType.Water, modifiedDamage.waterDamage);
+        if (modifiedDamage.healing > 0) damageNotifier.NotifyDamage(DamageType.Heal, modifiedDamage.healing);
+    }
+
+    private void AccumulateDamageText(Damage modifiedDamage)
+    {
+        if (_remainingTextAccumulationFrames < 0)
+        {
+            _remainingTextAccumulationFrames = textAccumulationFrames > 0 ? textAccumulationFrames : (CharacterCommonData.Instance != null ? CharacterCommonData.Instance.defaultAccumulationFrames : 5);
+            _accumulatedDamageForText = new Damage();
+        }
+
+        _accumulatedDamageForText += modifiedDamage;
+    }
+
+    private void FlushDamageText()
+    {
+        if (damageNotifier == null) return;
+
+        NotifyDamageImmediate(_accumulatedDamageForText);
+
+        _accumulatedDamageForText = new Damage();
     }
 
     /// <summary>
@@ -384,13 +384,13 @@ public class CharacterHealth : MonoBehaviour
     /// ノックバック処理をIKickbackHandlerに委譲します。
     /// </summary>
     /// <param name="knockbackValue">ノックバック量</param>
-    /// <param name="other">ノックバック方向の参考にできる情報</param>
-    private void HandleKnockback(float knockbackValue, GameObject other)
+    /// <param name="sourcePosition">ノックバック方向の参考にできる情報(ダメージ源の座標等)</param>
+    private void HandleKnockback(float knockbackValue, Vector2 sourcePosition)
     {
         if (knockbackValue > 0f && knockbackHandler != null)
         {
             // ノックバック処理を実装コンポーネントに任せる
-            knockbackHandler.ApplyKickback(knockbackValue, other);
+            knockbackHandler.ApplyKickback(knockbackValue, sourcePosition);
         }
     }
     /// <summary>
@@ -452,8 +452,8 @@ public interface IKickbackHandler
     /// ノックバックを適用します。
     /// </summary>
     /// <param name="knockbackValue">ノックバックの強さ</param>
-    /// <param name="other">ぶつかってきた放射物</param>
-    void ApplyKickback(float knockbackValue, GameObject other);
+    /// <param name="sourcePosition">ぶつかってきた放射物等の座標</param>
+    void ApplyKickback(float knockbackValue, Vector2 sourcePosition);
 }
 
 /// <summary>

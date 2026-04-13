@@ -11,11 +11,15 @@ public class StageInfoDisplayUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI islandNameText;      // 島名
     [SerializeField] private TextMeshProUGUI stageNameText;       // ステージ名
     [SerializeField] private TextMeshProUGUI stageSubNameText; // ステージ識別子 (デバッグや内部ID表示用)
+    [SerializeField] private TextMeshProUGUI stageTypeText;       // ステージタイプ表示用
+    [SerializeField] private TextMeshProUGUI rewardText;          // 報酬表示用
 
     [Header("UI要素 - ボタン")]
     [SerializeField] private Button startButton;           // ステージ開始ボタン
     [SerializeField] private Button openSpellSelectButton; // 持ち込み呪文選択ボタン
+    [SerializeField] private Button openWandSelectButton;  // 持ち込み杖選択ボタン
     [SerializeField] private GameObject spellBadge;        // 新規呪文通知バッジ
+    [SerializeField] private GameObject wandBadge;         // 新規杖通知バッジ
     [SerializeField] private Button closeButton;           // 閉じるボタン
 
     [Header("アニメーター設定")]
@@ -35,6 +39,9 @@ public class StageInfoDisplayUI : MonoBehaviour
         if (openSpellSelectButton != null)
             openSpellSelectButton.onClick.AddListener(OnOpenSpellSelectButtonClicked);
 
+        if (openWandSelectButton != null)
+            openWandSelectButton.onClick.AddListener(OnOpenWandSelectButtonClicked);
+
         if (closeButton != null)
             closeButton.onClick.AddListener(Close);
 
@@ -45,14 +52,29 @@ public class StageInfoDisplayUI : MonoBehaviour
     /// <summary>
     /// ステージ情報をセットして表示を更新します。
     /// </summary>
-    public void SetStageInfo(StageSelectUI stageSelectUI, string islandName, string stageSubName, string identifier)
+    public void SetStageInfo(StageSelectUI stageSelectUI, string islandName, string stageSubName, string identifier, StageConfig stageConfig)
     {
         this.stageSelectUI = stageSelectUI;
         currentStageIdentifier = identifier;
 
         if (islandNameText != null) islandNameText.text = islandName;
-        if (stageNameText != null) stageNameText.text = identifier;
+        if (stageNameText != null) stageNameText.text = $"ステージ{identifier}";
         if (stageSubNameText != null) stageSubNameText.text = stageSubName;
+        if (stageTypeText != null)
+        {
+            stageTypeText.text = stageConfig.stageType == StageType.Rush ? "ラッシュ" : "パズル";
+        }
+
+        if (rewardText != null)
+        {
+            bool isCleared = StageUnlockManager.Instance.IsStageCleared(identifier);
+            int rewardAmt = isCleared ? stageConfig.repeatClearReward : stageConfig.firstClearReward;
+            rewardText.text = $"{rewardAmt}";
+        }
+
+        bool isRush = stageConfig.stageType == StageType.Rush;
+        if (openSpellSelectButton != null) openSpellSelectButton.gameObject.SetActive(isRush);
+        if (openWandSelectButton != null) openWandSelectButton.gameObject.SetActive(isRush);
     }
 
     /// <summary>
@@ -65,6 +87,7 @@ public class StageInfoDisplayUI : MonoBehaviour
         gameObject.SetActive(true);
 
         UpdateSpellBadge();
+        UpdateWandBadge();
 
         if (rootAnimator != null)
         {
@@ -83,6 +106,15 @@ public class StageInfoDisplayUI : MonoBehaviour
             bool hasNew = SpellHoldInfoManager.Instance.HasAnyNewlyUnlockedSpells();
             spellBadge.SetActive(hasNew);
         }
+    }
+
+    /// <summary>
+    /// 新規取得杖がある場合、バッジを表示します。
+    /// </summary>
+    private void UpdateWandBadge()
+    {
+        bool hasNew = wandBadge != null && WandUnlockManager.Instance != null ? WandUnlockManager.Instance.HasAnyNewlyUnlockedWands() : false;
+        wandBadge.SetActive(hasNew);
     }
 
     bool close = true;
@@ -176,6 +208,26 @@ public class StageInfoDisplayUI : MonoBehaviour
         else
         {
             Debug.LogError("StageInfoDisplayUI: EquippedSpellController.Instance が見つかりません。");
+        }
+    }
+
+    bool wandSelectClicked = false;
+    /// <summary>
+    /// 持ち込み杖選択ボタンが押された時の処理
+    /// </summary>
+    private void OnOpenWandSelectButtonClicked()
+    {
+        if (wandSelectClicked) return;
+        wandSelectClicked = true;
+
+        if (EquippedWandController.Instance != null)
+        {
+            EquippedWandController.Instance.OpenWandSelectionUI(() => { wandSelectClicked = false; UpdateWandBadge(); });
+        }
+        else
+        {
+            wandSelectClicked = false;
+            Debug.LogError("StageInfoDisplayUI: EquippedWandController.Instance が見つかりません。");
         }
     }
 }

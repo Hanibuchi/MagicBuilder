@@ -120,7 +120,7 @@ MonoBehaviour:
   autoDestroy: 0
   destroyTime: 0.1
   damageData:
-    baseDamage: 2
+    baseDamage: 5
     woodDamage: 0
     waterDamage: 0
     temperatureDamage: 0

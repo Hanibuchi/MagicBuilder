@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: InitialEquippedSpellsConfig
   m_EditorClassIdentifier: 
   initialSpells:
+  - {fileID: 11400000, guid: 1ae5b79ace718244a92dfb03c51f91d4, type: 2}
+  - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
   - {fileID: 11400000, guid: f9277c2c77bc89b4499cc7f121cbc620, type: 2}
