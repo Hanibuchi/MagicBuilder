@@ -86,6 +86,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Stage/6_magic/Scene/Stage_Magic_5.unity
     guid: 1bc0663a9d54f1447af85eb6be5b3bf6
+  - enabled: 1
+    path: Assets/Stage/7_extra/Stage_Extra.unity
+    guid: d94d0acf4402eef4f86c6e014ebd24b8
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -73,3 +73,8 @@ MonoBehaviour:
     - 6-4
     - 6-5
     - 6-6
+  - islandID: extra
+    islandName: "\u9B54\u65CF\u306E\u7A7A\u5CF6"
+    wandToUnlock: 0
+    stages:
+    - 7-1
