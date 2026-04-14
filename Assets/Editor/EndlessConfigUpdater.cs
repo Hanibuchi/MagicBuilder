@@ -20,7 +20,6 @@ public class EndlessConfigUpdater : EditorWindow
     {
         string enemyCsvPath = "Assets/EnemyPrefabList.csv";
         string spawnCsvPath = "Assets/EndlessSpawnConfig.csv";
-        string dropSpellsCsvPath = "Assets/stage_drop_spells.csv";
 
         if (!File.Exists(enemyCsvPath) || !File.Exists(spawnCsvPath))
         {
@@ -28,57 +27,20 @@ public class EndlessConfigUpdater : EditorWindow
             return;
         }
 
-        if (!File.Exists(dropSpellsCsvPath))
+        // 0. Get SpellBase entries from SpellDatabase
+        SpellDatabase spellDatabase = SpellDatabase.Instance;
+        if (spellDatabase == null)
         {
-            Debug.LogError("stage_drop_spells.csv not found.");
+            Debug.LogError("SpellDatabase couldn't be loaded.");
             return;
-        }
-
-        // 0. Load Spells Map (to match with Drop Config)
-        Dictionary<string, SpellBase> spellDict = new Dictionary<string, SpellBase>();
-        string[] spellGuids = AssetDatabase.FindAssets("t:SpellBase");
-        foreach (var guid in spellGuids)
-        {
-            string path = AssetDatabase.GUIDToAssetPath(guid);
-            SpellBase spell = AssetDatabase.LoadAssetAtPath<SpellBase>(path);
-            if (spell != null && !string.IsNullOrEmpty(spell.spellType))
-            {
-                if (!spellDict.ContainsKey(spell.spellType))
-                {
-                    spellDict[spell.spellType] = spell;
-                }
-            }
-        }
-
-        // Load stage_drop_spells.csv
-        var dropLines = File.ReadAllLines(dropSpellsCsvPath);
-        Dictionary<string, List<string>> stageDropMap = new Dictionary<string, List<string>>();
-        for (int i = 1; i < dropLines.Length; i++)
-        {
-            if (string.IsNullOrWhiteSpace(dropLines[i])) continue;
-            string[] split = dropLines[i].Split(',');
-            if (split.Length >= 5)
-            {
-                string stageName = split[0].Trim();
-                List<string> types = new List<string>();
-                for (int c = 1; c <= 4; c++)
-                {
-                    string[] tArray = split[c].Split(new string[] { " / " }, StringSplitOptions.RemoveEmptyEntries);
-                    foreach (var t in tArray)
-                    {
-                        types.Add(t.Trim());
-                    }
-                }
-                stageDropMap[stageName] = types;
-            }
         }
 
         var defaultDropRates = new List<RandomSpawnsPhaseGenerator.RarityDropRate>
         {
-            new RandomSpawnsPhaseGenerator.RarityDropRate { rarity = SpellRarity.Common, dropRate = 0.20f },
-            new RandomSpawnsPhaseGenerator.RarityDropRate { rarity = SpellRarity.Uncommon, dropRate = 0.15f },
-            new RandomSpawnsPhaseGenerator.RarityDropRate { rarity = SpellRarity.Rare, dropRate = 0.10f },
-            new RandomSpawnsPhaseGenerator.RarityDropRate { rarity = SpellRarity.Epic, dropRate = 0.05f }
+            new RandomSpawnsPhaseGenerator.RarityDropRate { rarity = SpellRarity.Common, dropRate = 0.10f },
+            new RandomSpawnsPhaseGenerator.RarityDropRate { rarity = SpellRarity.Uncommon, dropRate = 0.075f },
+            new RandomSpawnsPhaseGenerator.RarityDropRate { rarity = SpellRarity.Rare, dropRate = 0.05f },
+            new RandomSpawnsPhaseGenerator.RarityDropRate { rarity = SpellRarity.Epic, dropRate = 0.025f }
         };
 
         // 1. Load EnemyPrefabs
@@ -103,6 +65,7 @@ public class EndlessConfigUpdater : EditorWindow
         
         // stageName -> List of Boards
         var endlessConfigData = new Dictionary<string, List<EndlessSpawnsPhaseGenerator.BoardConfig>>();
+        var stageDropMap = new Dictionary<string, HashSet<string>>(); // stageName -> HashSet of spells
 
         for (int i = 1; i < spawnLines.Length; i++)
         {
@@ -115,12 +78,27 @@ public class EndlessConfigUpdater : EditorWindow
                 string conditionValueStr = split[2].Trim();
                 string durationStr = split[3].Trim();
                 string composition = split[4].Trim();
+                string dropSpellsStr = split.Length >= 6 ? split[5].Trim() : "";
 
                 string stageName = stageRaw.Split(' ')[0].Trim(); // e.g., "7-1"
 
                 if (!endlessConfigData.ContainsKey(stageName))
                 {
                     endlessConfigData[stageName] = new List<EndlessSpawnsPhaseGenerator.BoardConfig>();
+                }
+                if (!stageDropMap.ContainsKey(stageName))
+                {
+                    stageDropMap[stageName] = new HashSet<string>();
+                }
+                
+                // Parse Drop Spells
+                if (!string.IsNullOrEmpty(dropSpellsStr))
+                {
+                    string[] drops = dropSpellsStr.Split(new string[] { " / " }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var d in drops)
+                    {
+                        stageDropMap[stageName].Add(d.Trim());
+                    }
                 }
                 
                 Enum.TryParse(conditionTypeStr, out EnemyPhaseConfig.PhaseConditionType cType);
@@ -185,13 +163,36 @@ public class EndlessConfigUpdater : EditorWindow
             rarityDropRates = new List<RandomSpawnsPhaseGenerator.RarityDropRate>(defaultDropRates)
         };
 
-        if (stageDropMap.TryGetValue(stageToUpdate, out List<string> dropTypes))
+        if (stageDropMap.TryGetValue(stageToUpdate, out HashSet<string> dropTypes))
         {
-            foreach (string sType in dropTypes)
+            if (dropTypes.Contains("ALL") || dropTypes.Contains("すべて"))
             {
-                if (spellDict.TryGetValue(sType, out SpellBase sb))
+                // Set all available spells
+                foreach (SpellType sType in spellDatabase.GetAllRegisteredSpellTypes())
                 {
-                    endlessGenerator.droppableSpells.Add(sb);
+                    SpellBase sb = spellDatabase.GetSpellAsset(sType);
+                    if (sb != null)
+                    {
+                        endlessGenerator.droppableSpells.Add(sb);
+                    }
+                }
+            }
+            else
+            {
+                foreach (string sTypeStr in dropTypes)
+                {
+                    if (Enum.TryParse(sTypeStr, out SpellType sType))
+                    {
+                        SpellBase sb = spellDatabase.GetSpellAsset(sType);
+                        if (sb != null)
+                        {
+                            endlessGenerator.droppableSpells.Add(sb);
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"Unknown spell type in CSV: {sTypeStr}");
+                    }
                 }
             }
         }
