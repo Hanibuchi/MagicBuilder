@@ -403,6 +403,18 @@ public class StageManager : MonoBehaviour
 
     void OnGameEnd()
     {
+        if (stageConfig != null)
+        {
+            if (stageConfig.stageType == StageType.Rush && EnemyPhaseExecutor.Instance != null)
+            {
+                EnemyPhaseExecutor.Instance.StopPhase();
+            }
+            else if (stageConfig.stageType == StageType.Puzzle && TeleportManager.Instance != null)
+            {
+                TeleportManager.Instance.DisableTeleport();
+            }
+        }
+
         GameTimerManager.Instance.StopTimer(); // タイマーを停止
         WandUIManager.Instance.Hide();
         SpellInventory.Instance.Hide();
@@ -427,18 +439,6 @@ public class StageManager : MonoBehaviour
     {
         if (gameEnd) return;
         gameEnd = true;
-
-        if (stageConfig != null)
-        {
-            if (stageConfig.stageType == StageType.Rush && EnemyPhaseExecutor.Instance != null)
-            {
-                EnemyPhaseExecutor.Instance.StopPhase();
-            }
-            else if (stageConfig.stageType == StageType.Puzzle && TeleportManager.Instance != null)
-            {
-                TeleportManager.Instance.DisableTeleport();
-            }
-        }
 
         // 初回クリアか判定し、クリアフラグを保存する
         isFirstClear = !(StageUnlockManager.Instance?.IsStageCleared(stageConfig.stageName) ?? false);
