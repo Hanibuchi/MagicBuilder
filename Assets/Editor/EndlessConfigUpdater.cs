@@ -108,14 +108,13 @@ public class EndlessConfigUpdater : EditorWindow
         {
             if (string.IsNullOrWhiteSpace(spawnLines[i])) continue;
             string[] split = spawnLines[i].Split(',');
-            if (split.Length >= 6)
+            if (split.Length >= 5)
             {
                 string stageRaw = split[0].Trim(); // e.g., "7-1 (エンドレス)"
-                string phase = split[1].Trim();   // e.g., "Board1"
-                string conditionTypeStr = split[2].Trim();
-                string conditionValueStr = split[3].Trim();
-                string durationStr = split[4].Trim();
-                string composition = split[5].Trim();
+                string conditionTypeStr = split[1].Trim();
+                string conditionValueStr = split[2].Trim();
+                string durationStr = split[3].Trim();
+                string composition = split[4].Trim();
 
                 string stageName = stageRaw.Split(' ')[0].Trim(); // e.g., "7-1"
 
