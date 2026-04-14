@@ -24,6 +24,7 @@ MonoBehaviour:
   stageType: 1
   firstClearReward: 270
   repeatClearReward: 135
+  endlessRewardMultiplier: 3
   references:
     version: 2
     RefIds: []
