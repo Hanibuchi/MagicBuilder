@@ -459,7 +459,7 @@ public class EnemyController : MyCharacterController, ITriggerHandler, IEnemyAtt
 
         enemyMovement?.ApplyStun();
         if (characterHealth != null)
-            ScoreManager.Instance?.AddScore(characterHealth.maxHealth);
+            ScoreManager.Instance?.AddScore(1f);
 
         base.NotifyDie(silent);
 
