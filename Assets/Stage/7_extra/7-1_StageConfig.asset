@@ -15,7 +15,7 @@ MonoBehaviour:
   stageName: 7-1
   subStageName: "\u30A8\u30F3\u30C9\u30EC\u30B9"
   SceneName: Stage_Extra
-  clearCondition: 2
+  clearCondition: 3
   enemyPhases: []
   phaseGenerators:
   - rid: 1486059510931128513

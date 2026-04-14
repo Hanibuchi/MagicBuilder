@@ -22,7 +22,7 @@ public class ResultPanelController : MonoBehaviour
     [Tooltip("スコアを表示するTextMeshProUGUI")]
     [SerializeField] private TextMeshProUGUI scoreText;
     [Tooltip("総合得点を表示するTextMeshProUGUI")]
-    [SerializeField] private TextMeshProUGUI clearTimeText;
+    [SerializeField] protected TextMeshProUGUI clearTimeText;
     [Tooltip("メッセージを表示するTextMeshProUGUI")]
     [SerializeField] private TextMeshProUGUI messageText;
 
@@ -88,7 +88,7 @@ public class ResultPanelController : MonoBehaviour
     /// <summary>
     /// 結果データをUIに設定します。
     /// </summary>
-    void SetResultData(StageResultData data)
+    protected virtual void SetResultData(StageResultData data)
     {
         if (stageNameText != null) stageNameText.text = data.stageName;
         if (stageSubNameText != null) stageSubNameText.text = data.stageSubName;
@@ -100,7 +100,7 @@ public class ResultPanelController : MonoBehaviour
     /// <summary>
     /// ステージ勝利時の表示設定を行います。
     /// </summary>
-    public void DisplayVictory(StageResultData data)
+    public virtual void DisplayVictory(StageResultData data)
     {
         Debug.Log("ResultPanelController: 勝利表示");
         SetResultData(data);
@@ -125,7 +125,7 @@ public class ResultPanelController : MonoBehaviour
     /// <summary>
     /// ステージ敗北時の表示設定を行います。
     /// </summary>
-    public void DisplayDefeat(StageResultData data)
+    public virtual void DisplayDefeat(StageResultData data)
     {
         Debug.Log("ResultPanelController: 敗北表示");
         SetResultData(data);
@@ -208,7 +208,7 @@ public class ResultPanelController : MonoBehaviour
     }
 
     // 必要に応じて、時間を "分:秒.ミリ秒" 形式に整形するヘルパーメソッドを追加
-    private string FormatTime(float totalSeconds)
+    protected string FormatTime(float totalSeconds)
     {
         TimeSpan timeSpan = TimeSpan.FromSeconds(totalSeconds);
 

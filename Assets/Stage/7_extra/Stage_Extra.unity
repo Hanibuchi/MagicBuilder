@@ -665,7 +665,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 87fab8c218278d44da0897c080ef9803, type: 2}
     - target: {fileID: 2950603546146285152, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
       propertyPath: clearCondition
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2950603546146285152, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
       propertyPath: enemySpawnPoint
