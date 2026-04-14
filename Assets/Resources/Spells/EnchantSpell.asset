@@ -16,12 +16,13 @@ MonoBehaviour:
   spellType: Enchant
   cooldown: 3
   spellName: "\u4ED8\u4E0E"
-  purchaseCosts: 64000000c80000009001000020030000
+  useCustomPurchaseCosts: 0
+  customPurchaseCosts: 4006000080070000c0080000000a0000
   rarity: 2
   icon: {fileID: 4650833445447063721, guid: c22aacc41a6edc04a98bfe2f2ff0a803, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   iconMaterial: {fileID: 0}
-  spellDescription: "\u89E6\u308C\u305F\u3082\u306E\u306B\u4FEE\u98FE\u546A\u6587\u306E\u52B9\u679C\u3092\u4ED8\u4E0E\u3059\u308B\u3002"
+  spellDescription: "\u3053\u306E\u546A\u6587\u306B\u9069\u7528\u3055\u308C\u308B\u546A\u6587\u306E\u52B9\u679C\u3092\u3001\u3053\u306E\u546A\u6587\u306B\u89E6\u308C\u305F\u5BFE\u8C61\u306B\u9069\u7528\u3059\u308B\u3002"
   trajectoryPrefabInterval: 0.1
   trajectoryMoveSpeed: 0.5
   maxPredictionTime: 5
