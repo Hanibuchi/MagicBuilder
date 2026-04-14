@@ -32,6 +32,9 @@ public class StageConfig : ScriptableObject
     [ContextMenu("Add Random Spawns Phase Generator")]
     void AddRandomSpawnsPhaseGenerator() => phaseGenerators.Add(new RandomSpawnsPhaseGenerator());
 
+    [ContextMenu("Add Endless Spawns Phase Generator")]
+    void AddEndlessSpawnsPhaseGenerator() => phaseGenerators.Add(new EndlessSpawnsPhaseGenerator());
+
     [Header("パスルステージ設定")]
     [Tooltip("パズルステージで使用する固定呪文のリスト。")]
     public SpellBase[] puzzleSpells;

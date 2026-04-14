@@ -357,25 +357,35 @@ public class StageManager : MonoBehaviour
             return;
         }
 
-        List<EnemyPhaseConfig> finalPhases = new List<EnemyPhaseConfig>();
-
-        // 既存の固定フェーズを追加
-        if (stageConfig.enemyPhases != null)
+        IEnumerable<EnemyPhaseConfig> GetPhasesEnumerable()
         {
-            finalPhases.AddRange(stageConfig.enemyPhases);
-        }
-
-        // 設定用ジェネレータクラスを通してフェーズを動的生成・追加
-        if (stageConfig.phaseGenerators != null)
-        {
-            foreach (var generator in stageConfig.phaseGenerators)
+            // 既存の固定フェーズを追加
+            if (stageConfig.enemyPhases != null)
             {
-                generator?.GeneratePhases(finalPhases);
+                foreach (var phase in stageConfig.enemyPhases)
+                {
+                    yield return phase;
+                }
+            }
+
+            // 設定用ジェネレータクラスを通してフェーズを動的生成・追加（無限生成にも対応）
+            if (stageConfig.phaseGenerators != null)
+            {
+                foreach (var generator in stageConfig.phaseGenerators)
+                {
+                    if (generator != null)
+                    {
+                        foreach (var phase in generator.GeneratePhasesEnumerable())
+                        {
+                            yield return phase;
+                        }
+                    }
+                }
             }
         }
 
         EnemyPhaseExecutor.Instance.SetSpawnPoint(enemySpawnPoint.position);
-        EnemyPhaseExecutor.Instance.StartPhase(finalPhases.ToArray(), () => { spawnComplete = true; });
+        EnemyPhaseExecutor.Instance.StartPhase(GetPhasesEnumerable(), () => { spawnComplete = true; });
     }
 
     /// <summary>
