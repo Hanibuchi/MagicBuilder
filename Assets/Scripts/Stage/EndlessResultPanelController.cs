@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// エンドレスモード専用のリザルトパネルコントローラー。
@@ -7,12 +8,44 @@ using UnityEngine;
 /// </summary>
 public class EndlessResultPanelController : ResultPanelController
 {
-    private const string ENDLESS_MESSAGE = "力尽きた...";
+    [System.Serializable]
+    public struct ScoreMessageData
+    {
+        [Tooltip("このスコア以上の場合にメッセージが表示されます。")]
+        public int thresholdScore;
+        [Tooltip("表示されるメッセージ内容。")]
+        public string message;
+    }
+
+    [Header("エンドレスモードのメッセージ設定")]
+    [SerializeField]
+    private ScoreMessageData[] scoreMessages = new ScoreMessageData[]
+    {
+        new ScoreMessageData { thresholdScore = 10000, message = "神の領域..." },
+        new ScoreMessageData { thresholdScore = 5000, message = "伝説の魔法使い！" },
+        new ScoreMessageData { thresholdScore = 1000, message = "素晴らしい戦いぶりだ！" },
+        new ScoreMessageData { thresholdScore = 0, message = "力尽きた..." }
+    };
 
     protected override void SetResultData(StageResultData data)
     {
+        // スコアに応じたメッセージを決定（閾値の降順で判定）
+        string selectedMessage = "力尽きた...";
+        if (scoreMessages != null && scoreMessages.Length > 0)
+        {
+            var sortedMessages = scoreMessages.OrderByDescending(m => m.thresholdScore);
+            foreach (var sm in sortedMessages)
+            {
+                if (data.score >= sm.thresholdScore)
+                {
+                    selectedMessage = sm.message;
+                    break;
+                }
+            }
+        }
+
         // 独自のメッセージに変更
-        data.message = ENDLESS_MESSAGE;
+        data.message = selectedMessage;
 
         // 基底クラスのUI反映を呼ぶ (Textへの反映など)
         base.SetResultData(data);

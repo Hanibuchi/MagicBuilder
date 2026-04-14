@@ -86,6 +86,8 @@ MonoBehaviour:
     uiPrefab: {fileID: 798243388910477293, guid: abfc63549b009ef458b2270d7f6cf56e, type: 3}
   - condition: 1
     uiPrefab: {fileID: 7289494422299341494, guid: f66165da31057784a9b01d08f0e85d66, type: 3}
+  - condition: 3
+    uiPrefab: {fileID: 4685425802960080510, guid: c699a793d96d1e34db6af129591f1423, type: 3}
   startDelayTime: 0
   totalSpellDropDuration: 1
   postDropWaitTime: 1
@@ -98,4 +100,4 @@ MonoBehaviour:
   clearSound: {fileID: 8300000, guid: 2667a0a008b044e218b63df62e2be749, type: 3}
   gameOverDelaySeconds: 1.5
   resultPanelPrefab: {fileID: 6345627378744446381, guid: ebe979ea95cfa9941a8abafc4c3f6172, type: 3}
-  endlessResultPanelPrefab: {fileID: 6345627378744446381, guid: ebe979ea95cfa9941a8abafc4c3f6172, type: 3}
+  endlessResultPanelPrefab: {fileID: 9122726609695754158, guid: 1efc7e202899ef4478c4d8f160b950af, type: 3}
