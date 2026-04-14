@@ -642,8 +642,17 @@ public class StageManager : MonoBehaviour
         {
             controller.DisplayVictory(data);
 
-            int reward = isFirstClear ? stageConfig.firstClearReward : stageConfig.repeatClearReward;
-            if (CurrencyController.Instance != null)
+            int reward = 0;
+            if (clearCondition == StageClearCondition.Endless)
+            {
+                reward = Mathf.RoundToInt(data.score * stageConfig.endlessRewardMultiplier);
+            }
+            else
+            {
+                reward = isFirstClear ? stageConfig.firstClearReward : stageConfig.repeatClearReward;
+            }
+
+            if (CurrencyController.Instance != null && reward > 0)
             {
                 CurrencyController.Instance.AddCurrency(reward);
             }

@@ -67,9 +67,16 @@ public class StageInfoDisplayUI : MonoBehaviour
 
         if (rewardText != null)
         {
-            bool isCleared = StageUnlockManager.Instance.IsStageCleared(identifier);
-            int rewardAmt = isCleared ? stageConfig.repeatClearReward : stageConfig.firstClearReward;
-            rewardText.text = $"{rewardAmt}";
+            if (stageConfig.clearCondition == StageClearCondition.Endless)
+            {
+                rewardText.text = $"スコア×{stageConfig.endlessRewardMultiplier:F1}";
+            }
+            else
+            {
+                bool isCleared = StageUnlockManager.Instance.IsStageCleared(identifier);
+                int rewardAmt = isCleared ? stageConfig.repeatClearReward : stageConfig.firstClearReward;
+                rewardText.text = $"{rewardAmt}";
+            }
         }
 
         bool isRush = stageConfig.stageType == StageType.Rush;
