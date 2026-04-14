@@ -9806,6 +9806,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageListConfig: {fileID: 11400000, guid: a913743c035d39741b49b95e008dd19b, type: 2}
   firstStageID: 1-1
+  initiallyUnlockedStageIDs:
+  - 7-1
 --- !u!4 &1355433060
 Transform:
   m_ObjectHideFlags: 0

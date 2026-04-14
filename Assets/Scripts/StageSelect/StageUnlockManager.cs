@@ -20,6 +20,9 @@ public class StageUnlockManager : MonoBehaviour
     private const string UNLOCK_KEY_PREFIX = "Stage_Unlocked_";
     private const string LATEST_STAGE_KEY = "Latest_Reached_Stage_ID";
     [SerializeField] string firstStageID = "1-1";
+    
+    [Tooltip("最初からアンロックされているステージのIDリスト (追加分)")]
+    [SerializeField] private List<string> initiallyUnlockedStageIDs = new List<string>();
 
     private void Awake()
     {
@@ -44,6 +47,15 @@ public class StageUnlockManager : MonoBehaviour
 
         // 初期ステージを設定（例: "Stage01" は最初から解放されている）
         UnlockStage(firstStageID); // 初期ステージを強制的に解放
+        
+        // リストで指定された追加の初期アンロックステージも解放する
+        if (initiallyUnlockedStageIDs != null)
+        {
+            foreach (var stageID in initiallyUnlockedStageIDs)
+            {
+                UnlockStage(stageID);
+            }
+        }
     }
 
 
