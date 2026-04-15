@@ -32,6 +32,15 @@ public class StageSkipUI : MonoBehaviour
 
     private bool CanSkip()
     {
+        // エンドレスモードの場合はスキップ不可
+        if (GameManager.Instance != null && GameManager.Instance.CurrentStageConfig != null)
+        {
+            if (GameManager.Instance.CurrentStageConfig.clearCondition == StageClearCondition.Endless)
+            {
+                return false;
+            }
+        }
+
         string lastSkipDateStr = PlayerPrefs.GetString(LastSkipDateKey, "");
         if (string.IsNullOrEmpty(lastSkipDateStr))
         {
