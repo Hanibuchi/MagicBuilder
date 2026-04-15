@@ -11699,6 +11699,8 @@ MonoBehaviour:
   islandStageMapConfig: {fileID: 11400000, guid: 308115efb2fda7b428f76ea1ca1fdd31, type: 2}
   wandAcquisitionEffect: {fileID: 168719716}
   autoSelectDelay: 0.5
+  authorMessagePrefab: {fileID: 7823383716459428108, guid: 5cae02cdd53aa584b96211a98e88b7b8, type: 3}
+  lastStageName: 6-6
 --- !u!4 &1496857790
 Transform:
   m_ObjectHideFlags: 0

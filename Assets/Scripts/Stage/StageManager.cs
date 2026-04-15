@@ -444,6 +444,10 @@ public class StageManager : MonoBehaviour
         isFirstClear = !(StageUnlockManager.Instance?.IsStageCleared(stageConfig.stageName) ?? false);
         StageUnlockManager.Instance?.MarkStageCleared(stageConfig.stageName);
 
+        // 作者メッセージ等のための今回クリアしたステージ名を記録
+        PlayerPrefs.SetString("JustClearedStage", stageConfig.stageName);
+        PlayerPrefs.Save();
+
         Debug.Log("🎉 ステージクリア！");
         OnGameEnd();
         StartCoroutine(DelayAndPauseGameOnGameClear());

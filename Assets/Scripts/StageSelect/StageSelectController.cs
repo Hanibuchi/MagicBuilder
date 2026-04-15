@@ -27,6 +27,10 @@ public class StageSelectController : MonoBehaviour, IStageStartListener
     [SerializeField] private float autoSelectDelay = 0.5f;
     // -------------------------
 
+    [Header("作者メッセージ")]
+    [Tooltip("作者からのメッセージ表示用プレハブ")]
+    [SerializeField] private GameObject authorMessagePrefab;
+
     private const string CAMERA_POS_X_KEY = "StageSelect_CameraPosX";
     private const string CAMERA_POS_Y_KEY = "StageSelect_CameraPosY";
 
@@ -124,10 +128,48 @@ public class StageSelectController : MonoBehaviour, IStageStartListener
         InitializeStageSelectView();
     }
 
+    [SerializeField] string lastStageName = "6-6";
     /// <summary>
     /// ステージ選択画面の表示状態を初期化します（島の自動選択、通貨表示、BGM再生）。
     /// </summary>
     private void InitializeStageSelectView()
+    {
+        string justCleared = PlayerPrefs.GetString("JustClearedStage", "");
+
+        // 指定したステージをクリアしてステージ選択に戻ってきたタイミングで、毎回メッセージを表示
+        if (justCleared == lastStageName && StageUnlockManager.Instance.IsStageCleared(lastStageName))
+        {
+            PlayerPrefs.SetString("JustClearedStage", ""); // 次回以降のためにリセット
+            PlayerPrefs.Save();
+            
+            if (authorMessagePrefab != null)
+            {
+                GameObject msgObj = Instantiate(authorMessagePrefab);
+                AuthorMessageController controller = msgObj.GetComponent<AuthorMessageController>();
+                if (controller != null)
+                {
+                    controller.Initialize(() => 
+                    {
+                        FinishInitializeStageSelectView();
+                    });
+                }
+                else
+                {
+                    FinishInitializeStageSelectView();
+                }
+            }
+            else
+            {
+                FinishInitializeStageSelectView();
+            }
+        }
+        else
+        {
+            FinishInitializeStageSelectView();
+        }
+    }
+
+    private void FinishInitializeStageSelectView()
     {
         AutomaticallySelectIsland();
 
