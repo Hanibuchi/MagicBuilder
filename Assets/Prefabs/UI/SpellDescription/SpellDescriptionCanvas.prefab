@@ -621,6 +621,7 @@ MonoBehaviour:
   descriptionText: {fileID: 8597359286062690935}
   detailItemsParent: {fileID: 8574112248606794042}
   detailItemPrefab: {fileID: 885257946542511326, guid: 81459826557f3474d9b7b8183b1c1098, type: 3}
+  typingStartDelay: 0.2
   panelAnimator: {fileID: 7432562036333324777}
   Test_spell: {fileID: 11400000, guid: 6c9d9dfe2f68e9144b91bb04a7bd8513, type: 2}
 --- !u!222 &8395601074832326009

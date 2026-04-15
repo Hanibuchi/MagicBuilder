@@ -24,12 +24,14 @@ public class ConfirmationUI : MonoBehaviour
     }
 
     private Action onClosedAction;
+    private Coroutine textCoroutine;
 
     public void Initialize(string message, Action onYes, Action onNo, Action onClosed = null)
     {
         if (messageText != null)
         {
-            messageText.text = message;
+            if (textCoroutine != null) StopCoroutine(textCoroutine);
+            textCoroutine = StartCoroutine(TypeTextRoutine(message));
         }
 
         this.onClosedAction = onClosed;
@@ -55,6 +57,18 @@ public class ConfirmationUI : MonoBehaviour
                 onNo?.Invoke();
                 Close();
             });
+        }
+    }
+
+    private IEnumerator TypeTextRoutine(string message)
+    {
+        messageText.text = message;
+        messageText.maxVisibleCharacters = 0;
+
+        for (int i = 1; i <= message.Length; i++)
+        {
+            messageText.maxVisibleCharacters = i;
+            yield return null;
         }
     }
 

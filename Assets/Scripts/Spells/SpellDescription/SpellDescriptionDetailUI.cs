@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 /// <summary>
 /// 呪文の詳細説明パネル内の個々の項目（アイコンと説明文）を表示するコンポーネント。
@@ -12,6 +13,11 @@ public class SpellDescriptionDetailUI : MonoBehaviour
 
     [Tooltip("項目説明文を表示するTextMeshProUGUIコンポーネント")]
     [SerializeField] private TextMeshProUGUI descriptionText;
+
+    [Tooltip("テキストの表示を開始するまでの遅延時間（秒）")]
+    [SerializeField] private float typingStartDelay = 0.2f;
+
+    private Coroutine textCoroutine;
 
     /// <summary>
     /// 表示するデータを設定します。
@@ -35,7 +41,25 @@ public class SpellDescriptionDetailUI : MonoBehaviour
         // 説明文を設定
         if (descriptionText != null)
         {
-            descriptionText.text = item.descriptionText;
+            if (textCoroutine != null) StopCoroutine(textCoroutine);
+            textCoroutine = StartCoroutine(TypeTextRoutine(item.descriptionText));
+        }
+    }
+
+    private IEnumerator TypeTextRoutine(string message)
+    {
+        descriptionText.text = message;
+        descriptionText.maxVisibleCharacters = 0;
+
+        if (typingStartDelay > 0f)
+        {
+            yield return new WaitForSecondsRealtime(typingStartDelay);
+        }
+
+        for (int i = 1; i <= message.Length; i++)
+        {
+            descriptionText.maxVisibleCharacters = i;
+            yield return null;
         }
     }
 }
