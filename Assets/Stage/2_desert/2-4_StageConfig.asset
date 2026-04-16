@@ -18,10 +18,10 @@ MonoBehaviour:
   clearCondition: 1
   enemyPhases: []
   phaseGenerators:
-  - rid: 1486059601775558814
-  - rid: 1486059601775558815
-  - rid: 1486059601775558816
-  - rid: 1486059601775558817
+  - rid: 1486059607443374145
+  - rid: 1486059607443374146
+  - rid: 1486059607443374147
+  - rid: 1486059607443374148
   puzzleSpells: []
   puzzleWands: 
   stageType: 0
@@ -31,7 +31,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 1486059601775558814
+    - rid: 1486059607443374145
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -41,7 +41,7 @@ MonoBehaviour:
           weight: 4
         - enemyPrefab: {fileID: 9157038701547673396, guid: dd19b0e8aa3670b41bbd81cd18cf092f, type: 3}
           weight: 3
-        - enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+        - enemyPrefab: {fileID: 7333475907507572004, guid: 4b541f965aa3765479cfcd95b8a499ef, type: 3}
           weight: 2
         - enemyPrefab: {fileID: 5364255320582704603, guid: 67f1a42cd82468f4aa9b920487b9162e, type: 3}
           weight: 0.8
@@ -96,15 +96,15 @@ MonoBehaviour:
           dropRate: 0.0882353
         - rarity: 3
           dropRate: 0.04411765
-    - rid: 1486059601775558815
+    - rid: 1486059607443374146
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
         startConditionValue: 10
         enemies:
-        - enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+        - enemyPrefab: {fileID: 7445576380768671888, guid: ff337a5a68d7e3140a6505cdb4ac9581, type: 3}
           weight: 4
-        - enemyPrefab: {fileID: 3738908839911435214, guid: 541b412a452207d45909e95a7ee45512, type: 3}
+        - enemyPrefab: {fileID: 7333475907507572004, guid: 4b541f965aa3765479cfcd95b8a499ef, type: 3}
           weight: 3
         - enemyPrefab: {fileID: 3348157412275093380, guid: 1121a8e607cfc824cb0838e8a813e2cc, type: 3}
           weight: 2
@@ -161,7 +161,7 @@ MonoBehaviour:
           dropRate: 0.0882353
         - rarity: 3
           dropRate: 0.04411765
-    - rid: 1486059601775558816
+    - rid: 1486059607443374147
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -226,7 +226,7 @@ MonoBehaviour:
           dropRate: 0.0882353
         - rarity: 3
           dropRate: 0.04411765
-    - rid: 1486059601775558817
+    - rid: 1486059607443374148
       type: {class: SimplePhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         phaseConfig:
