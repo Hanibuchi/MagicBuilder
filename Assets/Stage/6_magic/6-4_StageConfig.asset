@@ -18,12 +18,12 @@ MonoBehaviour:
   clearCondition: 1
   enemyPhases: []
   phaseGenerators:
-  - rid: 1486059559191576781
-  - rid: 1486059559191576782
-  - rid: 1486059559191576783
-  - rid: 1486059559191576784
-  - rid: 1486059559191576785
-  - rid: 1486059559191576786
+  - rid: 1486059601775558767
+  - rid: 1486059601775558768
+  - rid: 1486059601775558769
+  - rid: 1486059601775558770
+  - rid: 1486059601775558771
+  - rid: 1486059601775558772
   puzzleSpells: []
   puzzleWands: 
   stageType: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 1486059559191576781
+    - rid: 1486059601775558767
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -128,14 +128,14 @@ MonoBehaviour:
         - {fileID: 11400000, guid: 31b4d3e9e3f2e3043845c8a39a0daa4e, type: 2}
         rarityDropRates:
         - rarity: 0
-          dropRate: 0.2
+          dropRate: 0.10588236
         - rarity: 1
-          dropRate: 0.15
+          dropRate: 0.079411775
         - rarity: 2
-          dropRate: 0.1
+          dropRate: 0.05294118
         - rarity: 3
-          dropRate: 0.05
-    - rid: 1486059559191576782
+          dropRate: 0.02647059
+    - rid: 1486059601775558768
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -230,14 +230,14 @@ MonoBehaviour:
         - {fileID: 11400000, guid: 31b4d3e9e3f2e3043845c8a39a0daa4e, type: 2}
         rarityDropRates:
         - rarity: 0
-          dropRate: 0.2
+          dropRate: 0.10588236
         - rarity: 1
-          dropRate: 0.15
+          dropRate: 0.079411775
         - rarity: 2
-          dropRate: 0.1
+          dropRate: 0.05294118
         - rarity: 3
-          dropRate: 0.05
-    - rid: 1486059559191576783
+          dropRate: 0.02647059
+    - rid: 1486059601775558769
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -332,14 +332,14 @@ MonoBehaviour:
         - {fileID: 11400000, guid: 31b4d3e9e3f2e3043845c8a39a0daa4e, type: 2}
         rarityDropRates:
         - rarity: 0
-          dropRate: 0.2
+          dropRate: 0.10588236
         - rarity: 1
-          dropRate: 0.15
+          dropRate: 0.079411775
         - rarity: 2
-          dropRate: 0.1
+          dropRate: 0.05294118
         - rarity: 3
-          dropRate: 0.05
-    - rid: 1486059559191576784
+          dropRate: 0.02647059
+    - rid: 1486059601775558770
       type: {class: SimplePhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         phaseConfig:
@@ -350,7 +350,7 @@ MonoBehaviour:
             enemyPrefab: {fileID: 2525134202597692273, guid: 4121302df1a4f564db0eb5b6271c332b, type: 3}
             isBoss: 0
             customDroppableSpells: []
-    - rid: 1486059559191576785
+    - rid: 1486059601775558771
       type: {class: SimplePhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         phaseConfig:
@@ -361,7 +361,7 @@ MonoBehaviour:
             enemyPrefab: {fileID: 2525134202597692273, guid: 4121302df1a4f564db0eb5b6271c332b, type: 3}
             isBoss: 0
             customDroppableSpells: []
-    - rid: 1486059559191576786
+    - rid: 1486059601775558772
       type: {class: SimplePhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         phaseConfig:

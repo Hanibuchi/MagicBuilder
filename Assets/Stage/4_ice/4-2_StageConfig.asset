@@ -18,10 +18,10 @@ MonoBehaviour:
   clearCondition: 1
   enemyPhases: []
   phaseGenerators:
-  - rid: 1486059559191576769
-  - rid: 1486059559191576770
-  - rid: 1486059559191576771
-  - rid: 1486059559191576772
+  - rid: 1486059601775558755
+  - rid: 1486059601775558756
+  - rid: 1486059601775558757
+  - rid: 1486059601775558758
   puzzleSpells: []
   puzzleWands: 
   stageType: 0
@@ -31,7 +31,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 1486059559191576769
+    - rid: 1486059601775558755
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -104,14 +104,14 @@ MonoBehaviour:
         - {fileID: 11400000, guid: 28ccbd075847d8740bfae4910880bad8, type: 2}
         rarityDropRates:
         - rarity: 0
-          dropRate: 0.2
+          dropRate: 0.14705883
         - rarity: 1
-          dropRate: 0.15
+          dropRate: 0.11029412
         - rarity: 2
-          dropRate: 0.1
+          dropRate: 0.073529415
         - rarity: 3
-          dropRate: 0.05
-    - rid: 1486059559191576770
+          dropRate: 0.036764707
+    - rid: 1486059601775558756
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -182,14 +182,14 @@ MonoBehaviour:
         - {fileID: 11400000, guid: 28ccbd075847d8740bfae4910880bad8, type: 2}
         rarityDropRates:
         - rarity: 0
-          dropRate: 0.2
+          dropRate: 0.14705883
         - rarity: 1
-          dropRate: 0.15
+          dropRate: 0.11029412
         - rarity: 2
-          dropRate: 0.1
+          dropRate: 0.073529415
         - rarity: 3
-          dropRate: 0.05
-    - rid: 1486059559191576771
+          dropRate: 0.036764707
+    - rid: 1486059601775558757
       type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         startConditionType: 0
@@ -262,14 +262,14 @@ MonoBehaviour:
         - {fileID: 11400000, guid: 28ccbd075847d8740bfae4910880bad8, type: 2}
         rarityDropRates:
         - rarity: 0
-          dropRate: 0.2
+          dropRate: 0.14705883
         - rarity: 1
-          dropRate: 0.15
+          dropRate: 0.11029412
         - rarity: 2
-          dropRate: 0.1
+          dropRate: 0.073529415
         - rarity: 3
-          dropRate: 0.05
-    - rid: 1486059559191576772
+          dropRate: 0.036764707
+    - rid: 1486059601775558758
       type: {class: SimplePhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         phaseConfig:
