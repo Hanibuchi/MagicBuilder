@@ -301,6 +301,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -349,7 +350,7 @@ GameObject:
   - component: {fileID: 4505326272396211238}
   - component: {fileID: 5299661373147516830}
   m_Layer: 5
-  m_Name: RemoveAdsPurchaseUI
+  m_Name: PurchaseMessageUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -464,6 +465,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 4505326272396211238}
   priceText: {fileID: 7319839510126045649}
+  descriptionText: {fileID: 7996427805485515186}
   purchaseButton: {fileID: 7247808963811339812}
   fadeDuration: 0.5
 --- !u!1 &6255754590717548205
@@ -569,6 +571,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

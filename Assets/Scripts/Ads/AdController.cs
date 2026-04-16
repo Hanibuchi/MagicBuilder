@@ -26,7 +26,7 @@ public class AdController : MonoBehaviour
 
     [Header("UI References")]
     [SerializeField] private ContinueAdUI continueAdUI;
-    [SerializeField] private RemoveAdsPurchaseUI removeAdsPurchaseUI;
+    [SerializeField] private PurchaseMessageUI removeAdsPurchaseUI;
 
     private void Awake()
     {
@@ -112,7 +112,7 @@ public class AdController : MonoBehaviour
     {
         if (removeAdsPurchaseUI == null)
         {
-            RemoveAdsPurchaseUI prefab = Resources.Load<RemoveAdsPurchaseUI>("Ads/RemoveAdsPurchaseUI");
+            PurchaseMessageUI prefab = Resources.Load<PurchaseMessageUI>("Ads/RemoveAdsPurchaseUI");
             if (prefab != null)
             {
                 removeAdsPurchaseUI = Instantiate(prefab);
@@ -121,7 +121,8 @@ public class AdController : MonoBehaviour
 
         if (removeAdsPurchaseUI != null)
         {
-            removeAdsPurchaseUI.Init(price, () =>
+            string description = "広告を非表示にしますか？\n<size=20>※広告報酬は今まで通り得られます。";
+            removeAdsPurchaseUI.Init(price, description, () =>
             {
                 Debug.Log("[AdController] 広告削除アイテムの購入をリクエストします。");
                 IAPManager.Instance.BuyRemoveAds();
