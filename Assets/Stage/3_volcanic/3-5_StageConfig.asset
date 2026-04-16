@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: 3-5_StageConfig
   m_EditorClassIdentifier: 
   stageName: 3-5
-  subStageName: "\u591A\u91CD\u3068\u8907\u88FD"
+  subStageName: "\u8907\u88FD\u3068\u591A\u91CD"
   SceneName: Stage_Volcanic_5
   clearCondition: 0
   enemyPhases: []
   phaseGenerators: []
   puzzleSpells:
+  - {fileID: 11400000, guid: 7ec1dcb74d1e1f64cbc082ae8771f40d, type: 2}
   - {fileID: 11400000, guid: 28ccbd075847d8740bfae4910880bad8, type: 2}
   - {fileID: 11400000, guid: fc5ea195a8495ad44ae617919227056e, type: 2}
   puzzleWands: 00000000
