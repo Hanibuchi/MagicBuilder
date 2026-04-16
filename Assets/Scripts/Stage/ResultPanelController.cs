@@ -35,11 +35,11 @@ public class ResultPanelController : MonoBehaviour
     // --- ボタン要素 ---
 
     [Header("ボタンと遷移先のメソッド")]
-    [SerializeField] private Button stageSelectButton;
-    [SerializeField] private Button retryButton;
-    [SerializeField] private Button nextStageButton;
-    [SerializeField] private Button spellChangeButton;
-    [SerializeField] private Button wandChangeButton;
+    [SerializeField] protected Button stageSelectButton;
+    [SerializeField] protected Button retryButton;
+    [SerializeField] protected Button nextStageButton;
+    [SerializeField] protected Button spellChangeButton;
+    [SerializeField] protected Button wandChangeButton;
     [SerializeField] private GameObject spellBadge;
     [SerializeField] private GameObject wandBadge;
 

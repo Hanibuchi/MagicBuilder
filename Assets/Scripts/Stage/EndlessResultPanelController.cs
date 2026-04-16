@@ -69,5 +69,9 @@ public class EndlessResultPanelController : ResultPanelController
         // 今回の例では一旦基底を呼び出しつつ一部UIを調整します。
 
         base.DisplayVictory(data);
+
+        // エンドレスモードでは次のステージはないためリトライボタンを表示する
+        if (nextStageButton != null) nextStageButton.gameObject.SetActive(false);
+        if (retryButton != null) retryButton.gameObject.SetActive(true);
     }
 }
