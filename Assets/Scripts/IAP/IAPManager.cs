@@ -33,6 +33,8 @@ public class IAPManager : MonoBehaviour
     // コーヒーをおごるのプロダクトID
     public const string BUY_COFFEE = "com.hanitech8686.magicBuilder.buyCoffee";
 
+    public event Action OnCoffeePurchased;
+
     /// <summary>
     /// 広告非表示が購入済みかどうかを返します。
     /// </summary>
@@ -203,6 +205,7 @@ public class IAPManager : MonoBehaviour
         else if (productId == BUY_COFFEE)
         {
             Debug.Log("[IAP] コーヒーをおごるの購入が完了しました。ありがとうございます！");
+            OnCoffeePurchased?.Invoke();
         }
 
         // コンファーム（確定）処理

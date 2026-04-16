@@ -68,6 +68,19 @@ public class SettingsUI : MonoBehaviour
 
         // 初期状態では設定パネルを非表示にしておく
         settingsPanel.SetActive(false);
+
+        if (IAPManager.Instance != null)
+        {
+            IAPManager.Instance.OnCoffeePurchased += ShowThankYouUI;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (IAPManager.Instance != null)
+        {
+            IAPManager.Instance.OnCoffeePurchased -= ShowThankYouUI;
+        }
     }
 
     /// <summary>
@@ -233,6 +246,28 @@ public class SettingsUI : MonoBehaviour
         else
         {
             Debug.LogWarning("[SettingsUI] purchaseMessageUIPrefabがアサインされていません。インスペクターから設定してください。");
+        }
+    }
+
+    /// <summary>
+    /// コーヒーの購入が完了したときに呼び出される「ありがとうございます」UIの表示処理です。
+    /// </summary>
+    private void ShowThankYouUI()
+    {
+        if (buyCoffeePurchaseUI == null)
+        {
+            if (purchaseMessageUIPrefab != null)
+            {
+                buyCoffeePurchaseUI = Instantiate(purchaseMessageUIPrefab);
+            }
+        }
+
+        if (buyCoffeePurchaseUI != null)
+        {
+            string titleOrText = "OK";
+            string description = "コーヒーありがとうございます！";
+            buyCoffeePurchaseUI.Init(titleOrText, description, null);
+            buyCoffeePurchaseUI.Show();
         }
     }
 
