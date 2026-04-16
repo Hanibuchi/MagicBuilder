@@ -341,7 +341,7 @@ MonoBehaviour:
         loopStartConditionType: 0
         loopStartConditionValue: 10
         initialSpawnInterval: 3
-        spawnFrequencyIncreasePerBoard: 0.2
+        spawnFrequencyIncreasePerBoard: 0.02
         droppableSpells:
         - {fileID: 11400000, guid: 7abf0850d48fdf9428700611ba2f99ba, type: 2}
         - {fileID: 11400000, guid: af7dcd61f85a1f54ba774f721dad12f4, type: 2}
