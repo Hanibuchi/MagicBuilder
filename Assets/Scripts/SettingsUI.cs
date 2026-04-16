@@ -20,6 +20,8 @@ public class SettingsUI : MonoBehaviour
     [SerializeField] private Animator panelAnimator;
     [SerializeField] private Button openButton;
     [SerializeField] private Button closeButton;
+    [SerializeField] private Button xButton; // X（旧Twitter）を開くボタン
+    [SerializeField] private string authorXUrl = "https://x.com/your_account_name"; // 作者のXのURL
     [SerializeField] private AudioClip openSFX;
     [SerializeField] private AudioClip closeSFX;
     [SerializeField] private AudioClip volumeChangeSFX;
@@ -49,6 +51,11 @@ public class SettingsUI : MonoBehaviour
         // ボタンのクリックイベントにメソッドを登録
         openButton.onClick.AddListener(OnOpenButtonClicked);
         closeButton.onClick.AddListener(Close);
+        
+        if (xButton != null)
+        {
+            xButton.onClick.AddListener(OnXButtonClicked);
+        }
 
         // 初期状態では設定パネルを非表示にしておく
         settingsPanel.SetActive(false);
@@ -164,6 +171,16 @@ public class SettingsUI : MonoBehaviour
         closeButton.interactable = false;
         isPanelOpen = false;
         TimeStopManager.Instance.ReleaseTimeStop(this);
+    }
+
+    /// <summary>
+    /// X（旧Twitter）ボタンが押されたときに呼び出されます。
+    /// 作者のプロフィールページを開きます。
+    /// </summary>
+    private void OnXButtonClicked()
+    {
+        // PlaySE(openSFX); // クリック音（任意のSE）
+        Application.OpenURL(authorXUrl);
     }
 
     /// <summary>
