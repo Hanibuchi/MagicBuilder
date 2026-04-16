@@ -98,7 +98,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8904328848481720335, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: enemyWand.spells.Array.size
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8904328848481720335, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: 'enemyWand.spells.Array.data[0]'
@@ -111,43 +111,47 @@ PrefabInstance:
     - target: {fileID: 8904328848481720335, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: 'enemyWand.spells.Array.data[2]'
       value: 
-      objectReference: {fileID: 11400000, guid: f2f2f2f2f2f2f2f2f2f2f2f2f2f2f2f2, type: 2}
+      objectReference: {fileID: 11400000, guid: 8fe1a2149abb2c647a6e0912e52f059d, type: 2}
     - target: {fileID: 8904328848481720335, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: 'enemyWand.spells.Array.data[3]'
       value: 
-      objectReference: {fileID: 11400000, guid: 8fe1a2149abb2c647a6e0912e52f059d, type: 2}
+      objectReference: {fileID: 11400000, guid: 8ce3a351f7d98fb4fa75564c564cf499, type: 2}
     - target: {fileID: 8904328848481720335, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: 'enemyWand.spells.Array.data[4]'
       value: 
-      objectReference: {fileID: 11400000, guid: 8fe1a2149abb2c647a6e0912e52f059d, type: 2}
+      objectReference: {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
     - target: {fileID: 8904328848481720335, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: 'enemyWand.spells.Array.data[5]'
       value: 
-      objectReference: {fileID: 11400000, guid: 55d48327a80491a42a0f7f3b7e6e27b2, type: 2}
+      objectReference: {fileID: 11400000, guid: 549312c49a7774442afe5862ef809e48, type: 2}
     - target: {fileID: 8904328848481720335, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: 'enemyWand.spells.Array.data[6]'
       value: 
-      objectReference: {fileID: 11400000, guid: dd8d82e802947664db3bd58352a5f544, type: 2}
+      objectReference: {fileID: 11400000, guid: 1eb400a9e1b4a1a40ac990b73b153323, type: 2}
     - target: {fileID: 8904328848481720335, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: 'enemyWand.spells.Array.data[7]'
       value: 
-      objectReference: {fileID: 11400000, guid: af7dcd61f85a1f54ba774f721dad12f4, type: 2}
+      objectReference: {fileID: 11400000, guid: dd8d82e802947664db3bd58352a5f544, type: 2}
     - target: {fileID: 8904328848481720335, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: 'enemyWand.spells.Array.data[8]'
       value: 
-      objectReference: {fileID: 11400000, guid: 91a88df000abd0746ab7dd76dc0ccb3e, type: 2}
+      objectReference: {fileID: 11400000, guid: af7dcd61f85a1f54ba774f721dad12f4, type: 2}
     - target: {fileID: 8904328848481720335, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: 'enemyWand.spells.Array.data[9]'
       value: 
-      objectReference: {fileID: 11400000, guid: 8ce3a351f7d98fb4fa75564c564cf499, type: 2}
+      objectReference: {fileID: 11400000, guid: 91a88df000abd0746ab7dd76dc0ccb3e, type: 2}
     - target: {fileID: 8904328848481720335, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: 'enemyWand.spells.Array.data[10]'
       value: 
-      objectReference: {fileID: 11400000, guid: 648b38fdf99fe0e4eb9d5e4b134317b9, type: 2}
+      objectReference: {fileID: 11400000, guid: d01b125e34b6968459c46f40f2db332c, type: 2}
     - target: {fileID: 8904328848481720335, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
       propertyPath: 'enemyWand.spells.Array.data[11]'
       value: 
-      objectReference: {fileID: 11400000, guid: 549312c49a7774442afe5862ef809e48, type: 2}
+      objectReference: {fileID: 11400000, guid: 7bcff104ccafee340aa3a28240d444df, type: 2}
+    - target: {fileID: 8904328848481720335, guid: 4573f47fcfcd2eb40ac59702fcde7c7a, type: 3}
+      propertyPath: 'enemyWand.spells.Array.data[12]'
+      value: 
+      objectReference: {fileID: 11400000, guid: efb0a3b35b9742446bbafb9d0059d3c1, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
