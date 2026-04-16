@@ -34,10 +34,10 @@ public class PurchaseMessageUI : MonoBehaviour
         this.onPurchaseRequested = onPurchase;
         this.fullDescription = description;
 
-        // 価格表示を「¥価格」の形式に設定
+        // 価格表示をそのまま使用（すでに通貨記号が含まれている想定）
         if (priceText != null)
         {
-            priceText.text = $"¥{price}";
+            priceText.text = price;
         }
 
         purchaseButton.onClick.RemoveAllListeners();
@@ -103,7 +103,7 @@ public class PurchaseMessageUI : MonoBehaviour
 
         while (elapsed < fadeDuration)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
             canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsed / fadeDuration);
             yield return null;
         }
@@ -114,6 +114,10 @@ public class PurchaseMessageUI : MonoBehaviour
         {
             canvasGroup.interactable = true;
             canvasGroup.blocksRaycasts = true;
+        }
+        else
+        {
+            Destroy(gameObject);
         }
 
         activeCoroutine = null;
@@ -127,7 +131,7 @@ public class PurchaseMessageUI : MonoBehaviour
     /// </summary>
     public void Test_ShowUI()
     {
-        Init("200", "広告を非表示にしますか？\n<size=20>※広告報酬は今まで通り得られます。", () => Debug.Log("Test: Purchase Requested!"));
+        Init("¥200", "広告を非表示にしますか？\n<size=20>※広告報酬は今まで通り得られます。", () => Debug.Log("Test: Purchase Requested!"));
         Show();
     }
 

@@ -21,10 +21,14 @@ public class SettingsUI : MonoBehaviour
     [SerializeField] private Button openButton;
     [SerializeField] private Button closeButton;
     [SerializeField] private Button xButton; // X（旧Twitter）を開くボタン
+    [SerializeField] private Button buyCoffeeButton; // 作者にコーヒーをおごるボタン
     [SerializeField] private string authorXUrl = "https://x.com/your_account_name"; // 作者のXのURL
     [SerializeField] private AudioClip openSFX;
     [SerializeField] private AudioClip closeSFX;
     [SerializeField] private AudioClip volumeChangeSFX;
+    [SerializeField] private PurchaseMessageUI purchaseMessageUIPrefab; // 購入UIのプレハブ
+
+    private PurchaseMessageUI buyCoffeePurchaseUI;
 
     private bool isPanelOpen = false;
 
@@ -55,6 +59,11 @@ public class SettingsUI : MonoBehaviour
         if (xButton != null)
         {
             xButton.onClick.AddListener(OnXButtonClicked);
+        }
+
+        if (buyCoffeeButton != null)
+        {
+            buyCoffeeButton.onClick.AddListener(OnBuyCoffeeButtonClicked);
         }
 
         // 初期状態では設定パネルを非表示にしておく
@@ -181,6 +190,50 @@ public class SettingsUI : MonoBehaviour
     {
         // PlaySE(openSFX); // クリック音（任意のSE）
         Application.OpenURL(authorXUrl);
+    }
+
+    /// <summary>
+    /// コーヒー購入ボタンが押されたときに呼び出されます。
+    /// PurchaseMessageUIを生成して表示します。
+    /// </summary>
+    private void OnBuyCoffeeButtonClicked()
+    {
+        if (buyCoffeePurchaseUI == null)
+        {
+            if (purchaseMessageUIPrefab != null)
+            {
+                // UIキャンバスの子として生成するか、最前面に表示されるようにする
+                buyCoffeePurchaseUI = Instantiate(purchaseMessageUIPrefab);
+            }
+        }
+
+        if (buyCoffeePurchaseUI != null)
+        {
+            string price = "¥300"; // 仮の金額（デフォルト）
+            if (IAPManager.Instance != null)
+            {
+                string storePrice = IAPManager.Instance.GetProductPriceString(IAPManager.BUY_COFFEE);
+                if (!string.IsNullOrEmpty(storePrice))
+                {
+                    price = storePrice;
+                }
+            }
+
+            string description = "作者にコーヒーをおごりますか？\n<size=20>※今後の開発の励みになります！";
+            buyCoffeePurchaseUI.Init(price, description, () =>
+            {
+                Debug.Log("[SettingsUI] コーヒー購入処理を開始します。");
+                if (IAPManager.Instance != null)
+                {
+                    IAPManager.Instance.BuyCoffee();
+                }
+            });
+            buyCoffeePurchaseUI.Show();
+        }
+        else
+        {
+            Debug.LogWarning("[SettingsUI] purchaseMessageUIPrefabがアサインされていません。インスペクターから設定してください。");
+        }
     }
 
     /// <summary>

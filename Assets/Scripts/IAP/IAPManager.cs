@@ -30,6 +30,8 @@ public class IAPManager : MonoBehaviour
 
     // 広告削除のプロダクトID
     public const string REMOVE_ADS = "com.hanitech8686.magicBuilder.removeAds";
+    // コーヒーをおごるのプロダクトID
+    public const string BUY_COFFEE = "com.hanitech8686.magicBuilder.buyCoffee";
 
     /// <summary>
     /// 広告非表示が購入済みかどうかを返します。
@@ -78,7 +80,8 @@ public class IAPManager : MonoBehaviour
             // 商品定義
             var initialProductsToFetch = new List<ProductDefinition>
             {
-                new ProductDefinition(REMOVE_ADS, ProductType.NonConsumable)
+                new ProductDefinition(REMOVE_ADS, ProductType.NonConsumable),
+                new ProductDefinition(BUY_COFFEE, ProductType.Consumable)
             };
 
             // 商品情報の取得
@@ -101,6 +104,31 @@ public class IAPManager : MonoBehaviour
     public void BuyRemoveAds()
     {
         BuyProductID(REMOVE_ADS);
+    }
+
+    /// <summary>
+    /// コーヒーをおごる購入を開始するメソッド
+    /// </summary>
+    public void BuyCoffee()
+    {
+        BuyProductID(BUY_COFFEE);
+    }
+
+    /// <summary>
+    /// 指定された商品IDのローカライズされた価格文字列（通貨記号付き）を取得する
+    /// </summary>
+    public string GetProductPriceString(string productId)
+    {
+        if (IsInitialized())
+        {
+            var products = storeController.GetProducts();
+            var product = products?.FirstOrDefault(p => p.definition.id == productId);
+            if (product != null)
+            {
+                return product.metadata.localizedPriceString;
+            }
+        }
+        return ""; // 未初期化・取得不可の場合
     }
 
     /// <summary>
@@ -161,14 +189,21 @@ public class IAPManager : MonoBehaviour
 
     private void OnPurchasePending(PendingOrder pendingOrder)
     {
-        Debug.Log($"[IAP] OnPurchasePending: {pendingOrder}");
+        var product = pendingOrder.CartOrdered.Items().FirstOrDefault()?.Product;
+        string productId = product?.definition.id;
+
+        Debug.Log($"[IAP] OnPurchasePending: {productId}");
         
-        // 簡易実装: 単一商品のみ扱うため、購入完了とみなして広告削除を実行
-        // 本来は productID を照合すべきだが、APIプロパティ名が確実でないため割愛
-        
-        // 購入成功のフラグを保存
-        PlayerPrefs.SetInt("AdsRemoved", 1);
-        PlayerPrefs.Save();
+        if (productId == REMOVE_ADS)
+        {
+            // 購入成功のフラグを保存
+            PlayerPrefs.SetInt("AdsRemoved", 1);
+            PlayerPrefs.Save();
+        }
+        else if (productId == BUY_COFFEE)
+        {
+            Debug.Log("[IAP] コーヒーをおごるの購入が完了しました。ありがとうございます！");
+        }
 
         // コンファーム（確定）処理
         storeController.ConfirmPurchase(pendingOrder);

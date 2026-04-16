@@ -108,7 +108,7 @@ public class AdController : MonoBehaviour
     /// RemoveAdsPurchaseUIを初期化し、表示します。
     /// </summary>
     /// <param name="price">表示する価格文字列（例: "200"）</param>
-    public void ShowRemoveAdsPurchaseUI(string price = "200")
+    public void ShowRemoveAdsPurchaseUI(string defaultPrice = "¥200")
     {
         if (removeAdsPurchaseUI == null)
         {
@@ -121,6 +121,16 @@ public class AdController : MonoBehaviour
 
         if (removeAdsPurchaseUI != null)
         {
+            string price = defaultPrice;
+            if (IAPManager.Instance != null)
+            {
+                string storePrice = IAPManager.Instance.GetProductPriceString(IAPManager.REMOVE_ADS);
+                if (!string.IsNullOrEmpty(storePrice))
+                {
+                    price = storePrice;
+                }
+            }
+
             string description = "広告を非表示にしますか？\n<size=20>※広告報酬は今まで通り得られます。";
             removeAdsPurchaseUI.Init(price, description, () =>
             {
