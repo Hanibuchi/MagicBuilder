@@ -158,7 +158,7 @@ public class EndlessConfigUpdater : EditorWindow
             loopStartConditionType = EnemyPhaseConfig.PhaseConditionType.TimeElapsed,
             loopStartConditionValue = 10f,
             initialSpawnInterval = 3.0f,
-            spawnFrequencyIncreasePerBoard = 0.2f,
+            spawnFrequencyIncreasePerBoard = 0.02f,
             droppableSpells = new List<SpellBase>(),
             rarityDropRates = new List<RandomSpawnsPhaseGenerator.RarityDropRate>(defaultDropRates)
         };

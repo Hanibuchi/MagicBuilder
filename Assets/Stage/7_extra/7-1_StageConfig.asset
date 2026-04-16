@@ -18,7 +18,7 @@ MonoBehaviour:
   clearCondition: 3
   enemyPhases: []
   phaseGenerators:
-  - rid: 1486059559191576671
+  - rid: 1486059601775558841
   puzzleSpells: []
   puzzleWands: 
   stageType: 0
@@ -28,7 +28,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 1486059559191576671
+    - rid: 1486059601775558841
       type: {class: EndlessSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
       data:
         boards:
