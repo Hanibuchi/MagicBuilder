@@ -68,25 +68,16 @@ public class BeeMovement : EnemyMovementBase
         targetPosition = center + Random.insideUnitCircle * moveRadius;
     }
 
-    protected override void FixedUpdate()
-    {
-    }
-
     void LateUpdate()
     {
-        base.FixedUpdate();
-    }
-
-    protected override void HandleMovement()
-    {
-        base.HandleMovement();
+        if (!isMoving || isStunned > 0) return;
         if (!isInitialized) return;
 
         // 合計速度倍率（状態異常比率 * 呪文倍率）を移動経過時間に反映させる
         float currentMultiplier = GetTotalSpeedMultiplier();
 
-        // 経過時間を加算（倍率を掛けることで、減速時に移動がゆっくりになるようにする）
-        elapsedTime += Time.fixedDeltaTime * currentMultiplier;
+        // 経過時間を加算（LateUpdateなのでTime.deltaTimeを使用）
+        elapsedTime += Time.deltaTime * currentMultiplier;
 
         // 補間割合 (0.0 ～ 1.0)
         float t = Mathf.Clamp01(elapsedTime / moveDuration);
@@ -94,16 +85,8 @@ public class BeeMovement : EnemyMovementBase
         // 線形補間で移動（ベジェ曲線などを使わないシンプルなジグザグ移動）
         Vector2 nextPos = Vector2.Lerp(startPosition, targetPosition, t);
 
-        // if (rb != null)
-        // {
-        //     // Rigidbody2Dがある場合は物理演算に干渉しないようMovePositionを使用
-        //     rb.MovePosition(nextPos);
-        // }
-        // else
-        {
-            // Rigidbodyがない場合はTransformを直接動かす
-            modelTransform.position = nextPos;
-        }
+        // Rigidbodyがない場合はTransformを直接動かす
+        modelTransform.position = nextPos;
 
         // 到着したら次の地点へ
         if (t >= 1f)
