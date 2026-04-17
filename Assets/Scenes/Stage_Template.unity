@@ -677,7 +677,7 @@ PrefabInstance:
       objectReference: {fileID: 1008364732}
     - target: {fileID: 2950603546146285152, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
       propertyPath: debugDisableEnemySpawning
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4653788535072574927, guid: 07689bc01cea6f14fbc69ba08cffc607, type: 3}
       propertyPath: m_LocalPosition.x
@@ -897,6 +897,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 983434081324026500, guid: 4b54a6b9bb3133947ab0672ee85e6a8d, type: 3}
+      propertyPath: m_Name
+      value: RashMainGrid
+      objectReference: {fileID: 0}
     - target: {fileID: 9208365670137140494, guid: 4b54a6b9bb3133947ab0672ee85e6a8d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -936,10 +940,6 @@ PrefabInstance:
     - target: {fileID: 9208365670137140494, guid: 4b54a6b9bb3133947ab0672ee85e6a8d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 983434081324026500, guid: 4b54a6b9bb3133947ab0672ee85e6a8d, type: 3}
-      propertyPath: m_Name
-      value: RashMainGrid
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
