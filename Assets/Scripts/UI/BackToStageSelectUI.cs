@@ -78,6 +78,11 @@ public class BackToStageSelectUI : MonoBehaviour
             SoundManager.Instance.PlaySE(returnSE);
         }
 
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StopBGMWithFade(0.5f);
+        }
+
         if (TimeStopManager.Instance != null)
         {
             TimeStopManager.Instance.ResetAllRequests();

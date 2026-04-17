@@ -78,6 +78,11 @@ public class RetryUI : MonoBehaviour
             SoundManager.Instance.PlaySE(retrySE);
         }
 
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StopBGMWithFade(0.5f);
+        }
+
         if (GameManager.Instance != null && GameManager.Instance.CurrentStageConfig != null)
         {
             TimeStopManager.Instance.ResetAllRequests();
