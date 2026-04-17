@@ -7,6 +7,10 @@ public class RetryUI : MonoBehaviour
     [SerializeField] private GameObject confirmationUIPrefab;
     [SerializeField, TextArea] private string retryMessage = "本当にリトライしますか？";
 
+    [Space(10)]
+    [SerializeField] private AudioClip openConfirmSE;
+    [SerializeField] private AudioClip retrySE;
+
     private GameObject currentConfirmationInstance;
 
     private void Start()
@@ -19,6 +23,11 @@ public class RetryUI : MonoBehaviour
 
     private void OnRetryButtonClicked()
     {
+        if (openConfirmSE != null && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySE(openConfirmSE);
+        }
+
         // すでに確認画面が出ている場合は何もしない
         if (currentConfirmationInstance != null) return;
 
@@ -63,6 +72,11 @@ public class RetryUI : MonoBehaviour
     {
         if (isRetrying) return;
         isRetrying = true;
+
+        if (retrySE != null && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySE(retrySE);
+        }
 
         if (GameManager.Instance != null && GameManager.Instance.CurrentStageConfig != null)
         {

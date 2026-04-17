@@ -7,6 +7,10 @@ public class BackToStageSelectUI : MonoBehaviour
     [SerializeField] private GameObject confirmationUIPrefab;
     [SerializeField, TextArea] private string confirmMessage = "ステージ選択画面に戻りますか？\n（現在の進行状況は破棄されます）";
 
+    [Space(10)]
+    [SerializeField] private AudioClip openConfirmSE;
+    [SerializeField] private AudioClip returnSE;
+
     private GameObject currentConfirmationInstance;
 
     private void Start()
@@ -19,6 +23,11 @@ public class BackToStageSelectUI : MonoBehaviour
 
     private void OnBackButtonClicked()
     {
+        if (openConfirmSE != null && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySE(openConfirmSE);
+        }
+
         // すでに確認画面が出ている場合は何もしない
         if (currentConfirmationInstance != null) return;
 
@@ -63,6 +72,11 @@ public class BackToStageSelectUI : MonoBehaviour
     {
         if (isReturning) return;
         isReturning = true;
+
+        if (returnSE != null && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySE(returnSE);
+        }
 
         if (TimeStopManager.Instance != null)
         {
