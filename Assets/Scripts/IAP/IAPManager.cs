@@ -29,9 +29,9 @@ public class IAPManager : MonoBehaviour
     private StoreController storeController;
 
     // 広告削除のプロダクトID
-    public const string REMOVE_ADS = "com.hanitech8686.magicBuilder.removeAds";
+    public const string REMOVE_ADS = "com.Hanitech.MagicBuilder.removeAds";
     // コーヒーをおごるのプロダクトID
-    public const string BUY_COFFEE = "com.hanitech8686.magicBuilder.buyCoffee";
+    public const string BUY_COFFEE = "com.Hanitech.MagicBuilder.buyCoffee";
 
     public event Action OnCoffeePurchased;
 
