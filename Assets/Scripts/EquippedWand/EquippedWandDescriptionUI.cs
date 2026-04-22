@@ -42,6 +42,8 @@ public class EquippedWandDescriptionUI : MonoBehaviour, IBeginDragHandler, IEndD
     private Transform _originalParent;
     private int _originalSiblingIndex;
     private IEquippedWandDragObserver _observer;
+    private Coroutine _nameCoroutine;
+    private Coroutine _descCoroutine;
 
     /// <summary>
     /// 杖の表示内容を更新します。
@@ -53,6 +55,8 @@ public class EquippedWandDescriptionUI : MonoBehaviour, IBeginDragHandler, IEndD
         if (wand == null)
         {
             ClearFixedSpellIcons();
+            if (_nameCoroutine != null) { StopCoroutine(_nameCoroutine); _nameCoroutine = null; }
+            if (_descCoroutine != null) { StopCoroutine(_descCoroutine); _descCoroutine = null; }
             if (wandImage != null)
             {
                 wandImage.sprite = null;
@@ -75,15 +79,37 @@ public class EquippedWandDescriptionUI : MonoBehaviour, IBeginDragHandler, IEndD
 
         if (nameText != null)
         {
-            nameText.text = wand.wandName;
+            if (_nameCoroutine != null) StopCoroutine(_nameCoroutine);
+            _nameCoroutine = StartCoroutine(TypeTextRoutine(nameText, wand.wandName));
         }
 
         if (descriptionText != null)
         {
-            descriptionText.text = wand.description;
+            if (_descCoroutine != null) StopCoroutine(_descCoroutine);
+            _descCoroutine = StartCoroutine(TypeTextRoutine(descriptionText, wand.description));
         }
 
         UpdateFixedSpellIcons(wand.fixedSpells);
+    }
+
+    private IEnumerator TypeTextRoutine(TextMeshProUGUI textComponent, string message)
+    {
+        if (textComponent == null) yield break;
+
+        if (string.IsNullOrEmpty(message))
+        {
+            textComponent.text = string.Empty;
+            yield break;
+        }
+
+        textComponent.text = message;
+        textComponent.maxVisibleCharacters = 0;
+
+        for (int i = 1; i <= message.Length; i++)
+        {
+            textComponent.maxVisibleCharacters = i;
+            yield return null;
+        }
     }
 
     public void SetSlotIndex(int slotIndex)

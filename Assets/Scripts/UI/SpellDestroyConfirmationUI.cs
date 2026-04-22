@@ -18,6 +18,7 @@ public class SpellDestroyConfirmationUI : MonoBehaviour
 
     private bool isProcessed = false;
     private Action onClosedAction;
+    private Coroutine textCoroutine;
 
     private void Start()
     {
@@ -32,7 +33,8 @@ public class SpellDestroyConfirmationUI : MonoBehaviour
     {
         if (messageText != null)
         {
-            messageText.text = message;
+            if (textCoroutine != null) StopCoroutine(textCoroutine);
+            textCoroutine = StartCoroutine(TypeTextRoutine(message));
         }
 
         // 呪文のアイコンを生成
@@ -67,6 +69,18 @@ public class SpellDestroyConfirmationUI : MonoBehaviour
                 onNo?.Invoke();
                 Close();
             });
+        }
+    }
+
+    private IEnumerator TypeTextRoutine(string message)
+    {
+        messageText.text = message;
+        messageText.maxVisibleCharacters = 0;
+
+        for (int i = 1; i <= message.Length; i++)
+        {
+            messageText.maxVisibleCharacters = i;
+            yield return null;
         }
     }
 

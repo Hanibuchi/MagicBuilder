@@ -9,6 +9,10 @@ public class StageSkipUI : MonoBehaviour
     [SerializeField, TextArea] private string skipMessage = "このステージをスキップしてクリアしますか？\n（1日1回のみ使用可能）";
     [SerializeField, TextArea] private string alreadyUsedMessage = "本日のスキップ機能はすでに使用済みです。明日またご利用ください。";
 
+    [Space(10)]
+    [SerializeField] private AudioClip openConfirmSE;
+    [SerializeField] private AudioClip executeSkipSE;
+
     private const string LastSkipDateKey = "LastSkipDate";
     private GameObject currentConfirmationInstance;
 
@@ -32,6 +36,15 @@ public class StageSkipUI : MonoBehaviour
 
     private bool CanSkip()
     {
+        // エンドレスモードの場合はスキップ不可
+        if (GameManager.Instance != null && GameManager.Instance.CurrentStageConfig != null)
+        {
+            if (GameManager.Instance.CurrentStageConfig.clearCondition == StageClearCondition.Endless)
+            {
+                return false;
+            }
+        }
+
         string lastSkipDateStr = PlayerPrefs.GetString(LastSkipDateKey, "");
         if (string.IsNullOrEmpty(lastSkipDateStr))
         {
@@ -55,6 +68,11 @@ public class StageSkipUI : MonoBehaviour
 
     private void OnSkipButtonClicked()
     {
+        if (openConfirmSE != null && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySE(openConfirmSE);
+        }
+
         if (currentConfirmationInstance != null) return;
 
         if (!CanSkip())
@@ -125,6 +143,11 @@ public class StageSkipUI : MonoBehaviour
     {
         if (isSkipping) return;
         isSkipping = true;
+
+        if (executeSkipSE != null && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySE(executeSkipSE);
+        }
 
         RecordSkipUsage();
 

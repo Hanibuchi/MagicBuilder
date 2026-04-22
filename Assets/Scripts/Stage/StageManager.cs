@@ -342,7 +342,11 @@ public class StageManager : MonoBehaviour
         StartPhase();
         if (SoundManager.Instance != null && bGM != null)
             SoundManager.Instance.PlayBGM(bGM);
+            
+        OnEquipSpellsSequenceRoutineFinished?.Invoke();
     }
+
+    public event Action OnEquipSpellsSequenceRoutineFinished;
 
     public void StartPhase()
     {
@@ -353,25 +357,35 @@ public class StageManager : MonoBehaviour
             return;
         }
 
-        List<EnemyPhaseConfig> finalPhases = new List<EnemyPhaseConfig>();
-
-        // 既存の固定フェーズを追加
-        if (stageConfig.enemyPhases != null)
+        IEnumerable<EnemyPhaseConfig> GetPhasesEnumerable()
         {
-            finalPhases.AddRange(stageConfig.enemyPhases);
-        }
-
-        // 設定用ジェネレータクラスを通してフェーズを動的生成・追加
-        if (stageConfig.phaseGenerators != null)
-        {
-            foreach (var generator in stageConfig.phaseGenerators)
+            // 既存の固定フェーズを追加
+            if (stageConfig.enemyPhases != null)
             {
-                generator?.GeneratePhases(finalPhases);
+                foreach (var phase in stageConfig.enemyPhases)
+                {
+                    yield return phase;
+                }
+            }
+
+            // 設定用ジェネレータクラスを通してフェーズを動的生成・追加（無限生成にも対応）
+            if (stageConfig.phaseGenerators != null)
+            {
+                foreach (var generator in stageConfig.phaseGenerators)
+                {
+                    if (generator != null)
+                    {
+                        foreach (var phase in generator.GeneratePhasesEnumerable())
+                        {
+                            yield return phase;
+                        }
+                    }
+                }
             }
         }
 
         EnemyPhaseExecutor.Instance.SetSpawnPoint(enemySpawnPoint.position);
-        EnemyPhaseExecutor.Instance.StartPhase(finalPhases.ToArray(), () => { spawnComplete = true; });
+        EnemyPhaseExecutor.Instance.StartPhase(GetPhasesEnumerable(), () => { spawnComplete = true; });
     }
 
     /// <summary>
@@ -389,6 +403,18 @@ public class StageManager : MonoBehaviour
 
     void OnGameEnd()
     {
+        if (stageConfig != null)
+        {
+            if (stageConfig.stageType == StageType.Rush && EnemyPhaseExecutor.Instance != null)
+            {
+                EnemyPhaseExecutor.Instance.StopPhase();
+            }
+            else if (stageConfig.stageType == StageType.Puzzle && TeleportManager.Instance != null)
+            {
+                TeleportManager.Instance.DisableTeleport();
+            }
+        }
+
         GameTimerManager.Instance.StopTimer(); // タイマーを停止
         WandUIManager.Instance.Hide();
         SpellInventory.Instance.Hide();
@@ -414,21 +440,13 @@ public class StageManager : MonoBehaviour
         if (gameEnd) return;
         gameEnd = true;
 
-        if (stageConfig != null)
-        {
-            if (stageConfig.stageType == StageType.Rush && EnemyPhaseExecutor.Instance != null)
-            {
-                EnemyPhaseExecutor.Instance.StopPhase();
-            }
-            else if (stageConfig.stageType == StageType.Puzzle && TeleportManager.Instance != null)
-            {
-                TeleportManager.Instance.DisableTeleport();
-            }
-        }
-
         // 初回クリアか判定し、クリアフラグを保存する
         isFirstClear = !(StageUnlockManager.Instance?.IsStageCleared(stageConfig.stageName) ?? false);
         StageUnlockManager.Instance?.MarkStageCleared(stageConfig.stageName);
+
+        // 作者メッセージ等のための今回クリアしたステージ名を記録
+        PlayerPrefs.SetString("JustClearedStage", stageConfig.stageName);
+        PlayerPrefs.Save();
 
         Debug.Log("🎉 ステージクリア！");
         OnGameEnd();
@@ -541,6 +559,15 @@ public class StageManager : MonoBehaviour
     void HandleGameOver()
     {
         if (gameEnd) return;
+
+        // エンドレスモードの場合、ゲームオーバー扱いだが「クリア」として扱うフラグ付けを行う
+        if (clearCondition == StageClearCondition.Endless && stageConfig != null)
+        {
+            isFirstClear = !(StageUnlockManager.Instance?.IsStageCleared(stageConfig.stageName) ?? false);
+            StageUnlockManager.Instance?.MarkStageCleared(stageConfig.stageName);
+            Debug.Log("エンドレスモード終了、進行状況を保存します。");
+        }
+
         gameEnd = true;
         OnGameEnd();
         SoundManager.Instance.StopBGMWithFade(0.5f);
@@ -567,6 +594,9 @@ public class StageManager : MonoBehaviour
     [Header("UI設定")]
     [Tooltip("ステージクリア/ゲームオーバー時にInstantiateするリザルトパネルのPrefab")]
     [SerializeField] private GameObject resultPanelPrefab;
+    [Tooltip("エンドレスモード専用のリザルトパネルPrefab")]
+    [SerializeField] private GameObject endlessResultPanelPrefab;
+
     private const string VICTORY_MESSAGE = "勝利！"; // StageResultData用
     private const string DEFEAT_MESSAGE = "もう一度挑戦しましょう！"; // StageResultData用
 
@@ -575,14 +605,23 @@ public class StageManager : MonoBehaviour
     /// </summary>
     private void InstantiateResultPanel(bool isVictory)
     {
-        if (resultPanelPrefab == null)
+        GameObject prefabToUse = resultPanelPrefab;
+
+        // エンドレスモードの場合、勝敗関係なく専用パネルを使用
+        if (clearCondition == StageClearCondition.Endless && endlessResultPanelPrefab != null)
+        {
+            prefabToUse = endlessResultPanelPrefab;
+            isVictory = true; // エンドレスモードは常に報酬などのため「クリア扱い」とする
+        }
+
+        if (prefabToUse == null)
         {
             Debug.LogError("リザルトパネルPrefabが設定されていません！");
             return;
         }
 
         // プレハブをInstantiate
-        GameObject panelInstance = Instantiate(resultPanelPrefab);
+        GameObject panelInstance = Instantiate(prefabToUse);
         ResultPanelController controller = panelInstance.GetComponent<ResultPanelController>();
 
         if (controller == null)
@@ -607,8 +646,17 @@ public class StageManager : MonoBehaviour
         {
             controller.DisplayVictory(data);
 
-            int reward = isFirstClear ? stageConfig.firstClearReward : stageConfig.repeatClearReward;
-            if (CurrencyController.Instance != null)
+            int reward = 0;
+            if (clearCondition == StageClearCondition.Endless)
+            {
+                reward = Mathf.RoundToInt(data.score * stageConfig.endlessRewardMultiplier);
+            }
+            else
+            {
+                reward = isFirstClear ? stageConfig.firstClearReward : stageConfig.repeatClearReward;
+            }
+
+            if (CurrencyController.Instance != null && reward > 0)
             {
                 CurrencyController.Instance.AddCurrency(reward);
             }
@@ -694,6 +742,8 @@ public enum StageClearCondition
     // 特定のボスを倒したとき
     SpecificBossDefeated,
     // デバッグ用: UIを表示せず即座に開始
-    Debug_None
+    Debug_None,
     // 必要であれば他の条件（例: 時間切れ、パズルクリアなど）を追加可能
+    // 何らかの条件を満たすまで続く（プレイヤーが倒れたらクリア扱い）
+    Endless,
 }

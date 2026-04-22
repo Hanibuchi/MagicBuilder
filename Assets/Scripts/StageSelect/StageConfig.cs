@@ -32,6 +32,9 @@ public class StageConfig : ScriptableObject
     [ContextMenu("Add Random Spawns Phase Generator")]
     void AddRandomSpawnsPhaseGenerator() => phaseGenerators.Add(new RandomSpawnsPhaseGenerator());
 
+    [ContextMenu("Add Endless Spawns Phase Generator")]
+    void AddEndlessSpawnsPhaseGenerator() => phaseGenerators.Add(new EndlessSpawnsPhaseGenerator());
+
     [Header("パスルステージ設定")]
     [Tooltip("パズルステージで使用する固定呪文のリスト。")]
     public SpellBase[] puzzleSpells;
@@ -47,6 +50,8 @@ public class StageConfig : ScriptableObject
     public int firstClearReward = 100;
     [Tooltip("既クリアステージをクリアした時の報酬額")]
     public int repeatClearReward = 50;
+    [Tooltip("エンドレスステージにおけるスコアからの報酬倍数 (スコア × この値 が報酬になります)")]
+    public float endlessRewardMultiplier = 3f;
 }
 
 public enum StageType

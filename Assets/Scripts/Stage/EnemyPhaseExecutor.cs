@@ -40,17 +40,20 @@ public class EnemyPhaseExecutor : MonoBehaviour
         spawnPosition = position;
     }
 
-    // 現在実行中のフェーズと、次の処理待ちのフェーズを管理するスタック
+    // 現在実行中のフェーズと、次の処理待ちのフェーズを管理するスタック（後方互換用）
     private Stack<EnemyPhaseConfig> phaseStack = new Stack<EnemyPhaseConfig>();
+    private bool isEndlessRunning = false;
 
     public void StartPhase(EnemyPhaseConfig[] phases, Action callback = null)
     {
-        // 初期フェーズをスタックに追加
-        for (int i = phases.Length - 1; i >= 0; i--)
-        {
-            phaseStack.Push(phases[i]);
-        }
-        StartCoroutine(ExecutePhases(callback));
+        // 配列ベースの互換性用メソッド
+        StartPhase((IEnumerable<EnemyPhaseConfig>)phases, callback);
+    }
+
+    public void StartPhase(IEnumerable<EnemyPhaseConfig> phases, Action callback = null)
+    {
+        isEndlessRunning = true;
+        StartCoroutine(ExecutePhases(phases.GetEnumerator(), callback));
     }
 
     /// <summary>
@@ -60,23 +63,26 @@ public class EnemyPhaseExecutor : MonoBehaviour
     {
         StopAllCoroutines();
         phaseStack.Clear();
+        isEndlessRunning = false;
         Debug.Log("EnemyPhaseExecutor: フェーズ進行を停止しました。");
     }
 
     /// <summary>
     /// フェーズを深さ優先探索で実行するコルーチン。
     /// </summary>
-    private IEnumerator ExecutePhases(Action callback)
+    private IEnumerator ExecutePhases(IEnumerator<EnemyPhaseConfig> phaseEnumerator, Action callback)
     {
         Debug.Log("EnemyPhaseExecutor: フェーズ実行開始");
 
-        // スタックが空になるまでループ
-        while (phaseStack.Count > 0)
+        // Enumeratorからフェーズを次々に取得して実行（無限ループにも対応）
+        while (isEndlessRunning && phaseEnumerator.MoveNext())
         {
-            EnemyPhaseConfig currentPhase = phaseStack.Pop();
+            EnemyPhaseConfig currentPhase = phaseEnumerator.Current;
 
             // 1. 条件が満たされるまで待機
             yield return StartCoroutine(WaitForCondition(currentPhase));
+
+            if (!isEndlessRunning) break;
 
             // ボス出現演出の実行
             if (currentPhase.isBossPhase)
@@ -94,8 +100,12 @@ public class EnemyPhaseExecutor : MonoBehaviour
             }
         }
 
-        Debug.Log("EnemyPhaseExecutor: すべてのフェーズの実行が完了しました。");
-        callback?.Invoke();
+        if (isEndlessRunning)
+        {
+            Debug.Log("EnemyPhaseExecutor: すべてのフェーズの実行が完了しました。");
+            isEndlessRunning = false;
+            callback?.Invoke();
+        }
     }
 
     /// <summary>

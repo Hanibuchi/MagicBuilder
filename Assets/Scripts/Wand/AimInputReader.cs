@@ -28,6 +28,18 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     private float currentAngle;
     private float currentPower;
 
+    public Vector2 StartPointScreenPosition
+    {
+        get
+        {
+            if (startPointTransform != null && Camera.main != null)
+            {
+                return Camera.main.WorldToScreenPoint(startPointTransform.position);
+            }
+            return Vector2.zero;
+        }
+    }
+
     private void Awake()
     {
         if (Instance == null)
@@ -150,7 +162,10 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
         // 3. IAimControllerのメソッドを呼び出し、魔法を発射
         aimController.ReleaseMagic(angle, power);
+        OnMagicFired?.Invoke();
     }
+
+    public event System.Action OnMagicFired;
 
     /// <summary>
     /// ドロップされたオブジェクトが SpellUI である場合、杖から削除（破棄）します。
@@ -181,8 +196,12 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     {
         Vector2 launchVector = -dragDelta;
 
+        // 画面の高さに応じて最大ドラッグ距離をスケーリング (1080pを基準とする)
+        float referenceHeight = 1170f;
+        float scaledMaxDragDistance = maxDragDistance * (Screen.height / referenceHeight);
+
         // 強度の計算: ドラッグ距離を最大距離で正規化 (0.0f ～ 1.0fにクランプ)
-        power = Mathf.Clamp01(launchVector.magnitude / maxDragDistance);
+        power = Mathf.Clamp01(launchVector.magnitude / scaledMaxDragDistance);
 
         // 角度の計算: X軸 (右) を基準にした角度
         angle = Mathf.Atan2(launchVector.y, launchVector.x) * Mathf.Rad2Deg;

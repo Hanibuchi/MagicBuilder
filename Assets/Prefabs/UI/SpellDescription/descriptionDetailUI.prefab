@@ -88,6 +88,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iconImage: {fileID: 48195390864413756}
   descriptionText: {fileID: 262496123872918663}
+  typingStartDelay: 0.2
 --- !u!1 &4748859501155675271
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,6 +267,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: -20
   m_lineSpacingMax: 0

@@ -16,43 +16,35 @@ MonoBehaviour:
   subStageName: "\u6700\u521D\u306E\u30B9\u30C6\u30FC\u30B8"
   SceneName: Stage_Template
   clearCondition: 2
-  enemyPhases: []
-  phaseGenerators:
-  - rid: 1486059392694747261
+  enemyPhases:
+  - conditionType: 0
+    conditionValue: 0
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 5364255320582704603, guid: 67f1a42cd82468f4aa9b920487b9162e, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 0
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  - conditionType: 0
+    conditionValue: 0
+    isBossPhase: 0
+    spawnerConfig:
+      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
+      isBoss: 0
+      customDroppableSpells: []
+  phaseGenerators: []
   puzzleSpells: []
   puzzleWands: 
   stageType: 0
   firstClearReward: 100
   repeatClearReward: 50
+  endlessRewardMultiplier: 3
   references:
     version: 2
-    RefIds:
-    - rid: 1486059392694747261
-      type: {class: RandomSpawnsPhaseGenerator, ns: , asm: Assembly-CSharp}
-      data:
-        startConditionType: 0
-        startConditionValue: 5
-        enemies:
-        - enemyPrefab: {fileID: 310864327797576380, guid: 42656010a7e4e1b42bcf5cc44b5d0470, type: 3}
-          weight: 1
-        spawnInterval: 2
-        duration: 60
-        maxSpawnCount: 1
-        droppableSpells:
-        - {fileID: 11400000, guid: 7abf0850d48fdf9428700611ba2f99ba, type: 2}
-        - {fileID: 11400000, guid: af7dcd61f85a1f54ba774f721dad12f4, type: 2}
-        - {fileID: 11400000, guid: 54fdeaf1e456d8843845f8b704afde19, type: 2}
-        - {fileID: 11400000, guid: 28ccbd075847d8740bfae4910880bad8, type: 2}
-        - {fileID: 11400000, guid: 6b7a139abf2ffb24d9586ef6afe5485c, type: 2}
-        - {fileID: 11400000, guid: 348a49ff6b101e44b8f00dd2345dcc55, type: 2}
-        - {fileID: 11400000, guid: 7889960835c569e489391bc36cd6dc39, type: 2}
-        - {fileID: 11400000, guid: 202c2a40c82b5d746b2718eee9958c9c, type: 2}
-        rarityDropRates:
-        - rarity: 0
-          dropRate: 0.2
-        - rarity: 1
-          dropRate: 0.15
-        - rarity: 2
-          dropRate: 0.1
-        - rarity: 3
-          dropRate: 0.05
+    RefIds: []

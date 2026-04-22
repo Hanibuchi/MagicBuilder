@@ -16,7 +16,8 @@ MonoBehaviour:
   spellType: TwoSplit
   cooldown: 2
   spellName: "\u591A\u91CD\u8A60\u5531 x2"
-  purchaseCosts: 64000000c80000009001000020030000
+  useCustomPurchaseCosts: 1
+  customPurchaseCosts: 900100002003000040060000800c0000
   rarity: 2
   icon: {fileID: 1202131627156371203, guid: 6c1dcb866f2ab9d41b3fd26b344e3736, type: 3}
   iconColor: {r: 1, g: 1, b: 1, a: 1}

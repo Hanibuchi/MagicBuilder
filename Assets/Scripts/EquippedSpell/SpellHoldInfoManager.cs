@@ -109,6 +109,41 @@ public class SpellHoldInfoManager : MonoBehaviour
                 _spellUnlockedStatus[pair.Key] = true;
             }
         }
+
+        // 初期装備として設定されている呪文は、最低でも初期装備にセットされている個数分は所持させる（セーブデータ不整合の救済）
+        var initialConfig = Resources.Load<InitialEquippedSpellsConfig>("InitialEquippedSpellsConfig");
+        if (initialConfig != null && initialConfig.initialSpells != null)
+        {
+            Dictionary<SpellType, int> requiredCounts = new Dictionary<SpellType, int>();
+            foreach (var spell in initialConfig.initialSpells)
+            {
+                if (spell == null) continue;
+                
+                SpellType type = SpellDatabase.Instance.GetSpellType(spell);
+                if (type == SpellType.None) continue;
+                
+                if (requiredCounts.ContainsKey(type))
+                    requiredCounts[type]++;
+                else
+                    requiredCounts[type] = 1;
+            }
+
+            foreach (var kvp in requiredCounts)
+            {
+                SpellType type = kvp.Key;
+                int required = kvp.Value;
+                int current = GetSpellCount(type);
+                
+                if (current < required)
+                {
+                    int deficit = required - current;
+                    for (int i = 0; i < deficit; i++)
+                    {
+                        IncreaseSpellCount(type);
+                    }
+                }
+            }
+        }
     }
 
     /// <summary>

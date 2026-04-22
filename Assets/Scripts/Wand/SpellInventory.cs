@@ -149,6 +149,8 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
 
 
     // --- ISpellContainer の実装 ---
+    public event System.Action<int> OnSpellClicked;
+
     public void NotifyDragBegin(int index)
     {
         draggingSpellUI = spellUIs[index];
@@ -168,6 +170,7 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
 
     public void NotifyPointerClick(int index)
     {
+        OnSpellClicked?.Invoke(index);
         SpellBase spell = availableSpells[index];
         if (newSpells.Contains(spell))
         {
@@ -188,6 +191,18 @@ public class SpellInventory : MonoBehaviour, ISpellContainer
 
 
     // --- 追加機能: 杖への追加/移動のためのヘルパー ---
+
+    /// <summary>
+    /// インベントリ内の指定インデックスのSpellUIのRectTransformを取得します。チュートリアル用です。
+    /// </summary>
+    public RectTransform GetSpellUIRectTransform(int index)
+    {
+        if (index >= 0 && index < spellUIs.Count && spellUIs[index] != null)
+        {
+            return spellUIs[index].GetComponent<RectTransform>();
+        }
+        return null;
+    }
 
     /// <summary>
     /// 指定したインデックスの呪文データ（SpellBase）を取得する。

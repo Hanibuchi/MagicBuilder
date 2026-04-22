@@ -186,7 +186,17 @@ public class ConfigUpdater : EditorWindow
 
                     // ドロップ呪文の設定
                     randomPhase.droppableSpells = new List<SpellBase>();
-                    randomPhase.rarityDropRates = new List<RandomSpawnsPhaseGenerator.RarityDropRate>(defaultDropRates);
+                    
+                    float dropRateMultiplier = 1.0f - 0.5f * (L - 1) / 17f;
+                    randomPhase.rarityDropRates = new List<RandomSpawnsPhaseGenerator.RarityDropRate>();
+                    foreach (var dr in defaultDropRates)
+                    {
+                        randomPhase.rarityDropRates.Add(new RandomSpawnsPhaseGenerator.RarityDropRate
+                        {
+                            rarity = dr.rarity,
+                            dropRate = dr.dropRate * dropRateMultiplier
+                        });
+                    }
 
                     if (stageDropMap.TryGetValue(stageName, out List<string> dropTypes))
                     {

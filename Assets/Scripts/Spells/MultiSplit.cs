@@ -50,6 +50,7 @@ public class MultiSplit : SpellBase
         if (spellToDisplay == null) return;
 
         Vector2 baseCasterPoint = context.CasterPosition;
+        SpellContext originalContext = context.Clone();
 
         for (int r = 0; r < repeatCount; r++)
         {
@@ -60,7 +61,7 @@ public class MultiSplit : SpellBase
             // 発射角度 (rotationZ) に合わせてオフセットを回転させる
             Vector2 rotatedOffset = Quaternion.Euler(0, 0, rotationZ) * offset;
 
-            SpellContext newContext = (r == 0) ? context : context.Clone();
+            SpellContext newContext = (r == 0) ? context : originalContext.Clone();
             newContext.CasterPosition = baseCasterPoint + rotatedOffset;
             newContext.callId = r; // 繰り返し回数をIDとして設定
 
@@ -97,6 +98,7 @@ public class MultiSplit : SpellBase
         }
 
         Vector2 baseCasterPoint = context.CasterPosition;
+        SpellContext originalContext = context.Clone();
 
         for (int r = 0; r < repeatCount; r++)
         {
@@ -108,7 +110,7 @@ public class MultiSplit : SpellBase
             Vector2 rotatedOffset = Quaternion.Euler(0, 0, rotationZ) * offset;
 
             // 最初の発射の時は元のSpellContextを使用し、それ以外はCloneする
-            SpellContext newContext = (r == 0) ? context : context.Clone();
+            SpellContext newContext = (r == 0) ? context : originalContext.Clone();
             newContext.CasterPosition = baseCasterPoint + rotatedOffset;
             newContext.callId = r;
 

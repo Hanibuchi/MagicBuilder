@@ -33,6 +33,9 @@ public class SpellDescriptionUI : MonoBehaviour, IPointerClickHandler
     [SerializeField] private GameObject detailItemPrefab;
 
     [Header("アニメーション設定")]
+    [Tooltip("テキストの表示を開始するまでの遅延時間（秒）")]
+    [SerializeField] private float typingStartDelay = 0.2f;
+
     [Tooltip("詳細説明パネルのアニメーターコンポーネント")]
     [SerializeField] private Animator panelAnimator;
 
@@ -42,6 +45,8 @@ public class SpellDescriptionUI : MonoBehaviour, IPointerClickHandler
     private GameObject currentDropUI = null;
     private bool isHiding = false;
     private bool isShow = false;
+    private Coroutine descriptionCoroutine;
+    private Coroutine spellNameCoroutine;
 
     protected virtual void Awake()
     {
@@ -85,11 +90,6 @@ public class SpellDescriptionUI : MonoBehaviour, IPointerClickHandler
 
         currentlyDisplayedSpell = spell;
 
-        if (spellNameText != null)
-        {
-            spellNameText.text = spell.spellName;
-        }
-
         if (iconParent != null)
         {
             // CreateDropUI() を使ってドロップUI（アイコン）を生成
@@ -102,8 +102,19 @@ public class SpellDescriptionUI : MonoBehaviour, IPointerClickHandler
             }
         }
 
+        isHiding = false; // 表示中は非表示アニメーションフラグをリセット
+        // 3. パネルを先に表示（非アクティブなオブジェクトではCoroutineを実行できないため最初に行う）
+        detailPanelRoot.SetActive(true);
+
+        if (spellNameText != null)
+        {
+            if (spellNameCoroutine != null) StopCoroutine(spellNameCoroutine);
+            spellNameCoroutine = StartCoroutine(TypeSpellNameRoutine(spell.spellName));
+        }
+
         // 1. 呪文の概要説明を設定
-        descriptionText.text = spell.GetDescription();
+        if (descriptionCoroutine != null) StopCoroutine(descriptionCoroutine);
+        descriptionCoroutine = StartCoroutine(TypeDescriptionRoutine(spell.GetDescription()));
 
         // 2. 詳細項目リストを取得し、UIを生成・設定
         List<SpellDescriptionItem> details = spell.GetDescriptionDetails();
@@ -125,9 +136,6 @@ public class SpellDescriptionUI : MonoBehaviour, IPointerClickHandler
             }
         }
 
-        isHiding = false; // 表示中は非表示アニメーションフラグをリセット
-        // 3. パネルを表示
-        detailPanelRoot.SetActive(true);
         if (panelAnimator != null)
         {
             panelAnimator.SetTrigger("Show"); // アニメーターの"Show"トリガーを起動
@@ -175,6 +183,40 @@ public class SpellDescriptionUI : MonoBehaviour, IPointerClickHandler
         ClearDetailItems();
         ClearDropUI(); // アイコンクリアを追加
         isHiding = false; // フラグをリセット
+    }
+
+    private System.Collections.IEnumerator TypeDescriptionRoutine(string message)
+    {
+        descriptionText.text = message;
+        descriptionText.maxVisibleCharacters = 0;
+
+        if (typingStartDelay > 0f)
+        {
+            yield return new WaitForSecondsRealtime(typingStartDelay);
+        }
+
+        for (int i = 1; i <= message.Length; i++)
+        {
+            descriptionText.maxVisibleCharacters = i;
+            yield return null;
+        }
+    }
+
+    private System.Collections.IEnumerator TypeSpellNameRoutine(string message)
+    {
+        spellNameText.text = message;
+        spellNameText.maxVisibleCharacters = 0;
+
+        if (typingStartDelay > 0f)
+        {
+            yield return new WaitForSecondsRealtime(typingStartDelay);
+        }
+
+        for (int i = 1; i <= message.Length; i++)
+        {
+            spellNameText.maxVisibleCharacters = i;
+            yield return null;
+        }
     }
 
     /// <summary>

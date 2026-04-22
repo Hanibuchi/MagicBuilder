@@ -38,27 +38,15 @@ public class BatMovement : EnemyMovementBase
         isInitialized = true;
     }
 
-    protected override void FixedUpdate()
-    {
-        // BeeMovementと同様に空にし、代わりにLateUpdateでbase.FixedUpdate()を呼ぶ
-    }
-
     void LateUpdate()
     {
-        // BaseMovementの移動処理をLateUpdateのタイミングで強制的に実行
-        base.FixedUpdate();
-    }
-
-    protected override void HandleMovement()
-    {
-        // X方向の移動力追加などはベースクラスに任せる
-        base.HandleMovement();
-        
+        if (!isMoving || isStunned > 0) return;
         if (!isInitialized) return;
 
         if (enableVerticalMovement && modelTransform != null)
         {
             float currentMultiplier = GetTotalSpeedMultiplier();
+            // LateUpdateなのでTime.deltaTimeを使用
             elapsedTime += Time.deltaTime * currentMultiplier;
 
             // サイン波を用いてオフセットを計算
