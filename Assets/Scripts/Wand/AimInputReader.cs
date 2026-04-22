@@ -196,8 +196,12 @@ public class AimInputReader : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     {
         Vector2 launchVector = -dragDelta;
 
+        // 画面の高さに応じて最大ドラッグ距離をスケーリング (1080pを基準とする)
+        float referenceHeight = 1170f;
+        float scaledMaxDragDistance = maxDragDistance * (Screen.height / referenceHeight);
+
         // 強度の計算: ドラッグ距離を最大距離で正規化 (0.0f ～ 1.0fにクランプ)
-        power = Mathf.Clamp01(launchVector.magnitude / maxDragDistance);
+        power = Mathf.Clamp01(launchVector.magnitude / scaledMaxDragDistance);
 
         // 角度の計算: X軸 (右) を基準にした角度
         angle = Mathf.Atan2(launchVector.y, launchVector.x) * Mathf.Rad2Deg;
