@@ -21,6 +21,25 @@ public class TitleSceneManager : MonoBehaviour
     [Tooltip("ステージ選択画面へ遷移する時に鳴らすSE")]
     [SerializeField] AudioClip transitionSE;
 
+    [Header("アニメーション設定")]
+    [Tooltip("タイトルシーンで初期化したいAnimatorの配列")]
+    [SerializeField] private Animator[] animatorsToRebind;
+
+    private void Awake()
+    {
+        // Animator配列のTrigger("Start")
+        if (animatorsToRebind != null)
+        {
+            foreach (var animator in animatorsToRebind)
+            {
+                if (animator != null)
+                {
+                    animator.SetTrigger("Start");
+                }
+            }
+        }
+    }
+
     void Start()
     {
         // GameManagerの存在を確認（既にDontDestroyOnLoadされているはず）

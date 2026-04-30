@@ -103,5 +103,9 @@ public class GameManager : MonoBehaviour, IStageStartListener
     {
         yield return null; // 1フレーム待つ
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+
+        yield return null;
+        Time.timeScale = 1f;
     }
+
 }
