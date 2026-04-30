@@ -22,11 +22,15 @@ public class SettingsUI : MonoBehaviour
     [SerializeField] private Button closeButton;
     [SerializeField] private Button xButton; // X（旧Twitter）を開くボタン
     [SerializeField] private Button buyCoffeeButton; // 作者にコーヒーをおごるボタン
+    [SerializeField] private Button clearDataButton; // データリセットボタン
     [SerializeField] private string authorXUrl = "https://x.com/your_account_name"; // 作者のXのURL
     [SerializeField] private AudioClip openSFX;
     [SerializeField] private AudioClip closeSFX;
     [SerializeField] private AudioClip volumeChangeSFX;
+    [SerializeField] private AudioClip clearDataConfirmSFX; // データ削除時のSE
+    [SerializeField] private AudioClip clearDataCancelSFX; // データ削除キャンセル時のSE
     [SerializeField] private PurchaseMessageUI purchaseMessageUIPrefab; // 購入UIのプレハブ
+    [SerializeField] private ConfirmationUI confirmationUIPrefab; // 確認UIのプレハブ
 
     private PurchaseMessageUI buyCoffeePurchaseUI;
 
@@ -64,6 +68,11 @@ public class SettingsUI : MonoBehaviour
         if (buyCoffeeButton != null)
         {
             buyCoffeeButton.onClick.AddListener(OnBuyCoffeeButtonClicked);
+        }
+
+        if (clearDataButton != null)
+        {
+            clearDataButton.onClick.AddListener(OnClearDataButtonClicked);
         }
 
         // 初期状態では設定パネルを非表示にしておく
@@ -269,6 +278,38 @@ public class SettingsUI : MonoBehaviour
             buyCoffeePurchaseUI.Init(titleOrText, description, null);
             buyCoffeePurchaseUI.Show();
         }
+    }
+
+    /// <summary>
+    /// 全データ削除ボタンが押されたときに呼び出されます。
+    /// </summary>
+    private void OnClearDataButtonClicked()
+    {
+        if (confirmationUIPrefab == null)
+        {
+            Debug.LogError("[SettingsUI] confirmationUIPrefab が設定されていません。");
+            return;
+        }
+
+        // 確認UIを生成 (最前面に表示するため、Canvasや適当な親を指定するかルートに置く)
+        // ここでは自身の子として生成します。Canvasが親にある前提です。
+        ConfirmationUI confirmationUI = Instantiate(confirmationUIPrefab, transform.parent);
+        
+        string message = "すべてのセーブデータを削除しますか？\nこの操作は取り消せません。";
+        confirmationUI.Initialize(message, () =>
+        {
+            // Yesが押されたときの処理
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.ClearPlayerPrefs();
+            }
+            PlaySE(clearDataConfirmSFX);
+        },
+        () => 
+        {
+            // Noが押されたときは何もしない
+            PlaySE(clearDataCancelSFX);
+        });
     }
 
     /// <summary>
