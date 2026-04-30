@@ -335,19 +335,16 @@ public class SpellHoldInfoManager : MonoBehaviour
         {
             if (type == SpellType.None) continue;
 
-            // 保持数が 10 未満の場合、10 になるまで増やす
-            int currentCount = GetSpellCount(type);
-            for (int i = currentCount; i < 10; i++)
-            {
-                IncreaseSpellCount(type);
-            }
-            
-            // 念のため開放状態も確認して強制的に開放する
-            if (!IsSpellUnlocked(type))
-            {
-                UnlockSpell(type);
-            }
+            // ディクショナリを直接更新し、SaveAllData の連続呼び出しを避ける
+            int currentCount = _spellCounts.TryGetValue(type, out int c) ? c : 0;
+            _spellCounts[type] = Mathf.Max(currentCount, 10);
+            _spellUnlockedStatus[type] = true;
+            _spellNewlyUnlockedStatus.TryAdd(type, false);
         }
+
+        // 全呪文の更新が終わってから1回だけ保存
+        SaveAllData();
+
         Debug.Log("<color=cyan>[SpellHoldInfoManager Test]</color> すべての登録済み呪文を開放し、10個ずつ所持させました。");
     }
 
