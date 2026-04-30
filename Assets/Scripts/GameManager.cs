@@ -74,4 +74,14 @@ public class GameManager : MonoBehaviour, IStageStartListener
     {
         SceneTransitionManager.Instance.LoadScenesWithTransition(STAGE_SELECT_SCENE_NAME);
     }
+
+    /// <summary>
+    /// PlayerPrefsのデータをすべて削除します。
+    /// </summary>
+    public void ClearPlayerPrefs()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        Debug.Log("GameManager: PlayerPrefsのデータをすべて削除しました。");
+    }
 }

@@ -75,9 +75,14 @@ public class DebugTools : MonoBehaviour
     /// </summary>
     public void ClearPlayerPrefs()
     {
-        PlayerPrefs.DeleteAll();
-        PlayerPrefs.Save();
-        Debug.Log("PlayerPrefsのデータをすべて削除しました。");
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.ClearPlayerPrefs();
+        }
+        else
+        {
+            Debug.LogError("GameManager.Instance が見つかりません。");
+        }
     }
 }
 
