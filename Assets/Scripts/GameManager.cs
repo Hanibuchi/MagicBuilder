@@ -76,12 +76,32 @@ public class GameManager : MonoBehaviour, IStageStartListener
     }
 
     /// <summary>
-    /// PlayerPrefsのデータをすべて削除します。
+    /// PlayerPrefsのデータをすべて削除し、GameManager以外のDontDestroyOnLoadオブジェクトを破棄してから1フレーム後にタイトルシーンへ戻ります。
     /// </summary>
     public void ClearPlayerPrefs()
     {
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
         Debug.Log("GameManager: PlayerPrefsのデータをすべて削除しました。");
+
+        // DontDestroyOnLoadの全ルートオブジェクトを取得
+        var dontDestroyScene = gameObject.scene;
+        var rootObjects = dontDestroyScene.GetRootGameObjects();
+        foreach (var go in rootObjects)
+        {
+            if (go != this.gameObject && !go.TryGetComponent(out IAPManager _))
+            {
+                Destroy(go);
+            }
+        }
+
+        // 1フレーム待ってからシーンをリロード
+        StartCoroutine(ReloadSceneAfterFrame());
+    }
+
+    private System.Collections.IEnumerator ReloadSceneAfterFrame()
+    {
+        yield return null; // 1フレーム待つ
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 }
