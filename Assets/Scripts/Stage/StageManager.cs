@@ -34,6 +34,10 @@ public class StageManager : MonoBehaviour
     [Tooltip("これをチェックすると、敵のフェーズ（生成）を開始しません。")]
     [SerializeField] private bool debugDisableEnemySpawning = false;
 
+    [Header("コンティニュー設定")]
+    [Tooltip("コンティニュー（広告視聴での復活）機能を有効にするか")]
+    [SerializeField] private bool enableContinueFeature = false;
+
     // --- 定数 ---
 
     [SerializeField] Transform enemySpawnPoint;
@@ -528,7 +532,7 @@ public class StageManager : MonoBehaviour
         if (gameEnd) return;
 
         // 初回のゲームオーバー時のみコンティニュー広告を表示
-        if (!hasUsedContinue && AdController.Instance != null)
+        if (enableContinueFeature && !hasUsedContinue && AdController.Instance != null)
         {
             hasUsedContinue = true;
             // 広告UI表示中は時間を止める

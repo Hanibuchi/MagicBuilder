@@ -11,11 +11,23 @@ public class GumballProjectile : SpellProjectileDamageSource, IClickTriggerFireL
     [Header("Gumball設定")]
     [SerializeField] private AudioClip stickSound;
     [SerializeField] private float stickSoundVolume = 1.0f;
+    [Tooltip("発射後、このフレーム数の間はくっつき判定を無視します")]
+    [SerializeField] private int ignoreFrames = 1;
+
+    private int currentFrame = 0;
 
     protected override void Awake()
     {
         base.Awake();
         rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void Update()
+    {
+        if (currentFrame <= ignoreFrames)
+        {
+            currentFrame++;
+        }
     }
 
     /// <summary>
@@ -29,6 +41,7 @@ public class GumballProjectile : SpellProjectileDamageSource, IClickTriggerFireL
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
         if (isStuck) return;
+        if (currentFrame <= ignoreFrames) return;
 
         HandleStick(collision.transform);
 
@@ -39,6 +52,7 @@ public class GumballProjectile : SpellProjectileDamageSource, IClickTriggerFireL
     protected override void OnTriggerEnter2D(Collider2D other)
     {
         if (isStuck) return;
+        if (currentFrame <= ignoreFrames) return;
 
         // Triggerの場合は、Groundレイヤーなら無視する
         if (other.gameObject.layer != LayerMask.NameToLayer("Ground"))

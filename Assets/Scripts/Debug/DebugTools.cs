@@ -58,4 +58,31 @@ public class DebugTools : MonoBehaviour
             Debug.LogError("EquippedSpellManager.Instance が見つかりません。");
         }
     }
+
+    /// <summary>
+    /// すべてのデバッグメソッドを実行します。
+    /// </summary>
+    public void ExecuteAllDebugMethods()
+    {
+        UnlockAndGrantAllSpells();
+        UnlockAllWands();
+        UnlockAllStage();
+        MaximizeEquippedSpellCapacity();
+    }
+
+    /// <summary>
+    /// PlayerPrefsのデータをすべて削除します。
+    /// </summary>
+    public void ClearPlayerPrefs()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.ClearPlayerPrefs();
+        }
+        else
+        {
+            Debug.LogError("GameManager.Instance が見つかりません。");
+        }
+    }
 }
+

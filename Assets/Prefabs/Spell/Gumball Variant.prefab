@@ -132,6 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageSourceType: 0
   maxPierceCount: 999
+  currentSpellLayer: 0
   enableImpulse: 0
   impulseForce: 1
   animator: {fileID: 0}
@@ -144,6 +145,7 @@ MonoBehaviour:
   destroySoundVolume: 1
   stickSound: {fileID: 8300000, guid: 7c59ead1c0a254004bc52e663fd40aa4, type: 3}
   stickSoundVolume: 1
+  ignoreFrames: 1
 --- !u!212 &6753135889922644291 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 5706498535635540185, guid: 0a454efb2e9f7c741a74856ad732bec1, type: 3}
