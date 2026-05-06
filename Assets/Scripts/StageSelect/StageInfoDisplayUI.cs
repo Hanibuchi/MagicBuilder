@@ -32,6 +32,7 @@ public class StageInfoDisplayUI : MonoBehaviour
 
     public Button StartButton => startButton;
     public Button OpenSpellSelectButton => openSpellSelectButton;
+    public Button OpenWandSelectButton => openWandSelectButton;
     public event System.Action<string> OnUIOpened;
     public event System.Action<string> OnStageInfoSet;
     public event System.Action OnUIClosed;

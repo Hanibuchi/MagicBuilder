@@ -23,7 +23,9 @@ public class StageSelectTutorialController : MonoBehaviour
     [SerializeField] private SpellBase targetDragSpell;
 
     private bool hasTappedSpellSelect = false;
+    private bool hasTappedWandSelect = false;
     private Coroutine tutorialCoroutine;
+    private Coroutine wandTutorialCoroutine;
 
     private void Awake()
     {
@@ -47,6 +49,11 @@ public class StageSelectTutorialController : MonoBehaviour
             {
                 StageInfoDisplayUI.Instance.OpenSpellSelectButton.onClick.AddListener(OnSpellSelectButtonClicked);
             }
+
+            if (StageInfoDisplayUI.Instance.OpenWandSelectButton != null)
+            {
+                StageInfoDisplayUI.Instance.OpenWandSelectButton.onClick.AddListener(OnWandSelectButtonClicked);
+            }
         }
     }
 
@@ -66,6 +73,11 @@ public class StageSelectTutorialController : MonoBehaviour
             {
                 StageInfoDisplayUI.Instance.OpenSpellSelectButton.onClick.RemoveListener(OnSpellSelectButtonClicked);
             }
+
+            if (StageInfoDisplayUI.Instance.OpenWandSelectButton != null)
+            {
+                StageInfoDisplayUI.Instance.OpenWandSelectButton.onClick.RemoveListener(OnWandSelectButtonClicked);
+            }
         }
     }
 
@@ -75,6 +87,11 @@ public class StageSelectTutorialController : MonoBehaviour
         {
             hasTappedSpellSelect = true;
         }
+    }
+
+    private void OnWandSelectButtonClicked()
+    {
+        hasTappedWandSelect = true;
     }
 
     private void HandleStagesGeneratedForTutorial(string islandID)
@@ -151,14 +168,17 @@ public class StageSelectTutorialController : MonoBehaviour
 
     private void OnStageInfoSet(string identifier)
     {
-        if (identifier == targetStageIdentifier && !hasTappedSpellSelect)
+        StopTutorial();
+
+        if (PlayerPrefs.GetInt("IsWandSelectTutorialDone", 0) != 1
+            && WandUnlockManager.Instance != null
+            && WandUnlockManager.Instance.HasAnyNewlyUnlockedWands())
         {
-            StopTutorial();
-            tutorialCoroutine = StartCoroutine(SpellSetTutorialSequenceRoutine());
+            wandTutorialCoroutine = StartCoroutine(WandSelectTutorialRoutine());
         }
-        else
+        else if (identifier == targetStageIdentifier && !hasTappedSpellSelect)
         {
-            StopTutorial();
+            tutorialCoroutine = StartCoroutine(SpellSetTutorialSequenceRoutine());
         }
     }
 
@@ -169,11 +189,59 @@ public class StageSelectTutorialController : MonoBehaviour
             StopCoroutine(tutorialCoroutine);
             tutorialCoroutine = null;
         }
+        if (wandTutorialCoroutine != null)
+        {
+            StopCoroutine(wandTutorialCoroutine);
+            wandTutorialCoroutine = null;
+        }
         if (pointerController != null)
         {
             pointerController.HidePointer();
             pointerController.HideDescription();
         }
+    }
+
+    private IEnumerator WandSelectTutorialRoutine()
+    {
+        if (pointerController == null) yield break;
+
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        if (StageInfoDisplayUI.Instance == null
+            || StageInfoDisplayUI.Instance.OpenWandSelectButton == null
+            || !StageInfoDisplayUI.Instance.OpenWandSelectButton.gameObject.activeInHierarchy)
+        {
+            yield break;
+        }
+
+        hasTappedWandSelect = false;
+        pointerController.ShowDescription("杖を確認しよう");
+
+        while (!hasTappedWandSelect)
+        {
+            if (StageInfoDisplayUI.Instance.OpenWandSelectButton.TryGetComponent<RectTransform>(out var wandButtonRect))
+            {
+                Canvas canvas = wandButtonRect.GetComponentInParent<Canvas>();
+                Camera cam = canvas != null ? canvas.worldCamera : null;
+                Vector3 worldCenter = wandButtonRect.TransformPoint(wandButtonRect.rect.center);
+                Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(cam, worldCenter);
+                pointerController.PlayTapAnimation(screenPos);
+            }
+
+            float elapsed = 0f;
+            while (elapsed < 1.5f)
+            {
+                if (hasTappedWandSelect) break;
+                elapsed += Time.unscaledDeltaTime;
+                yield return null;
+            }
+        }
+
+        PlayerPrefs.SetInt("IsWandSelectTutorialDone", 1);
+        PlayerPrefs.Save();
+
+        pointerController.HidePointer();
+        pointerController.HideDescription();
     }
 
     private IEnumerator SpellSetTutorialSequenceRoutine()
