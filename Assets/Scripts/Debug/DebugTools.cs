@@ -9,6 +9,7 @@ public class DebugTools : MonoBehaviour
     /// <summary>
     /// すべての呪文を開放し、1つずつ所持した状態にします。
     /// </summary>
+    [ContextMenu("すべての呪文を開放・所持")]
     public void UnlockAndGrantAllSpells()
     {
         if (SpellHoldInfoManager.Instance != null)
@@ -21,7 +22,7 @@ public class DebugTools : MonoBehaviour
         }
     }
 
-
+    [ContextMenu("すべての杖を開放")]
     public void UnlockAllWands()
     {
         WandUnlockManager.Instance.UnlockAllWands();
@@ -31,6 +32,7 @@ public class DebugTools : MonoBehaviour
     /// <summary>
     /// すべてのステージを開放します。
     /// </summary>
+    [ContextMenu("すべてのステージを開放")]
     public void UnlockAllStage()
     {
         if (StageUnlockManager.Instance != null)
@@ -47,6 +49,7 @@ public class DebugTools : MonoBehaviour
     /// <summary>
     /// 持ち込み呪文の容量を最大にします。
     /// </summary>
+    [ContextMenu("持ち込み呪文の容量を最大化")]
     public void MaximizeEquippedSpellCapacity()
     {
         if (EquippedSpellManager.Instance != null)
@@ -62,6 +65,7 @@ public class DebugTools : MonoBehaviour
     /// <summary>
     /// 所持金を最大にします。
     /// </summary>
+    [ContextMenu("所持金を最大化")]
     public void MaximizeCurrency()
     {
         if (CurrencyController.Instance != null)
@@ -77,6 +81,7 @@ public class DebugTools : MonoBehaviour
     /// <summary>
     /// すべてのデバッグメソッドを実行します。
     /// </summary>
+    [ContextMenu("すべてのデバッグメソッドを実行")]
     public void ExecuteAllDebugMethods()
     {
         UnlockAndGrantAllSpells();
@@ -89,6 +94,7 @@ public class DebugTools : MonoBehaviour
     /// <summary>
     /// PlayerPrefsのデータをすべて削除します。
     /// </summary>
+    [ContextMenu("PlayerPrefsデータをクリア")]
     public void ClearPlayerPrefs()
     {
         if (GameManager.Instance != null)
