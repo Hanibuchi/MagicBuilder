@@ -14094,6 +14094,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageSelectTutorialController
   pointerController: {fileID: 1017997079}
+  stageSelectUI: {fileID: 826938147}
+  firstStageIdentifier: 1-1
   targetStageIdentifier: 1-4
   requiredCapacityCount: 4
   targetDragSpell: {fileID: 11400000, guid: 08f3639c14bb5b14e8bdb47157ecd491, type: 2}

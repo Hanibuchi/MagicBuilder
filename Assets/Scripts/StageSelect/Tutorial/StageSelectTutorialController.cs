@@ -10,6 +10,8 @@ public class StageSelectTutorialController : MonoBehaviour
     [Header("Tutorial Settings")]
     [Tooltip("インスペクタから設定するチュートリアルポインターコントローラー")]
     [SerializeField] private TutorialPointerController pointerController;
+    [SerializeField] private StageSelectUI stageSelectUI;
+    [SerializeField] private string firstStageIdentifier = "1-1";
 
     [Tooltip("チュートリアルを開始するステージID（最初のラッシュステージなど）")]
     [SerializeField] private string targetStageIdentifier = "1-4";
@@ -22,6 +24,17 @@ public class StageSelectTutorialController : MonoBehaviour
 
     private bool hasTappedSpellSelect = false;
     private Coroutine tutorialCoroutine;
+
+    private void Awake()
+    {
+        if (!PlayerPrefs.GetInt("IsStageSelectTutorialDone", 0).Equals(1))
+        {
+            if (stageSelectUI != null)
+            {
+                stageSelectUI.OnStagesGeneratedAction += HandleStagesGeneratedForTutorial;
+            }
+        }
+    }
 
     private void Start()
     {
@@ -39,6 +52,11 @@ public class StageSelectTutorialController : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (stageSelectUI != null)
+        {
+            stageSelectUI.OnStagesGeneratedAction -= HandleStagesGeneratedForTutorial;
+        }
+
         if (StageInfoDisplayUI.Instance != null)
         {
             StageInfoDisplayUI.Instance.OnStageInfoSet -= OnStageInfoSet;
@@ -59,12 +77,84 @@ public class StageSelectTutorialController : MonoBehaviour
         }
     }
 
+    private void HandleStagesGeneratedForTutorial(string islandID)
+    {
+        if (PlayerPrefs.GetInt("IsStageSelectTutorialDone", 0) == 1) return;
+        StartCoroutine(FirstStageSelectTutorialRoutine());
+    }
+
+    private IEnumerator FirstStageSelectTutorialRoutine()
+    {
+        yield return new WaitForSeconds(0.01f); // ボタンの生成待ち
+
+        if (stageSelectUI == null || stageSelectUI.StageButtonParent == null) yield break;
+
+        StageButton targetButton = null;
+        foreach (Transform child in stageSelectUI.StageButtonParent)
+        {
+            var btn = child.GetComponent<StageButton>();
+            if (btn != null && btn.StageIdentifier == firstStageIdentifier)
+            {
+                targetButton = btn;
+                break;
+            }
+        }
+
+        if (targetButton == null) yield break;
+
+        bool isClicked = false;
+        UnityEngine.Events.UnityAction clickAction = () =>
+        {
+            isClicked = true;
+
+            PlayerPrefs.SetInt("IsStageSelectTutorialDone", 1);
+            PlayerPrefs.Save();
+        };
+        targetButton.button.onClick.AddListener(clickAction);
+
+        if (pointerController != null)
+        {
+            pointerController.ShowDescription("ステージを選択");
+        }
+
+        while (!isClicked)
+        {
+            if (pointerController != null)
+            {
+                var rect = targetButton.GetComponent<RectTransform>();
+                if (rect != null)
+                {
+                    Camera cam = rect.GetComponentInParent<Canvas>()?.worldCamera;
+                    Vector3 worldCenter = rect.TransformPoint(rect.rect.center);
+                    Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(cam, worldCenter);
+
+                    pointerController.PlayTapAnimation(screenPos);
+                }
+            }
+
+            float elapsed = 0f;
+            while (elapsed < 1.5f)
+            {
+                if (isClicked) break;
+                elapsed += Time.unscaledDeltaTime;
+                yield return null;
+            }
+        }
+
+        if (pointerController != null)
+        {
+            pointerController.HidePointer();
+            pointerController.HideDescription();
+        }
+        targetButton.button.onClick.RemoveListener(clickAction);
+    }
+
     private void OnStageInfoSet(string identifier)
     {
         if (identifier == targetStageIdentifier && !hasTappedSpellSelect)
         {
             StopTutorial();
-            tutorialCoroutine = StartCoroutine(TutorialSequenceRoutine());
+            tutorialCoroutine = StartCoroutine(SpellSetTutorialSequenceRoutine());
         }
         else
         {
@@ -86,7 +176,7 @@ public class StageSelectTutorialController : MonoBehaviour
         }
     }
 
-    private IEnumerator TutorialSequenceRoutine()
+    private IEnumerator SpellSetTutorialSequenceRoutine()
     {
         if (pointerController == null)
         {
@@ -198,11 +288,11 @@ public class StageSelectTutorialController : MonoBehaviour
             {
                 StopCoroutine(innerTutorial);
             }
-            
+
             // 後始末
             pointerController.HidePointer();
             pointerController.HideDescription();
-            
+
             // 装備完了していたら外側のループも抜ける
             currentSpells = EquippedSpellManager.Instance.GetEquippedSpells();
             if (currentSpells.Count > targetSlotIndex && currentSpells[targetSlotIndex] == targetDragSpell)
