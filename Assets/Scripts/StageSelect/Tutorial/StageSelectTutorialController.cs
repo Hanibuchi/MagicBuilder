@@ -27,7 +27,7 @@ public class StageSelectTutorialController : MonoBehaviour
         if (StageInfoDisplayUI.Instance != null)
         {
             StageInfoDisplayUI.Instance.OnUIOpened += OnStageInfoDisplayUIOpened;
-            
+
             if (StageInfoDisplayUI.Instance.OpenSpellSelectButton != null)
             {
                 StageInfoDisplayUI.Instance.OpenSpellSelectButton.onClick.AddListener(OnSpellSelectButtonClicked);
@@ -40,7 +40,7 @@ public class StageSelectTutorialController : MonoBehaviour
         if (StageInfoDisplayUI.Instance != null)
         {
             StageInfoDisplayUI.Instance.OnUIOpened -= OnStageInfoDisplayUIOpened;
-            
+
             if (StageInfoDisplayUI.Instance.OpenSpellSelectButton != null)
             {
                 StageInfoDisplayUI.Instance.OpenSpellSelectButton.onClick.RemoveListener(OnSpellSelectButtonClicked);
@@ -88,11 +88,11 @@ public class StageSelectTutorialController : MonoBehaviour
                     // Rectの中心座標（ワールド座標）を取得してからスクリーン座標に変換
                     Vector3 worldCenter = spellButtonRect.TransformPoint(spellButtonRect.rect.center);
                     Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(cam, worldCenter);
-                    
+
                     pointerController.PlayTapAnimation(screenPos);
                 }
             }
-            
+
             // アニメーションのループ時間待機
             float elapsed = 0f;
             while (elapsed < 1.5f)
@@ -130,7 +130,7 @@ public class StageSelectTutorialController : MonoBehaviour
                         Camera cam = increaseBtnRect.GetComponentInParent<Canvas>()?.worldCamera;
                         Vector3 worldCenter = increaseBtnRect.TransformPoint(increaseBtnRect.rect.center);
                         Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(cam, worldCenter);
-                        
+
                         pointerController.PlayTapAnimation(screenPos);
                     }
                 }
@@ -168,7 +168,7 @@ public class StageSelectTutorialController : MonoBehaviour
                         Camera cam = purchaseBtnRect.GetComponentInParent<Canvas>()?.worldCamera;
                         Vector3 worldCenter = purchaseBtnRect.TransformPoint(purchaseBtnRect.rect.center);
                         Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(cam, worldCenter);
-                        
+
                         pointerController.PlayTapAnimation(screenPos);
                     }
                 }
@@ -192,14 +192,110 @@ public class StageSelectTutorialController : MonoBehaviour
 
             pointerController.HidePointer();
             pointerController.HideDescription();
-            
+
             // UIを閉じるアニメーション等があるため待機
+            yield return new WaitForSeconds(0.5f);
+        }
+
+
+        // まず呪文を持っていなければ購入を促す
+        SpellType targetSpellType = SpellDatabase.Instance.GetSpellType(targetDragSpell);
+
+        while (SpellHoldInfoManager.Instance.GetSpellCount(targetSpellType) <= 0)
+        {
+            // ① 対象の呪文アイコンを指す
+            pointerController.ShowDescription("呪文を購入しよう");
+
+            bool isSpellIconTapped = false;
+            while (!isSpellIconTapped)
+            {
+                if (EquippedSpellSelectionUI.Instance != null)
+                {
+                    EquippedSpellIconUI targetIconUI = null;
+                    foreach (var ui in EquippedSpellSelectionUI.Instance.HoldListSpellUIs)
+                    {
+                        if (ui != null && ui.GetSpellData() == targetDragSpell)
+                        {
+                            targetIconUI = ui;
+                            break;
+                        }
+                    }
+
+                    if (targetIconUI != null)
+                    {
+                        RectTransform iconRect = targetIconUI.GetComponent<RectTransform>();
+                        if (iconRect != null)
+                        {
+                            Camera cam = iconRect.GetComponentInParent<Canvas>()?.worldCamera;
+                            Vector3 worldCenter = iconRect.TransformPoint(iconRect.rect.center);
+                            Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(cam, worldCenter);
+
+                            pointerController.PlayTapAnimation(screenPos);
+                        }
+                    }
+                }
+
+                float elapsed = 0f;
+                while (elapsed < 1.5f)
+                {
+                    if (SpellPurchaseUI.Instance != null && SpellPurchaseUI.Instance.gameObject.activeInHierarchy)
+                    {
+                        isSpellIconTapped = true;
+                        break;
+                    }
+                    elapsed += Time.deltaTime;
+                    yield return null;
+                }
+            }
+
+            pointerController.HidePointer();
+            pointerController.HideDescription();
+            yield return new WaitForSeconds(0.5f);
+
+            // ② 購入ボタンを指さす
+            pointerController.ShowDescription("購入して獲得");
+
+            while (SpellHoldInfoManager.Instance.GetSpellCount(targetSpellType) <= 0)
+            {
+                if (SpellPurchaseUI.Instance != null && SpellPurchaseUI.Instance.PurchaseButton != null && SpellPurchaseUI.Instance.gameObject.activeInHierarchy)
+                {
+                    RectTransform purchaseBtnRect = SpellPurchaseUI.Instance.PurchaseButton.GetComponent<RectTransform>();
+                    if (purchaseBtnRect != null)
+                    {
+                        Camera cam = purchaseBtnRect.GetComponentInParent<Canvas>()?.worldCamera;
+                        Vector3 worldCenter = purchaseBtnRect.TransformPoint(purchaseBtnRect.rect.center);
+                        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(cam, worldCenter);
+
+                        pointerController.PlayTapAnimation(screenPos);
+                    }
+                }
+                else
+                {
+                    // キャンセルされたらやり直す
+                    break;
+                }
+
+                float elapsed = 0f;
+                while (elapsed < 1.0f)
+                {
+                    if (SpellHoldInfoManager.Instance.GetSpellCount(targetSpellType) > 0 || !SpellPurchaseUI.Instance.gameObject.activeInHierarchy)
+                    {
+                        break;
+                    }
+                    elapsed += Time.deltaTime;
+                    yield return null;
+                }
+            }
+
+            pointerController.HidePointer();
+            pointerController.HideDescription();
             yield return new WaitForSeconds(0.5f);
         }
 
         // 装備ドラッグチュートリアル
         if (targetDragSpell != null && requiredCapacityCount > 0)
         {
+
             pointerController.ShowDescription("ドラッグで装備");
 
             int targetSlotIndex = requiredCapacityCount - 1; // 装備するべき最後の枠
