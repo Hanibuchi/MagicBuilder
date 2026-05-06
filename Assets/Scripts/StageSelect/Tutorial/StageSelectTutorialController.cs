@@ -26,7 +26,7 @@ public class StageSelectTutorialController : MonoBehaviour
     {
         if (StageInfoDisplayUI.Instance != null)
         {
-            StageInfoDisplayUI.Instance.OnUIOpened += OnStageInfoDisplayUIOpened;
+            StageInfoDisplayUI.Instance.OnStageInfoSet += OnStageInfoSet;
 
             if (StageInfoDisplayUI.Instance.OpenSpellSelectButton != null)
             {
@@ -39,7 +39,7 @@ public class StageSelectTutorialController : MonoBehaviour
     {
         if (StageInfoDisplayUI.Instance != null)
         {
-            StageInfoDisplayUI.Instance.OnUIOpened -= OnStageInfoDisplayUIOpened;
+            StageInfoDisplayUI.Instance.OnStageInfoSet -= OnStageInfoSet;
 
             if (StageInfoDisplayUI.Instance.OpenSpellSelectButton != null)
             {
@@ -56,7 +56,7 @@ public class StageSelectTutorialController : MonoBehaviour
         }
     }
 
-    private void OnStageInfoDisplayUIOpened(string identifier)
+    private void OnStageInfoSet(string identifier)
     {
         if (identifier == targetStageIdentifier && !hasTappedSpellSelect)
         {

@@ -33,6 +33,7 @@ public class StageInfoDisplayUI : MonoBehaviour
     public Button StartButton => startButton;
     public Button OpenSpellSelectButton => openSpellSelectButton;
     public event System.Action<string> OnUIOpened;
+    public event System.Action<string> OnStageInfoSet;
 
     private void Awake()
     {
@@ -87,6 +88,8 @@ public class StageInfoDisplayUI : MonoBehaviour
         bool isRush = stageConfig.stageType == StageType.Rush;
         if (openSpellSelectButton != null) openSpellSelectButton.gameObject.SetActive(isRush);
         if (openWandSelectButton != null) openWandSelectButton.gameObject.SetActive(isRush);
+
+        OnStageInfoSet?.Invoke(identifier);
     }
 
     /// <summary>
