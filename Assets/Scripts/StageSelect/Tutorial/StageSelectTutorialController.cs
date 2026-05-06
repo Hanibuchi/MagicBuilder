@@ -104,7 +104,26 @@ public class StageSelectTutorialController : MonoBehaviour
 
         if (!isAlreadyEquipped)
         {
-            pointerController.ShowDescription("タップして呪文をセット");
+            yield return StartCoroutine(HandleSpellSelectButtonTutorial());
+            yield return StartCoroutine(HandleCapacityIncreaseTutorial());
+            yield return StartCoroutine(HandleSpellPurchaseTutorial());
+            yield return StartCoroutine(HandleSpellEquipTutorial(targetSlotIndex));
+        } // if (!isAlreadyEquipped) の閉じカッコ
+
+        // 装備完了後もしくはすでに装備済みの場合、UIを閉じる
+        if (EquippedSpellController.Instance != null && EquippedSpellSelectionUI.Instance != null && EquippedSpellSelectionUI.Instance.gameObject.activeInHierarchy)
+        {
+            EquippedSpellController.Instance.CloseSpellSelectionUI();
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
+        yield return StartCoroutine(HandleStartButtonTutorial());
+    }
+
+    private IEnumerator HandleSpellSelectButtonTutorial()
+    {
+        pointerController.ShowDescription("タップして呪文をセット");
 
         // UIアニメーション完了待ち
         yield return new WaitForSeconds(0.5f);
@@ -143,7 +162,10 @@ public class StageSelectTutorialController : MonoBehaviour
 
         // 呪文UIが開くまで少し待機
         yield return new WaitForSeconds(1.0f);
+    }
 
+    private IEnumerator HandleCapacityIncreaseTutorial()
+    {
         // 枠拡張チュートリアル
         while (EquippedSpellManager.Instance.GetMaxCapacity() < requiredCapacityCount)
         {
@@ -228,8 +250,10 @@ public class StageSelectTutorialController : MonoBehaviour
             // UIを閉じるアニメーション等があるため待機
             yield return new WaitForSeconds(0.5f);
         }
+    }
 
-
+    private IEnumerator HandleSpellPurchaseTutorial()
+    {
         // まず呪文を持っていなければ購入を促す
         SpellType targetSpellType = SpellDatabase.Instance.GetSpellType(targetDragSpell);
 
@@ -323,14 +347,15 @@ public class StageSelectTutorialController : MonoBehaviour
             pointerController.HideDescription();
             yield return new WaitForSeconds(0.5f);
         }
+    }
 
+    private IEnumerator HandleSpellEquipTutorial(int targetSlotIndex)
+    {
         // 装備ドラッグチュートリアル
         if (targetDragSpell != null && requiredCapacityCount > 0)
         {
-
             pointerController.ShowDescription("ドラッグで装備");
 
-            // int targetSlotIndex = requiredCapacityCount - 1; // 上で定義済み
             bool isEquipped = false;
 
             while (!isEquipped)
@@ -409,16 +434,10 @@ public class StageSelectTutorialController : MonoBehaviour
             pointerController.HidePointer();
             pointerController.HideDescription();
         }
-        } // if (!isAlreadyEquipped) の閉じカッコ
+    }
 
-        // 装備完了後もしくはすでに装備済みの場合、UIを閉じる
-        if (EquippedSpellController.Instance != null && EquippedSpellSelectionUI.Instance != null && EquippedSpellSelectionUI.Instance.gameObject.activeInHierarchy)
-        {
-            EquippedSpellController.Instance.CloseSpellSelectionUI();
-        }
-
-        yield return new WaitForSeconds(0.5f);
-
+    private IEnumerator HandleStartButtonTutorial()
+    {
         // プレイ（開始）ボタンを押すよう促す
         pointerController.ShowDescription("プレイ開始！");
         bool isStartTapped = false;
