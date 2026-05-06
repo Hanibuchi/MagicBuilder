@@ -34,6 +34,7 @@ public class StageInfoDisplayUI : MonoBehaviour
     public Button OpenSpellSelectButton => openSpellSelectButton;
     public event System.Action<string> OnUIOpened;
     public event System.Action<string> OnStageInfoSet;
+    public event System.Action OnUIClosed;
 
     private void Awake()
     {
@@ -143,6 +144,8 @@ public class StageInfoDisplayUI : MonoBehaviour
     {
         if (close) return;
         close = true;
+
+        OnUIClosed?.Invoke();
 
         if (SoundManager.Instance != null && closeSound != null)
             SoundManager.Instance.PlaySE(closeSound);

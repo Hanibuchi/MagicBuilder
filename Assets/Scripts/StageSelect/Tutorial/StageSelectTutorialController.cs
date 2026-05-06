@@ -21,12 +21,14 @@ public class StageSelectTutorialController : MonoBehaviour
     [SerializeField] private SpellBase targetDragSpell;
 
     private bool hasTappedSpellSelect = false;
+    private Coroutine tutorialCoroutine;
 
     private void Start()
     {
         if (StageInfoDisplayUI.Instance != null)
         {
             StageInfoDisplayUI.Instance.OnStageInfoSet += OnStageInfoSet;
+            StageInfoDisplayUI.Instance.OnUIClosed += StopTutorial;
 
             if (StageInfoDisplayUI.Instance.OpenSpellSelectButton != null)
             {
@@ -40,6 +42,7 @@ public class StageSelectTutorialController : MonoBehaviour
         if (StageInfoDisplayUI.Instance != null)
         {
             StageInfoDisplayUI.Instance.OnStageInfoSet -= OnStageInfoSet;
+            StageInfoDisplayUI.Instance.OnUIClosed -= StopTutorial;
 
             if (StageInfoDisplayUI.Instance.OpenSpellSelectButton != null)
             {
@@ -60,7 +63,26 @@ public class StageSelectTutorialController : MonoBehaviour
     {
         if (identifier == targetStageIdentifier && !hasTappedSpellSelect)
         {
-            StartCoroutine(TutorialSequenceRoutine());
+            StopTutorial();
+            tutorialCoroutine = StartCoroutine(TutorialSequenceRoutine());
+        }
+        else
+        {
+            StopTutorial();
+        }
+    }
+
+    public void StopTutorial()
+    {
+        if (tutorialCoroutine != null)
+        {
+            StopCoroutine(tutorialCoroutine);
+            tutorialCoroutine = null;
+        }
+        if (pointerController != null)
+        {
+            pointerController.HidePointer();
+            pointerController.HideDescription();
         }
     }
 
