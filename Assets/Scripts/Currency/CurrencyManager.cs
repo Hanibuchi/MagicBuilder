@@ -28,6 +28,9 @@ public class CurrencyManager : MonoBehaviour
     [SerializeField]
     private int currentCurrency = 0;
 
+    [SerializeField]
+    private int maxCurrencyForDebug = int.MaxValue;
+
     /// <summary>
     /// 現在の所持額を取得します。
     /// </summary>
@@ -86,6 +89,15 @@ public class CurrencyManager : MonoBehaviour
 
         Debug.Log("CurrencyManager: Not enough currency.");
         return false;
+    }
+
+    /// <summary>
+    /// デバッグ用：所持金を最大にします。
+    /// </summary>
+    public void Test_SetMaxCurrency()
+    {
+        currentCurrency = maxCurrencyForDebug;
+        SaveCurrency();
     }
 
     /// <summary>

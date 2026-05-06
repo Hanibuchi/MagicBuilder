@@ -60,6 +60,21 @@ public class DebugTools : MonoBehaviour
     }
 
     /// <summary>
+    /// 所持金を最大にします。
+    /// </summary>
+    public void MaximizeCurrency()
+    {
+        if (CurrencyController.Instance != null)
+        {
+            CurrencyController.Instance.Test_SetMaxCurrency();
+        }
+        else
+        {
+            Debug.LogError("CurrencyController.Instance が見つかりません。");
+        }
+    }
+
+    /// <summary>
     /// すべてのデバッグメソッドを実行します。
     /// </summary>
     public void ExecuteAllDebugMethods()
@@ -68,6 +83,7 @@ public class DebugTools : MonoBehaviour
         UnlockAllWands();
         UnlockAllStage();
         MaximizeEquippedSpellCapacity();
+        MaximizeCurrency();
     }
 
     /// <summary>

@@ -90,4 +90,21 @@ public class CurrencyController : MonoBehaviour
 
         return success;
     }
+
+    /// <summary>
+    /// デバッグ用：所持金を最大に設定し、UIに反映します。
+    /// </summary>
+    public void Test_SetMaxCurrency()
+    {
+        if (CurrencyManager.Instance != null)
+        {
+            CurrencyManager.Instance.Test_SetMaxCurrency();
+        }
+
+        if (CurrencyUI.Instance != null)
+        {
+            CurrencyUI.Instance.Show();
+            CurrencyUI.Instance.SetCurrencyText(CurrencyManager.Instance.CurrentCurrency);
+        }
+    }
 }
