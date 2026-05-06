@@ -113,7 +113,7 @@ public class StageSelectTutorialController : MonoBehaviour
             EquippedSpellController.Instance.CloseSpellSelectionUI();
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSecondsRealtime(0.5f);
 
         yield return HandleStartButtonTutorial();
     }
@@ -133,7 +133,7 @@ public class StageSelectTutorialController : MonoBehaviour
             pointerController.ShowDescription("タップして呪文をセット");
 
             // UIアニメーション完了待ち
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSecondsRealtime(0.5f);
 
             while (!hasTappedSpellSelect)
             {
@@ -167,7 +167,7 @@ public class StageSelectTutorialController : MonoBehaviour
                         hasTappedSpellSelect = true;
                         break;
                     }
-                    elapsed += Time.deltaTime;
+                    elapsed += Time.unscaledDeltaTime;
                     yield return null;
                 }
             }
@@ -176,7 +176,7 @@ public class StageSelectTutorialController : MonoBehaviour
             pointerController.HideDescription();
 
             // 呪文UIが開くまで少し待機
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSecondsRealtime(1.0f);
 
             // 呪文UIが開いている間のみ以下のチュートリアルを実行
             Coroutine innerTutorial = StartCoroutine(InnerSpellEquipSequence(targetSlotIndex));
@@ -253,7 +253,7 @@ public class StageSelectTutorialController : MonoBehaviour
                         isIncreaseCapacityTapped = true;
                         break;
                     }
-                    elapsed += Time.deltaTime;
+                    elapsed += Time.unscaledDeltaTime;
                     yield return null;
                 }
             }
@@ -261,7 +261,7 @@ public class StageSelectTutorialController : MonoBehaviour
             pointerController.HidePointer();
             pointerController.HideDescription();
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSecondsRealtime(0.5f);
 
             // ② 購入ボタンを指さす
             int currentCapacity = EquippedSpellManager.Instance.GetMaxCapacity();
@@ -294,7 +294,7 @@ public class StageSelectTutorialController : MonoBehaviour
                     {
                         break;
                     }
-                    elapsed += Time.deltaTime;
+                    elapsed += Time.unscaledDeltaTime;
                     yield return null;
                 }
             }
@@ -303,7 +303,7 @@ public class StageSelectTutorialController : MonoBehaviour
             pointerController.HideDescription();
 
             // UIを閉じるアニメーション等があるため待機
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSecondsRealtime(0.5f);
         }
     }
 
@@ -354,14 +354,14 @@ public class StageSelectTutorialController : MonoBehaviour
                         isSpellIconTapped = true;
                         break;
                     }
-                    elapsed += Time.deltaTime;
+                    elapsed += Time.unscaledDeltaTime;
                     yield return null;
                 }
             }
 
             pointerController.HidePointer();
             pointerController.HideDescription();
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSecondsRealtime(0.5f);
 
             // ② 購入ボタンを指さす
             pointerController.ShowDescription("購入して獲得");
@@ -393,14 +393,14 @@ public class StageSelectTutorialController : MonoBehaviour
                     {
                         break;
                     }
-                    elapsed += Time.deltaTime;
+                    elapsed += Time.unscaledDeltaTime;
                     yield return null;
                 }
             }
 
             pointerController.HidePointer();
             pointerController.HideDescription();
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSecondsRealtime(0.5f);
         }
     }
 
@@ -481,7 +481,7 @@ public class StageSelectTutorialController : MonoBehaviour
                         isEquipped = true;
                         break;
                     }
-                    elapsed += Time.deltaTime;
+                    elapsed += Time.unscaledDeltaTime;
                     yield return null;
                 }
             }
@@ -526,7 +526,7 @@ public class StageSelectTutorialController : MonoBehaviour
                     isStartTapped = true;
                     break;
                 }
-                elapsed += Time.deltaTime;
+                elapsed += Time.unscaledDeltaTime;
                 yield return null;
             }
         }
