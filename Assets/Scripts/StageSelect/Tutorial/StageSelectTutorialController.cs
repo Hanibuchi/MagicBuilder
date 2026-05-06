@@ -72,7 +72,17 @@ public class StageSelectTutorialController : MonoBehaviour
             yield break;
         }
 
-        pointerController.ShowDescription("タップして呪文をセット");
+        int targetSlotIndex = requiredCapacityCount - 1; // 装備するべき最後の枠
+        bool isAlreadyEquipped = false;
+        var initialSpells = EquippedSpellManager.Instance.GetEquippedSpells();
+        if (initialSpells.Count > targetSlotIndex && initialSpells[targetSlotIndex] == targetDragSpell)
+        {
+            isAlreadyEquipped = true;
+        }
+
+        if (!isAlreadyEquipped)
+        {
+            pointerController.ShowDescription("タップして呪文をセット");
 
         // UIアニメーション完了待ち
         yield return new WaitForSeconds(0.5f);
@@ -298,7 +308,7 @@ public class StageSelectTutorialController : MonoBehaviour
 
             pointerController.ShowDescription("ドラッグで装備");
 
-            int targetSlotIndex = requiredCapacityCount - 1; // 装備するべき最後の枠
+            // int targetSlotIndex = requiredCapacityCount - 1; // 上で定義済み
             bool isEquipped = false;
 
             while (!isEquipped)
@@ -377,5 +387,55 @@ public class StageSelectTutorialController : MonoBehaviour
             pointerController.HidePointer();
             pointerController.HideDescription();
         }
+        } // if (!isAlreadyEquipped) の閉じカッコ
+
+        // 装備完了後もしくはすでに装備済みの場合、UIを閉じる
+        if (EquippedSpellController.Instance != null && EquippedSpellSelectionUI.Instance != null && EquippedSpellSelectionUI.Instance.gameObject.activeInHierarchy)
+        {
+            EquippedSpellController.Instance.CloseSpellSelectionUI();
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
+        // プレイ（開始）ボタンを押すよう促す
+        pointerController.ShowDescription("プレイ開始！");
+        bool isStartTapped = false;
+        
+        while (!isStartTapped)
+        {
+            if (StageInfoDisplayUI.Instance != null && StageInfoDisplayUI.Instance.StartButton != null && StageInfoDisplayUI.Instance.gameObject.activeInHierarchy)
+            {
+                RectTransform startBtnRect = StageInfoDisplayUI.Instance.StartButton.GetComponent<RectTransform>();
+                if (startBtnRect != null)
+                {
+                    Camera cam = startBtnRect.GetComponentInParent<Canvas>()?.worldCamera;
+                    Vector3 worldCenter = startBtnRect.TransformPoint(startBtnRect.rect.center);
+                    Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(cam, worldCenter);
+
+                    pointerController.PlayTapAnimation(screenPos);
+                }
+            }
+            else
+            {
+                // UIが閉じた場合はスタートされたとみなす
+                isStartTapped = true;
+                break;
+            }
+
+            float elapsed = 0f;
+            while (elapsed < 1.5f)
+            {
+                if (StageInfoDisplayUI.Instance == null || !StageInfoDisplayUI.Instance.gameObject.activeInHierarchy)
+                {
+                    isStartTapped = true;
+                    break;
+                }
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+        }
+
+        pointerController.HidePointer();
+        pointerController.HideDescription();
     }
 }

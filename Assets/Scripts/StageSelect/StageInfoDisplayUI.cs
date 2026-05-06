@@ -30,6 +30,7 @@ public class StageInfoDisplayUI : MonoBehaviour
     private string currentStageIdentifier;
     public string CurrentStageIdentifier => currentStageIdentifier;
 
+    public Button StartButton => startButton;
     public Button OpenSpellSelectButton => openSpellSelectButton;
     public event System.Action<string> OnUIOpened;
 
