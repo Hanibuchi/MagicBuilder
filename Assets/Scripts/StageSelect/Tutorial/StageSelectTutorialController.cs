@@ -104,10 +104,7 @@ public class StageSelectTutorialController : MonoBehaviour
 
         if (!isAlreadyEquipped)
         {
-            yield return StartCoroutine(HandleSpellSelectButtonTutorial());
-            yield return StartCoroutine(HandleCapacityIncreaseTutorial());
-            yield return StartCoroutine(HandleSpellPurchaseTutorial());
-            yield return StartCoroutine(HandleSpellEquipTutorial(targetSlotIndex));
+            yield return HandleSpellSelectButtonTutorial(targetSlotIndex);
         } // if (!isAlreadyEquipped) の閉じカッコ
 
         // 装備完了後もしくはすでに装備済みの場合、UIを閉じる
@@ -118,50 +115,108 @@ public class StageSelectTutorialController : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        yield return StartCoroutine(HandleStartButtonTutorial());
+        yield return HandleStartButtonTutorial();
     }
 
-    private IEnumerator HandleSpellSelectButtonTutorial()
+    private IEnumerator HandleSpellSelectButtonTutorial(int targetSlotIndex)
     {
-        pointerController.ShowDescription("タップして呪文をセット");
-
-        // UIアニメーション完了待ち
-        yield return new WaitForSeconds(0.5f);
-
-        while (!hasTappedSpellSelect)
+        while (true)
         {
-            if (StageInfoDisplayUI.Instance != null && StageInfoDisplayUI.Instance.OpenSpellSelectButton != null)
+            // まず装備完了しているかチェック（ループの終了条件）
+            var currentSpells = EquippedSpellManager.Instance.GetEquippedSpells();
+            if (currentSpells.Count > targetSlotIndex && currentSpells[targetSlotIndex] == targetDragSpell)
             {
-                RectTransform spellButtonRect = StageInfoDisplayUI.Instance.OpenSpellSelectButton.GetComponent<RectTransform>();
-                if (spellButtonRect != null)
-                {
-                    Camera cam = spellButtonRect.GetComponentInParent<Canvas>()?.worldCamera;
-                    // Rectの中心座標（ワールド座標）を取得してからスクリーン座標に変換
-                    Vector3 worldCenter = spellButtonRect.TransformPoint(spellButtonRect.rect.center);
-                    Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(cam, worldCenter);
-
-                    pointerController.PlayTapAnimation(screenPos);
-                }
+                break;
             }
 
-            // アニメーションのループ時間待機
-            float elapsed = 0f;
-            while (elapsed < 1.5f)
+            hasTappedSpellSelect = false;
+            pointerController.ShowDescription("タップして呪文をセット");
+
+            // UIアニメーション完了待ち
+            yield return new WaitForSeconds(0.5f);
+
+            while (!hasTappedSpellSelect)
             {
-                if (hasTappedSpellSelect)
+                // UIがすでに開かれているならスキップ
+                if (EquippedSpellSelectionUI.Instance != null && EquippedSpellSelectionUI.Instance.IsVisible)
                 {
+                    hasTappedSpellSelect = true;
                     break;
                 }
-                elapsed += Time.deltaTime;
+
+                if (StageInfoDisplayUI.Instance != null && StageInfoDisplayUI.Instance.OpenSpellSelectButton != null)
+                {
+                    RectTransform spellButtonRect = StageInfoDisplayUI.Instance.OpenSpellSelectButton.GetComponent<RectTransform>();
+                    if (spellButtonRect != null)
+                    {
+                        Camera cam = spellButtonRect.GetComponentInParent<Canvas>()?.worldCamera;
+                        // Rectの中心座標（ワールド座標）を取得してからスクリーン座標に変換
+                        Vector3 worldCenter = spellButtonRect.TransformPoint(spellButtonRect.rect.center);
+                        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(cam, worldCenter);
+
+                        pointerController.PlayTapAnimation(screenPos);
+                    }
+                }
+
+                // アニメーションのループ時間待機
+                float elapsed = 0f;
+                while (elapsed < 1.5f)
+                {
+                    if (hasTappedSpellSelect || (EquippedSpellSelectionUI.Instance != null && EquippedSpellSelectionUI.Instance.IsVisible))
+                    {
+                        hasTappedSpellSelect = true;
+                        break;
+                    }
+                    elapsed += Time.deltaTime;
+                    yield return null;
+                }
+            }
+
+            pointerController.HidePointer();
+            pointerController.HideDescription();
+
+            // 呪文UIが開くまで少し待機
+            yield return new WaitForSeconds(1.0f);
+
+            // 呪文UIが開いている間のみ以下のチュートリアルを実行
+            Coroutine innerTutorial = StartCoroutine(InnerSpellEquipSequence(targetSlotIndex));
+
+            // UIが閉じられるか、完了するまで待機
+            while (EquippedSpellSelectionUI.Instance != null && EquippedSpellSelectionUI.Instance.IsVisible)
+            {
+                currentSpells = EquippedSpellManager.Instance.GetEquippedSpells();
+                if (currentSpells.Count > targetSlotIndex && currentSpells[targetSlotIndex] == targetDragSpell)
+                {
+                    // 装備完了
+                    break;
+                }
                 yield return null;
             }
+
+            // もしUIが途中で閉じられたら、チュートリアルコルーチンを停止して再スタート
+            if (innerTutorial != null)
+            {
+                StopCoroutine(innerTutorial);
+            }
+            
+            // 後始末
+            pointerController.HidePointer();
+            pointerController.HideDescription();
+            
+            // 装備完了していたら外側のループも抜ける
+            currentSpells = EquippedSpellManager.Instance.GetEquippedSpells();
+            if (currentSpells.Count > targetSlotIndex && currentSpells[targetSlotIndex] == targetDragSpell)
+            {
+                break;
+            }
         }
+    }
 
-        pointerController.HidePointer();
-        pointerController.HideDescription();
-
-        // 呪文UIが開くまで少し待機
-        yield return new WaitForSeconds(1.0f);
+    private IEnumerator InnerSpellEquipSequence(int targetSlotIndex)
+    {
+        yield return HandleCapacityIncreaseTutorial();
+        yield return HandleSpellPurchaseTutorial();
+        yield return HandleSpellEquipTutorial(targetSlotIndex);
     }
 
     private IEnumerator HandleCapacityIncreaseTutorial()
@@ -441,7 +496,7 @@ public class StageSelectTutorialController : MonoBehaviour
         // プレイ（開始）ボタンを押すよう促す
         pointerController.ShowDescription("プレイ開始！");
         bool isStartTapped = false;
-        
+
         while (!isStartTapped)
         {
             if (StageInfoDisplayUI.Instance != null && StageInfoDisplayUI.Instance.StartButton != null && StageInfoDisplayUI.Instance.gameObject.activeInHierarchy)
