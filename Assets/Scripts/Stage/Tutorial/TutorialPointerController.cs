@@ -156,13 +156,13 @@ public class TutorialPointerController : MonoBehaviour
         pointerAnimator.SetTrigger(dragStartTriggerHash);
 
         // 押した実感が出るまで少し待機
-        yield return new WaitForSeconds(dragAnimationWaitTime);
+        yield return new WaitForSecondsRealtime(dragAnimationWaitTime);
 
         // ② ドラッグ（移動）
         float elapsedTime = 0f;
         while (elapsedTime < dragDuration)
         {
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.unscaledDeltaTime;
             float t = Mathf.Clamp01(elapsedTime / dragDuration);
 
             // 滑らかに移動させるためのイージング処理 (SmoothStep)
@@ -178,6 +178,6 @@ public class TutorialPointerController : MonoBehaviour
         pointerAnimator.SetTrigger(dragEndTriggerHash);
 
         // 離した後の余韻で少し待機
-        yield return new WaitForSeconds(dragAnimationWaitTime);
+        yield return new WaitForSecondsRealtime(dragAnimationWaitTime);
     }
 }
