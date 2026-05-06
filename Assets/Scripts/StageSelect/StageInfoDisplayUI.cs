@@ -28,6 +28,10 @@ public class StageInfoDisplayUI : MonoBehaviour
 
     public static StageInfoDisplayUI Instance { get; private set; }
     private string currentStageIdentifier;
+    public string CurrentStageIdentifier => currentStageIdentifier;
+
+    public Button OpenSpellSelectButton => openSpellSelectButton;
+    public event System.Action<string> OnUIOpened;
 
     private void Awake()
     {
@@ -101,6 +105,8 @@ public class StageInfoDisplayUI : MonoBehaviour
             rootAnimator.SetTrigger("Open");
             rootAnimator.ResetTrigger("Close");
         }
+
+        OnUIOpened?.Invoke(currentStageIdentifier);
     }
 
     /// <summary>
