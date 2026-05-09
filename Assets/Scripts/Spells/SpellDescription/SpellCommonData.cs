@@ -139,4 +139,8 @@ public class SpellCommonData : ScriptableObject
     public AudioClip spellDropSound;
     [Tooltip("呪文がドロップした際の音量")]
     public float spellDropSoundVolume = 1.0f;
+    [Tooltip("呪文をゴミ箱に捨てた際の音")]
+    public AudioClip throwSound;
+    [Tooltip("呪文をゴミ箱に捨てた際の音量")]
+    public float throwSoundVolume = 1.0f;
 }
