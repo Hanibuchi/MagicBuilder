@@ -90,5 +90,7 @@ EditorBuildSettings:
     path: Assets/Stage/7_extra/Stage_Extra.unity
     guid: d94d0acf4402eef4f86c6e014ebd24b8
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 0fca1cedf1f82f848a8e8b0ee540ab0f, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+    com.unity.localization.settings: {fileID: 11400000, guid: d9589e215d9650e4d9ffa0ee0d65cecb, type: 2}
   m_UseUCBPForAssetBundles: 0
