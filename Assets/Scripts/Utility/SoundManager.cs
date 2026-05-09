@@ -113,12 +113,12 @@ public class SoundManager : MonoBehaviour
     // --- 音量取得メソッド (Audio Mixer経由) ---
     public float GetBGMVolume0to1()
     {
-        return PlayerPrefs.GetFloat(BGM_VOLUME_SAVE_KEY, 0.8f);
+        return PlayerPrefs.GetFloat(BGM_VOLUME_SAVE_KEY, 0.5f);
     }
 
     public float GetSEVolume0to1()
     {
-        return PlayerPrefs.GetFloat(SE_VOLUME_SAVE_KEY, 0.8f);
+        return PlayerPrefs.GetFloat(SE_VOLUME_SAVE_KEY, 0.5f);
     }
 
     public void StopBGMWithFade(float duration = 1.0f)
