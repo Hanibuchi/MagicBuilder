@@ -23,10 +23,6 @@ MonoBehaviour:
     m_Key: App_ShortName
     m_Metadata:
       m_Items: []
-  - m_Id: 1011426127872
-    m_Key: App_UserTrackingUsageDescription
-    m_Metadata:
-      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
