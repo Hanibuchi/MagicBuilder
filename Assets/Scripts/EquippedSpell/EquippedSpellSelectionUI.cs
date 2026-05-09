@@ -69,6 +69,10 @@ public class EquippedSpellSelectionUI : MonoBehaviour,
 
     [Header("容量拡張UI")]
     [SerializeField] private Button increaseCapacityButton;
+    public Button IncreaseCapacityButton => increaseCapacityButton;
+
+    public IReadOnlyList<EquippedSpellIconUI> HoldListSpellUIs => _holdListSpellUIs;
+    public IReadOnlyList<Component> EquippedSlotUIs => _equippedSlotUIs;
 
     [Header("装備解除（ゴミ箱）設定")]
     [SerializeField] private EquippedTrashAreaUI trashArea;

@@ -21,6 +21,7 @@ public class CapacityPurchaseUI : MonoBehaviour, IPointerClickHandler
     [Header("購入UI要素")]
     [SerializeField, Tooltip("購入ボタン")]
     private Button purchaseButton;
+    public Button PurchaseButton => purchaseButton;
 
     [SerializeField, Tooltip("購入ボタンの画像コンポーネント")]
     private Image purchaseButtonImage;

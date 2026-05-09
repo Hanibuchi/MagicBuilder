@@ -3,6 +3,7 @@
 using UnityEngine;
 using System.Linq;
 using TMPro;
+using System;
 
 /// <summary>
 /// 選択された島に対応するステージ一覧を表示するUIを管理するクラス。
@@ -20,6 +21,7 @@ public class StageSelectUI : MonoBehaviour
     [Tooltip("ステージボタンを配置する親となるTransform。")]
     [SerializeField]
     private Transform stageButtonParent;
+    public Transform StageButtonParent => stageButtonParent;
 
     [SerializeField]
     TextMeshProUGUI islandNameText;
@@ -44,6 +46,8 @@ public class StageSelectUI : MonoBehaviour
 
     private string selectAnimTrigger = "Show"; // UI表示アニメーションのトリガー名
     private string normalizedAnimTrigger = "Hide"; // UI非表示アニメーションのトリガー名
+
+    public Action<string> OnStagesGeneratedAction;
 
     // --- 初期化 ---
 
@@ -100,6 +104,7 @@ public class StageSelectUI : MonoBehaviour
 
         // 3. ステージボタンの生成と表示
         GenerateStageButtons(islandID);
+        OnStagesGeneratedAction?.Invoke(islandID);
     }
 
     /// <summary>

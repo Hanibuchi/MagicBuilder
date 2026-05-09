@@ -28,6 +28,14 @@ public class StageInfoDisplayUI : MonoBehaviour
 
     public static StageInfoDisplayUI Instance { get; private set; }
     private string currentStageIdentifier;
+    public string CurrentStageIdentifier => currentStageIdentifier;
+
+    public Button StartButton => startButton;
+    public Button OpenSpellSelectButton => openSpellSelectButton;
+    public Button OpenWandSelectButton => openWandSelectButton;
+    public event System.Action<string> OnUIOpened;
+    public event System.Action<string> OnStageInfoSet;
+    public event System.Action OnUIClosed;
 
     private void Awake()
     {
@@ -82,6 +90,8 @@ public class StageInfoDisplayUI : MonoBehaviour
         bool isRush = stageConfig.stageType == StageType.Rush;
         if (openSpellSelectButton != null) openSpellSelectButton.gameObject.SetActive(isRush);
         if (openWandSelectButton != null) openWandSelectButton.gameObject.SetActive(isRush);
+
+        OnStageInfoSet?.Invoke(identifier);
     }
 
     /// <summary>
@@ -101,6 +111,8 @@ public class StageInfoDisplayUI : MonoBehaviour
             rootAnimator.SetTrigger("Open");
             rootAnimator.ResetTrigger("Close");
         }
+
+        OnUIOpened?.Invoke(currentStageIdentifier);
     }
 
     /// <summary>
@@ -133,6 +145,8 @@ public class StageInfoDisplayUI : MonoBehaviour
     {
         if (close) return;
         close = true;
+
+        OnUIClosed?.Invoke();
 
         if (SoundManager.Instance != null && closeSound != null)
             SoundManager.Instance.PlaySE(closeSound);

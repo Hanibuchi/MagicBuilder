@@ -414,8 +414,14 @@ public class WandUI : MonoBehaviour, ISpellContainer
             }
         }
 
-        // 最後のSpacingUIをハイライト（空きがある場合のみ）
-        if (CanDropSpell(false))
+        // 最後のSpacingUIをハイライト（杖に通常の呪文が一つもないときだけ）
+        int currentSpellCount = spellBasesCashe.Count;
+        if (draggedSpellUI != null && draggedSpellUI.spellContainerUI as WandUI == this)
+        {
+            currentSpellCount--;
+        }
+
+        if (currentSpellCount <= 0 && CanDropSpell(false))
         {
             for (int i = uiElements.Count - 1; i >= 0; i--)
             {

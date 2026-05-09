@@ -20,6 +20,7 @@ public class StageButton : MonoBehaviour
 
     // 内部で保持するステージ情報
     private string stageIdentifier;
+    public string StageIdentifier => stageIdentifier;
     StageSelectUI stageSelectUI;
     private int stageIndex; // ステージの順番を保持
 

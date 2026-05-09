@@ -39,3 +39,5 @@ MonoBehaviour:
   triggerMagicCircleColor: {r: 0.8, g: 0.5019608, b: 0.32156864, a: 1}
   spellDropSound: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
   spellDropSoundVolume: 1
+  throwSound: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
+  throwSoundVolume: 1
