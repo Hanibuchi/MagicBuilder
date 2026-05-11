@@ -348,6 +348,35 @@ public class SpellHoldInfoManager : MonoBehaviour
         Debug.Log("<color=cyan>[SpellHoldInfoManager Test]</color> すべての登録済み呪文を開放し、10個ずつ所持させました。");
     }
 
+    /// <summary>
+    /// すべての登録済み呪文を開放し、それぞれ1個ずつ所持した状態にします（デバッグ用）。
+    /// </summary>
+    public void Test_UnlockAndGrantAllSpellsOneEach()
+    {
+        if (SpellDatabase.Instance == null)
+        {
+            Debug.LogError("SpellDatabase.Instance が null のため、すべての呪文を開放できませんでした。");
+            return;
+        }
+
+        var allTypes = SpellDatabase.Instance.GetAllRegisteredSpellTypes();
+        foreach (SpellType type in allTypes)
+        {
+            if (type == SpellType.None) continue;
+
+            // ディクショナリを直接更新し、SaveAllData の連続呼び出しを避ける
+            int currentCount = _spellCounts.TryGetValue(type, out int c) ? c : 0;
+            _spellCounts[type] = Mathf.Max(currentCount, 1);
+            _spellUnlockedStatus[type] = true;
+            _spellNewlyUnlockedStatus.TryAdd(type, false);
+        }
+
+        // 全呪文の更新が終わってから1回だけ保存
+        SaveAllData();
+
+        Debug.Log("<color=cyan>[SpellHoldInfoManager Test]</color> すべての登録済み呪文を開放し、1個ずつ所持させました。");
+    }
+
     // SpellHoldInfoManager.cs 内に追記
 
     // [Header("--- デバッグ/テスト用設定 ---")]

@@ -16,28 +16,7 @@ MonoBehaviour:
   subStageName: "\u6700\u521D\u306E\u30B9\u30C6\u30FC\u30B8"
   SceneName: Stage_Template
   clearCondition: 2
-  enemyPhases:
-  - conditionType: 0
-    conditionValue: 0
-    isBossPhase: 0
-    spawnerConfig:
-      enemyPrefab: {fileID: 5364255320582704603, guid: 67f1a42cd82468f4aa9b920487b9162e, type: 3}
-      isBoss: 0
-      customDroppableSpells: []
-  - conditionType: 0
-    conditionValue: 0
-    isBossPhase: 0
-    spawnerConfig:
-      enemyPrefab: {fileID: 8884610926546658600, guid: 3ab43ade8af57d34a981cd5edd0af441, type: 3}
-      isBoss: 0
-      customDroppableSpells: []
-  - conditionType: 0
-    conditionValue: 0
-    isBossPhase: 0
-    spawnerConfig:
-      enemyPrefab: {fileID: 2896178943378485087, guid: 0f36424a9faebc0448b7097cc41f6e28, type: 3}
-      isBoss: 0
-      customDroppableSpells: []
+  enemyPhases: []
   phaseGenerators: []
   puzzleSpells: []
   puzzleWands: 

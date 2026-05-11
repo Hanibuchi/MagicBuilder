@@ -7,14 +7,30 @@ using UnityEngine;
 public class DebugTools : MonoBehaviour
 {
     /// <summary>
-    /// すべての呪文を開放し、1つずつ所持した状態にします。
+    /// すべての呪文を開放し、10個ずつ所持した状態にします。
     /// </summary>
-    [ContextMenu("すべての呪文を開放・所持")]
+    [ContextMenu("すべての呪文を開放・10個ずつ所持")]
     public void UnlockAndGrantAllSpells()
     {
         if (SpellHoldInfoManager.Instance != null)
         {
             SpellHoldInfoManager.Instance.Test_UnlockAndGrantAllSpells();
+        }
+        else
+        {
+            Debug.LogError("SpellHoldInfoManager.Instance が見つかりません。");
+        }
+    }
+
+    /// <summary>
+    /// すべての呪文を開放し、1つずつ所持した状態にします。
+    /// </summary>
+    [ContextMenu("すべての呪文を開放・1つずつ所持")]
+    public void UnlockAndGrantAllSpellsOneEach()
+    {
+        if (SpellHoldInfoManager.Instance != null)
+        {
+            SpellHoldInfoManager.Instance.Test_UnlockAndGrantAllSpellsOneEach();
         }
         else
         {
