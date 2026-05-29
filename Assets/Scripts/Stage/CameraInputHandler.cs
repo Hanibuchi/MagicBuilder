@@ -262,7 +262,8 @@ public class CameraInputHandler : MonoBehaviour, IDragHandler, IBeginDragHandler
         if (CameraManager.Instance == null || mainCamera == null) return;
 
         // カメラの現在のOrthographic Size (画面の高さの半分)
-        float halfHeight = mainCamera.orthographicSize;
+        // mainCamera.orthographicSizeは更新が遅れる場合があるため、CameraManagerから計算する
+        float halfHeight = CameraManager.Instance.DefaultOrthographicSize * CameraManager.Instance.GetSize();
         // アスペクト比から画面の幅の半分を計算
         float halfWidth = halfHeight * mainCamera.aspect;
 
