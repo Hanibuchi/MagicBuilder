@@ -60,6 +60,20 @@ public class ConfirmationUI : MonoBehaviour
         }
     }
 
+    public void UpdateText(string newMessage)
+    {
+        if (messageText != null)
+        {
+            if (textCoroutine != null)
+            {
+                StopCoroutine(textCoroutine);
+                textCoroutine = null;
+            }
+            messageText.text = newMessage;
+            messageText.maxVisibleCharacters = 99999;
+        }
+    }
+
     private IEnumerator TypeTextRoutine(string message)
     {
         messageText.text = message;

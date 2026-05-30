@@ -6,8 +6,10 @@ public class StageSkipUI : MonoBehaviour
 {
     [SerializeField] private Button skipButton;
     [SerializeField] private GameObject confirmationUIPrefab;
-    [SerializeField, TextArea] private string skipMessage = "このステージをスキップしてクリアしますか？\n（1日1回のみ使用可能）";
-    [SerializeField, TextArea] private string alreadyUsedMessage = "本日のスキップ機能はすでに使用済みです。明日またご利用ください。";
+    
+    [Header("Settings")]
+    [SerializeField, Tooltip("スキップが回復するまでの時間（時間単位）")]
+    private int skipRecoveryHours = 3;
 
     [Space(10)]
     [SerializeField] private AudioClip openConfirmSE;
@@ -27,23 +29,26 @@ public class StageSkipUI : MonoBehaviour
 
     private void UpdateSkipButtonState()
     {
-        // スキップできない場合はボタンのGameObject自体を非表示にする
+        // エンドレスモードの場合はボタン自体を非表示にする
         if (skipButton != null)
         {
-            skipButton.gameObject.SetActive(CanSkip());
+            skipButton.gameObject.SetActive(!IsEndlessMode());
         }
+    }
+
+    private bool IsEndlessMode()
+    {
+        if (GameManager.Instance != null && GameManager.Instance.CurrentStageConfig != null)
+        {
+            return GameManager.Instance.CurrentStageConfig.clearCondition == StageClearCondition.Endless;
+        }
+        return false;
     }
 
     private bool CanSkip()
     {
         // エンドレスモードの場合はスキップ不可
-        if (GameManager.Instance != null && GameManager.Instance.CurrentStageConfig != null)
-        {
-            if (GameManager.Instance.CurrentStageConfig.clearCondition == StageClearCondition.Endless)
-            {
-                return false;
-            }
-        }
+        if (IsEndlessMode()) return false;
 
         string lastSkipDateStr = PlayerPrefs.GetString(LastSkipDateKey, "");
         if (string.IsNullOrEmpty(lastSkipDateStr))
@@ -53,10 +58,54 @@ public class StageSkipUI : MonoBehaviour
 
         if (DateTime.TryParse(lastSkipDateStr, out DateTime lastSkipDate))
         {
-            return lastSkipDate.Date < DateTime.Now.Date;
+            return DateTime.Now >= lastSkipDate.AddHours(skipRecoveryHours);
         }
 
         return true; // パースに失敗した場合は念のため許可
+    }
+
+    private string GetAlreadyUsedMessageWithTime()
+    {
+        string baseMessage = "スキップ回復まで";
+        string lastSkipDateStr = PlayerPrefs.GetString(LastSkipDateKey, "");
+        if (string.IsNullOrEmpty(lastSkipDateStr) || !DateTime.TryParse(lastSkipDateStr, out DateTime lastSkipDate))
+        {
+            return baseMessage;
+        }
+
+        DateTime now = DateTime.Now;
+        DateTime recoveryTime = lastSkipDate.AddHours(skipRecoveryHours);
+        TimeSpan remainingTime = recoveryTime - now;
+
+        if (remainingTime.TotalSeconds <= 0)
+        {
+            return $"{baseMessage}\nあと 0秒";
+        }
+        
+        string timeText = "";
+        if (remainingTime.Hours > 0)
+        {
+            timeText += $"{remainingTime.Hours}時間";
+        }
+        if (remainingTime.Minutes > 0 || remainingTime.Hours > 0)
+        {
+            timeText += $"{remainingTime.Minutes}分";
+        }
+        timeText += $"{remainingTime.Seconds}秒";
+        
+        return $"{baseMessage}\nあと {timeText}";
+    }
+
+    private void Update()
+    {
+        if (currentConfirmationInstance != null && !CanSkip())
+        {
+            ConfirmationUI confirmationUI = currentConfirmationInstance.GetComponent<ConfirmationUI>();
+            if (confirmationUI != null)
+            {
+                confirmationUI.UpdateText(GetAlreadyUsedMessageWithTime());
+            }
+        }
     }
 
     private void RecordSkipUsage()
@@ -77,7 +126,7 @@ public class StageSkipUI : MonoBehaviour
 
         if (!CanSkip())
         {
-            ShowInfoMessage(alreadyUsedMessage);
+            ShowInfoMessage(GetAlreadyUsedMessageWithTime());
             return;
         }
 
@@ -93,8 +142,9 @@ public class StageSkipUI : MonoBehaviour
 
         if (confirmationUI != null)
         {
+            string message = $"このステージをスキップしますか？\n（{skipRecoveryHours}時間に1回使用可能）";
             confirmationUI.Initialize(
-                skipMessage,
+                message,
                 onYes: () =>
                 {
                     ExecuteSkip();
@@ -175,5 +225,23 @@ public class StageSkipUI : MonoBehaviour
         }
         
         Debug.Log("デバッグ：スキップの使用状態をリセットしました（再びスキップ可能になりました）。");
+    }
+
+    [ContextMenu("Debug: Set Recovery to 1 Minute")]
+    public void DebugSetRecoveryToOneMinute()
+    {
+        // 1分後に回復するように、LastSkipDateを逆算して設定する
+        DateTime targetRecoveryTime = DateTime.Now.AddMinutes(1);
+        DateTime fakeLastSkipDate = targetRecoveryTime.AddHours(-skipRecoveryHours);
+
+        PlayerPrefs.SetString(LastSkipDateKey, fakeLastSkipDate.ToString("o"));
+        PlayerPrefs.Save();
+        
+        if (Application.isPlaying)
+        {
+            UpdateSkipButtonState();
+        }
+        
+        Debug.Log("デバッグ：スキップ回復までの残り時間を1分に設定しました。");
     }
 }
