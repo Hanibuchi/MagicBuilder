@@ -570,6 +570,23 @@ public class StageManager : MonoBehaviour
             isFirstClear = !(StageUnlockManager.Instance?.IsStageCleared(stageConfig.stageName) ?? false);
             StageUnlockManager.Instance?.MarkStageCleared(stageConfig.stageName);
             Debug.Log("エンドレスモード終了、進行状況を保存します。");
+
+#if UNITY_WEBGL
+            try
+            {
+                if (ScoreManager.Instance != null)
+                {
+                    float finalScore = ScoreManager.Instance.GetTotalScore();
+                    // エンドレスモードのハイスコアを送信 (ボードNo 2)
+                    unityroom.Api.UnityroomApiClient.Instance.SendScore(2, finalScore, unityroom.Api.ScoreboardWriteMode.HighScoreDesc);
+                    Debug.Log($"エンドレススコアをunityroomに送信しました: {finalScore}");
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Unityroomスコア送信でエラーが発生しました: {e.Message}");
+            }
+#endif
         }
 
         gameEnd = true;

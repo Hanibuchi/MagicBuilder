@@ -279,6 +279,23 @@ public class StageUnlockManager : MonoBehaviour
         PlayerPrefs.SetString(LATEST_STAGE_KEY, stageId);
         PlayerPrefs.Save();
         Debug.Log($"最新到達ステージIDが **{stageId}** に更新されました。");
+
+#if UNITY_WEBGL
+        try
+        {
+            int reachedStageCount = orderedStageNames.IndexOf(stageId) + 1;
+            if (reachedStageCount > 0)
+            {
+                unityroom.Api.UnityroomApiClient.Instance.SendScore(1, reachedStageCount, unityroom.Api.ScoreboardWriteMode.HighScoreDesc);
+                Debug.Log($"到達ステージ数をunityroomに送信しました: {reachedStageCount}");
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Unityroomスコア送信でエラーが発生しました: {e.Message}");
+        }
+#endif
+
         return true; // 成功
     }
 }

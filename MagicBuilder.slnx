@@ -74,6 +74,7 @@
   <Project Path="Unity.VisualScripting.State.csproj" />
   <Project Path="Unity.InternalAPIEditorBridge.001.csproj" />
   <Project Path="Unity.Purchasing.AppleMacosStub.csproj" />
+  <Project Path="unityroom.csproj" />
   <Project Path="Unity.Purchasing.Codeless.csproj" />
   <Project Path="UnityEditor.UI.csproj" />
   <Project Path="Unity.RenderPipelines.Universal.2D.Editor.Overrides.csproj" />
